@@ -1,0 +1,49 @@
+# Directories
+WORK_DIR = /home/bryngel2/3d_cell
+PETSC_DIR = /home/bryngel2/packages/petsc-3.0.0-p3
+PETSC_ARCH = linux-gnu-c-debug
+include $(PETSC_DIR)/conf/variables
+#include ${PETSC_DIR}/conf/rules
+MKL_DIR = /home/bryngel2/intel/mkl/10.0.1.014/lib/em64t
+#/opt/intel/composer_xe_2013_sp1.3.174/mkl/lib/intel64
+#/opt/intel/mkl/10.0.5.025/lib/em64t
+MYLIB_DIR = /home/bryngel2/3d_cell/mylib
+
+vpath $(WORK_DIR)/common
+
+COMMON_INCLUDE = -I$(WORK_DIR)/common -I$(MYLIB_DIR)/include
+INCLUDE = $(COMMON_INCLUDE) $(PETSC_INCLUDE) #-I/home/bryngel2/packages/petsc-3.3-p7/include
+
+# Libraries
+COMMON_LIB = $(WORK_DIR)/common/libcommon.a -L$(MYLIB_DIR)/lib
+SPHPK_LIB = -L$(MYLIB_DIR)/lib -lsphpk
+LAPACK95_LIB = -L$(MYLIB_DIR)/lib -llapack95
+FFTW_LIB = -L/software/fftw-3.3.2-x86_64/lib -lfftw3
+#-L/home/bryngel2/packages/fftw-3.3.4-mpi/lib -lfftw3
+NETCDF_LIB = -L$(MYLIB_DIR)/lib -lnetcdf
+PETSC_LIB = -L$(PETSC_DIR)/$(PETSC_ARCH)/lib $(PETSC_KSP_LIB_BASIC)
+	
+MKL_LIB = -L$(MKL_DIR) -Wl,-rpath,$(MKL_DIR) \
+	-lmkl_lapack -lmkl -lguide -lpthread
+	
+#STATIC = -static-intel
+
+# Compiler and linker
+FC = mpif90
+# /srv/local/data0/installation/mvapich/mvapich2-2.0rc2-gnu/src/env/mpif90
+NICE = -fpconstant -r8
+DEBUG =  #-O0 -g -traceback -CB -debug extended -debug-parameters all 
+OPTS = -O3 #-vec-report0
+#PROF = -pg
+
+FFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) $(INCLUDE)
+LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF)
+
+%.o : %.F90
+	$(FC) $(FFLAGS) -c $<
+%.o : %.F
+	$(FC) $(FFLAGS) -c $<
+
+# Archiving
+AR	= ar ru
+RANLIB	= ranlib
