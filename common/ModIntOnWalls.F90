@@ -15,11 +15,11 @@ module ModIntOnWalls
   private
 
   public :: AddIntOnWalls, &
-  	SingIntOnWall, &
-  	PrepareSingIntOnWall, &
-	Tri_Int_Regular, &
-	Tri_Int_Duffy, &
-	MinDistToTri
+    SingIntOnWall, &
+    PrepareSingIntOnWall, &
+    Tri_Int_Regular, &
+    Tri_Int_Duffy, &
+    MinDistToTri
 
 contains
 
@@ -66,7 +66,7 @@ contains
 
         deallocate(vtmp)
 
-	p = p + wall%nvert
+    p = p + wall%nvert
       end do ! iwall
 
       ! If there is only one wall, then all are self-interactions
@@ -86,37 +86,37 @@ contains
       do j3 = max(i3-1, 0), min(i3+1, slist%Nc(3)+1)
         j = slist%hoc(j1,j2,j3)
 
-	do while (j > 0)
-	  if (tlist%indx(i,0) == slist%indx(j,0)) goto 999
+    do while (j > 0)
+      if (tlist%indx(i,0) == slist%indx(j,0)) goto 999
 
-	  iwall = slist%indx(j,0)- walls(1)%ID + 1
-	  wall => walls(iwall)
-	  iele = slist%indx(j,1)
-	  do l = 1, 3
-	    ivert = wall%e2v(iele,l)
-	    xele(l,:) = wall%x(ivert,:)
-	    fele(l,:) = wall%f(ivert,:)
-	  end do ! l
+      iwall = slist%indx(j,0)- walls(1)%ID + 1
+      wall => walls(iwall)
+      iele = slist%indx(j,1)
+      do l = 1, 3
+        ivert = wall%e2v(iele,l)
+        xele(l,:) = wall%x(ivert,:)
+        fele(l,:) = wall%f(ivert,:)
+      end do ! l
 
-	  ! Translate xele close to xi
-	  xx = nint( (xi - xele(1,:))*iLb ) * Lb
-	  do l = 1, 3
-	    xele(l,:) = xele(l,:) + xx
-	  end do ! l
+      ! Translate xele close to xi
+      xx = nint( (xi - xele(1,:))*iLb ) * Lb
+      do l = 1, 3
+        xele(l,:) = xele(l,:) + xx
+      end do ! l
 
-	  rr = MinDistToTri(xi, xele, s0, t0)
-	  if (rr > rc) goto 999
+      rr = MinDistToTri(xi, xele, s0, t0)
+      if (rr > rc) goto 999
 
-	  if (rr < wall%epsDist(iele)) then
-	    call Tri_Int_Duffy(xele, fele, xi, s0, t0, dv)
-	  else 
-	    call Tri_Int_Regular(xele, fele, xi, dv)
-	  end if
-	  v(i,:) = v(i,:) + c1*dv/tlist%Acoef(i)  !COEF
-!	  v(i,:) = v(i,:) + c1*dv/(1.+tlist%lam(i))  !COEF
+      if (rr < wall%epsDist(iele)) then
+        call Tri_Int_Duffy(xele, fele, xi, s0, t0, dv)
+      else 
+        call Tri_Int_Regular(xele, fele, xi, dv)
+      end if
+      v(i,:) = v(i,:) + c1*dv/tlist%Acoef(i)  !COEF
+!     v(i,:) = v(i,:) + c1*dv/(1.+tlist%lam(i))  !COEF
 
-999 	  j = slist%next(j)
-	end do ! while
+999       j = slist%next(j)
+    end do ! while
       end do ! j3
       end do ! j2
       end do ! j1
@@ -210,23 +210,23 @@ contains
       do j1 = max(i1-1, 0), min(i1+1, slist%Nc(1)+1)
       do j2 = max(i2-1, 0), min(i2+1, slist%Nc(2)+1)
       do j3 = max(i3-1, 0), min(i3+1, slist%Nc(3)+1)
-	j = slist%hoc(j1,j2,j3)
-	
-	do while (j > 0)
-	  if (slist%indx(j,0) .ne. wall%Id) goto 888
+    j = slist%hoc(j1,j2,j3)
+    
+    do while (j > 0)
+      if (slist%indx(j,0) .ne. wall%Id) goto 888
 
-	  xj = slist%x(j,:)
-	  xx = xi - xj;    xx = xx - nint(xx*iLb)*Lb
-	  rr = sqrt(sum(xx*xx))
+      xj = slist%x(j,:)
+      xx = xi - xj;    xx = xx - nint(xx*iLb)*Lb
+      rr = sqrt(sum(xx*xx))
 
-	  if (rr < rc) then
-	    nnz(i) = nnz(i) + 3
-	    nnz(i+nvert) = nnz(i)
-	    nnz(i+2*nvert) = nnz(i)
-	  end if
+      if (rr < rc) then
+        nnz(i) = nnz(i) + 3
+        nnz(i+nvert) = nnz(i)
+        nnz(i+2*nvert) = nnz(i)
+      end if
 
-888	  j = slist%next(j)
-	end do ! j
+888   j = slist%next(j)
+    end do ! j
       end do ! j3
       end do ! j2
       end do ! j1
@@ -246,45 +246,45 @@ contains
       do j1 = max(i1-1, 0), min(i1+1, slist%Nc(1)+1)
       do j2 = max(i2-1, 0), min(i2+1, slist%Nc(2)+1)
       do j3 = max(i3-1, 0), min(i3+1, slist%Nc(3)+1)
-	! j is the source element
-	j = slist%hoc(j1,j2,j3)
+    ! j is the source element
+    j = slist%hoc(j1,j2,j3)
 
-	do while (j > 0)
-	  if (slist%indx(j,0) .ne. wall%id) goto 999
+    do while (j > 0)
+      if (slist%indx(j,0) .ne. wall%id) goto 999
 
-	  iele = slist%indx(j,1)
+      iele = slist%indx(j,1)
 
-	  do l = 1, 3
-	    ivert = wall%e2v(iele,l)
-	    xele(l,:) = wall%x(ivert,:)
-	  end do ! l
+      do l = 1, 3
+        ivert = wall%e2v(iele,l)
+        xele(l,:) = wall%x(ivert,:)
+      end do ! l
 
-	  ! Translate the triangle close to xi
-	  xx = nint((xi - xele(1,:))*iLb) * Lb
-	  do l = 1, 3
-	    xele(l,:) = xele(l,:) + xx
-	    fele(l,:) = 0.0		! dummy
-	  end do ! l
+      ! Translate the triangle close to xi
+      xx = nint((xi - xele(1,:))*iLb) * Lb
+      do l = 1, 3
+        xele(l,:) = xele(l,:) + xx
+        fele(l,:) = 0.0     ! dummy
+      end do ! l
 
-	  rr = MinDistToTri(xi, xele, s0, t0)
-	  if (rr > rc) goto 999
+      rr = MinDistToTri(xi, xele, s0, t0)
+      if (rr > rc) goto 999
 
-	  if (rr > wall%epsDist(iele)) then
-	    call Tri_Int_Regular(xele, fele, xi, rhs, lhs)
-	  else 
-	    call Tri_Int_Duffy(xele, fele, xi, s0, t0, rhs, lhs)
-	  end if
+      if (rr > wall%epsDist(iele)) then
+        call Tri_Int_Regular(xele, fele, xi, rhs, lhs)
+      else 
+        call Tri_Int_Duffy(xele, fele, xi, s0, t0, rhs, lhs)
+      end if
 
-	  irows = (/ i, i+nvert, i+2*nvert /) - 1
-	  do l = 1, 3
-	    ivert = wall%e2v(iele,l)
-	    icols = (/ ivert, ivert+nvert, ivert+2*nvert /) - 1
-	    values = reshape( transpose(lhs(l,:,:)), (/9/) )
-	    call MatSetValues(wall%lhs, 3, irows, 3, icols, values, ADD_VAlUES, ierr)
-	  end do ! l
+      irows = (/ i, i+nvert, i+2*nvert /) - 1
+      do l = 1, 3
+        ivert = wall%e2v(iele,l)
+        icols = (/ ivert, ivert+nvert, ivert+2*nvert /) - 1
+        values = reshape( transpose(lhs(l,:,:)), (/9/) )
+        call MatSetValues(wall%lhs, 3, irows, 3, icols, values, ADD_VAlUES, ierr)
+      end do ! l
 
 999       j = slist%next(j)
-	end do ! while
+    end do ! while
       end do ! j3
       end do ! j2
       end do ! j1
@@ -340,13 +340,13 @@ contains
       rhs = rhs + (EA*xx*dot_product(xx,fGq) + EB*fGq)
 
       if (present(lhs)) then
-	forall(ii=1:3,jj=1:3) lhsTmp(ii,jj) = EA*xx(ii)*xx(jj)
-	forall(ii=1:3) lhsTmp(ii,ii) = lhsTmp(ii,ii) + EB
-	lhsTmp = dsGq*lhsTmp
+    forall(ii=1:3,jj=1:3) lhsTmp(ii,jj) = EA*xx(ii)*xx(jj)
+    forall(ii=1:3) lhsTmp(ii,ii) = lhsTmp(ii,ii) + EB
+    lhsTmp = dsGq*lhsTmp
 
-	lhs(1,:,:) = lhs(1,:,:) + (1 - s -t)*lhsTmp
-	lhs(2,:,:) = lhs(2,:,:) + s*lhsTmp
-	lhs(3,:,:) = lhs(3,:,:) + t*lhsTmp
+    lhs(1,:,:) = lhs(1,:,:) + (1 - s -t)*lhsTmp
+    lhs(2,:,:) = lhs(2,:,:) + s*lhsTmp
+    lhs(3,:,:) = lhs(3,:,:) + t*lhsTmp
       end if
     end do ! iGQ
 
@@ -384,7 +384,7 @@ contains
     if (.not. INITED) then
     !  nGq = 4
     !  allocate(rGq(nGq), wGq(nGq))
-	write(*,*)"***Initializing the quadrature rule in PSIOW***"
+    write(*,*)"***Initializing the quadrature rule in PSIOW***"
       call GauLeg(0._WP, 1._WP, nGq, rGq, wGq)
       INITED = .true.
     end if
@@ -414,8 +414,8 @@ contains
 
         xGq = (1. - s)*x0 + (s - t)*x1 + t*x2
         fGq = (1. - s)*f0 + (s - t)*f1 + t*f2
-	dsGq = wGq(i)*wGq(j)*detJ*s
-	fGq = dsGq*fGq
+    dsGq = wGq(i)*wGq(j)*detJ*s
+    fGq = dsGq*fGq
 
         xx = xTar - xGq
         rr = sqrt(sum(xx**2))
@@ -423,30 +423,30 @@ contains
 
         rhs = rhs + (EA*xx*dot_product(xx,fGq) + EB*fGq)
 
-	if (present(lhs)) then
-	  forall(ii=1:3,jj=1:3) lhsTmp(ii,jj) = EA*xx(ii)*xx(jj)
-	  forall(ii=1:3) lhsTmp(ii,ii) = lhsTmp(ii,ii) + EB
-	  lhsTmp = dsGq*lhsTmp
+    if (present(lhs)) then
+      forall(ii=1:3,jj=1:3) lhsTmp(ii,jj) = EA*xx(ii)*xx(jj)
+      forall(ii=1:3) lhsTmp(ii,ii) = lhsTmp(ii,ii) + EB
+      lhsTmp = dsGq*lhsTmp
 
-	  ! Find the reference coordinate in the original triangle
-	  select case (n)
-	    case (1)
-	      s1 = 0.;    t1 = 0.
-	      s2 = 1.;    t2 = 0.
-	    case (2)
-	      s1 = 1.;    t1 = 0.
-	      s2 = 0.;    t2 = 1.
-	    case (3)
-	      s1 = 0.;    t1 = 1.
-	      s2 = 0.;    t2 = 0.
-	  end select
-	  sGlb = (1. - s)*s0 + (s - t)*s1 + t*s2
-	  tGlb = (1. - s)*t0 + (s - t)*t1 + t*t2
+      ! Find the reference coordinate in the original triangle
+      select case (n)
+        case (1)
+          s1 = 0.;    t1 = 0.
+          s2 = 1.;    t2 = 0.
+        case (2)
+          s1 = 1.;    t1 = 0.
+          s2 = 0.;    t2 = 1.
+        case (3)
+          s1 = 0.;    t1 = 1.
+          s2 = 0.;    t2 = 0.
+      end select
+      sGlb = (1. - s)*s0 + (s - t)*s1 + t*s2
+      tGlb = (1. - s)*t0 + (s - t)*t1 + t*t2
 
-	  lhs(1,:,:) = lhs(1,:,:) + (1. - sGlb - tGlb)*lhsTmp
-	  lhs(2,:,:) = lhs(2,:,:) + sGlb*lhsTmp
-	  lhs(3,:,:) = lhs(3,:,:) + tGlb*lhsTmp
-	end if ! present lhs
+      lhs(1,:,:) = lhs(1,:,:) + (1. - sGlb - tGlb)*lhsTmp
+      lhs(2,:,:) = lhs(2,:,:) + sGlb*lhsTmp
+      lhs(3,:,:) = lhs(3,:,:) + tGlb*lhsTmp
+    end if ! present lhs
 
       end do ! j
       end do ! i
@@ -499,10 +499,10 @@ contains
     if (s + t <= det) then
       if (s < 0) then
         if (t < 0) then
-	  whichRegion = 4
-	else
-	  whichRegion = 3
-	end if
+      whichRegion = 4
+    else
+      whichRegion = 3
+    end if
       else if (t < 0) then
         whichRegion = 5 
       else
@@ -540,23 +540,23 @@ contains
 
     select case (whichRegion)
       case (0)
-	s = invDet*s
-	t = invDet*t
+    s = invDet*s
+    t = invDet*t
 
       case (1)
         s = (c + e - b - d)/(a - 2*b + c)
-	s = min(1._WP, max(0._WP, s))
-	t = 1. - s
+    s = min(1._WP, max(0._WP, s))
+    t = 1. - s
 
       case (3)
         s = 0.
-	t = -e/c
-	t = min(1._WP, max(0._WP, t))
+    t = -e/c
+    t = min(1._WP, max(0._WP, t))
 
       case (5)
         t = 0.
-	s = -d/a
-	s = min(1._WP, max(0._WP, s))
+    s = -d/a
+    s = min(1._WP, max(0._WP, s))
     end select
 
     MinDistToTri = sqrt(a*s*s + 2*b*s*t + c*t*t + 2*d*s + 2*e*t + f);

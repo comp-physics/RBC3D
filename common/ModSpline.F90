@@ -11,11 +11,11 @@ module ModSpline
   private
 
   public :: Spline_Create, &
-  	Spline_Destroy, &
-	Spline_Build, &
-	Spline_Build_on_Sphere, &
-	Spline_Interp, &
-	Spline_FindProjection
+    Spline_Destroy, &
+    Spline_Build, &
+    Spline_Build_on_Sphere, &
+    Spline_Interp, &
+    Spline_FindProjection
 
 contains
 
@@ -30,10 +30,10 @@ contains
     spln%nvar = nvar
 
     allocate(spln%u(0:m-1, 0:n-1, nvar), &
-	spln%u1(0:m-1, 0:n-1, nvar), &
-	spln%u2(0:m-1, 0:n-1, nvar), &
-	spln%u12(0:m-1, 0:n-1, nvar), &
-	spln%kx(nvar), spln%ky(nvar) )
+    spln%u1(0:m-1, 0:n-1, nvar), &
+    spln%u2(0:m-1, 0:n-1, nvar), &
+    spln%u12(0:m-1, 0:n-1, nvar), &
+    spln%kx(nvar), spln%ky(nvar) )
 
     spln%hx = TWO_PI/m
     spln%hy = TWO_PI/n
@@ -168,19 +168,19 @@ contains
     j2 = modulo(j1+1, spln%n)
 
     cx = (/ 1 + s*s*(-3. + 2.*s), s*s*(3. - 2.*s), &
-    	spln%hx*s*(1. + s*(-2. + s)), spln%hx*s*s*(-1. + s) /)
+        spln%hx*s*(1. + s*(-2. + s)), spln%hx*s*s*(-1. + s) /)
     cy = (/ 1 + t*t*(-3. + 2.*t), t*t*(3. - 2.*t), &
-    	spln%hy*t*(1. + t*(-2. + t)), spln%hy*t*t*(-1. + t) /)
+        spln%hy*t*(1. + t*(-2. + t)), spln%hy*t*t*(-1. + t) /)
 
     do l = 1, size(f)
       u(1,:) = (/ spln%u(i1,j1,l), spln%u(i1,j2,l), &
-      		spln%u2(i1,j1,l), spln%u2(i1,j2,l) /)
+            spln%u2(i1,j1,l), spln%u2(i1,j2,l) /)
       u(2,:) = (/ spln%u(i2,j1,l), spln%u(i2,j2,l), &
-      		spln%u2(i2,j1,l), spln%u2(i2,j2,l) /)
+            spln%u2(i2,j1,l), spln%u2(i2,j2,l) /)
       u(3,:) = (/ spln%u1(i1,j1,l), spln%u1(i1,j2,l), &
-      		spln%u12(i1,j1,l), spln%u12(i1,j2,l) /)
+            spln%u12(i1,j1,l), spln%u12(i1,j2,l) /)
       u(4,:) = (/ spln%u1(i2,j1,l), spln%u1(i2,j2,l), &
-      		spln%u12(i2,j1,l), spln%u12(i2,j2,l) /)
+            spln%u12(i2,j1,l), spln%u12(i2,j2,l) /)
 
       f(l) = dot_product(cx, matmul(u, cy))
     end do ! l
@@ -235,14 +235,14 @@ contains
 
       do iphi = 1, nphi
       do ith = 1, nth
-	i = ith + nth*(iphi - 1)
+    i = ith + nth*(iphi - 1)
 
-	xyGq_L(i,1) = thPat_L(ith)*cos(phiPat_L(iphi))
-	xyGq_L(i,2) = thPat_L(ith)*sin(phiPat_L(iphi))
+    xyGq_L(i,1) = thPat_L(ith)*cos(phiPat_L(iphi))
+    xyGq_L(i,2) = thPat_L(ith)*sin(phiPat_L(iphi))
 
-	call Spline_Interp(spln, thPat(ith,iphi), phiPat(ith,iphi), xx)
-	xx = xx - xtar
-	dist2Gq(i) = sum(xx**2)
+    call Spline_Interp(spln, thPat(ith,iphi), phiPat(ith,iphi), xx)
+    xx = xx - xtar
+    dist2Gq(i) = sum(xx**2)
       end do ! ith
       end do ! iphi
 

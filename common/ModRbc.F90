@@ -11,22 +11,22 @@ module ModRbc
   private
 
   public :: RBC_Create, &
-	RBC_Destroy, &
-	RBC_MakeSphere, &
-	RBC_MakeEllipsoid, &
-	RBC_MakeLeukocyte, &
-	RBC_MakePlatelet, &
-	RBC_MakeBiConcave, &
-	RBC_ComputeGeometry, &
-	RBC_CovarGrad_Vec, &
-	RBC_CovarGrad_Tensor, &
-	RBC_SphProject, &
-	RBC_Integral, &
-	RBC_BuildSurfaceSource
+    RBC_Destroy, &
+    RBC_MakeSphere, &
+    RBC_MakeEllipsoid, &
+    RBC_MakeLeukocyte, &
+    RBC_MakePlatelet, &
+    RBC_MakeBiConcave, &
+    RBC_ComputeGeometry, &
+    RBC_CovarGrad_Vec, &
+    RBC_CovarGrad_Tensor, &
+    RBC_SphProject, &
+    RBC_Integral, &
+    RBC_BuildSurfaceSource
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
-	Shell_Bend
+    Shell_Bend
 
 
 contains
@@ -79,11 +79,11 @@ contains
     allocate(cell%th(nlat), cell%phi(nlon), cell%w(nlat) )
     allocate(cell%x(nlat,nlon,3) )
     allocate(cell%a1(nlat,nlon,3), cell%a2(nlat,nlon,3), &
-    		cell%a1_rcp(nlat,nlon,3), cell%a2_rcp(nlat,nlon,3), &
-		cell%a3(nlat,nlon,3) )
+            cell%a1_rcp(nlat,nlon,3), cell%a2_rcp(nlat,nlon,3), &
+        cell%a3(nlat,nlon,3) )
     allocate(cell%detj(nlat,nlon) )
     allocate(cell%a(nlat,nlon,2,2), cell%a_rcp(nlat,nlon,2,2), &
-    		cell%b(nlat,nlon,2,2) )
+            cell%b(nlat,nlon,2,2) )
     allocate(cell%f(nlat,nlon,3), cell%g(nlat,nlon,3), cell%v(nlat,nlon,3)  )
 
     allocate(cell%qq(nlat,nlon,3,6))
@@ -292,9 +292,9 @@ contains
     allocate(a31(nlat,nlon,3), a32(nlat,nlon,3) )
 
     call ShAnalGau(nlat, nlon, 3, cell%x, size(cell%x,1), size(cell%x,2), &
-    		va, vb, size(va,1), size(va,2), cell%wshags )
+            va, vb, size(va,1), size(va,2), cell%wshags )
     call ShGradGau(nlat, nlon, 3, cell%a1, cell%a2, size(cell%a1,1), size(cell%a1,2),&
-		va, vb, size(va,1), size(va,2), cell%wvhsgs )
+        va, vb, size(va,1), size(va,2), cell%wvhsgs )
 
     ! Surface tangential and normals
     do ilon = 1, nlon
@@ -334,9 +334,9 @@ contains
 
     ! Compute curvature tensor
     call ShAnalGau(nlat, nlon, 3, cell%a3, size(cell%a3,1), size(cell%a3,2), &
-    		va, vb, size(va,1), size(va,2), cell%wshags )
+            va, vb, size(va,1), size(va,2), cell%wshags )
     call ShGradGau(nlat, nlon, 3, a31, a32, size(a31,1), size(a31,2), &
-    		va, vb, size(va,1), size(va,2), cell%wvhsgs )
+            va, vb, size(va,1), size(va,2), cell%wvhsgs )
 
     do ilon = 1, nlon
     do ilat = 1, nlat
@@ -427,9 +427,9 @@ contains
 
     ! Compute the derivative of each Cartesian component
     call ShAnalGau(nlat, nlon, 3, vc, size(vc,1), size(vc,2), &
-    		vca, vcb, size(vca,1), size(vca,2), cell%wshags )
+            vca, vcb, size(vca,1), size(vca,2), cell%wshags )
     call ShGradGau(nlat, nlon, 3, vc1, vc2, size(vc1,1), size(vc1,2),&
-    	 	vca, vcb, size(vca,1), size(vca,2), cell%wvhsgs )
+            vca, vcb, size(vca,1), size(vca,2), cell%wvhsgs )
 
     ! Project the derivative to the surface
     do ilat = 1, nlat
@@ -484,8 +484,8 @@ contains
       tc_loc = 0.
       do i = 1, 3
       do j = 1, 3
-	tc_loc(i,j) = t_loc(1,1)*a1(i)*a1(j) + t_loc(1,2)*a1(i)*a2(j) +&
-		      t_loc(2,1)*a2(i)*a1(j) + t_loc(2,2)*a2(i)*a2(j)
+    tc_loc(i,j) = t_loc(1,1)*a1(i)*a1(j) + t_loc(1,2)*a1(i)*a2(j) +&
+              t_loc(2,1)*a2(i)*a1(j) + t_loc(2,2)*a2(i)*a2(j)
       end do ! i
       end do ! j
 
@@ -495,9 +495,9 @@ contains
 
     ! Compute derivative of each component
     call ShAnalGau(nlat, nlon, 9, tc, size(tc,1), size(tc,2), &
-    	tca, tcb, size(tca,1), size(tca,2), cell%wshags )
+        tca, tcb, size(tca,1), size(tca,2), cell%wshags )
     call ShGradGau(nlat, nlon, 9, tc1, tc2, size(tc1,1), size(tc1,2), &
-    	tca, tcb, size(tca,1), size(tca,2), cell%wvhsgs )
+        tca, tcb, size(tca,1), size(tca,2), cell%wvhsgs )
 
     ! Project back to surface tensor form
     do ilat = 1, nlat
@@ -546,14 +546,14 @@ contains
 
     ! Forward transfomr
     call ShAnalGau(nlat, nlon, nvar, u, size(u,1), size(u,2), &
-    		va, vb, size(va,1), size(va,2), cell%wshags)
+            va, vb, size(va,1), size(va,2), cell%wshags)
 
     ! Filtering
     call ShFilter(nlat, nlon, nvar, va, vb, size(va,1), size(va,2), cell%nlat0, cell%nlon0)
 
     ! Backward transform
     call ShSynthGau(nlat, nlon, nvar, u, size(u,1), size(u,2), &
-    		va, vb, size(va,1), size(va,2), cell%wshsgs)
+            va, vb, size(va,1), size(va,2), cell%wshsgs)
 
     ! Deallocate working arrays
     deallocate(va, vb)
@@ -579,7 +579,7 @@ contains
     do ilat = 1, nlat
       dv = 0.
       do ilon = 1, nlon
-	dv = dv + f(ilat,ilon)*cell%detj(ilat,ilon)
+    dv = dv + f(ilat,ilon)*cell%detj(ilat,ilon)
       end do ! ilon
 
       v = v + dv*cell%w(ilat)
@@ -610,29 +610,29 @@ contains
     ! Build spline representation for x, a3, and detj
     if (present(xFlag)) then
       if (xFlag) then
-	! x
+    ! x
         call ShAnalGau(nlat, nlon, 3, cell%x, size(cell%x,1), size(cell%x,2), &
-		va, vb, size(va,1), size(va,2), cell%wshags )
-	call ShFilter(nlat, nlon, 3, va, vb, size(va,1), size(va,2), nlat0, nlon0)
+        va, vb, size(va,1), size(va,2), cell%wshags )
+    call ShFilter(nlat, nlon, 3, va, vb, size(va,1), size(va,2), nlat0, nlon0)
         call ShSynthEqu(nlat+1, nlon, 3, v, size(v,1), size(v,2), &
-		va, vb, size(va,1), size(va,2), cell%wshses )
+        va, vb, size(va,1), size(va,2), cell%wshses )
         call Spline_Build_On_Sphere(cell%spln_x, v)
 
 
-	! a3
-	call ShAnalGau(nlat, nlon , 3, cell%a3, size(cell%a3,1), size(cell%a3,2), &
-		va, vb, size(va,1), size(va,2), cell%wshags )
+    ! a3
+    call ShAnalGau(nlat, nlon , 3, cell%a3, size(cell%a3,1), size(cell%a3,2), &
+        va, vb, size(va,1), size(va,2), cell%wshags )
         call ShFilter(nlat, nlon, 3, va, vb, size(va,1), size(va,2), nlat0, nlon0 )
         call ShSynthEqu(nlat+1, nlon, 3, v, size(v,1), size(v,2), &
-		va, vb, size(va,1), size(va,2), cell%wshses )
+        va, vb, size(va,1), size(va,2), cell%wshses )
         call Spline_Build_On_Sphere(cell%spln_a3, v)
 
-	! detJ
-	call ShAnalGau(nlat, nlon, 1, cell%detj, size(cell%detj,1), size(cell%detj,2), &
-		va, vb, size(va,1), size(va,2), cell%wshags )
+    ! detJ
+    call ShAnalGau(nlat, nlon, 1, cell%detj, size(cell%detj,1), size(cell%detj,2), &
+        va, vb, size(va,1), size(va,2), cell%wshags )
         call ShFilter(nlat, nlon, 1, va, vb, size(va,1), size(va,2), nlat0, nlon0 )
         call ShSynthEqu(nlat+1, nlon, 1, v, size(v,1), size(v,2), &
-		va, vb, size(va,1), size(va,2), cell%wshses )
+        va, vb, size(va,1), size(va,2), cell%wshses )
         call Spline_Build_On_Sphere(cell%spln_detJ, v(:,:,1))
       end if
     end if
@@ -640,40 +640,40 @@ contains
     ! f*detJ
     if (present(fFlag)) then
       if (fFlag) then
-	! Spline representation
-	allocate(FdetJ(nlat,nlon,3) )
-	do ii = 1, 3
-	  FdetJ(:,:,ii) = cell%f(:,:,ii) * cell%detj
+    ! Spline representation
+    allocate(FdetJ(nlat,nlon,3) )
+    do ii = 1, 3
+      FdetJ(:,:,ii) = cell%f(:,:,ii) * cell%detj
         end do ! ii
 
         call ShAnalGau(nlat, nlon, 3, FdetJ, size(FdetJ,1), size(FdetJ,2), &
-		va, vb, size(va,1), size(va,2), cell%wshags )
+        va, vb, size(va,1), size(va,2), cell%wshags )
         call ShFilter(nlat, nlon, 3, va, vb, size(va,1), size(va,2), nlat0, nlon0 )
         call ShSynthEqu(nlat+1, nlon, 3, v, size(v,1), size(v,2), &
-		va, vb, size(va,1), size(va,2), cell%wshses )
+        va, vb, size(va,1), size(va,2), cell%wshses )
         call Spline_Build_On_Sphere(cell%spln_FdetJ, v)
 
-	deallocate(FdetJ)
+    deallocate(FdetJ)
       end if
     end if
 
     ! g*detJ
     if (present(gFlag)) then
       if (gFlag) then
-	! Spline representation
-	allocate(GdetJ(nlat,nlon,3) )
-	do ii = 1, 3
-	  gdetj(:,:,ii) = cell%g(:,:,ii) * cell%detj
+    ! Spline representation
+    allocate(GdetJ(nlat,nlon,3) )
+    do ii = 1, 3
+      gdetj(:,:,ii) = cell%g(:,:,ii) * cell%detj
         end do ! ii
 
         call ShAnalGau(nlat, nlon, 3, GdetJ, size(GdetJ,1), size(GdetJ,2), &
-		va, vb, size(va,1), size(va,2), cell%wshags )
+        va, vb, size(va,1), size(va,2), cell%wshags )
         call ShFilter(nlat, nlon, 3, va, vb, size(va,1), size(va,2), nlat0, nlon0 )
         call ShSynthEqu(nlat+1, nlon, 3, v, size(v,1), size(v,2), &
-		va, vb, size(va,1), size(va,2), cell%wshses )
+        va, vb, size(va,1), size(va,2), cell%wshses )
         call Spline_Build_On_Sphere(cell%spln_GdetJ, v)
 
-	deallocate(GdetJ)
+    deallocate(GdetJ)
       end if
     end if
 
@@ -694,7 +694,7 @@ contains
 
     integer :: nlat, nlon, ilat, ilon
     real(WP),allocatable :: bnd(:,:,:,:), dbnd(:,:,:,:,:), &
-	  	tau_t(:,:,:,:), dtau_t(:,:,:,:,:), tau_n(:,:,:), dtau_n(:,:,:,:)
+        tau_t(:,:,:,:), dtau_t(:,:,:,:,:), tau_n(:,:,:), dtau_n(:,:,:,:)
     real(WP) :: a_rcp(2,2), b(2,2), f_tmp(3)
     real(WP) :: fnTot
 
@@ -746,7 +746,7 @@ contains
       b = cell%b(ilat,ilon,:,:)
 
       f(ilat,ilon,3) = -dtau_n(ilat,ilon,1,1) - dtau_n(ilat,ilon,2,2) &
-	  - sum(tau_t(ilat,ilon,:,:)*b)
+      - sum(tau_t(ilat,ilon,:,:)*b)
     end do ! ilon
     end do ! ilat
 
@@ -763,8 +763,8 @@ contains
     do ilat = 1, nlat
     do ilon = 1, nlon
       f(ilat,ilon,:) = f(ilat,ilon,1)*cell%a1(ilat,ilon,:) + &
-	  f(ilat,ilon,2)*cell%a2(ilat,ilon,:) + &
-	  f(ilat,ilon,3)*cell%a3(ilat,ilon,:)
+      f(ilat,ilon,2)*cell%a2(ilat,ilon,:) + &
+      f(ilat,ilon,3)*cell%a3(ilat,ilon,:)
     end do ! ilon
     end do ! ilat
 
@@ -808,7 +808,7 @@ contains
       V2 = cellRef%a_rcp(ilat,ilon,:,:)
 
       tau_tmp = 0.5*ES/JS*(lbd1 + 1.0)*V2 &
-      	      + 0.5*JS*(ED*lbd2 - ES)*cell%a_rcp(ilat,ilon,:,:)
+              + 0.5*JS*(ED*lbd2 - ES)*cell%a_rcp(ilat,ilon,:,:)
 
       tau(ilat,ilon,:,:) = tau_tmp
     end do ! ilon

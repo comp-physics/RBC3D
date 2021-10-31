@@ -31,9 +31,9 @@ module ModQuadRule
   public
 
   public :: GaussQuad_Init, &
-	GaussQuad_Finalize, &
-	GauLeg, &
-	GauLeg_Sinh
+    GaussQuad_Finalize, &
+    GauLeg, &
+    GauLeg_Sinh
 
   private :: MyAsinh
 
@@ -164,17 +164,17 @@ contains
     do its=1,MAXIT
       where (unfinished)
         p1=1.0
-	p2=0.0
+    p2=0.0
       end where
       
       ! Loop up the recurrence relation to get the Legendre 
       ! polynomials evaluated at z
       do j=1,n
         where (unfinished)
-	  p3=p2
-	  p2=p1
-	  p1=((2.0*j-1.0)*z*p2-(j-1.0)*p3)/j
-	end where
+      p3=p2
+      p2=p1
+      p1=((2.0*j-1.0)*z*p2-(j-1.0)*p3)/j
+    end where
       end do
 
       ! p1 now contains the desired Legendre polynomials. 
@@ -183,9 +183,9 @@ contains
       ! lower order.
       where (unfinished)
         pp=n*(z*p1-p2)/(z*z-1.0)
-	z1=z
-	z=z1-p1/pp			! Newton’s method.
-	unfinished=(abs(z-z1) > EPS)
+    z1=z
+    z=z1-p1/pp          ! Newton’s method.
+    unfinished=(abs(z-z1) > EPS)
       end where
 
       if (.not. any(unfinished)) exit

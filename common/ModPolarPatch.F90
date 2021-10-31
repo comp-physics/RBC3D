@@ -11,11 +11,11 @@ module ModPolarPatch
   private
 
   public :: RbcPolarPatch_Create, &
-  	RbcPolarPatch_Destroy, &
-  	PolarPatch_Build, &
-  	PolarPatch_FindPoints, &
-	PolarPatch_Map, &
-  	DistOnSphere
+    RbcPolarPatch_Destroy, &
+    PolarPatch_Build, &
+    PolarPatch_FindPoints, &
+    PolarPatch_Map, &
+    DistOnSphere
 
 contains
 
@@ -45,7 +45,7 @@ contains
     nazm = 2*nrad
 
     ! Copy values
-    patch%nlat = nlat		
+    patch%nlat = nlat       
     patch%nlon = nlon
     patch%radius = radius
     patch%nrad = nrad
@@ -54,7 +54,7 @@ contains
     ! Allocate arrays
     allocate(patch%thL(nrad), patch%phiL(nazm), patch%w(nrad))
     allocate(patch%thG(nrad,nazm,nlat,nlon), &
-    	patch%phiG(nrad,nazm,nlat,nlon));
+        patch%phiG(nrad,nazm,nlat,nlon));
 
     ! Compute local patch
     call GauLeg(0._WP, radius, nrad, patch%thL, patch%w)
@@ -69,7 +69,7 @@ contains
     do ilon = 1, nlon
     do ilat = 1, nlat
       call PolarPatch_Build(rbc%th(ilat), rbc%phi(ilon), patch%thL, patch%phiL, &
-      		patch%thG(:,:,ilat,ilon), patch%phiG(:,:,ilat,ilon))
+            patch%thG(:,:,ilat,ilon), patch%phiG(:,:,ilat,ilon))
     end do ! ilat
     end do ! ilon
 
@@ -96,7 +96,7 @@ contains
 !  (th0, pi0) -- origin of the patch
 !  thL(:), phiL(:) -- local polar coordinates
 !  thG(:,:), phiG(:,:) -- mesh coordinates after the patch is
-!		mapped to the surface
+!       mapped to the surface
   subroutine PolarPatch_Build(th0, phi0, thL, phiL, thG, phiG)
     real(WP) :: th0, phi0
     real(WP) :: thL(:), phiL(:)
@@ -124,9 +124,9 @@ contains
     cos_th0 = cos(th0)
 
     A = 0.
-    A(1,1) = cos_th0;	A(1,3) = sin_th0
+    A(1,1) = cos_th0;   A(1,3) = sin_th0
     A(2,2) = 1.
-    A(3,1) = -sin_th0;	A(3,3) = cos_th0
+    A(3,1) = -sin_th0;  A(3,3) = cos_th0
 
     do i = 1, nth
     do j = 1, nphi
@@ -193,17 +193,17 @@ contains
       dphi = acos(dphi)
 
       if (dphi > pi - eps) then
-	jmin = 1
-	jmax = nphi
+    jmin = 1
+    jmax = nphi
       else
-	jmin = ceiling((phi0 - dphi - phis(1))*ih_phi) + 1
-	jmax = floor((phi0 + dphi - phis(1))*ih_phi) + 1
+    jmin = ceiling((phi0 - dphi - phis(1))*ih_phi) + 1
+    jmax = floor((phi0 + dphi - phis(1))*ih_phi) + 1
       end if
 
       do j = jmin, jmax
-	n = n + 1
-	ijs(n,1) = i
-	ijs(n,2) = modulo(j-1,nphi) + 1
+    n = n + 1
+    ijs(n,1) = i
+    ijs(n,2) = modulo(j-1,nphi) + 1
       end do ! j
     end do ! i
 

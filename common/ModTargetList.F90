@@ -11,10 +11,10 @@ module ModTargetList
   private :: SetActiveFlag
 
   public :: TargetList_Create, &
-  	TargetList_Destroy, &
-  	TargetList_Update, &
-	TargetList_CreateFromRaw, &
-	TargetList_CollectArray
+    TargetList_Destroy, &
+    TargetList_Update, &
+    TargetList_CreateFromRaw, &
+    TargetList_CollectArray
 
 contains
 
@@ -59,12 +59,12 @@ contains
       do irbc = 1, size(rbcs)
         rbc => rbcs(irbc)
 
-	do ilon = 1, rbc%nlon
+    do ilon = 1, rbc%nlon
         do ilat = 1, rbc%nlat
-	  p = p + 1
-	  list%indx(p,0:2) = (/ rbc%ID, ilat, ilon /)
-	end do ! ilat
-	end do ! ilon
+      p = p + 1
+      list%indx(p,0:2) = (/ rbc%ID, ilat, ilon /)
+    end do ! ilat
+    end do ! ilon
       end do ! irbc
     end if
 
@@ -72,10 +72,10 @@ contains
       do iwall = 1, size(walls)
         wall => walls(iwall)
 
-	do ivert = 1, wall%nvert
-	  p = p + 1
-	  list%indx(p,0:2) = (/ wall%Id, ivert, -1 /)
-	end do ! ivert
+    do ivert = 1, wall%nvert
+      p = p + 1
+      list%indx(p,0:2) = (/ wall%Id, ivert, -1 /)
+    end do ! ivert
       end do ! i
     end if
 
@@ -111,11 +111,11 @@ contains
       do irbc = 1, size(rbcs)
         rbc => rbcs(irbc)
 
-	nvert = rbc%nlat * rbc%nlon
-	list%lam(p+1:p+nvert) = viscRat(rbc%celltype)   !COEF
-	list%Acoef(p+1:p+nvert) = Acoef(rbc%celltype)   !COEF
-	list%x(p+1:p+nvert,:) = reshape(rbc%x, (/nvert,3/))
-	p = p + nvert
+    nvert = rbc%nlat * rbc%nlon
+    list%lam(p+1:p+nvert) = viscRat(rbc%celltype)   !COEF
+    list%Acoef(p+1:p+nvert) = Acoef(rbc%celltype)   !COEF
+    list%x(p+1:p+nvert,:) = reshape(rbc%x, (/nvert,3/))
+    p = p + nvert
       end do ! irbc
     end if
 
@@ -123,11 +123,11 @@ contains
       do iwall = 1, size(walls)
         wall => walls(iwall)
 
-	nvert = wall%nvert
-	list%lam(p+1:p+nvert) = 1. !COEF
-	list%Acoef(p+1:p+nvert) = 2.  !COEF
-	list%x(p+1:p+nvert,:) = wall%x
-	p = p + nvert
+    nvert = wall%nvert
+    list%lam(p+1:p+nvert) = 1. !COEF
+    list%Acoef(p+1:p+nvert) = 2.  !COEF
+    list%x(p+1:p+nvert,:) = wall%x
+    p = p + nvert
       end do ! iwall
     end if
 
@@ -189,8 +189,8 @@ contains
     do i = 1, list%npoint
       if (list%active(i)) then
         p = p + 1
-	ia(p) = i
-	asend(p,:) = a(i,:)
+    ia(p) = i
+    asend(p,:) = a(i,:)
       end if
     end do ! i
 

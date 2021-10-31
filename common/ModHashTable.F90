@@ -9,8 +9,8 @@ module ModHashTable
   private
 
   public :: HashTable_Build, &
-  	HashTable_Index, &
-	HashTable_ComputeNumBlocks
+    HashTable_Index, &
+    HashTable_ComputeNumBlocks
 
 contains
 
@@ -39,7 +39,7 @@ contains
 
       if ( i3 >= 0 .and. i3 <= Nc(3)+1 ) then
         next(i) = hoc(i1,i2,i3)
-	hoc(i1,i2,i3) = i
+    hoc(i1,i2,i3) = i
       end if
     end do ! i
 

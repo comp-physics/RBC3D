@@ -29,13 +29,13 @@ module ModNoSlip
   private
 
   public :: NoSlipWall, &
-  	Compute_Wall_Residual_Vel, &
+    Compute_Wall_Residual_Vel, &
         WallBuildMat   !! TESTING
 
   private :: MyMatMult, &
-	AssembleArray, &
-	My_VecGetValues, &
-	My_VecSetValues
+    AssembleArray, &
+    My_VecGetValues, &
+    My_VecSetValues
 
 contains
 
@@ -61,8 +61,8 @@ contains
       dof = 0
       do iwall = 1 , nwall
         wall => walls(iwall)
-	npoint = npoint + wall%nvert
-	dof = dof + 3*count(wall%v2v <= 0)
+    npoint = npoint + wall%nvert
+    dof = dof + 3*count(wall%v2v <= 0)
       end do ! iwall
 
       ! Set up petsc matrix-free GMRES solver
@@ -81,8 +81,8 @@ contains
 
        !SHB modify from 1.D-3 to 1.D-6 and now to eps_Ewd
       call KSPSetTolerances(ksp_lhs, eps_Ewd, &
-      		PETSC_DEFAULT_DOUBLE_PRECISION, PETSC_DEFAULT_DOUBLE_PRECISION, &
-		60, ierr)
+            PETSC_DEFAULT_DOUBLE_PRECISION, PETSC_DEFAULT_DOUBLE_PRECISION, &
+        60, ierr)
 !!$      print *
 !!$      print *, "SMALL WALL ITERATIONS"
 !!$      print *, "SMALL WALL ITERATIONS"
@@ -369,13 +369,13 @@ contains
       wall => walls(iwall)
       do ivert = 1, wall%nvert
         pu = pu + 1
-	pu1D = wall%indxVertGlb(ivert)
+    pu1D = wall%indxVertGlb(ivert)
 
-	if (direction == 1) then
-	  u1D(3*pu1D-2:3*pu1D) = u(pu,:)
-	else
-	  u(pu,:) = u1D(3*pu1D-2:3*pu1D)
-	end if
+    if (direction == 1) then
+      u1D(3*pu1D-2:3*pu1D) = u(pu,:)
+    else
+      u(pu,:) = u1D(3*pu1D-2:3*pu1D)
+    end if
       end do !ivert
     end do ! iwall
 

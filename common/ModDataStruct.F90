@@ -8,12 +8,12 @@ module ModDataStruct
   private
 
   public :: t_Spline, &
-  	t_Rbc, &
-	t_RbcPolarPatch, &
-  	t_Wall, &
-	t_SourceList, &
-	t_TargetList, &
-	t_NbrRbcList
+    t_Rbc, &
+    t_RbcPolarPatch, &
+    t_Wall, &
+    t_SourceList, &
+    t_TargetList, &
+    t_NbrRbcList
 
 !**********************************************************************
 ! 2D periodic spline surface of periodicity 2*PI
@@ -128,7 +128,7 @@ module ModDataStruct
 
     real(WP) :: ES, ED, EB
 
-    integer :: ID	! the unique ID
+    integer :: ID   ! the unique ID
 
     integer :: celltype
 
@@ -140,11 +140,11 @@ module ModDataStruct
 ! nlat, nlon
 ! radius -- patch radius
 ! nrad, nazm -- number of patch points along radial and 
-!		azimuthal directions
+!       azimuthal directions
 ! thL, phiL -- local coordiantes of patch mesh points
 ! w -- weight of integration weight (including masking fucntion)
 ! thG(:,:,i,j), phiG(:,:,i,j) -- global latitudinal and longitudinal
-!		coordinates of a patch centered at (i,j)-th mesh point
+!       coordinates of a patch centered at (i,j)-th mesh point
   type t_RbcPolarPatch
     integer :: nlat, nlon
     real(WP) :: radius

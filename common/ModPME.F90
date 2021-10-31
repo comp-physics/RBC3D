@@ -42,15 +42,15 @@ module ModPME
   private
 
   public :: PME_Init, &
-  	PME_Finalize, &
-	PME_Distrib_Source, &
-	PME_Transform, &
-	PME_Add_Interp_Vel
+    PME_Finalize, &
+    PME_Distrib_Source, &
+    PME_Transform, &
+    PME_Add_Interp_Vel
 
   private :: Update_Buff_Vel, &
-  	Distrib_Source, &
-  	Interp_Vel, &
-	flag_Sing_Lay, flag_Doub_Lay
+    Distrib_Source, &
+    Interp_Vel, &
+    flag_Sing_Lay, flag_Doub_Lay
 
 contains
 
@@ -72,7 +72,7 @@ contains
     flag_doub_lay = (abs(c2) > 1.E-10)
 
     ! Initialize
-    ff = 0.		
+    ff = 0.     
     tt = 0.
 
     ! cells
@@ -80,24 +80,24 @@ contains
       slist => slist_rbc
 
       do p = 1, slist%nPoint
-	xtmp = slist%x(p,:)
+    xtmp = slist%x(p,:)
 
-	if (flag_sing_lay) then
-	  ftmp = slist%f(p,:)
-	else
-	  ftmp = 0.
-	end if
+    if (flag_sing_lay) then
+      ftmp = slist%f(p,:)
+    else
+      ftmp = 0.
+    end if
 
-	if (flag_doub_lay) then
-	  gtmp = slist%g(p,:)
-	  a3tmp = slist%a3(p,:)*slist%Bcoef(p)    !COEF
-!	  a3tmp = slist%a3(p,:)*(1.-slist%lam(p))    !COEF
-	  forall(ii = 1:3, jj = 1:3) ttmp(ii,jj) = gtmp(ii)*a3tmp(jj)
-	else
-	  ttmp = 0.
-	end if
+    if (flag_doub_lay) then
+      gtmp = slist%g(p,:)
+      a3tmp = slist%a3(p,:)*slist%Bcoef(p)    !COEF
+!     a3tmp = slist%a3(p,:)*(1.-slist%lam(p))    !COEF
+      forall(ii = 1:3, jj = 1:3) ttmp(ii,jj) = gtmp(ii)*a3tmp(jj)
+    else
+      ttmp = 0.
+    end if
 
-	call Distrib_Source(xtmp, c1, c2, ftmp, ttmp)
+    call Distrib_Source(xtmp, c1, c2, ftmp, ttmp)
       end do ! p
     end if
 
@@ -106,27 +106,27 @@ contains
       slist => slist_wall
 
       do p = 1, slist%npoint
-	iwall = slist%indx(p,0) - walls(1)%id + 1
-	iele = slist%indx(p,1)
-	wall => walls(iwall)
+    iwall = slist%indx(p,0) - walls(1)%id + 1
+    iele = slist%indx(p,1)
+    wall => walls(iwall)
 
-	do l = 1, 3
-	  ivert = wall%e2v(iele,l)
-	  xele(l,:) = wall%x(ivert,:)
-	  fele(l,:) = wall%f(ivert,:)
-	end do ! l
+    do l = 1, 3
+      ivert = wall%e2v(iele,l)
+      xele(l,:) = wall%x(ivert,:)
+      fele(l,:) = wall%f(ivert,:)
+    end do ! l
 
-	xtmp = THRD*sum(xele, dim=1)
+    xtmp = THRD*sum(xele, dim=1)
 
-	if (flag_sing_lay) then
-	  ftmp = THRD*sum(fele, dim=1)*wall%area(iele)
+    if (flag_sing_lay) then
+      ftmp = THRD*sum(fele, dim=1)*wall%area(iele)
         else
-	  ftmp = 0.
-	end if
+      ftmp = 0.
+    end if
 
-	ttmp = 0.	! no double-layer density on wall
+    ttmp = 0.   ! no double-layer density on wall
 
-	call Distrib_Source(xtmp, c1, c2, ftmp, ttmp)
+    call Distrib_Source(xtmp, c1, c2, ftmp, ttmp)
       end do ! p
     end if
 
@@ -166,8 +166,8 @@ contains
     do j = iqBgn(2), iqEnd(2)
     do k = iqBgn(3), iqEnd(3)
       if (i==0 .and. j==0 .and. k==0) then
-	vvC(k,j,i,:) = 0.
-	cycle
+    vvC(k,j,i,:) = 0.
+    cycle
       end if
 
       q = qq(k,j,i,:)
@@ -183,22 +183,22 @@ contains
       if (flag_sing_lay) then
         ffCtmp = ffC(k,j,i,:)
 
-	vvCtmp = 2*alpha/vol*phi1*(q2t*ffCtmp - qt*sum(qt*ffCTmp))
-	vvC(k,j,i,:) = vvC(k,j,i,:) + vvCtmp
+    vvCtmp = 2*alpha/vol*phi1*(q2t*ffCtmp - qt*sum(qt*ffCTmp))
+    vvC(k,j,i,:) = vvC(k,j,i,:) + vvCtmp
       end if
 
       ! Double layer potential
       if (flag_doub_lay) then
         ttCtmp = ttC(k,j,i,:,:)
-	trtmp = ttCtmp(1,1) + ttCtmp(2,2) + ttCtmp(3,3)
+    trtmp = ttCtmp(1,1) + ttCtmp(2,2) + ttCtmp(3,3)
 
         vvCtmp = 0.
-	vvCtmp = vvCtmp + iota*4*pi*alpha/vol*phi0*( &
-		q*trtmp + matmul(q,ttCtmp) + matmul(ttCtmp,q) )
+    vvCtmp = vvCtmp + iota*4*pi*alpha/vol*phi0*( &
+        q*trtmp + matmul(q,ttCtmp) + matmul(ttCtmp,q) )
         vvCtmp = vvCtmp - iota*8*pi**2*alpha**2/vol*phi1* &
-		sum(q * matmul(ttCtmp,q))*q
-	! Note:
-	!  The sign is tricky, see notes
+        sum(q * matmul(ttCtmp,q))*q
+    ! Note:
+    !  The sign is tricky, see notes
         vvC(k,j,i,:) = vvC(k,j,i,:) - vvCtmp
       end if
     end do ! k
@@ -241,7 +241,7 @@ contains
       if (tlist%active(i)) then
         call Interp_Vel(tlist%x(i,:), dv)
         v(i,:) = v(i,:) + dv/tlist%Acoef(i)  !COEF
-!	    v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))  !COEF
+!       v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))  !COEF
       end if
     end do ! i
 
@@ -286,15 +286,15 @@ contains
       q(1) = i*iLb(1)
 
       if (j < Nb(2)/2) then
-	q(2) = j*iLb(2)
+    q(2) = j*iLb(2)
       else
-	q(2) = (j - Nb(2))*iLb(2)
+    q(2) = (j - Nb(2))*iLb(2)
       end if
 
       if (k < Nb(3)/2) then
-	q(3) = k*iLb(3)
+    q(3) = k*iLb(3)
       else
-	q(3) = (k - Nb(3))*iLb(3)
+    q(3) = (k - Nb(3))*iLb(3)
       end if
 
       ! Note: the Fourier coefficients computed by Adam's PFFTW code
@@ -317,21 +317,21 @@ contains
 
     do ii = 1, 3
       do k = iqBgn(ii), iqEnd(ii)
-	b = 0.
-	do m = 0, PBSpln - 2
-	  b = b + MP(m+1)*exp(two_PI*iota*k*m/real(Nb(ii)))
-	end do ! m
-	b = exp(two_PI*iota*k*(PBSpln - 1.)/real(Nb(ii)))/b
-	b = abs(b)**2
+    b = 0.
+    do m = 0, PBSpln - 2
+      b = b + MP(m+1)*exp(two_PI*iota*k*m/real(Nb(ii)))
+    end do ! m
+    b = exp(two_PI*iota*k*(PBSpln - 1.)/real(Nb(ii)))/b
+    b = abs(b)**2
 
-	select case (ii)
-	  case (1)
-	    bb(:,:,k) = bb(:,:,k)*b
-	  case (2)
-	    bb(:,k,:) = bb(:,k,:)*b
-	  case (3)
-	    bb(k,:,:) = bb(k,:,:)*b
-	end select
+    select case (ii)
+      case (1)
+        bb(:,:,k) = bb(:,:,k)*b
+      case (2)
+        bb(:,k,:) = bb(:,k,:)*b
+      case (3)
+        bb(k,:,:) = bb(k,:,:)*b
+    end select
       end do ! k
     end do ! ii
 
@@ -376,17 +376,17 @@ contains
 !    ! Send data to the node to the left
 !    bufSend = reshape( vv(:,:,ixBgn(3):ixBgn(3)+(PBspln-1),:), (/sizeBuf/) )
 !    call MPI_SendRecv( bufSend, sizeBuf, MPI_WP, nodeLeft, nodeNum, &
-!    		bufRecv, sizeBuf, MPI_WP, nodeRight, nodeRight, &
-!		MPI_COMM_Ewald, stat, ierr)
+!           bufRecv, sizeBuf, MPI_WP, nodeRight, nodeRight, &
+!       MPI_COMM_Ewald, stat, ierr)
 !    vv(:,:,ixEnd(3)+1:ixEnd(3)+PBspln,:) = &
-!    	reshape( bufRecv, (/Nb(1), Nb(2), PBspln, 3/) )
+!       reshape( bufRecv, (/Nb(1), Nb(2), PBspln, 3/) )
 
     ! Send data to the node to the right
     bufSend = reshape( vv(:,:,ixEnd(3)-PBspln+1:ixEnd(3),:), (/sizeBuf/) )
 !    print*, 'bufsend'
     call MPI_SendRecv(bufSend, sizebuf, MPI_WP, nodeRight, nodeNum, &
-    		bufRecv, sizeBuf, MPI_WP, nodeLeft, nodeLeft, &
-		MPI_COMM_Ewald, stat, ierr)
+            bufRecv, sizeBuf, MPI_WP, nodeLeft, nodeLeft, &
+        MPI_COMM_Ewald, stat, ierr)
 !   print*,' callled mpi'
     vv(:,:,ixBgn(3)-PBspln:ixBgn(3)-1,:) = reshape( bufRecv, (/ Nb(1), Nb(2), PBspln, 3/) )
 
@@ -430,12 +430,12 @@ contains
 
       do j0 = 1, PBspln
       do i0 = 1, PBspln
-	j = modulo(jmin+j0-1, Nb(2))
-	i = modulo(imin+i0-1, Nb(1))
+    j = modulo(jmin+j0-1, Nb(2))
+    i = modulo(imin+i0-1, Nb(1))
 
-	wxyz = wx(i0)*wy(j0)*wz(k0)
-	if (flag_sing_lay) ff(i,j,k,:) = ff(i,j,k,:) + (c1*wxyz)*f
-	if (flag_doub_lay) tt(i,j,k,:,:) = tt(i,j,k,:,:) + (c2*wxyz)*t
+    wxyz = wx(i0)*wy(j0)*wz(k0)
+    if (flag_sing_lay) ff(i,j,k,:) = ff(i,j,k,:) + (c1*wxyz)*f
+    if (flag_doub_lay) tt(i,j,k,:,:) = tt(i,j,k,:,:) + (c2*wxyz)*t
       end do ! i0
       end do ! j0
     end do ! k0
@@ -477,11 +477,11 @@ contains
 
       do j0 = 1, PBspln
       do i0 = 1, PBspln
-	j = modulo(jmin+j0-1, Nb(2))
-	i = modulo(imin+i0-1, Nb(1))
+    j = modulo(jmin+j0-1, Nb(2))
+    i = modulo(imin+i0-1, Nb(1))
 
-	wxyz = wx(i0)*wy(j0)*wz(k0)
-	v = v + wxyz*vv(i,j,k,:)
+    wxyz = wx(i0)*wy(j0)*wz(k0)
+    v = v + wxyz*vv(i,j,k,:)
       end do ! i0
       end do ! j0
     end do ! k0

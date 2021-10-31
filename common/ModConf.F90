@@ -11,7 +11,7 @@ module ModConf
   real(WP) :: Lb(3), iLb(3)
 
   ! PhysEwald, FourierEwald -- whether the node do physical and/or Fourier part 
-  ! 			of the Ewald sum
+  !             of the Ewald sum
   logical :: PhysEwald, FourierEwald
   ! MPI_COMM_Ewald -- MPI communicator for computing Ewald sum
   integer :: MPI_COMM_Ewald
@@ -67,7 +67,7 @@ module ModConf
   ! time -- current time
   ! Ts -- time step length
   integer :: Nt0, Nt
-  real(WP) :: time0, time, Ts		
+  real(WP) :: time0, time, Ts       
 
   ! Input/output
   ! File name format: dir + prefix + number + suffix
@@ -92,14 +92,14 @@ module ModConf
   public
 
   public :: InitMPI, &
-  	FinalizeMPI, &
-  	ReadConfig, &
-	SetEwaldPrms, &
-	DomainDecomp, &
-	Is_Source, &
-	Cell_Has_Source, &
-	Tri_Has_Source, &
-	CollectArray
+    FinalizeMPI, &
+    ReadConfig, &
+    SetEwaldPrms, &
+    DomainDecomp, &
+    Is_Source, &
+    Cell_Has_Source, &
+    Tri_Has_Source, &
+    CollectArray
 
 contains
 
@@ -133,8 +133,8 @@ contains
       print *, 'Node ', nodeNum, ' of ', numNodes, ' running on ', trim(machinename)
       do i = 1, numNodes - 1 
         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
-	call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
-	print *, 'Node ', i, ' of ', numNodes, ' running on ', trim(machinename)
+    call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+    print *, 'Node ', i, ' of ', numNodes, ' running on ', trim(machinename)
       end do ! i
     else
       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
@@ -154,13 +154,13 @@ contains
     if (do_split_comm) then
       ! Generate two communicators for physical and Fourier Ewald sum
       if (nodeNum < numNodes - 16) then
-	PhysEwald = .true.
-	FourierEwald = .false.
-	color = 1
+    PhysEwald = .true.
+    FourierEwald = .false.
+    color = 1
       else
-	PhysEwald = .false.
-	FourierEwald = .true.
-	color = 2
+    PhysEwald = .false.
+    FourierEwald = .true.
+    color = 2
       end if
 
       call MPI_Comm_Split(MPI_COMM_WORLD, color, 0, MPI_COMM_Ewald, ierr)
@@ -238,9 +238,9 @@ contains
     if (rootWorld) then
       open(funit, file=trim(fn), action='read')
 
-      read(funit, *) alpha_Ewd;		print *, 'alpha_Ewd = ', alpha_Ewd
-      read(funit, *) eps_Ewd;		print *, 'eps_Ewd = ', eps_Ewd
-      read(funit, *) PBspln_Ewd;	print *, 'PBspln_Ewd = ', PBspln_Ewd
+      read(funit, *) alpha_Ewd;     print *, 'alpha_Ewd = ', alpha_Ewd
+      read(funit, *) eps_Ewd;       print *, 'eps_Ewd = ', eps_Ewd
+      read(funit, *) PBspln_Ewd;    print *, 'PBspln_Ewd = ', PBspln_Ewd
 
       read(funit, *) nCellTypes;        print *, 'nCellTypes = ',nCelltypes
       read(funit, *) viscRatIN(1:nCellTypes)
@@ -250,21 +250,21 @@ contains
 
       read(funit, *) Deflate;           print *, 'Deflate = ', Deflate
       !print *, 'before error'
-      read(funit, *) pGradTar(1);		print *, 'pGradTar = ', pGradTar(1)
-      read(funit, *) pGradTar(2);		print *, 'pGradTar = ', pGradTar(2)
-      read(funit, *) pGradTar(3);		print *, 'pGradTar = ', pGradTar(3)
+      read(funit, *) pGradTar(1);       print *, 'pGradTar = ', pGradTar(1)
+      read(funit, *) pGradTar(2);       print *, 'pGradTar = ', pGradTar(2)
+      read(funit, *) pGradTar(3);       print *, 'pGradTar = ', pGradTar(3)
       !print *, 'after error'
-      read(funit, *) Nt;		print *, 'Nt = ', Nt
-      read(funit, *) Ts;		print *, 'Ts = ', Ts
+      read(funit, *) Nt;        print *, 'Nt = ', Nt
+      read(funit, *) Ts;        print *, 'Ts = ', Ts
 
-      read(funit, *) cell_out;		print *, 'cell_out = ', cell_out
-      read(funit, *) wall_out;		print *, 'wall_out = ', wall_out
-      read(funit, *) pgrad_out;		print *, 'pgrad_out = ', pgrad_out
-      read(funit, *) flow_out;		print *, 'flow_out = ', flow_out
-      read(funit, *) ftot_out;		print *, 'flow_out = ', ftot_out
-      read(funit, *) restart_out;	print *, 'restart_out = ', restart_out
+      read(funit, *) cell_out;      print *, 'cell_out = ', cell_out
+      read(funit, *) wall_out;      print *, 'wall_out = ', wall_out
+      read(funit, *) pgrad_out;     print *, 'pgrad_out = ', pgrad_out
+      read(funit, *) flow_out;      print *, 'flow_out = ', flow_out
+      read(funit, *) ftot_out;      print *, 'flow_out = ', ftot_out
+      read(funit, *) restart_out;   print *, 'restart_out = ', restart_out
 
-      read(funit, *) restart_file;	print *, 'restart file = ', trim(restart_file)
+      read(funit, *) restart_file;  print *, 'restart file = ', trim(restart_file)
 
       read(funit, *) epsDist;           print *, 'epsDist = ',epsDist
       read(funit, *) ForceCoef;         print *, 'ForceCoef = ',ForceCoef
@@ -357,30 +357,30 @@ contains
     ! Cut-off distance for 
     if (PhysEwald) then
       if (rootEwald) then
-	! Physical sum parameters
-	! Note: cut-off radius is such that
-	!  (s^3  + 1.5*s^2 + 0.75/s)*exp(-s^2) < 0.75*sqrt(PI)*eps
-	!  at the cut-off radius,
-	!  where s = r*sqrt(PI/alpha) and eps is the error tolerance.
-	!
-	!  Here, the error tolerance is defined to be
-	!  the double-layer Ewald physical sum divided by the Green's
-	!  function of the infinite space at the cut-off radius.
+    ! Physical sum parameters
+    ! Note: cut-off radius is such that
+    !  (s^3  + 1.5*s^2 + 0.75/s)*exp(-s^2) < 0.75*sqrt(PI)*eps
+    !  at the cut-off radius,
+    !  where s = r*sqrt(PI/alpha) and eps is the error tolerance.
+    !
+    !  Here, the error tolerance is defined to be
+    !  the double-layer Ewald physical sum divided by the Green's
+    !  function of the infinite space at the cut-off radius.
 
-	! Use iteration to determine the cut-off radius
-	s = 1.
-	do iter = 1, iterMax
-	  s = 0.75*sqrt(PI)*eps_Ewd/(s**3 + 1.5*s + 0.75/s)
-	  s = sqrt(-log(s))
-	end do ! iter
-	rc_Ewd = sqrt(alpha_Ewd/PI)*s
+    ! Use iteration to determine the cut-off radius
+    s = 1.
+    do iter = 1, iterMax
+      s = 0.75*sqrt(PI)*eps_Ewd/(s**3 + 1.5*s + 0.75/s)
+      s = sqrt(-log(s))
+    end do ! iter
+    rc_Ewd = sqrt(alpha_Ewd/PI)*s
 
-	! Need at least three cells in each direction
-	rc_Ewd  = min(minval(Lb/3.001), rc_Ewd )
+    ! Need at least three cells in each direction
+    rc_Ewd  = min(minval(Lb/3.001), rc_Ewd )
 
-	write(*, '(A)') 'Derived Ewald sum parameters:'
-	write(*, '(A,F15.5)') 'rc = ', rc_Ewd
-	write(*, '(A,3I5)') 'Nc = ', floor(Lb/rc_Ewd)
+    write(*, '(A)') 'Derived Ewald sum parameters:'
+    write(*, '(A,F15.5)') 'rc = ', rc_Ewd
+    write(*, '(A,3I5)') 'Nc = ', floor(Lb/rc_Ewd)
       end if
 
       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
@@ -389,17 +389,17 @@ contains
 
     if (FourierEwald) then
       if (rootEwald) then
-	call MPI_Comm_Size(MPI_Comm_Ewald, numNodes, ierr)
+    call MPI_Comm_Size(MPI_Comm_Ewald, numNodes, ierr)
 
-	! Fourier sum parameters
-	Nb_Ewd = 2*ceiling(sqrt(-log(eps_Ewd)/(pi*alpha_Ewd))*Lb)
-	Nb_Ewd(3) = max(Nb_Ewd(3), numNodes*PBspln_Ewd)
-	Nb_Ewd(3) = ceiling(real(Nb_Ewd(3))/numNodes) * numNodes
-	NbC_Ewd = (/ Nb_Ewd(1)/2+1, Nb_Ewd(2), Nb_Ewd(3) /)
+    ! Fourier sum parameters
+    Nb_Ewd = 2*ceiling(sqrt(-log(eps_Ewd)/(pi*alpha_Ewd))*Lb)
+    Nb_Ewd(3) = max(Nb_Ewd(3), numNodes*PBspln_Ewd)
+    Nb_Ewd(3) = ceiling(real(Nb_Ewd(3))/numNodes) * numNodes
+    NbC_Ewd = (/ Nb_Ewd(1)/2+1, Nb_Ewd(2), Nb_Ewd(3) /)
         
-	write(*, '(A,3I5)') 'Nb = ', Nb_Ewd
-	write(*, '(A,3I5)') 'NbC = ', NbC_Ewd
-	write(*, *)
+    write(*, '(A,3I5)') 'Nb = ', Nb_Ewd
+    write(*, '(A,3I5)') 'NbC = ', NbC_Ewd
+    write(*, *)
       end if
 
       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
@@ -565,7 +565,7 @@ contains
     end do ! i
 
     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
-    		iaRecv, recvcounts, displs, MPI_INTEGER, COMM, ierr)
+            iaRecv, recvcounts, displs, MPI_INTEGER, COMM, ierr)
 
     ! Send and receive a(:,:)
     sendCount = np*nvar
@@ -579,7 +579,7 @@ contains
       displs(i) = displs(i-1) + recvcounts(i-1)
     end do ! i
     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
-    		aRecv, recvcounts, displs, MPI_WP, COMM, ierr)
+            aRecv, recvcounts, displs, MPI_WP, COMM, ierr)
 
     ! Re-assemble data
     do i = 1, npTot

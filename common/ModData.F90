@@ -20,8 +20,8 @@ module ModData
   type(t_TargetList),target :: tlist_rbc, tlist_wall
 
   public :: GlobData_Init, &
-	GlobData_Finalize, &
-	SyncSurfCoord
+    GlobData_Finalize, &
+    SyncSurfCoord
 
 contains
 
@@ -54,11 +54,11 @@ contains
 
       do ivert = 1, wall%nvert
         if (wall%v2v(ivert) == 0) then
-	  p = p + 1
-	  wall%indxVertGlb(ivert) = p
-	else
-	  wall%indxVertGlb(ivert) = wall%indxVertGlb(wall%v2v(ivert))
-	end if
+      p = p + 1
+      wall%indxVertGlb(ivert) = p
+    else
+      wall%indxVertGlb(ivert) = wall%indxVertGlb(wall%v2v(ivert))
+    end if
       end do ! ivert
     end do ! iwall
 

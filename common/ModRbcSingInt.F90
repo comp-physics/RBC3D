@@ -12,13 +12,13 @@ module ModRbcSingInt
   implicit none
 
   public :: RBC_SingInt, &
-  	RBC_NearSingInt, &
-  	RBC_NearSingInt_Subtract, &
-  	RBC_NearSingInt_ReAdd
+    RBC_NearSingInt, &
+    RBC_NearSingInt_Subtract, &
+    RBC_NearSingInt_ReAdd
 
   public :: NbrRbcList_Create, &
-  	NbrRbcList_Destroy, &
-	NbrRbcList_Insert
+    NbrRbcList_Destroy, &
+    NbrRbcList_Insert
 
 contains
 
@@ -69,20 +69,20 @@ contains
       if (rr >= rc) cycle
 
       if (c1 .ne. 0) then
-	call Spline_Interp(rbc%spln_FdetJ, th_j, phi_j, fj)
-	fj = patch%w(irad)*fj
+    call Spline_Interp(rbc%spln_FdetJ, th_j, phi_j, fj)
+    fj = patch%w(irad)*fj
 
-	call EwaldCoeff_SL(rr, EA, EB)
-	dv = dv + c1*(EA*xx*dot_product(xx,fj) + EB*fj)
+    call EwaldCoeff_SL(rr, EA, EB)
+    dv = dv + c1*(EA*xx*dot_product(xx,fj) + EB*fj)
       end if
 
       if (c2 .ne. 0) then
-	call Spline_Interp(rbc%spln_GdetJ, th_j, phi_j, gj)
-	gj = patch%w(irad)*gj
-	call Spline_Interp(rbc%spln_a3, th_j, phi_j, a3j)
+    call Spline_Interp(rbc%spln_GdetJ, th_j, phi_j, gj)
+    gj = patch%w(irad)*gj
+    call Spline_Interp(rbc%spln_a3, th_j, phi_j, a3j)
 
-	call EwaldCoeff_DL(rr, EA)
-	dv = dv + c2*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
+    call EwaldCoeff_DL(rr, EA)
+    dv = dv + c2*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
       end if
     end do ! iazm
     end do ! irad
@@ -149,15 +149,15 @@ contains
 
       ! Take care of the jump conditions when there is double-layer integral
       if (c2 .ne. 0) then
-	call Spline_Interp(rbc%spln_detJ, th0, phi0, detJ0)
-	call Spline_Interp(rbc%spln_GdetJ, th0, phi0, g0)
-	g0 = g0/detJ0(1)
+    call Spline_Interp(rbc%spln_detJ, th0, phi0, detJ0)
+    call Spline_Interp(rbc%spln_GdetJ, th0, phi0, g0)
+    g0 = g0/detJ0(1)
 
-	if (dist > 0) then
-	    dv0 = dv0 + c2*4*PI*g0
+    if (dist > 0) then
+        dv0 = dv0 + c2*4*PI*g0
         else
-	    dv0 = dv0 - c2*4*PI*g0
-	end if
+        dv0 = dv0 - c2*4*PI*g0
+    end if
       end if
 
       dvtmp = dv0 + dist/dist1*(dv1 - dv0);
@@ -209,16 +209,16 @@ contains
       mask = MaskFunc(dth/radPat)
 
       if (C1 /= 0) then
-	fj = rbc%f(ilat,ilon,:)*rbc%detJ(ilat,ilon)*rbc%w(ilat)
-	call EwaldCoeff_SL(rr, EA, EB)
-	dv = dv - c1*mask*(EA*xx*dot_product(xx,fj) + EB*fj)
+    fj = rbc%f(ilat,ilon,:)*rbc%detJ(ilat,ilon)*rbc%w(ilat)
+    call EwaldCoeff_SL(rr, EA, EB)
+    dv = dv - c1*mask*(EA*xx*dot_product(xx,fj) + EB*fj)
       end if
 
       if (C2 /= 0) then
-	gj = rbc%g(ilat,ilon,:)*rbc%detJ(ilat,ilon)*rbc%w(ilat)
-	a3j = rbc%a3(ilat,ilon,:)
-	call EwaldCoeff_DL(rr, EA)
-	dv = dv - c2*mask*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
+    gj = rbc%g(ilat,ilon,:)*rbc%detJ(ilat,ilon)*rbc%w(ilat)
+    a3j = rbc%a3(ilat,ilon,:)
+    call EwaldCoeff_DL(rr, EA)
+    dv = dv - c2*mask*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
       end if
     end do ! p
 
@@ -289,20 +289,20 @@ contains
       if (rr > rc) cycle
 
       if (C1 .ne. 0) then
-	call Spline_Interp(rbc%spln_FdetJ, th_j, phi_j, fj)
-	fj = wtPat(irad)*fj
+    call Spline_Interp(rbc%spln_FdetJ, th_j, phi_j, fj)
+    fj = wtPat(irad)*fj
 
-	call EwaldCoeff_SL(rr, EA, EB)
-	dv = dv + c1*(EA*xx*dot_product(xx, fj) + EB*fj)
+    call EwaldCoeff_SL(rr, EA, EB)
+    dv = dv + c1*(EA*xx*dot_product(xx, fj) + EB*fj)
       end if
 
       if (C2 .ne. 0) then
-	call Spline_Interp(rbc%spln_a3, th_j, phi_j, a3j)
-	call Spline_Interp(rbc%spln_GdetJ, th_j, phi_j, gj)
-	gj = wtPat(irad)*gj
+    call Spline_Interp(rbc%spln_a3, th_j, phi_j, a3j)
+    call Spline_Interp(rbc%spln_GdetJ, th_j, phi_j, gj)
+    gj = wtPat(irad)*gj
 
-	call EwaldCoeff_DL(rr, EA)
-	dv = dv + c2*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
+    call EwaldCoeff_DL(rr, EA)
+    dv = dv + c2*(EA*xx*dot_product(xx,gj)*dot_product(xx,a3j))
       end if
     end do ! iazm
     end do ! irad
@@ -351,11 +351,11 @@ contains
 
     do i = 1, list%N
       if (list%indx(i,0) == indx(0)) then
-	if (dist < list%dist(i)) then
-	  list%indx(i,1:2) = indx(1:2)
-	  list%dist(i) = dist
-	end if
-	return
+    if (dist < list%dist(i)) then
+      list%indx(i,1:2) = indx(1:2)
+      list%dist(i) = dist
+    end if
+    return
       end if
     end do ! i
 

@@ -10,9 +10,9 @@ module ModWall
   private
 
   public :: Wall_Create, &
-  	Wall_Destroy, &
-	Wall_Build_V2V, &
-	Wall_ComputeGeometry
+    Wall_Destroy, &
+    Wall_Build_V2V, &
+    Wall_ComputeGeometry
 
 contains
 
@@ -86,7 +86,7 @@ contains
       dx2 = wall%x(ivert,:) - xmax
       if (minval(abs(dx1)) < eps .or. minval(abs(dx2)) < eps) then
         nvertBd = nvertBd + 1
-	ivertBd(nvertBd) = ivert
+    ivertBd(nvertBd) = ivert
       end if
     end do ! ivert
 
@@ -99,12 +99,12 @@ contains
       do p2 = p1+1, nvertBd
         ivert2 = ivertBd(p2)
 
-	xx = wall%x(ivert2,:) - wall%x(ivert1,:)
-	xx = xx - nint(xx*iLb)*Lb
+    xx = wall%x(ivert2,:) - wall%x(ivert1,:)
+    xx = xx - nint(xx*iLb)*Lb
 
-	if (maxval(abs(xx)) < eps) then
-	  wall%v2v(ivert2) = ivert1
-	end if
+    if (maxval(abs(xx)) < eps) then
+      wall%v2v(ivert2) = ivert1
+    end if
       end do ! p2
     end do ! p1
 
@@ -125,7 +125,7 @@ contains
     do iele = 1, wall%nele
       do l = 1, 3
         ivert = wall%e2v(iele,l)
-	xele(l,:) = wall%x(ivert,:)
+    xele(l,:) = wall%x(ivert,:)
       end do ! l
 
       x12 = xele(2,:) - xele(1,:)

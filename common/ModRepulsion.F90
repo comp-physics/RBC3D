@@ -22,7 +22,7 @@ module ModRepulsion
   public :: AddR0Motion
 
   private :: Closest_Neighbor_Cell, &
-  	Closest_Neighbor_Wall
+    Closest_Neighbor_Wall
   
 contains
 
@@ -156,85 +156,85 @@ contains
 
     if (PhysEwald) then
       do i = 1, tlist%nPoint
-	if (.not.tlist%active(i)) cycle
+    if (.not.tlist%active(i)) cycle
 
-	irbc = tlist%indx(i,0)
-	ilat = tlist%indx(i,1)
-	ilon = tlist%indx(i,2)
+    irbc = tlist%indx(i,0)
+    ilat = tlist%indx(i,1)
+    ilon = tlist%indx(i,2)
 
-	rbc => rbcs(irbc)
+    rbc => rbcs(irbc)
 
-	xi = rbc%x(ilat,ilon,:)
-	a3i = rbc%a3(ilat,ilon,:)
-	thi = rbc%th(ilat)
-	phii = rbc%phi(ilon)
+    xi = rbc%x(ilat,ilon,:)
+    a3i = rbc%a3(ilat,ilon,:)
+    thi = rbc%th(ilat)
+    phii = rbc%phi(ilon)
 
-	! Set distance threshhold
-	epsDist = 2*sqrt(rbc%area)/rbc%nlat
-	epsDistRef = rbc%patch%radius
+    ! Set distance threshhold
+    epsDist = 2*sqrt(rbc%area)/rbc%nlat
+    epsDistRef = rbc%patch%radius
 
-	!  Find the shortest distance of xi to the same surface
-	!
-	!  For a point xj on the same surface, let xx = xi - xj and xxn = -xx*a3j
-	!  xj is not considered for distance calculation if any of the following happens
-	!  -- The distance between xi and xj on the reference sphere is
-	!     smaller than epsDistRef
-	!  -- |xx| > 2*epsDist
-	!  -- The angle between xx and -a3j is greater than 45 degree
-	!
-	!  Other wise, the distance between xi and xj is xxn
+    !  Find the shortest distance of xi to the same surface
+    !
+    !  For a point xj on the same surface, let xx = xi - xj and xxn = -xx*a3j
+    !  xj is not considered for distance calculation if any of the following happens
+    !  -- The distance between xi and xj on the reference sphere is
+    !     smaller than epsDistRef
+    !  -- |xx| > 2*epsDist
+    !  -- The angle between xx and -a3j is greater than 45 degree
+    !
+    !  Other wise, the distance between xi and xj is xxn
 
-	! Initialize
-	dist = huge(dist)	
+    ! Initialize
+    dist = huge(dist)   
 
-	call HashTable_Index(slist%Nc, slist%iLbNc, xi, i1, i2, i3)
-	do j1 = max(i1-1,0), min(i1+1, slist%Nc(1)+1)
-	do j2 = max(i2-1,0), min(i2+1, slist%Nc(2)+1)
-	do j3 = max(i3-1,0), min(i3+1, slist%Nc(3)+1)
-	  j = slist%hoc(j1,j2,j3)
+    call HashTable_Index(slist%Nc, slist%iLbNc, xi, i1, i2, i3)
+    do j1 = max(i1-1,0), min(i1+1, slist%Nc(1)+1)
+    do j2 = max(i2-1,0), min(i2+1, slist%Nc(2)+1)
+    do j3 = max(i3-1,0), min(i3+1, slist%Nc(3)+1)
+      j = slist%hoc(j1,j2,j3)
 
-	  do while (j > 0)
-	    if (slist%indx(j,0) .ne. irbc) goto 999
+      do while (j > 0)
+        if (slist%indx(j,0) .ne. irbc) goto 999
 
-	    ilat = slist%indx(j,1)
-	    ilon = slist%indx(j,2)
+        ilat = slist%indx(j,1)
+        ilon = slist%indx(j,2)
 
-	    xj = rbc%x(ilat,ilon,:)
-	    a3j = rbc%a3(ilat,ilon,:)
-	    thj = rbc%th(ilat)
-	    phij = rbc%phi(ilon)
+        xj = rbc%x(ilat,ilon,:)
+        a3j = rbc%a3(ilat,ilon,:)
+        thj = rbc%th(ilat)
+        phij = rbc%phi(ilon)
 
-	    rrRef = DistOnSphere(thi, phii, thj, phij)
-	    if (rrRef < epsDistRef) goto 999
+        rrRef = DistOnSphere(thi, phii, thj, phij)
+        if (rrRef < epsDistRef) goto 999
 
-	    xx = xi - xj
-	    rr = sqrt(sum(xx*xx))
-	    if (rr > epsDist) goto 999
+        xx = xi - xj
+        rr = sqrt(sum(xx*xx))
+        if (rr > epsDist) goto 999
 
-	    xxn = -dot_product(xx, a3j)
-	    if (xxn/rr < 0.707) goto 999
+        xxn = -dot_product(xx, a3j)
+        if (xxn/rr < 0.707) goto 999
 
-	    dist = min(dist, rr)
+        dist = min(dist, rr)
 
-999	    j = slist%next(j)
-	  end do ! j
-	end do ! j3
-	end do ! j2
-	end do ! j1
+999     j = slist%next(j)
+      end do ! j
+    end do ! j3
+    end do ! j2
+    end do ! j1
 
-	if (dist < epsDist) then
-	  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	  ! Hard coded, future change needed
-	  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	  FF = ForceCoef*exp(1 - dist/epsDist)
-	  fi = FF*a3i
+    if (dist < epsDist) then
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      ! Hard coded, future change needed
+      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      FF = ForceCoef*exp(1 - dist/epsDist)
+      fi = FF*a3i
 
-	  cntDf = cntDf + 1
-	  indxDf(cntDf) = i
-	  df(cntDf,:) = fi
-	end if
+      cntDf = cntDf + 1
+      indxDf(cntDf) = i
+      df(cntDf,:) = fi
+    end if
 
-	distMin = min(rr, distMin)
+    distMin = min(rr, distMin)
       end do ! i
     end if
 
@@ -244,9 +244,9 @@ contains
 
     if (rootWorld) then
       if (cntDf_Glb > 0 ) then
-	write(*, '(A)')        'Intra-cellular repulsion:'
-	write(*, '(A,ES12.2)') '  min dist = ', distMin_Glb
-	write(*, '(A,I5,A)')   '  repulsion forces added on ', cntDf_Glb, ' points'
+    write(*, '(A)')        'Intra-cellular repulsion:'
+    write(*, '(A,ES12.2)') '  min dist = ', distMin_Glb
+    write(*, '(A,I5,A)')   '  repulsion forces added on ', cntDf_Glb, ' points'
       end if
     end if
 
@@ -257,10 +257,10 @@ contains
 
       p = 0
       do irbc = 1 , nrbc
-	rbc => rbcs(irbc)
-	NN = rbc%nlat * rbc%nlon
-	rbc%f = rbc%f + reshape(dfGlb(p+1:p+NN,:), shape(rbc%f))
-	p = p + NN
+    rbc => rbcs(irbc)
+    NN = rbc%nlat * rbc%nlon
+    rbc%f = rbc%f + reshape(dfGlb(p+1:p+NN,:), shape(rbc%f))
+    p = p + NN
       end do ! irbc
     end if
 
@@ -501,7 +501,7 @@ contains
     ! Initialize
     dist0 = huge(dist0)
 
-    if (nrbc == 0) return	! Need to actually have cells
+    if (nrbc == 0) return   ! Need to actually have cells
 
     ! Loop over neighboring cells
     slist => slist_rbc
@@ -513,21 +513,21 @@ contains
       j = slist%hoc(j1,j2,j3)
 
       do while (j > 0)
-	xj = slist%x(j,:)
-	surfId_j = slist%indx(j,0)
+    xj = slist%x(j,:)
+    surfId_j = slist%indx(j,0)
 
-	if (surfId_j == surfId_i) goto 999
+    if (surfId_j == surfId_i) goto 999
 
-	xx = xi - xj
-	xx = xx - nint(xx*iLb)*Lb
-	rr = sqrt(sum(xx*xx))
+    xx = xi - xj
+    xx = xx - nint(xx*iLb)*Lb
+    rr = sqrt(sum(xx*xx))
 
-	if (rr < dist0) then
-	  irbc0 = surfId_j - rbcs(1)%id + 1
-	  ilat0 = slist%indx(j,1)
-	  ilon0 = slist%indx(j,2)
-	  dist0 = rr
-	end if
+    if (rr < dist0) then
+      irbc0 = surfId_j - rbcs(1)%id + 1
+      ilat0 = slist%indx(j,1)
+      ilon0 = slist%indx(j,2)
+      dist0 = rr
+    end if
 
 999     j = slist%next(j)
       end do ! while
@@ -577,7 +577,7 @@ contains
     ! Initialize
     dist0 = huge(dist0)
 
-    if (nwall == 0) return	! Need to have a wall
+    if (nwall == 0) return  ! Need to have a wall
 
     ! Loop over all neighboring elements
     slist => slist_wall
@@ -590,27 +590,27 @@ contains
 
       do while (j > 0)
         surfId_j = slist%indx(j,0)
-	if (surfId_j == surfId_i) goto 999
+    if (surfId_j == surfId_i) goto 999
 
-	iwall = surfId_j - walls(1)%id + 1
-	wall => walls(iwall)
-	iele = slist%indx(j,1)
+    iwall = surfId_j - walls(1)%id + 1
+    wall => walls(iwall)
+    iele = slist%indx(j,1)
 
-	do l = 1, 3
-	  xele(l,:) = wall%x(wall%e2v(iele,l),:)
-	end do ! l
+    do l = 1, 3
+      xele(l,:) = wall%x(wall%e2v(iele,l),:)
+    end do ! l
 
-	! Translate xi as close to the triangle as possible
-	xx = xi - xele(1,:)
-	xx = xx - nint(xx*iLb)*Lb
-	xtar = xele(1,:) + xx
+    ! Translate xi as close to the triangle as possible
+    xx = xi - xele(1,:)
+    xx = xx - nint(xx*iLb)*Lb
+    xtar = xele(1,:) + xx
 
-	rr = MinDistToTri(xtar, xele, x0=xj)
+    rr = MinDistToTri(xtar, xele, x0=xj)
 
-	if (rr < dist0) then
-	  dist0 = rr
-	  x0 = xj
-	end if
+    if (rr < dist0) then
+      dist0 = rr
+      x0 = xj
+    end if
 
 999     j = slist%next(j)
       end do ! while

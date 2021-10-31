@@ -16,21 +16,21 @@ module ModIO
   private
   
   public :: IO_Init, &
-	IO_Finalize, &
-  	WriteAll, &
-  	WriteRBC, &
-  	WriteManyRBCs, &
+    IO_Finalize, &
+    WriteAll, &
+    WriteRBC, &
+    WriteManyRBCs, &
         WriteManyRBCsNoFilt, &
-	WriteWall, &
-	WriteManyWalls, &
-	WritePressGrad, &
-	WriteFlowRate, &
-!	WriteVelField, &
-!	WriteViscStress, &
-	ReadMyWallMesh, &
-	ReadWallMesh, &
-	WriteRestart, &
-	ReadRestart, &
+    WriteWall, &
+    WriteManyWalls, &
+    WritePressGrad, &
+    WriteFlowRate, &
+!   WriteVelField, &
+!   WriteViscStress, &
+    ReadMyWallMesh, &
+    ReadWallMesh, &
+    WriteRestart, &
+    ReadRestart, &
         ReadRestart_NoWalls
 
 contains
@@ -42,18 +42,18 @@ contains
 
     if (rootWorld) then
       if (pgrad_out > 0) then
-	write(fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
-	open(pGrad_unit, file=trim(fn), action='write')
+    write(fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+    open(pGrad_unit, file=trim(fn), action='write')
       end if
 
       if (flow_out > 0) then
-	write(fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
-	open(flow_unit, file=trim(fn), action='write')
+    write(fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+    open(flow_unit, file=trim(fn), action='write')
       end if
 
       if (ftot_out > 0) then
-	write(fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
-	open(ftot_unit, file=trim(fn), action='write')
+    write(fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+    open(ftot_unit, file=trim(fn), action='write')
       end if
 
     end if
@@ -88,19 +88,19 @@ contains
 
     if (rootWorld) then
       if (cell_out > 0 .and. mod(lt,cell_out) == 0) then
-	write(fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
-	call WriteManyRBCs(fn, nrbc, rbcs)
+    write(fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
+    call WriteManyRBCs(fn, nrbc, rbcs)
         write(fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
         call WriteExactPts(fn, nrbc, rbcs) 
       end if
 
       if (wall_out > 0 .and. mod(lt,wall_out) == 0) then
-	write(fn, FMT=fn_FMT) 'D/', 'wall', lt, '.dat'
-	call WriteManyWalls(fn, nwall, walls)
+    write(fn, FMT=fn_FMT) 'D/', 'wall', lt, '.dat'
+    call WriteManyWalls(fn, nwall, walls)
       end if
 
       if (pgrad_out > 0 .and. mod(lt, pGrad_out) == 0) then
-	call WritePressGrad(lt, time)
+    call WritePressGrad(lt, time)
       end if
 
       if (flow_out > 0 .and. mod(lt, flow_out) == 0) then
@@ -108,10 +108,10 @@ contains
       end if
 
       if (restart_out > 0 .and. mod(lt,restart_out) == 0) then
-	write(fn, FMT=fn_FMT) 'D/', 'restart', lt, '.dat'
-	call WriteRestart(fn, lt, time)
+    write(fn, FMT=fn_FMT) 'D/', 'restart', lt, '.dat'
+    call WriteRestart(fn, lt, time)
         fn = 'D/restart.LATEST.dat'
-	call WriteRestart(fn, lt, time)
+    call WriteRestart(fn, lt, time)
       end if
     end if
 
@@ -134,9 +134,9 @@ contains
 
     ! Convert the mesh from Gaussian to uniform
     call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-    		xa, xb, size(xa,1), size(xa,2), rbc%wshags )
+            xa, xb, size(xa,1), size(xa,2), rbc%wshags )
     call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-    		xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+            xa, xb, size(xa,1), size(xa,2), rbc%wshses )
 
     open(cell_unit, file=trim(fn), action='write')
     write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
@@ -187,20 +187,20 @@ contains
       allocate(x(0:nlat,nlon,3), xa(nlon/2+1,nlat+1,3), xb(nlon/2+1,nlat+1,3) )
 
       call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-		  xa, xb, size(xa,1), size(xa,2), rbc%wshags )
+          xa, xb, size(xa,1), size(xa,2), rbc%wshags )
       call ShFilter(nlat, nlon, 3, xa, xb, size(xa,1), size(xa,2), rbc%nlat0, rbc%nlon0 )
       call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-		  xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+          xa, xb, size(xa,1), size(xa,2), rbc%wshses )
 
       write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat+1, '  J=', nlon+1, '  F=POINT'
      
       do ilon = 1, nlon
       do ilat = 0, nlat
-	write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
+    write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
       end do ! ilat
       end do ! ilon
       do ilat = 0, nlat
-	write(cell_unit, '(3F20.10)') x(ilat,1,:)
+    write(cell_unit, '(3F20.10)') x(ilat,1,:)
       end do ! ilat
 
       ! Deallocate working arrays
@@ -236,11 +236,11 @@ contains
      
       do ilon = 1, nlon
       do ilat = 1, nlat
-	write(cell_unit, '(3F20.10)') rbc%x(ilat,ilon,:)
+    write(cell_unit, '(3F20.10)') rbc%x(ilat,ilon,:)
       end do ! ilat
       end do ! ilon
       do ilat = 1, nlat
-	write(cell_unit, '(3F20.10)') rbc%x(ilat,1,:)
+    write(cell_unit, '(3F20.10)') rbc%x(ilat,1,:)
       end do ! ilat
 
     end do ! irbc
@@ -290,7 +290,7 @@ contains
     open(wall_unit, file=trim(fn), action='write')
     write(wall_unit, '(A)') 'VARIABLES = X, Y, Z'
     write(wall_unit, '(A,I9,A,I9,A)') &
-    	'ZONE N = ', wall%nvert, ' E = ', wall%nele, ' F=FEPOINT ET=TRIANGLE'
+        'ZONE N = ', wall%nvert, ' E = ', wall%nele, ' F=FEPOINT ET=TRIANGLE'
 
     do ivert = 1, wall%nvert
       write(wall_unit, '(3F20.10)') wall%x(ivert,:)
@@ -331,14 +331,14 @@ contains
       nele = wall%nele
 
       write(wall_unit, '(A,I9,A,I9,A)') &
-	  'ZONE N = ', nvert, ' E = ', nele, ' F=FEPOINT ET=TRIANGLE'
+      'ZONE N = ', nvert, ' E = ', nele, ' F=FEPOINT ET=TRIANGLE'
 
       do ivert = 1, nvert
-	write(wall_unit, '(3F20.10)') wall%x(ivert,:)
+    write(wall_unit, '(3F20.10)') wall%x(ivert,:)
       end do ! ivert
 
       do iele = 1, nele
-	write(wall_unit, '(3I9)') wall%e2v(iele,:)
+    write(wall_unit, '(3I9)') wall%e2v(iele,:)
       end do ! iele
     end do ! iwall
 
@@ -438,8 +438,8 @@ contains
 !      write(vel_unit, '(A,I0,A,I9,A)') 'ZONE I=', Nx, ' J=', Ny, ' F=POINT'
 !      do j = 1, Ny
 !      do i = 1, Nx
-!	n = i + Nx*(j-1)
-!	write(vel_unit, '(6ES15.5)') x(n,:), v(n,:)
+!   n = i + Nx*(j-1)
+!   write(vel_unit, '(6ES15.5)') x(n,:), v(n,:)
 !      end do ! j
 !      end do ! i
 !
@@ -542,7 +542,7 @@ contains
     if (file_exists /= .TRUE.) then
       write(*, *) 'Subroutine ', func_name
       write(*, *) 'Error: file ', trim(fn), ' does not exist'
-      stop	
+      stop  
     end if
  
     read(99, *) num_nod_per_el
@@ -681,11 +681,11 @@ print*,'3'
       rbc => rbcs(irbc)
 
       if (rootWorld) then
-	read(restart_unit) nlat0, nlon0
-	read(restart_unit) nlat, nlon
+    read(restart_unit) nlat0, nlon0
+    read(restart_unit) nlat, nlon
        ! celltype = 1; print *,"NO READ CELL TYPE" 
         read(restart_unit) celltype
-	write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
         write(*,*) 'nlat =',nlat
       end if
       call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -707,13 +707,13 @@ print*,'3'
 
       ! Check array dimension
       if (rootWorld) then
-	if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
+    if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
         print*, 'nlat,nlon =', nlat, nlon
         print*, 'rbc nlat,nlon =', rbc%nlat, rbc%nlon
         write(*, *) 'Subroutine ', func_name
-	    write(*, *) 'Error: invalid array dimension'
-	  stop
-	end if
+        write(*, *) 'Error: invalid array dimension'
+      stop
+    end if
       end if
 
       if (rootWorld) then
@@ -738,7 +738,7 @@ print*,'4'
       if (rootWorld) then
         read(restart_unit) nvert, nele
 
-	write(*, *) 'iwall : ', iwall, ' nvert = ', nvert, ' nele = ', nele
+    write(*, *) 'iwall : ', iwall, ' nvert = ', nvert, ' nele = ', nele
       end if
       call MPI_Bcast(nvert, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(nele, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -746,9 +746,9 @@ print*,'4'
       call Wall_Create(wall, nvert, nele)
 
       if (rootWorld) then
-	read(restart_unit) wall%x
-	read(restart_unit) wall%f
-	read(restart_unit) wall%e2v
+    read(restart_unit) wall%x
+    read(restart_unit) wall%f
+    read(restart_unit) wall%e2v
       end if
       call MPI_Bcast(wall%x, size(wall%x), MPI_WP, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(wall%f, size(wall%f), MPI_WP, 0, MPI_Comm_World, ierr)
@@ -890,11 +890,11 @@ print*,'4'
       rbc => rbcs(irbc)
 
       if (rootWorld) then
-	read(restart_unit) nlat0, nlon0
-	read(restart_unit) nlat, nlon
+    read(restart_unit) nlat0, nlon0
+    read(restart_unit) nlat, nlon
        ! celltype = 1; print *,"NO READ CELL TYPE" 
         read(restart_unit) celltype
-	write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
         write(*,*) 'nlat =',nlat
       end if
       call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -911,11 +911,11 @@ print*,'4'
 
       ! Check array dimension
       if (rootWorld) then
-	if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
-	    write(*, *) 'Subroutine ', func_name
-	    write(*, *) 'Error: invalid array dimension'
-	  stop
-	end if
+    if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
+        write(*, *) 'Subroutine ', func_name
+        write(*, *) 'Error: invalid array dimension'
+      stop
+    end if
       end if
 
       if (rootWorld) then

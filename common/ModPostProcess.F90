@@ -14,9 +14,9 @@ module ModPostProcess
   private
 
   public :: CalcVelocityField, &
-  	WallShearForce, &
-	CellFlowRate, &
-	ComputeParticleStress
+    WallShearForce, &
+    CellFlowRate, &
+    ComputeParticleStress
 
 contains
 
@@ -75,11 +75,11 @@ contains
 
       do iele = 1, wall%nele
         do l = 1, 3
-	  ivert = wall%e2v(iele,l)
-	  f_ele(l,:) = wall%f(ivert,:)
-	end do ! l
+      ivert = wall%e2v(iele,l)
+      f_ele(l,:) = wall%f(ivert,:)
+    end do ! l
 
-	sf = sf + thrd*sum(f_ele,1)*wall%area(iele)
+    sf = sf + thrd*sum(f_ele,1)*wall%area(iele)
       end do ! iele
     end do ! iwall
 
@@ -104,8 +104,8 @@ contains
       do ilon = 1, rbc%nlon
       do ilat = 1, rbc%nlat
         ds = rbc%detJ(ilat,ilon)*rbc%w(ilat)
-	vn = dot_product(rbc%g(ilat,ilon,:), rbc%a3(ilat,ilon,:))
-	flowrate = flowrate + (rbc%x(ilat,ilon,3) - zc)*vn*ds
+    vn = dot_product(rbc%g(ilat,ilon,:), rbc%a3(ilat,ilon,:))
+    flowrate = flowrate + (rbc%x(ilat,ilon,3) - zc)*vn*ds
       end do ! ilat
       end do ! ilon
     end do ! irbc
@@ -135,9 +135,9 @@ contains
       do ilon = 1, rbc%nlon
       do ilat = 1, rbc%nlat
         x = rbc%x(ilat,ilon,:) - xc
-	f = rbc%f(ilat,ilon,:)
-	dS = rbc%w(ilat)*rbc%detJ(ilat,ilon)
-	forall(ii=1:3, jj=1:3) tau(ii,jj) = tau(ii,jj) - dS*f(ii)*x(jj)
+    f = rbc%f(ilat,ilon,:)
+    dS = rbc%w(ilat)*rbc%detJ(ilat,ilon)
+    forall(ii=1:3, jj=1:3) tau(ii,jj) = tau(ii,jj) - dS*f(ii)*x(jj)
       end do ! ilat
       end do ! ilon
     end do ! irbc

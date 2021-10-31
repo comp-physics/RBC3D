@@ -12,7 +12,7 @@ module ModFFT
   private
 
   public :: FFT_Diff, &
-  	FFT_Project
+    FFT_Project
 
 contains
 
@@ -37,23 +37,23 @@ contains
       allocate(w(m,nvar), wc(m/2+1,nvar) )
 
       call dfftw_plan_many_dft_r2c(fftw_fplan, 1, m, nvar, &
-		    w, m, 1, m, &
-		    wc, m/2+1, 1, m/2+1, FFTW_ESTIMATE)
+            w, m, 1, m, &
+            wc, m/2+1, 1, m/2+1, FFTW_ESTIMATE)
       call dfftw_plan_many_dft_c2r(fftw_bplan, 1, m, nvar, &
-		    wc, m/2+1, 1, m/2+1, &
-		    w, m, 1, m, FFTW_ESTIMATE)
+            wc, m/2+1, 1, m/2+1, &
+            w, m, 1, m, FFTW_ESTIMATE)
 
       do j = 1, size(u,2)
-	w = u(:,j,:)
-	call dfftw_execute(fftw_fplan)
+    w = u(:,j,:)
+    call dfftw_execute(fftw_fplan)
 
-	do i = 1, m/2
-	  wc(i,:) = (iota*(i-1)/real(m))*wc(i,:)
-	end do ! j
-	wc(m/2+1,:) = 0.
+    do i = 1, m/2
+      wc(i,:) = (iota*(i-1)/real(m))*wc(i,:)
+    end do ! j
+    wc(m/2+1,:) = 0.
 
-	call dfftw_execute(fftw_bplan)
-	u1(:,j,:) = w
+    call dfftw_execute(fftw_bplan)
+    u1(:,j,:) = w
       end do ! j
 
       call dfftw_destroy_plan(fftw_fplan)
@@ -66,23 +66,23 @@ contains
       allocate(w(n,nvar), wc(n/2+1,nvar) )
 
       call dfftw_plan_many_dft_r2c(fftw_fplan, 1, n, nvar, &
-		    w, n, 1, n, &
-		    wc, n/2+1, 1, n/2+1, FFTW_ESTIMATE)
+            w, n, 1, n, &
+            wc, n/2+1, 1, n/2+1, FFTW_ESTIMATE)
       call dfftw_plan_many_dft_c2r(fftw_bplan, 1, n, nvar, &
-		    wc, n/2+1, 1, n/2+1, &
-		    w, n, 1, n, FFTW_ESTIMATE)
+            wc, n/2+1, 1, n/2+1, &
+            w, n, 1, n, FFTW_ESTIMATE)
 
       do i = 1, size(u,1)
-	w = u(i,:,:)
-	call dfftw_execute(fftw_fplan)
+    w = u(i,:,:)
+    call dfftw_execute(fftw_fplan)
 
-	do j = 1, n/2
-	  wc(j,:) = (iota*(j-1)/real(n))*wc(j,:)
-	end do ! j
-	wc(n/2+1,:) = 0.
+    do j = 1, n/2
+      wc(j,:) = (iota*(j-1)/real(n))*wc(j,:)
+    end do ! j
+    wc(n/2+1,:) = 0.
 
-	call dfftw_execute(fftw_bplan)
-	u2(i,:,:) = w
+    call dfftw_execute(fftw_bplan)
+    u2(i,:,:) = w
       end do ! i
 
       call dfftw_destroy_plan(fftw_fplan)
@@ -133,10 +133,10 @@ contains
       do i = 0, m/2-1
       do j = -n/2-1, n/2-1
         if (j >= 0) then
-	  gh(i,j) = fh(i,j)
+      gh(i,j) = fh(i,j)
         else
-	  gh(i,j+ng) = fh(i,j+nf)
-	end if
+      gh(i,j+ng) = fh(i,j+nf)
+    end if
       end do ! j
       end do ! i
 
