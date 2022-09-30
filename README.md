@@ -1,10 +1,8 @@
-# Spectral Boundary Integral Solver for Cell-scale Flows
-## Authors: S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
+# Spectral Boundary Integral Solver for ELectrohydrodynamic Flows in Drops
+## Authors: M. Firouznia, S. H. Bryngelson, D. Saintillan
 
-RBC3D is a flow solver for soft capsules and cells. It solves the boundary integral form of the Stokes equations via an algorithm tailored for cell-scale simulations:
+EHD_Drop_3D is an electrohydrodynamic solver viscous drops. It solves the boundary integral forms of the Laplace's equations and Stokes equations via an algorithm tailored for drop-scale simulations:
 
 * Spectrally-accurate spherical harmonics represent the deforming surfaces
-* Modified Green’s function approximation used for near-range interactions
-* Electrostatic-like repulsion prevents cells from intersecting
-* Weak-formulation of no-slip boundary conditions (e.g., vessel walls)
-* These features ensure that simulations are robust. Parallel communication (MPI) enables large simulations, such as model vascular networks.
+* Shape reparametrization technique minimizes the high-frequency components in the spherical harmonics expansion of surface parametrization
+* Weighted spherical harmonic representation treats ringing artifacts in the convection-dominated regime and provides convergent solutions
