@@ -1,0 +1,17 @@
+cff-version: 1.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Firouznia"
+  given-names:  "Mohammadhossein"
+  orcid: "https://orcid.org/0000-0002-5358-8675"
+- family-names: "Bryngelson"
+  given-names: "Spencer H"
+  
+  family-names: "Saintillan"
+  given-names: "David"
+  
+title: "Spectral Boundary Integral Solver for Electrohydrodynamic Flows in Viscous Drops"
+version: 1.0
+doi: 
+date-released: 2022-09-30
+url: "https://github.com/mfirouzn/EHD_Drop_3D"
