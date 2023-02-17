@@ -14,8 +14,8 @@ ifeq ($(UNAMES),Linux)
 
   else
 
-    F90 := g95 -DG95 -g -fmod=../lib -I../lib 
-    CPP := g95 -E -DG95
+    F90 := gfortran -g -std=legacy
+    CPP := gcc
 
   endif
 
