@@ -92,7 +92,7 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
    * Add these to your shell rc, e.g., your `.bashrc`, and also execute them from the command line. You will not be able to build RBC3D or PETSc-lite without this. If you are using something other than bash, look up how to set environment variables for it.
       * Execute (notice this is the path from above): `export PETSC_DIR=/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
       * Execute: `export PETSC_ARCH=linux-gnu-c-debug`
-* Ascent up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc`
+* Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc`
 * Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc):
 ```
 ./configure --with-cc=mpicc --with-fc=mpif90 --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
@@ -110,31 +110,36 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 ### LAPACK95
 
-* Download the lapack95 interface for Fortran, for example [here](https://netlib.org/lapack95/lapack95.tgz), via `wget https://netlib.org/lapack95/lapack95.tgz`
-* Untar it, using, e.g., `tar -xvf <lapack95.tgz>`
-* Modify `make.inc` as needed:
+* Navigate back to `RBC3D/packages`
+* Fetch lapack95: `wget https://netlib.org/lapack95/lapack95.tgz`
+* Expand it: `tar -xvf lapack95.tgz`
+* cd `LAPACK95`
+* Modify `make.inc`:
     * Change this line `MODLIB = -I/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/mylib/include`
-    * Change this one to point to your lapack-3.9.1 install:
-        * `LAPACK_PATH = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/lapack-3.9.1`
-    * Also change these `FC = gfortran -ffree-form` and `FC1 = gfortran -ffixed-form` and `OPTS0 = `
+    * Change line 23 of `maeke.inc` to point to the full path of your `lapack-3.11` build:
+        * `LAPACK_PATH = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/lapack-3.11`
+    * Also change 
+      * Line 6 to: `FC = gfortran -ffree-form` 
+      * Line 7 to: `FC1 = gfortran -ffixed-form` 
+      * Line 16 to `OPTS0 = `
 * `cd SRC`
 * Execute `make single_double_complex_dcomplex`
-* `cd ..`
-* Execute `mv LAPACK95.a liblapack95.a`
+* `cd ..` (back to `RBC3D/packages/LAPACK95`)
+* Execute `mv lapack95.a liblapack95.a`
 
 ### NETCDF
 
 * Need to get to netcdff (netcdf-fortran)
 * PACE Phoenix has this pre-installed
 * `module load netcdf-c netcdf-cxx netcdf-fortran`
-* You can get the information about where `netcdf-fortran` is installed, which you will need for `Makefile.inc`, via `module show netcdf-fortran`
+* Later you will need information about where `netcdf-fortran` is installed for `Makefile.inc`. 
+* Get this via `module show netcdf-fortran` and looking at the `NETCDF_FORTRANROOT`
+* In my case, this is `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/`
 
 ### Spherepack
 
-* This is located in `RBC3D/install/spherepack3.2`
-* Change `make.inc` as appropriate
-    * For example, `LIB=../lib/libspherepack.a`
-    * And this snippet
+* This is located in `RBC3D/packages/spherepack3.2`
+* Change `make.inc`, in particular
 ```
 ifeq ($(UNAMES),Linux)
 
@@ -148,7 +153,6 @@ ifeq ($(UNAMES),Linux)
   else
 
     F90 := gfortran -g -std=legacy
-    # -fmod=../lib -I../lib
     CPP := gcc
 
   endif
