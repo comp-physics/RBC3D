@@ -146,16 +146,16 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 * This is needed to run `make .depend` in both `common/` and `case/` during build.
 * Sometimes available on systems by default
-* PACE Phoenix doesn't seem to have it.
-* You can grab it from [here](https://github.com/outpaddling/makedepf90)
+* PACE Phoenix doesn't seem to have it, so let's build it
 * Descend into `RBC3D/packages`
 * `git clone https://github.com/outpaddling/makedepf90.git`
+* `cd makedepf90`
 * Modify `Makefile.in`, including
   * Line 30: `CC=gcc` (or something to this effect)
   * Line 41: `prefix` (which should be your full path to the binary build, e.g. for me: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/makedepf90`)
- * Build: `make` 
- * Install: `make install` 
- * This will build the `makedepf90` binary in your `RBC3D/packages/makedepf90` directory
+* Build: `make` 
+* Install: `make install` 
+* This will build the `makedepf90` binary in your `RBC3D/packages/makedepf90` directory
 
 ## Configure Makefile.inc
 
