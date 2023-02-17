@@ -55,7 +55,7 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 * `cd BLAS-3.11.0`
 * Modify `make.inc` line 18 as `FC = mpif90`
 * Execute `make`, which will create the library file `blas_LINUX.a`
-* You will need the absolute path of `blas_LINUX.a` to configure `Makefile.inc` later
+* Later, You will need the absolute path of `blas_LINUX.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
 
 ### LAPACK
@@ -68,8 +68,9 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
    * `CC = mpicc` (line 9)
    * `FC = mpif90` (line 20)
 * `mv make.inc.example make.inc`
-* Build: `make` 
-* Install: `make install`
+* Build (this takes a few minutes): `make`
+* Later, You will need the absolute path of `liblapack.a` to configure `petsc-lite`
+   * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a`
 
 ### Valgrind
 
