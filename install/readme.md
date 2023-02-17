@@ -138,9 +138,11 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 ### Spherepack
 
-* Descend into `RBC3D/packages/spherepack3.2`
+* Navigate back to `RBC3D/packages`
+* Fetch Spherepack: `git clone https://github.com/comp-physics/spherepack3.2.git`
+* `cd spherepack3.2`
 * Change `make.inc` if using non-GNU compilers
-* Execute `make all`
+* Execute `make`
 
 ### makedepf90
 
