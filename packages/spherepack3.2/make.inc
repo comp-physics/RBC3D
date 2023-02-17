@@ -19,7 +19,7 @@ ifeq ($(UNAMES),Linux)
 
   endif
 
-  MAKE := gmake
+  MAKE := make
   AR := /usr/bin/ar
 
 endif
@@ -28,7 +28,7 @@ ifeq ($(UNAMES),AIX)
 
   F90 := xlf -qmoddir=../lib -I../lib
   CPP := xlf -d -qnoobject
-  MAKE := gmake
+  MAKE := make
   AR := /usr/bin/ar
 
 endif
@@ -47,7 +47,7 @@ ifeq ($(UNAMES),IRIX64)
     AR := /usr/bin/ar
     F90 := f90 -I../lib
     CPP := f90 -E
-    MAKE := /usr/local/bin/gmake
+    MAKE := /usr/local/bin/make
 
 endif
 
@@ -57,6 +57,6 @@ ifeq ($(UNAMES),Darwin)
     F90 := gfortran 
 #   F90 := gfortran -fdefault-real-8 
     CPP := gfortran -cpp
-    MAKE := /usr/bin/gmake
+    MAKE := /usr/bin/make
 
 endif

@@ -14,6 +14,6 @@ clean ::
 
 # Dependency
 depend .depend : $(wildcard *.F90)
-	makedepf90 *.F90 > .depend
+	$(MAKEDEPEND_BIN) *.F90 > .depend
 
 include .depend

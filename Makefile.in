@@ -1,43 +1,46 @@
 # Directories
-WORK_DIR = /home/bryngel2/3d_cell
-PETSC_DIR = /home/bryngel2/packages/petsc-3.0.0-p3
-PETSC_ARCH = linux-gnu-c-debug
+WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/test-rbc/RBC3D
+PETSC_DIR = $(WORK_DIR)/packages/mypetsc
 include $(PETSC_DIR)/conf/variables
-#include ${PETSC_DIR}/conf/rules
-MKL_DIR = /home/bryngel2/intel/mkl/10.0.1.014/lib/em64t
-#/opt/intel/composer_xe_2013_sp1.3.174/mkl/lib/intel64
-#/opt/intel/mkl/10.0.5.025/lib/em64t
-MYLIB_DIR = /home/bryngel2/3d_cell/mylib
+MKL_DIR = $(WORK_DIR)/packages/mkl
+LAPACK95_DIR = $(WORK_DIR)/packages/LAPACK95
+SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
+
+# Makedependf90 binary
+MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
+
+# Directories from loaded modules
+FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6
+NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
 
 vpath $(WORK_DIR)/common
 
-COMMON_INCLUDE = -I$(WORK_DIR)/common -I$(MYLIB_DIR)/include
-INCLUDE = $(COMMON_INCLUDE) $(PETSC_INCLUDE) #-I/home/bryngel2/packages/petsc-3.3-p7/include
+# Includes
+MKL_INCLUDE = $(MKL_DIR)/interfaces/lapack95/obj
+LAPACK95_INCLUDE = $(LAPACK95_DIR)/lapack95_modules
+PETSC_INCLUDE = $(PETSC_DIR)/include
+NETCDF_INCLUDE = $(NETCDF_DIR)/include
+
+COMMON_INCLUDE = -I$(WORK_DIR)/common -I$(MKL_INCLUDE) -I$(LAPACK95_INCLUDE)
+INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(NETCDF_INCLUDE)
 
 # Libraries
-COMMON_LIB = $(WORK_DIR)/common/libcommon.a -L$(MYLIB_DIR)/lib
-SPHPK_LIB = -L$(MYLIB_DIR)/lib -lsphpk
-LAPACK95_LIB = -L$(MYLIB_DIR)/lib -llapack95
-FFTW_LIB = -L/software/fftw-3.3.2-x86_64/lib -lfftw3
-#-L/home/bryngel2/packages/fftw-3.3.4-mpi/lib -lfftw3
-NETCDF_LIB = -L$(MYLIB_DIR)/lib -lnetcdf
-PETSC_LIB = -L$(PETSC_DIR)/$(PETSC_ARCH)/lib $(PETSC_KSP_LIB_BASIC)
-	
-MKL_LIB = -L$(MKL_DIR) -Wl,-rpath,$(MKL_DIR) \
-	-lmkl_lapack -lmkl -lguide -lpthread
-	
-#STATIC = -static-intel
+COMMON_LIB = $(WORK_DIR)/common/libcommon.a
+SPHPK_LIB = -L$(SPHEREPACK_DIR)/lib -lspherepack
+LAPACK95_LIB = -L$(LAPACK95_DIR) -llapack95
+FFTW_LIB = -L$(FFTW_DIR)/lib -lfftw3
+NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
+PETSC_LIB = -L$(PETSC_DIR)/lib $(PETSC_KSP_LIB_BASIC)
+MKL_LIB = -L$(MKL_DIR)/lib/em64t -Wl,-rpath,$(MKL_DIR)/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread
 
 # Compiler and linker
 FC = mpif90
-# /srv/local/data0/installation/mvapich/mvapich2-2.0rc2-gnu/src/env/mpif90
-NICE = -fpconstant -r8
-DEBUG =  #-O0 -g -traceback -CB -debug extended -debug-parameters all 
-OPTS = -O3 #-vec-report0
-#PROF = -pg
+NICE = -fallow-argument-mismatch -freal-4-real-8
+DEBUG =
+OPTS = -O0
 
 FFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) $(INCLUDE)
-LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF)
+LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF) -Wl,--copy-dt-needed-entries
 
 %.o : %.F90
 	$(FC) $(FFLAGS) -c $<

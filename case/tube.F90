@@ -15,7 +15,7 @@ program cells_in_tube
   implicit none
   character(CHRLEN) :: fn
 
-#include "../../petsc_include.h"
+#include "../petsc_include.h"
 
   call InitAll
 

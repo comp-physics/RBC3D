@@ -479,7 +479,7 @@ contains
 
     ! Check whether the file exists
     ierr = NF90_OPEN(trim(fn), NF90_NOWRITE, ncid)
-    if (ierr /= 0) then
+    if (ierr .ne. 0) then
       write(*, *) 'Subroutine ', func_name
       write(*, *) 'Error: file ', trim(fn), ' does not exist'
       stop
@@ -488,7 +488,7 @@ contains
     ! Check whether the mesh is Tri3
     ierr = nf90_inq_dimid(ncid, "num_nod_per_el1", dimid)
     ierr = nf90_inquire_dimension(ncid, dimid, len=num_nod_per_el)
-    if (num_nod_per_el /= 3) then
+    if (num_nod_per_el .ne. 3) then
       write(*, *) 'Subroutine ', func_name
       write(*, *) 'Error: the input mesh is not of Tri3 type'
       stop
@@ -539,7 +539,7 @@ contains
     write(*, *) 'Mesh File: ', trim(fn)
 
     ! Check whether the file exists
-    if (file_exists /= .TRUE.) then
+    if (file_exists .neqv. .TRUE.) then
       write(*, *) 'Subroutine ', func_name
       write(*, *) 'Error: file ', trim(fn), ' does not exist'
       stop  
@@ -550,7 +550,7 @@ contains
     read(99, *) nele
 
     ! Check whether the mesh is Tri3
-    if (num_nod_per_el /= 3) then
+    if (num_nod_per_el .ne. 3) then
       write(*, *) 'Subroutine ', func_name
       write(*, *) 'Error: the input mesh is not of Tri3 type'
       stop

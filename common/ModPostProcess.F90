@@ -61,7 +61,7 @@ contains
 
 !**********************************************************************
 ! Compute the total wall shear force
-  function WallShearForce result(sf)
+  function WallShearForce() result(sf)
     real(WP) :: sf(3)
 
     type(t_wall),pointer :: wall
@@ -87,7 +87,7 @@ contains
 
 !**********************************************************************
 ! Compute the total cellular flow rate
-  function CellFlowRate result(flowrate)
+  function CellFlowRate() result(flowrate)
     real(WP) :: flowrate
 
     type(t_rbc),pointer :: rbc

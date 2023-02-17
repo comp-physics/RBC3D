@@ -3,7 +3,7 @@ module ModDataStruct
   use ModDataTypes
 
   implicit none
-#include "petsc_include.h"
+#include "../petsc_include.h"
 
   private
 
