@@ -21,15 +21,28 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
    * `tar -xvf l_mkl_p_10.0.1.014.tgz`
 
 * Proceed with a user installation
+    * mkdir `packages/mkl` 
     * `cd ../l_mkl_p_10.0.1.014`
-    * `./install/install`
+    * `./install.sh`
+    * `3. Install as current user.`
+    * `1. Install`
+    * `2. Provide the absolute path for an existing license file.`
+    * `Please type a selection or License file name or port@hostname: /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mkl-licenses/l_GVJ78MLJ.lic`
     * `2. Install the software without using RPM database (root password not required).`
-    * Provide the absolute path to the license file when requested
-    * There are two licenses provides, for example one is at located `install/mkl-licenses/l_GVJ78MLJ.lic`
-* Move into the `mkl/interfaces/lapack95` directory
-* Build the LAPACK95 here by
-    * Modify the `makefile` via `FC=gfortran`
-    * Execute `make`
+    * `Enter`
+    * `Enter`
+    * `d`, `d`, `d`, `d`, type `accept` and return
+    * `Where do you want to install to?`: 
+      * Via another terminal move into the `RBC3D/packages/mkl/` directory and issue `pwd`
+      * Use this location for the prompt 
+      * Accept warnings about overwriting the existing directory
+    * `Enter to continue`
+    * `Enter to continue`
+    * Done
+* Build the MKL LAPACK95 by
+    * Move into the MKL LAPACK95 directory: `cd RBC3D/packages/mkl/interfaces/lapack95` 
+    * Modify the `makefile` to `FC = gfortran` on lines 47 and 50.
+    * Execute `make libem64t`
     * Copy all module files from `mkl/interfaces/lapack95/obj/` into `RBC3D/mylib/include/`
         * This should include `mkl95_lapack.mod`, `mkl95_precision.mod`, `libmkl_lapack95.a`
 
