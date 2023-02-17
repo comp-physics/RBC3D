@@ -138,30 +138,8 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 ### Spherepack
 
-* This is located in `RBC3D/packages/spherepack3.2`
-* Change `make.inc`, in particular
-```
-ifeq ($(UNAMES),Linux)
-
-  PGI := $(shell mpif90 2>&1)
-
-  ifeq ($(PGI),pgf90-Warning-No files to process)
-
-    F90 := pgf90 -module ../lib -I../lib
-    CPP := pgf90 -E
-
-  else
-
-    F90 := gfortran -g -std=legacy
-    CPP := gcc
-
-  endif
-
-  MAKE := gmake
-  AR := /usr/bin/ar
-
-endif
-```
+* Descend into `RBC3D/packages/spherepack3.2`
+* Change `make.inc` if using non-GNU compilers
 * Execute `make all`
 
 ### makedepf90
@@ -170,10 +148,14 @@ endif
 * Sometimes available on systems by default
 * PACE Phoenix doesn't seem to have it.
 * You can grab it from [here](https://github.com/outpaddling/makedepf90)
-    * Modify `Makefile`, including
-        * `CC=gcc` (or something to this effect)
-        * `prefix` (which should be set to the directory you unpacked this thing in)
-    * Then just `make` and `make install` (maybe?) should be enough to build the `makedepf90` binary in whatever directory you unpacked the source in.
+* Descend into `RBC3D/packages`
+* `git clone https://github.com/outpaddling/makedepf90.git`
+* Modify `Makefile.in`, including
+  * Line 30: `CC=gcc` (or something to this effect)
+  * Line 41: `prefix` (which should be your full path to the binary build, e.g. for me: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/makedepf90`)
+ * Build: `make` 
+ * Install: `make install` 
+ * This will build the `makedepf90` binary in your `RBC3D/packages/makedepf90` directory
 
 ## Configure Makefile.inc
 
