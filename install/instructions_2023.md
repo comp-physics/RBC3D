@@ -160,47 +160,22 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 ## Configure Makefile.inc
 
 You need to change the `Makefile.inc` to locate all of these libraries!
-All-together, you should have something like this
+This mostly just means changing the first 14 lines of `Makefile.inc`:
 
 ```
-WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D
-PETSC_DIR = /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc
-PETSC_ARCH = linux-gnu-c-debug
+WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/test-rbc/RBC3D
+PETSC_DIR = $(WORK_DIR)/packages/mypetsc
 include $(PETSC_DIR)/conf/variables
-MKL_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/mkl/lib/em64t
-MYLIB_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/mylib
+MKL_DIR = $(WORK_DIR)/packages/mkl
+LAPACK95_DIR = $(WORK_DIR)/packages/LAPACK95
+SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 
-vpath $(WORK_DIR)/common
+# Makedependf90 binary
+MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
 
-COMMON_INCLUDE = -I$(WORK_DIR)/common -I$(MYLIB_DIR)/include
-INCLUDE = $(COMMON_INCLUDE) $(PETSC_INCLUDE) -I/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include
-
-COMMON_LIB = $(WORK_DIR)/common/libcommon.a
-SPHPK_LIB = -L/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/install/spherepack3.2/lib -lspherepack
-LAPACK95_LIB = -L/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack95 -llapack95
-FFTW_LIB = -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3
-NETCDF_LIB = -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff
-PETSC_LIB = -L$(PETSC_DIR)/lib $(PETSC_KSP_LIB_BASIC)
-MKL_LIB = -L$(MKL_DIR) -Wl,-rpath,$(MKL_DIR) \
-    -lmkl_lapack -lmkl -lguide -lpthread
-
-# Compiler and linker
-FC = mpif90
-NICE = -fallow-argument-mismatch -freal-4-real-8
-DEBUG =
-OPTS = -O0
-
-FFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) $(INCLUDE)
-LDFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) -Wl,--copy-dt-needed-entries
-
-%.o : %.F90
-    $(FC) $(FFLAGS) -c $<
-%.o : %.F
-    $(FC) $(FFLAGS) -c $<
-
-# Archiving
-AR  = ar ru
-RANLIB  = ranlib
+# Directories from loaded modules
+FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6
+NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
 ```
 
 ## Build
@@ -210,37 +185,13 @@ RANLIB  = ranlib
 This is the main code-base.
 
 * Descend into `RBC3D/common`
-* Modify the `Makefile` to use the path for your `makedepf90`
-    * Like this: `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/makedepf90/makedepf90 *.F90 > .depend`
-* Run `rm -f .depend` and then `make .depend`
+* Execute `make .depend`
 * Execute `make`
 
 ### Case
 
 This is an example case.
 
-* Modify the `Makefile` again, like
-```
-include ../Makefile.in
-
-LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(MKL_LIB) $(LAPACK95_LIB) $(STATIC)
-EXECUTABLES = tube initcond
-
-all : $(EXECUTABLES)
-
-lib : $(wildcard $(WORK_DIR)/common/*.F90)
-    make -C $(WORK_DIR)/common
-
-$(EXECUTABLES) : % : %.o $(wildcard $(COMMON_DIR)/*.F90)
-    make lib
-    $(FC) $(LDFLAGS) -o $@ $< $(LIB)
-
-clean :
-    -rm -f $(EXECUTABLES) *.o *.mod *.a core
-
-# Dependency
-.depend : $(wildcard *.F90)
-    /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/makedepf90/makedepf90 $^ > .depend
-
-include .depend
-```
+* Descend into `RBC3D/case`
+* Execute `make .depend`
+* Execute `make`
