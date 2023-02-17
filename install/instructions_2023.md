@@ -8,6 +8,7 @@
 ## Compilers
 
 You will need `gcc` and `mpich` (or the like).
+On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 ## Build libraries
 
