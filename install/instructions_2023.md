@@ -43,24 +43,33 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
     * Move into the MKL LAPACK95 directory: `cd RBC3D/packages/mkl/interfaces/lapack95` 
     * Modify the `makefile` to `FC = gfortran` on lines 47 and 50.
     * Execute `make libem64t`
-    * Copy all module files from `mkl/interfaces/lapack95/obj/` into `RBC3D/mylib/include/`
+    * Execute `make lib64`
+    * Copy all module files from `RBC/packages/mkl/interfaces/lapack95/obj/*` into `RBC3D/mylib/include/`
         * This should include `mkl95_lapack.mod`, `mkl95_precision.mod`, `libmkl_lapack95.a`
 
 ### BLAS
 
-* I use `BLAS-3.10.0`
-* Download it and unpack in `RBC3D/packages/BLAS-3.10.0` (for example)
-* Modify `make.inc`, like
-    * `FC=mpif90`
-* Then just `make`, which should create the library file `blas_LINUX.a`
-* You will need the absolute path of `blas_LINUX.a` to configure `Makefile.inc`
+* Move back into packages: `cd RBC3D/packages`
+* Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
+* Unpack it: `tar -xvf blas-3.11.0.tgz`
+* `cd BLAS-3.11.0`
+* Modify `make.inc` line 18 as `FC = mpif90`
+* Execute `make`, which will create the library file `blas_LINUX.a`
+* You will need the absolute path of `blas_LINUX.a` to configure `Makefile.inc` later
+   * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
 
 ### LAPACK
 
-* I use `lapack-3.9.1`
-* Download it and unpack in `RBC3D/packages/lapack-3.9.1` (for example)
-* Modify `make.inc` as needed, `CC=mpicc` and `FC=mpif90` for example.
-* `make` and (maybe?) `make install` as appropriate
+* Move back into packages: `cd RBC3D/packages`
+* Download the latest lapack (at time of writing `3.11`): `wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz`
+* Unpack it `tar -xvf v3.11.tar.gz`
+* `cd lapack-3.11`
+* Modify `make.inc.example` as needed 
+   * `CC = mpicc` (line 9)
+   * `FC = mpif90` (line 20)
+* `mv make.inc.example make.inc`
+* Build: `make` 
+* Install: `make install`
 
 ### Valgrind
 
