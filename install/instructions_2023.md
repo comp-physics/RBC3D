@@ -15,9 +15,15 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 ### MKL
 
 * We need an old MKL, in this case `l_mkl_p_10.0.1.014/`
-    * The tarball for this library and licenses for it are in the `install/` directory
-* Untar the tarball in `RBC/packages`
+    * The tarball for this library and licenses for it are in the `packages/` directory
+* Untar it via
+   * `cd packages`
+   * `tar -xvf l_mkl_p_10.0.1.014.tgz`
+
 * Proceed with a user installation
+    * `cd ../l_mkl_p_10.0.1.014`
+    * `./install/install`
+    * `2. Install the software without using RPM database (root password not required).`
     * Provide the absolute path to the license file when requested
     * There are two licenses provides, for example one is at located `install/mkl-licenses/l_GVJ78MLJ.lic`
 * Move into the `mkl/interfaces/lapack95` directory
