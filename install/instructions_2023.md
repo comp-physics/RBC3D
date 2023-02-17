@@ -82,18 +82,22 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 
 ### PETSc-lite
 
-* Depends on Valgrind, LAPACK, BLAS
-* Untar (`tar -xvf <file>`) the tarbar located in `install/` to `packages/`
-* Set up your environment via the environment variables like this
-(You will need to put these in your shell rc, e.g., your `.bashrc`. You will not be able to build RBC3D or PETSc-lite without this)
+* This depends on Valgrind, LAPACK, BLAS from above, don't attempt until those steps are finished
+* Move back to `RBC3D/packages`
+* Unpack `petsc-lite`: `tar -xvf petsc-lite-3.0.0-p3.tar.gz`
+* Set up your environment via the environment variables 
+   * Get the absolute path of the unpacked petsc via
+      * `cd petsc-3.0.0-p3`
+      * `pwd`: In my case: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
+   * Add these to your shell rc, e.g., your `.bashrc`. You will not be able to build RBC3D or PETSc-lite without this.
 ```
 export PETSC_DIR=/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3
 export PETSC_ARCH=linux-gnu-c-debug
 ```
-* Build by first creating a new directory `mypetsc/`, for example, as `RBC3D/packages/mypetsc`
+* Ascent up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc`
 * Configure via something like this, using your own absolute paths:
 ```
-./configure --with-cc=mpicc --with-fc=mpif90 --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.10.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.9.1/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+./configure --with-cc=mpicc --with-fc=mpif90 --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
 ```
 * Then `make` and `make install`
 
