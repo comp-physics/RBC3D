@@ -147,10 +147,9 @@ You will need `gcc` and `mpich` (or the like).
 * Sometimes available on systems by default
 * PACE Phoenix doesn't seem to have it, so let's build it
 * Descend into `RBC3D/packages`
-* `git clone https://github.com/outpaddling/makedepf90.git`
+* `git clone https://github.com/comp-physics/makedepf90.git`
 * `cd makedepf90`
 * Modify `Makefile`, including
-  * Line 30: `CC=gcc` (or something to this effect)
   * Line 41: `prefix` (which should be your full path to the binary build, e.g. for me: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/makedepf90`)
 * Build: `make` 
 * Install: `make install` 
@@ -159,19 +158,12 @@ You will need `gcc` and `mpich` (or the like).
 ## Configure Makefile.inc
 
 You need to change the `Makefile.inc` to locate all of these libraries!
-This mostly just means changing the first 14 lines of `Makefile.inc`:
-
+This mostly just means changing the first line of `Makefile.inc`:
 ```
 WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D
-PETSC_DIR = $(WORK_DIR)/packages/mypetsc
-include $(PETSC_DIR)/conf/variables
-MKL_DIR = $(WORK_DIR)/packages/mkl
-LAPACK95_DIR = $(WORK_DIR)/packages/LAPACK95
-SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
-
-# Makedependf90 binary
-MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
-
+```
+and the module directories
+```bash
 # Directories from loaded modules
 FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6
 NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
