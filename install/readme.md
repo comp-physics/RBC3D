@@ -44,8 +44,6 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
     * Modify the `makefile` to `FC = gfortran` on lines 47 and 50.
     * Execute `make libem64t`
     * Execute `make lib64`
-    * Copy all module files from `RBC/packages/mkl/interfaces/lapack95/obj/*` into `RBC3D/mylib/include/`
-        * This should include `mkl95_lapack.mod`, `mkl95_precision.mod`, `libmkl_lapack95.a`
 
 ### BLAS
 
