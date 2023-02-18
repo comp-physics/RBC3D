@@ -37,7 +37,7 @@ MKL_LIB = -L$(MKL_DIR)/lib/em64t -Wl,-rpath,$(MKL_DIR)/lib/em64t -lmkl_lapack -l
 
 # Compiler and linker
 FC = mpif90
-# remove -fallow-argument-mismatch is during compilation you have a problem (due to old gnu compilers)
+# remove -fallow-argument-mismatch if during compilation you have a problem with it (due to old gnu compilers)
 NICE = -fallow-argument-mismatch -freal-4-real-8
 DEBUG =
 OPTS = -O0
