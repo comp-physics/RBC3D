@@ -112,7 +112,6 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 * Expand it: `tar -xvf lapack95.tgz`
 * cd `LAPACK95`
 * Modify `make.inc`:
-    * Change this line `MODLIB = -I/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/mylib/include`
     * Change line 23 of `make.inc` to point to the full path of your `lapack-3.11` build:
         * `LAPACK_PATH = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/lapack-3.11`
     * Also change 
