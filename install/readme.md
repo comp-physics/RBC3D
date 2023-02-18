@@ -10,7 +10,7 @@
 You will need `gcc` and `mpich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
 * On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
-* 
+
 ## Build libraries
 
 ### MKL
@@ -177,11 +177,13 @@ FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fft
 NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
 ```
 
+* If you have an older version of `gfortran` then you will need to remove the `-fallow-argument-mismatch` flag on line 38 of `Makefile.in`
+
 ## Build
 
 ### Common
 
-This is the main code-base.
+This is the main codebase.
 
 * Descend into `RBC3D/common`
 * Execute `make .depend`
