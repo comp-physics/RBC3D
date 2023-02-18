@@ -8,8 +8,9 @@
 ## Compilers
 
 You will need `gcc` and `mpich` (or the like).
-On PACE Phoenix you can issue `module load gcc mvapich2`.
-
+* On PACE Phoenix you can issue `module load gcc mvapich2`.
+* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
+* 
 ## Build libraries
 
 ### MKL
