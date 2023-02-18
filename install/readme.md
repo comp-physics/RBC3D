@@ -149,7 +149,7 @@ You will need `gcc` and `mpich` (or the like).
 * Descend into `RBC3D/packages`
 * `git clone https://github.com/outpaddling/makedepf90.git`
 * `cd makedepf90`
-* Modify `Makefile.in`, including
+* Modify `Makefile`, including
   * Line 30: `CC=gcc` (or something to this effect)
   * Line 41: `prefix` (which should be your full path to the binary build, e.g. for me: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/makedepf90`)
 * Build: `make` 
