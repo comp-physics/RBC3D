@@ -91,7 +91,7 @@ You will need `gcc` and `mpich` (or the like).
       * Execute (notice this is the path from above): `export PETSC_DIR=/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
       * Execute: `export PETSC_ARCH=linux-gnu-c-debug`
 * Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc`
-* Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc):
+* Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc), and notice the `--with-mpiexec=srun` line where you should replace `srun` with what is relevant for your system (`srun` if available, `mpirun` or `mpiexec` are two other options):
 ```
 ./configure --with-cc=mpicc --with-fc=mpif90 --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
 ```
