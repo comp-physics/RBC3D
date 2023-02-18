@@ -15,14 +15,13 @@ On PACE Phoenix you can issue `module load gcc mvapich2`.
 ### MKL
 
 * We need an old MKL, in this case `l_mkl_p_10.0.1.014/`
-    * The tarball for this library and licenses for it are in the `packages/` directory
-* Untar it via
-   * `cd packages`
+* Fetch it: 
+   * `cd packages/`
+   * `wget https://www.dropbox.com/s/gljrvl6p2f5x3go/l_mkl_p_10.0.1.014.tgz`
    * `tar -xvf l_mkl_p_10.0.1.014.tgz`
-
 * Proceed with a user installation
-    * mkdir `packages/mkl` 
-    * `cd ../l_mkl_p_10.0.1.014`
+    * `mkdir RBC3D/packages/mkl` 
+    * `cd l_mkl_p_10.0.1.014`
     * `./install.sh`
     * `3. Install as current user.`
     * `1. Install`
