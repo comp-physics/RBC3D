@@ -1,10 +1,8 @@
-<div style="padding:2px;background:#fff;webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;width:60%;margin:0 auto;overflow:hidden;">
 <p align="center">
   <a href="http://mflowcode.github.io/">
-    <img src="install/cells-2.png" alt="RBC3D Banner" width="500"/>
+    <img src="install/cells-2.png" alt="RBC3D Banner" width="600"/>
   </a>
 </p>
-</div>
 
 # Spectral Boundary Integral Solver for Cell-scale Flows
 ## Authors: S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
