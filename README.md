@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://mflowcode.github.io/">
-    <img src="install/cells-3.png" alt="RBC3D Banner" width="600"/>
+    <img src="install/cells-3.png" alt="RBC3D Banner" width="800"/>
   </a>
 </p>
 <p align="center">
