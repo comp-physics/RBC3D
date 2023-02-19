@@ -4,8 +4,8 @@
   </a>
 </p>
 
-# Spectral Boundary Integral Solver for Cell-scale Flows
-## Authors: S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
+# RBC3D: Spectral boundary integral solver for cell-scale flows
+### Authors: S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
 
 [![DOI](https://zenodo.org/badge/412637841.svg)](https://zenodo.org/badge/latestdoi/412637841)
 
