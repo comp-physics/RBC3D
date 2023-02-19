@@ -3,12 +3,16 @@
     <img src="install/cells-2.png" alt="RBC3D Banner" width="600"/>
   </a>
 </p>
+<p align="center">
+  <a href="https://zenodo.org/badge/latestdoi/412637841">
+    <img src="https://zenodo.org/badge/412637841.svg" />
+  </a>
+</p>
 
-# RBC3D: Spectral boundary integral solver for cell-scale flows
-### Authors: S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
+# RBC3D
+### Spectral boundary integral solver for cell-scale flows
 
-[![DOI](https://zenodo.org/badge/412637841.svg)](https://zenodo.org/badge/latestdoi/412637841)
-
+__Authors:__ S. H. Bryngelson, H. Zhao, A. Isfahani, J. B. Freund
 
 RBC3D is a flow solver for soft capsules and cells. 
 It implements the methods discussed in [Zhao et al., JCP (2010)](https://doi.org/10.1016/j.jcp.2010.01.024) and more.
