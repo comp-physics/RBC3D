@@ -1,4 +1,4 @@
-# RBC3D Build Instructions
+# RBC3D Build and Run Instructions
 
 0. Ensure you have compilers and wrappers
 1. Build libraries
