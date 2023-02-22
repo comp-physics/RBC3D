@@ -40,7 +40,7 @@ FC = mpif90
 # remove -fallow-argument-mismatch if during compilation you have a problem with it (due to old gnu compilers)
 NICE = -fallow-argument-mismatch -freal-4-real-8
 DEBUG =
-OPTS = -O0
+OPTS = -O3
 
 FFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) $(INCLUDE)
 LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF) -Wl,--copy-dt-needed-entries
