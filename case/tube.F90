@@ -13,6 +13,7 @@ program cells_in_tube
   use ModQuadRule
 
   implicit none
+  integer :: cutoff
   character(CHRLEN) :: fn
 
 #include "../petsc_include.h"
@@ -37,7 +38,7 @@ contains
     call InitSystem
 
     ! Note: SetEwaldPrms and DomainDecomp must be called after InitSystem
-    call SetEwaldPrms	
+    call SetEwaldPrms
     call DomainDecomp
     call GlobData_Init
 
@@ -123,7 +124,7 @@ contains
     ! Background velocity
 !    if (Nt0 == 0) then
       vbkg(1:2) = 0.
-      vbkg(3) = 8.     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      vbkg(3) = 8.
 !    end if
      print *,vbkg
 

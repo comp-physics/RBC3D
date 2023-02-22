@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="http://mflowcode.github.io/">
-    <img src="install/cells-3.png" alt="RBC3D Banner" width="800"/>
-  </a>
+  <img src="install/cells-3.png" alt="RBC3D Banner" width="800"/>
 </p>
 <p align="center">
   <a href="https://zenodo.org/badge/latestdoi/412637841">
