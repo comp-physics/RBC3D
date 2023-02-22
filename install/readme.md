@@ -189,3 +189,9 @@ This is an example case.
 * Execute `make .depend`
 * Execute `make`
 
+## Run
+
+In `case/` you should be able to
+* `mpiexec -n 2 ./initcond`
+* `mpiexec -n 2 ./tube`
+or substitute in your mpi runner like `srun`.
