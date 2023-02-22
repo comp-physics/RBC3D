@@ -118,7 +118,7 @@ You will need `gcc` and `mpich` (or the like).
     * Also change 
       * Line 6 to: `FC = gfortran -ffree-form` 
       * Line 7 to: `FC1 = gfortran -ffixed-form` 
-      * Line 16 to `OPTS0 = `
+      * Line 16 to `OPTS0 = -O3 `
 * `cd SRC`
 * Execute `make single_double_complex_dcomplex`
 * `cd ..` (back to `RBC3D/packages/LAPACK95`)
