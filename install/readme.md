@@ -1,13 +1,20 @@
 # RBC3D Build and Run Instructions
 
+-1. Use an appropriate computer
 0. Ensure you have compilers and wrappers
 1. Build libraries
 2. Cnfigure the `Makefile.inc` in the base directory
 3. Build `common/` and `case/`
 
-## Compilers
+## Use an appropriate computer
 
-You will need `gcc` and `mpich` (or the like).
+* RBC3D __will not__ build on non-x86 hardware (like a new Mac M1+) at time of writing. Use an x86 machine (AMD or Intel processors).
+* RBC3D has not been tested on WSL or Windows computers broadly. We do not recommend using WSL. Instead, use a Linux partition or a *nix-based computing cluster.
+At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix. 
+
+## Ensure you have compilers and wrappers
+
+You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
 * On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
 
