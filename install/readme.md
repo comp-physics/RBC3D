@@ -1,10 +1,10 @@
 # RBC3D Build and Run Instructions
 
--1. Use an appropriate computer
-0. Ensure you have compilers and wrappers
-1. Build libraries
-2. Cnfigure the `Makefile.inc` in the base directory
-3. Build `common/` and `case/`
+0. Use an appropriate computer
+1. Ensure you have compilers and wrappers
+2. Build libraries
+3. Cnfigure the `Makefile.inc` in the base directory
+4. Build `common/` and `case/`
 
 ## Use an appropriate computer
 
