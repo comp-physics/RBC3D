@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Spectral Boundary Integral Solver for Electrohydrodynamic
+  Flows in Viscous Drops
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Mohammadhossein
+    family-names: Firouznia
+    email: mfirouzn@eng.ucsd.edu
+    orcid: 'https://orcid.org/0000-0002-5358-8675'
+    affiliation: University of California San Diego
+  - given-names: Spencer H.
+    family-names: Bryngelson
+    affiliation: Georgia Institute of Technology
+  - given-names: David
+    family-names: Santillan
+    affiliation: University of California San Diego
+identifiers:
+  - type: url
+    value: 'https://arxiv.org/abs/2210.04957'
+repository-code: 'https://github.com/mfirouzn/EHD_Drop_3D'
+abstract: >-
+  EHD_Drop_3D is an electrohydrodynamic solver for viscous
+  drops. It solves the boundary integral forms of the
+  Laplace's equations and Stokes equations via an algorithm
+  tailored for drop-scale simulations.
+license: MIT
+version: '1.0'
+date-released: '2022-10-10'
