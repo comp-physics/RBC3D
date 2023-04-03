@@ -11,13 +11,12 @@ authors:
   - given-names: Mohammadhossein
     family-names: Firouznia
     email: mfirouzn@eng.ucsd.edu
-    orcid: 'https://orcid.org/0000-0002-5358-8675'
     affiliation: University of California San Diego
   - given-names: Spencer H.
     family-names: Bryngelson
     affiliation: Georgia Institute of Technology
   - given-names: David
-    family-names: Santillan
+    family-names: Saintillan
     affiliation: University of California San Diego
 identifiers:
   - type: url
