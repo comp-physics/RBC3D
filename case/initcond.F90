@@ -12,8 +12,8 @@ program InitCond
 
   implicit none
 
-  integer,parameter :: nrbcMax = 128
-  integer,parameter :: nwallMax = 4
+  integer,parameter :: nrbcMax = 256 ! was 128
+  integer,parameter :: nwallMax = 8 ! was 4
   type(t_rbc),pointer :: rbc
   type(t_rbc)         :: rbcRef
   type(t_wall),pointer :: wall
@@ -25,6 +25,9 @@ program InitCond
   integer,parameter :: ranseed = 161269
   character(CHRLEN) :: fn
   real :: lengtube,lengspacing, phi, actlen
+
+  integer :: rbcl !layers of red blood cells; each layer has 6 blood cell bois
+  integer :: rbcpl  !red blood cells per layer
 
     ! Initialize
     call InitMPI
@@ -44,13 +47,18 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 8
+    !CHANGE THIS FOR SCALING EXPERIMENTSs
+    rbcl = 32
+
+    !make hexagonal layers
+    rbcpl = 7
+    nrbc = rbcl * rbcpl
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-    lengtube = nrbc/real(phi) !XXLL
+    lengtube = rbcl/real(phi) !XXLL
 
-    lengspacing = lengtube/Real(nrbc)
+    lengspacing = lengtube/Real(rbcl)
 
     wall%f = 0.
 
@@ -74,7 +82,7 @@ program InitCond
     Lb(2) = Lb(1)
     Lb(3) = zmax - zmin
     lengtube = Lb(3)
-    lengspacing = lengtube/real(nrbc)
+    ! lengspacing = lengtube/real(nrbc)
 
     ! Reference cell 
     xc = 0.
@@ -89,8 +97,15 @@ program InitCond
 
     ! place cells
     do iz = 1,nrbc
-        xc(1:2) = 0.
-        xc(3) = lengspacing*(iz-0.5)
+        !make hexagon thingy
+        if (modulo(iz, rbcpl) < 1) then
+            xc(1:2) = 0
+        else
+            xc(1) = 3 * cos(PI/3 * (modulo((iz), rbcpl)))
+            xc(2) = 3 * sin(PI/3 * (modulo((iz), rbcpl)))
+        end if
+
+        xc(3) = lengspacing*(((iz - 1) / rbcpl) - 0.5)
         print*, 'Xc', iz, xc
 
         rbc => rbcs(iz)
