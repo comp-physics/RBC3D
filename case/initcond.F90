@@ -12,8 +12,8 @@ program InitCond
 
   implicit none
 
-  integer,parameter :: nrbcMax = 256 ! was 128
-  integer,parameter :: nwallMax = 8 ! was 4
+  integer,parameter :: nrbcMax = 128 ! was 128
+  integer,parameter :: nwallMax = 4 ! was 4
   type(t_rbc),pointer :: rbc
   type(t_rbc)         :: rbcRef
   type(t_wall),pointer :: wall
@@ -48,7 +48,7 @@ program InitCond
     end if
 
     !CHANGE THIS FOR SCALING EXPERIMENTSs
-    rbcl = 32
+    rbcl = 16
 
     !make hexagonal layers
     rbcpl = 7

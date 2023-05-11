@@ -9,12 +9,13 @@
 #run this in the case directory of RBC3D
 
 #SBATCH --account=gts-coc-coda20
-#SBATCH -N16 --ntasks-per-node=24
-#SBATCH -t8:00:00
+#SBATCH -N1 --ntasks-per-node=24
+#SBATCH --mem-per-cpu=1G
+#SBATCH -t2:00:00
 #SBATCH -qinferno
 #SBATCH --mail-user=smullangi3@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/4000It_WBCSim_4L_384P.log"
+#SBATCH -o "./run_logs/250It_RBCSim_16L_1CPU.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -29,4 +30,4 @@ ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 make clean
 make
 srun -n 1 ./initcond
-srun -n 384 ./tube
+time srun -n 24 ./tube
