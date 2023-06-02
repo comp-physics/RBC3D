@@ -5,6 +5,7 @@ module ModRbc
   use ModDataStruct
   use ModSphpk
   use ModSpline
+  use ModPolyRoots
 
   implicit none
 
@@ -22,7 +23,10 @@ module ModRbc
     RBC_CovarGrad_Tensor, &
     RBC_SphProject, &
     RBC_Integral, &
-    RBC_BuildSurfaceSource
+    RBC_BuildSurfaceSource, &
+    RBC_MakeSickle, &
+    RBC_IsSickleCoordValid, &
+    RBC_SolveSickleRho
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
@@ -175,6 +179,109 @@ contains
     end if
 
   end subroutine RBC_MakeSphere
+
+  subroutine RBC_MakeSickle(cell, r, xc)
+    type(t_RBC) :: cell
+    real(WP),optional :: xc(3)
+
+    integer :: ilat, ilon, ii, a_toggle
+    real(WP) :: th, phi, r, p
+
+    real(WP), dimension(0:5) :: a_l, a_u
+    real(WP), dimension(2) :: b
+
+    a_toggle = 0
+    a_u = (/ 1.36 , -0.0403, 0.306, -0.00169, -0.0360, -0.0277 /)
+    a_l = (/ -0.806, -0.1141, -0.00678, 0.00212, 0.0201,  0.0284 /)
+
+    do ilon = 1, cell%nlon
+    do ilat = 1, cell%nlat
+      th = cell%th(ilat)
+      phi = cell%phi(ilon)
+
+      if (a_toggle .eq. 0) then
+        r = RBC_SolveSickleRho(th, phi, a_u)
+      else 
+        r = RBC_SolveSickleRho(th, phi, a_l)
+      end if
+
+      
+      if (RBC_IsSickleCoordValid(th, phi, r, b, p) .eq. 0) then
+        !rho is invalid, toggle the surface and recalculate rho
+        a_toggle = 1 - a_toggle
+        if (a_toggle .eq. 0) then
+          r = RBC_SolveSickleRho(th, phi, a_u)
+        else 
+          r = RBC_SolveSickleRho(th, phi, a_l)
+        end if
+      end if
+
+      cell%x(ilat,ilon,1) = r*sin(phi)*cos(th)
+      cell%x(ilat,ilon,2) = r*sin(phi)*sin(th)
+      cell%x(ilat,ilon,3) = r*cos(phi)
+
+    end do ! ilat
+    end do !ilon
+
+
+    if (present(xc)) then
+      do ii = 1, 3
+        cell%x(:,:,ii) = cell%x(:,:,ii) + xc(ii)
+      end do ! ii
+    end if
+
+  end subroutine RBC_MakeSickle
+
+  function RBC_IsSickleCoordValid(th, phi, r, b, p) result(valid)
+    real(WP) :: th, phi, r, p, x, y, res
+    real(WP),dimension(2) :: b
+    integer :: valid
+
+    x = r * sin(phi) * cos(th)
+    y = r * sin(phi) * sin(th)
+
+    res = (abs(x) / b(1))**p + (abs(y) / b(2))**p
+    if (res .le. 1) then 
+      valid = 1
+    else 
+      valid = 0
+    end if 
+ 
+  end function RBC_IsSickleCoordValid
+
+  function RBC_SolveSickleRho(th, phi, a) result(r)
+    real(WP) :: th, phi, r, ct2, st2, cp2, sp2
+    real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
+    real(WP),dimension(5) :: quarticCoeffs
+    complex(WP), dimension(4) :: all_roots
+    integer :: i
+
+    if (sin(phi) .eq. 0) then
+      r = a(0) / cos(phi)
+      return
+    end if
+
+    ct2 = cos(th) ** 2
+    st2 = sin(th) ** 2
+    cp2 = cos(phi) ** 2
+    sp2 = sin(phi) ** 2
+
+    quarticCoeffs(1) = a(0)
+    quarticCoeffs(2) = -1 * cos(phi)
+    quarticCoeffs(3) = a(1) * ct2 * sp2 + a(2) * st2 * sp2
+    quarticCoeffs(4) = 0
+    quarticCoeffs(5) = a(3) * ((ct2 * sp2)**2) + a(4) * ((st2 * sp2)**2) + a(5) * (ct2 * st2 *(sp2 ** 2))
+
+    call QuarticRoots(quarticCoeffs, all_roots)
+
+    r = huge(r)
+    do i = 1, 4
+      if (REAL(AIMAG(all_roots(i))) .eq. 0 .and. REAL(REAL(all_roots(i))) .ge. 0) then
+        r = min(r, REAL(REAL(all_roots(i))))
+      end if
+    end do
+
+  end function RBC_SolveSickleRho
     
   
 !**********************************************************************
