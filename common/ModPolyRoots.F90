@@ -54,7 +54,7 @@ MODULE ModPolyRoots
 !----------------------------------------------------------------------------
 
   INTERFACE Swap
-    MODULE PROCEDURE SwapDouble, SwapSingle
+    MODULE PROCEDURE SwapDouble!, SwapSingle
   END INTERFACE
 
 CONTAINS
@@ -572,17 +572,17 @@ SUBROUTINE SwapDouble(a,b)
 END Subroutine SwapDouble   ! -----------------------------------------------
 
 !+
-SUBROUTINE SwapSingle(a,b)
-! ---------------------------------------------------------------------------
-! PURPOSE - Interchange the contents of a and b
-  REAL(SP),INTENT(IN OUT):: a,b
-  REAL(SP):: t
-!----------------------------------------------------------------------------
-  t=b
-  b=a
-  a=t
-  RETURN
-END Subroutine SwapSingle   ! -----------------------------------------------
+! SUBROUTINE SwapSingle(a,b)
+! ! ---------------------------------------------------------------------------
+! ! PURPOSE - Interchange the contents of a and b
+!   REAL(SP),INTENT(IN OUT):: a,b
+!   REAL(SP):: t
+! !----------------------------------------------------------------------------
+!   t=b
+!   b=a
+!   a=t
+!   RETURN
+! END Subroutine SwapSingle   ! -----------------------------------------------
 
 
 END Module ModPolyRoots   ! ==============================================
