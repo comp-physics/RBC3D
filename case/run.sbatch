@@ -15,7 +15,7 @@
 #SBATCH -qinferno
 #SBATCH --mail-user=smullangi3@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/250It_RBCSim_16L_1CPU.log"
+#SBATCH -o "./run_logs/250It_RBCSim_SickleTrial.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -27,7 +27,14 @@ cd ../
 
 ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 
+cd ../common
 make clean
+make .depend
+make
+
+cd ../case
+make clean
+make .depend
 make
 srun -n 1 ./initcond
-time srun -n 24 ./tube
+time srun ./tube
