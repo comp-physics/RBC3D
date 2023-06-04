@@ -185,7 +185,7 @@ contains
     real(WP),optional :: xc(3)
 
     integer :: ilat, ilon, ii
-    real(WP) :: th, phi, r, p
+    real(WP) :: th, phi, r_u, r_l, r, p
 
     real(WP), dimension(0:5) :: a_l, a_u
     real(WP), dimension(2) :: b
@@ -198,14 +198,12 @@ contains
 
     do ilon = 1, cell%nlon
     do ilat = 1, cell%nlat
-      th = cell%th(ilat)
-      phi = cell%phi(ilon)
+      phi = cell%th(ilat)
+      th = cell%phi(ilon)
 
-      r = RBC_SolveSickleRho(th, phi, a_u)
-      if (RBC_IsSickleCoordValid(th, phi, r, b, p) .eq. 0) then
-        !rho is invalid, use other surface and recalculate rho
-        r = RBC_SolveSickleRho(th, phi, a_l)
-      end if
+      r_u = RBC_SolveSickleRho(th, phi, a_u)
+      r_l = RBC_SolveSickleRho(th, phi, a_l)
+      r = min(r_u, r_l)
 
       cell%x(ilat,ilon,1) = r*sin(phi)*cos(th)
       cell%x(ilat,ilon,2) = r*sin(phi)*sin(th)
