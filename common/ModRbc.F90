@@ -184,36 +184,27 @@ contains
     type(t_RBC) :: cell
     real(WP),optional :: xc(3)
 
-    integer :: ilat, ilon, ii, a_toggle
+    integer :: ilat, ilon, ii
     real(WP) :: th, phi, r, p
 
     real(WP), dimension(0:5) :: a_l, a_u
     real(WP), dimension(2) :: b
 
-    a_toggle = 0
     a_u = (/ 1.36 , -0.0403, 0.306, -0.00169, -0.0360, -0.0277 /)
     a_l = (/ -0.806, -0.1141, -0.00678, 0.00212, 0.0201,  0.0284 /)
+
+    b = (/ 5.8, 3.05 /)
+    p = 1.54
 
     do ilon = 1, cell%nlon
     do ilat = 1, cell%nlat
       th = cell%th(ilat)
       phi = cell%phi(ilon)
 
-      if (a_toggle .eq. 0) then
-        r = RBC_SolveSickleRho(th, phi, a_u)
-      else 
-        r = RBC_SolveSickleRho(th, phi, a_l)
-      end if
-
-      
+      r = RBC_SolveSickleRho(th, phi, a_u)
       if (RBC_IsSickleCoordValid(th, phi, r, b, p) .eq. 0) then
-        !rho is invalid, toggle the surface and recalculate rho
-        a_toggle = 1 - a_toggle
-        if (a_toggle .eq. 0) then
-          r = RBC_SolveSickleRho(th, phi, a_u)
-        else 
-          r = RBC_SolveSickleRho(th, phi, a_l)
-        end if
+        !rho is invalid, use other surface and recalculate rho
+        r = RBC_SolveSickleRho(th, phi, a_l)
       end if
 
       cell%x(ilat,ilon,1) = r*sin(phi)*cos(th)
