@@ -180,12 +180,12 @@ contains
 
   end subroutine RBC_MakeSphere
 
-  subroutine RBC_MakeSickle(cell, r, xc)
+  subroutine RBC_MakeSickle(cell, rad, xc)
     type(t_RBC) :: cell
     real(WP),optional :: xc(3)
 
     integer :: ilat, ilon, ii
-    real(WP) :: th, phi, r_u, r_l, r, p
+    real(WP) :: th, phi, r_u, r_l, r, p, rad
 
     real(WP), dimension(0:5) :: a_l, a_u
     real(WP), dimension(2) :: b
@@ -198,16 +198,17 @@ contains
 
     do ilon = 1, cell%nlon
     do ilat = 1, cell%nlat
-      phi = cell%th(ilat)
-      th = cell%phi(ilon)
+      th = cell%th(ilat)
+      phi = cell%phi(ilon)
 
-      r_u = RBC_SolveSickleRho(th, phi, a_u)
-      r_l = RBC_SolveSickleRho(th, phi, a_l)
+      r_u = RBC_SolveSickleRho(phi, th, a_u)
+      r_l = RBC_SolveSickleRho(phi, th, a_l)
       r = min(r_u, r_l)
+      r = r * rad / b(1)
 
-      cell%x(ilat,ilon,1) = r*sin(phi)*cos(th)
-      cell%x(ilat,ilon,2) = r*sin(phi)*sin(th)
-      cell%x(ilat,ilon,3) = r*cos(phi)
+      cell%x(ilat,ilon,1) = r*sin(th)*cos(phi)
+      cell%x(ilat,ilon,2) = r*sin(th)*sin(phi)
+      cell%x(ilat,ilon,3) = r*cos(th)
 
     end do ! ilat
     end do !ilon

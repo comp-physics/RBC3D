@@ -90,7 +90,7 @@ program InitCond
       ! place cells
       do iz = 1,nrbc
           xc(1:2) = 0.
-          xc(3) = 0 !lengspacing*(iz-0.5)
+          xc(3) = lengspacing*(iz-0.5)
           print*, 'Xc', iz, xc
   
           rbc => rbcs(iz)
