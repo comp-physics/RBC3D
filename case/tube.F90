@@ -83,7 +83,7 @@ contains
       
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeBiconcave(rbcRef, radEqv)
+      call RBC_MakeSickle(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(2)
