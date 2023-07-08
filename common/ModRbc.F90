@@ -25,7 +25,6 @@ module ModRbc
     RBC_Integral, &
     RBC_BuildSurfaceSource, &
     RBC_MakeSickle, &
-    RBC_IsSickleCoordValid, &
     RBC_SolveSickleRho
 
   public :: Shell_ResForce
@@ -201,8 +200,8 @@ contains
       th = cell%th(ilat)
       phi = cell%phi(ilon)
 
-      r_u = RBC_SolveSickleRho(phi, th, a_u)
-      r_l = RBC_SolveSickleRho(phi, th, a_l)
+      r_u = RBC_SolveSickleRho(th, phi, a_u)
+      r_l = RBC_SolveSickleRho(th, phi, a_l)
       r = min(r_u, r_l)
       r = r * rad / b(1)
 
@@ -222,23 +221,6 @@ contains
 
   end subroutine RBC_MakeSickle
 
-  function RBC_IsSickleCoordValid(th, phi, r, b, p) result(valid)
-    real(WP) :: th, phi, r, p, x, y, res
-    real(WP),dimension(2) :: b
-    integer :: valid
-
-    x = r * sin(phi) * cos(th)
-    y = r * sin(phi) * sin(th)
-
-    res = (abs(x) / b(1))**p + (abs(y) / b(2))**p
-    if (res .le. 1) then 
-      valid = 1
-    else 
-      valid = 0
-    end if 
- 
-  end function RBC_IsSickleCoordValid
-
   function RBC_SolveSickleRho(th, phi, a) result(r)
     real(WP) :: th, phi, r, ct2, st2, cp2, sp2
     real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
@@ -246,8 +228,8 @@ contains
     complex(WP), dimension(4) :: all_roots
     integer :: i
 
-    if (sin(phi) .eq. 0) then
-      r = a(0) / cos(phi)
+    if (sin(th) .eq. 0) then
+      r = a(0) / cos(th)
       return
     end if
 
@@ -257,10 +239,10 @@ contains
     sp2 = sin(phi) ** 2
 
     quarticCoeffs(1) = a(0)
-    quarticCoeffs(2) = -1 * cos(phi)
-    quarticCoeffs(3) = a(1) * ct2 * sp2 + a(2) * st2 * sp2
+    quarticCoeffs(2) = -1 * cos(th)
+    quarticCoeffs(3) = a(1) * cp2 * st2 + a(2) * sp2 * st2
     quarticCoeffs(4) = 0
-    quarticCoeffs(5) = a(3) * ((ct2 * sp2)**2) + a(4) * ((st2 * sp2)**2) + a(5) * (ct2 * st2 *(sp2 ** 2))
+    quarticCoeffs(5) = a(3) * ((cp2 * st2)**2) + a(4) * ((sp2 * st2)**2) + a(5) * (cp2 * sp2 *(st2 ** 2))
 
     call QuarticRoots(quarticCoeffs, all_roots)
 
@@ -929,6 +911,7 @@ contains
     nlat = cell%nlat
     nlon = cell%nlon
 
+    !print *, 'Bending Stuff'
     do ilat = 1, nlat
     do ilon = 1, nlon
       b = matmul(cell%a_rcp(ilat,ilon,:,:), cell%b(ilat,ilon,:,:))
@@ -937,7 +920,12 @@ contains
       bnd(ilat,ilon,:,:) = -cell%EB*matmul(b - bref, cell%a_rcp(ilat,ilon,:,:))
     end do ! ilon
     end do ! ilat
-
+    !print *, bnd
+    print *, "Max Bend", MAX(MAXVAL(bnd) , ABS(MINVAL(bnd)))
+    print *, "Max A-rcp diff", MAX(MAXVAL(cell%a_rcp - cellRef%a_rcp) , &
+ABS(MINVAL(cell%a_rcp - cellRef%a_rcp)))
+    print *, "Max b diff", MAX(MAXVAL(cell%b - cellRef%b) , ABS(MINVAL(cell%b - &
+cellRef%b)))
   end subroutine Shell_Bend
 
 !**********************************************************************

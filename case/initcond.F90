@@ -34,7 +34,7 @@ program InitCond
       allocate(walls(nwallMax))
   
       ! Wall
-      nwall = 1
+      nwall = 0 !1
       wall=>walls(1)
   
       if (10.ge.12) then
@@ -82,7 +82,7 @@ program InitCond
       radEqv = 1.0
   
       call Rbc_Create(rbcRef, nlat0, dealias)
-      call Rbc_MakeSickle(rbcRef, radEqv, xc)
+      call Rbc_MakeBiconcave(rbcRef, radEqv, xc)
   
       do ii = 1,3
           szCell(ii) = maxval(rbcRef%x(:,:,ii)) - minval(rbcRef%x(:,:,ii))
@@ -97,7 +97,7 @@ program InitCond
           rbc => rbcs(iz)
           rbc%celltype = 1
           call Rbc_Create(rbc, nlat0, dealias)
-          call Rbc_MakeSickle(rbc, radEqv, xc)
+          call Rbc_MakeBiconcave(rbc, radEqv, xc)
           !call BackAndForth(rbc)
       end do
   
@@ -108,7 +108,7 @@ program InitCond
       write(*, '(A,3F10.3)') 'Periodic domain size = ', Lb
   
       Nt0 = 0; time = 0.
-      vBkg(1:2) = 0.; vBkg(3) = 8.
+      vBkg(1:2) = 0.; vBkg(3) = 0.
   
       ! Write intial conditions
       if (nrbc > 0) then
@@ -142,7 +142,7 @@ program InitCond
   contains
   
   subroutine BackAndForth(cell)
-    type(t_RBC) :: cell
+    type(t_RBC), intent(inout) :: cell
     integer :: nlat, nlon
     real(WP), dimension( : , : , :), allocatable :: va, vb
 
@@ -158,6 +158,7 @@ program InitCond
         va, vb, size(va, 1), size(va, 2), cell%wshsgs)
 
     deallocate(va, vb)
+
   end subroutine BackAndForth
 
   subroutine Recenter_Cells_and_Walls

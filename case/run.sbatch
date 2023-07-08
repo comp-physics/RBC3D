@@ -9,13 +9,13 @@
 #run this in the case directory of RBC3D
 
 #SBATCH --account=gts-coc-coda20
-#SBATCH -N1 --ntasks-per-node=24
+#SBATCH -N2 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=1G
 #SBATCH -t2:00:00
-#SBATCH -qinferno
+#SBATCH -q inferno
 #SBATCH --mail-user=smullangi3@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/250It_RBCSim_SickleTrial.log"
+#SBATCH -o "./run_logs/RBCSim_HealthyTrial.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -37,4 +37,4 @@ make clean
 make .depend
 make
 srun -n 1 ./initcond
-time srun ./tube
+srun ./tube

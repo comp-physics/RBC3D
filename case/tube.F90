@@ -83,7 +83,7 @@ contains
       
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeSickle(rbcRef, radEqv)
+      call RBC_MakeBiconcave(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(2)
@@ -124,7 +124,7 @@ contains
     ! Background velocity
 !    if (Nt0 == 0) then
       vbkg(1:2) = 0.
-      vbkg(3) = 8.
+      vbkg(3) = 0.
 !    end if
      print *,vbkg
 
