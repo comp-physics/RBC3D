@@ -31,7 +31,7 @@ module ModIO
     ReadWallMesh, &
     WriteRestart, &
     ReadRestart, &
-        ReadRestart_NoWalls
+        ReadRestart_NoWalls, ReadRBCPlain, WriteRBCPlain
 
 contains
 
@@ -134,9 +134,9 @@ contains
 
     ! Convert the mesh from Gaussian to uniform
     call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-            xa, xb, size(xa,1), size(xa,2), rbc%wshags )
+           xa, xb, size(xa,1), size(xa,2), rbc%wshags )
     call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-            xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+           xa, xb, size(xa,1), size(xa,2), rbc%wshses )
 
     open(cell_unit, file=trim(fn), action='write')
     write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
@@ -518,6 +518,76 @@ contains
     ierr = nf90_close(ncid)
 
   end subroutine ReadWallMesh
+
+
+!*********************************************************************
+  subroutine WriteRBCPlain(fn, rbc)
+    character(*) :: fn
+    type(t_rbc) :: rbc
+
+    open(cell_unit, file=trim(fn), action='write')
+
+    write(cell_unit, *) rbc%nlat0, rbc%nlon0
+    write(cell_unit, *) rbc%nlat, rbc%nlon
+    write(cell_unit, *) rbc%celltype
+    write(cell_unit, *) rbc%x
+
+    close(cell_unit)
+  end subroutine WriteRBCPlain
+
+  subroutine ReadRBCPlain(fn, rbc, xc)
+    character(*) :: fn
+    type(t_rbc) :: rbc
+    Real(WP),optional :: xc(3)
+
+    integer :: nlat0, nlon0, nlat, nlon, dealias_fac, celltype, ilat, ilon, ierr, ii
+    if (rootWorld) then
+      open(unit=cell_unit, file= trim(fn), status='old', action='read')
+
+      read(cell_unit, *) nlat0, nlon0
+      read(cell_unit, *) nlat, nlon
+      read(cell_unit, *) celltype
+    end if !root world
+
+    call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlat, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+
+    if (nlat/real(nlat0).lt.1.5) then
+      dealias_fac = 100
+    else
+        dealias_fac = nlat/nlat0
+    end if !dealias factor
+
+    rbc%celltype = celltype
+    call Rbc_Create(rbc, nlat0, dealias_fac)
+    rbc%nlat = nlat
+    rbc%nlon = nlon
+
+    if (rootWorld) then
+      read(cell_unit, *) rbc%x
+    end if !root world
+    close(cell_unit)
+    call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
+
+    ! recenter to zero - the exported cell was offset to fit in the box
+    do ilon = 1, nlon
+    do ilat = 1, nlat
+      rbc%x(ilat, ilon, 1) = rbc%x(ilat, ilon, 1) - 5.25
+      rbc%x(ilat, ilon, 2) = rbc%x(ilat, ilon, 2) - 5.25
+      rbc%x(ilat, ilon, 3) = rbc%x(ilat, ilon, 3) - (5 / 7.0)
+    end do
+    end do
+    
+    if (present(xc)) then
+      do ii = 1, 3
+        rbc%x(:,:,ii) = rbc%x(:,:,ii) + xc(ii)
+      end do ! ii
+    end if
+
+  end subroutine ReadRBCPlain
 
 !**********************************************************************
 ! Read a wall mesh file in dat format

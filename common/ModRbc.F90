@@ -6,6 +6,7 @@ module ModRbc
   use ModSphpk
   use ModSpline
   use ModPolyRoots
+  use ModConf
 
   implicit none
 
@@ -24,8 +25,7 @@ module ModRbc
     RBC_SphProject, &
     RBC_Integral, &
     RBC_BuildSurfaceSource, &
-    RBC_MakeSickle, &
-    RBC_SolveSickleRho
+    RBC_MakeSickleGraham
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
@@ -178,82 +178,115 @@ contains
     end if
 
   end subroutine RBC_MakeSphere
-
-  subroutine RBC_MakeSickle(cell, rad, xc)
+  
+  subroutine RBC_MakeSickleGraham(cell, r, xc)
+  
     type(t_RBC) :: cell
+    real(WP) :: r
     real(WP),optional :: xc(3)
-
     integer :: ilat, ilon, ii
-    real(WP) :: th, phi, r_u, r_l, r, p, rad
-
-    real(WP), dimension(0:5) :: a_l, a_u
-    real(WP), dimension(2) :: b
-
-    a_u = (/ 1.36 , -0.0403, 0.306, -0.00169, -0.0360, -0.0277 /)
-    a_l = (/ -0.806, -0.1141, -0.00678, 0.00212, 0.0201,  0.0284 /)
-
-    b = (/ 5.8, 3.05 /)
-    p = 1.54
-
+    real(WP) :: th, phi
+    real(WP) :: pol, eq, curv
+  
+    pol = 1.2 * r
+    eq = 0.25 * r
+    curv = 0.2 * r
+  
     do ilon = 1, cell%nlon
     do ilat = 1, cell%nlat
       th = cell%th(ilat)
       phi = cell%phi(ilon)
-
-      r_u = RBC_SolveSickleRho(th, phi, a_u)
-      r_l = RBC_SolveSickleRho(th, phi, a_l)
-      r = min(r_u, r_l)
-      r = r * rad / b(1)
-
-      cell%x(ilat,ilon,1) = r*sin(th)*cos(phi)
-      cell%x(ilat,ilon,2) = r*sin(th)*sin(phi)
-      cell%x(ilat,ilon,3) = r*cos(th)
-
+      cell%x(ilat,ilon,1) = pol*sin(th)*cos(phi)
+      cell%x(ilat,ilon,2) = eq*sin(th)*sin(phi)
+      cell%x(ilat,ilon,3) = eq*cos(th)
+  
+      !curve capsule
+      !cell%x(ilon, ilat, 2) = cell%x(ilon, ilat, 2) - (curv * (cell%x(ilon, ilat, 3)**2))
     end do ! ilat
-    end do !ilon
-
-
+    end do ! ilon
     if (present(xc)) then
       do ii = 1, 3
         cell%x(:,:,ii) = cell%x(:,:,ii) + xc(ii)
       end do ! ii
     end if
+  
+    end subroutine RBC_MakeSickleGraham    
 
-  end subroutine RBC_MakeSickle
+  ! subroutine RBC_MakeSickle(cell, rad, xc)
+  !   type(t_RBC) :: cell
+  !   real(WP),optional :: xc(3)
 
-  function RBC_SolveSickleRho(th, phi, a) result(r)
-    real(WP) :: th, phi, r, ct2, st2, cp2, sp2
-    real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
-    real(WP),dimension(5) :: quarticCoeffs
-    complex(WP), dimension(4) :: all_roots
-    integer :: i
+  !   integer :: ilat, ilon, ii
+  !   real(WP) :: th, phi, r_u, r_l, r, p, rad
 
-    if (sin(th) .eq. 0) then
-      r = a(0) / cos(th)
-      return
-    end if
+  !   real(WP), dimension(0:5) :: a_l, a_u
+  !   real(WP), dimension(2) :: b
 
-    ct2 = cos(th) ** 2
-    st2 = sin(th) ** 2
-    cp2 = cos(phi) ** 2
-    sp2 = sin(phi) ** 2
+  !   a_u = (/ 1.36 , -0.0403, 0.306, -0.00169, -0.0360, -0.0277 /)
+  !   a_l = (/ -0.806, -0.1141, -0.00678, 0.00212, 0.0201,  0.0284 /)
 
-    quarticCoeffs(1) = a(0)
-    quarticCoeffs(2) = -1 * cos(th)
-    quarticCoeffs(3) = a(1) * cp2 * st2 + a(2) * sp2 * st2
-    quarticCoeffs(4) = 0
-    quarticCoeffs(5) = a(3) * ((cp2 * st2)**2) + a(4) * ((sp2 * st2)**2) + a(5) * (cp2 * sp2 *(st2 ** 2))
+  !   b = (/ 5.8, 3.05 /)
+  !   p = 1.54
 
-    call QuarticRoots(quarticCoeffs, all_roots)
+  !   do ilon = 1, cell%nlon
+  !   do ilat = 1, cell%nlat
+  !     th = cell%th(ilat)
+  !     phi = cell%phi(ilon)
 
-    r = huge(r)
-    do i = 1, 4
-      if (REAL(AIMAG(all_roots(i))) .eq. 0 .and. REAL(REAL(all_roots(i))) .ge. 0) then
-        r = min(r, REAL(REAL(all_roots(i))))
-      end if
-    end do
+  !     r_u = RBC_SolveSickleRho(th, phi, a_u)
+  !     r_l = RBC_SolveSickleRho(th, phi, a_l)
+  !     r = min(r_u, r_l)
+  !     r = r * rad / b(1)
 
-  end function RBC_SolveSickleRho
+  !     cell%x(ilat,ilon,1) = r*sin(th)*cos(phi)
+  !     cell%x(ilat,ilon,2) = r*sin(th)*sin(phi)
+  !     cell%x(ilat,ilon,3) = r*cos(th)
+
+  !   end do ! ilat
+  !   end do !ilon
+
+
+  !   if (present(xc)) then
+  !     do ii = 1, 3
+  !       cell%x(:,:,ii) = cell%x(:,:,ii) + xc(ii)
+  !     end do ! ii
+  !   end if
+
+  ! end subroutine RBC_MakeSickle
+
+  ! function RBC_SolveSickleRho(th, phi, a) result(r)
+  !   real(WP) :: th, phi, r, ct2, st2, cp2, sp2
+  !   real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
+  !   real(WP),dimension(5) :: quarticCoeffs
+  !   complex(WP), dimension(4) :: all_roots
+  !   integer :: i
+
+  !   if (sin(th) .eq. 0) then
+  !     r = a(0) / cos(th)
+  !     return
+  !   end if
+
+  !   ct2 = cos(th) ** 2
+  !   st2 = sin(th) ** 2
+  !   cp2 = cos(phi) ** 2
+  !   sp2 = sin(phi) ** 2
+
+  !   quarticCoeffs(1) = a(0)
+  !   quarticCoeffs(2) = -1 * cos(th)
+  !   quarticCoeffs(3) = a(1) * cp2 * st2 + a(2) * sp2 * st2
+  !   quarticCoeffs(4) = 0
+  !   quarticCoeffs(5) = a(3) * ((cp2 * st2)**2) + a(4) * ((sp2 * st2)**2) + a(5) * (cp2 * sp2 *(st2 ** 2))
+
+  !   call QuarticRoots(quarticCoeffs, all_roots)
+
+  !   r = huge(r)
+  !   do i = 1, 4
+  !     if (REAL(AIMAG(all_roots(i))) .eq. 0 .and. REAL(REAL(all_roots(i))) .ge. 0) then
+  !       r = min(r, REAL(REAL(all_roots(i))))
+  !     end if
+  !   end do
+
+  ! end function RBC_SolveSickleRho
     
   
 !**********************************************************************
@@ -309,7 +342,7 @@ contains
     end if
 
   end subroutine RBC_MakeEllipsoid
-    
+
 !**********************************************************************
 ! Make a bioconcave shaped red blood cell
 ! Arguments:
@@ -911,7 +944,6 @@ contains
     nlat = cell%nlat
     nlon = cell%nlon
 
-    !print *, 'Bending Stuff'
     do ilat = 1, nlat
     do ilon = 1, nlon
       b = matmul(cell%a_rcp(ilat,ilon,:,:), cell%b(ilat,ilon,:,:))
@@ -920,12 +952,7 @@ contains
       bnd(ilat,ilon,:,:) = -cell%EB*matmul(b - bref, cell%a_rcp(ilat,ilon,:,:))
     end do ! ilon
     end do ! ilat
-    !print *, bnd
-    print *, "Max Bend", MAX(MAXVAL(bnd) , ABS(MINVAL(bnd)))
-    print *, "Max A-rcp diff", MAX(MAXVAL(cell%a_rcp - cellRef%a_rcp) , &
-ABS(MINVAL(cell%a_rcp - cellRef%a_rcp)))
-    print *, "Max b diff", MAX(MAXVAL(cell%b - cellRef%b) , ABS(MINVAL(cell%b - &
-cellRef%b)))
+
   end subroutine Shell_Bend
 
 !**********************************************************************

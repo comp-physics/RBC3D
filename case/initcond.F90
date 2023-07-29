@@ -34,7 +34,7 @@ program InitCond
       allocate(walls(nwallMax))
   
       ! Wall
-      nwall = 0 !1
+      nwall = 1
       wall=>walls(1)
   
       if (10.ge.12) then
@@ -45,7 +45,7 @@ program InitCond
           actlen = 13.33
       end if
   
-      nrbc = 1
+      nrbc = 2
       nlat0 = 12
       dealias = 3
       phi = 70/real(100)
@@ -81,8 +81,9 @@ program InitCond
       xc = 0.
       radEqv = 1.0
   
+      
       call Rbc_Create(rbcRef, nlat0, dealias)
-      call Rbc_MakeBiconcave(rbcRef, radEqv, xc)
+      call RBC_MakeBiconcave(rbcRef, radEqv, xc)
   
       do ii = 1,3
           szCell(ii) = maxval(rbcRef%x(:,:,ii)) - minval(rbcRef%x(:,:,ii))
@@ -95,10 +96,13 @@ program InitCond
           print*, 'Xc', iz, xc
   
           rbc => rbcs(iz)
-          rbc%celltype = 1
-          call Rbc_Create(rbc, nlat0, dealias)
-          call Rbc_MakeBiconcave(rbc, radEqv, xc)
-          !call BackAndForth(rbc)
+          if (iz .eq. 1) then 
+            rbc%celltype = 1
+            call Rbc_Create(rbc, nlat0, dealias)
+            call RBC_MakeBiconcave(rbc, radEqv, xc)
+          else 
+            call ReadRBCPlain('Input/SickleCell.dat', rbc, xc)
+          end if
       end do
   
       ! Put things in the middle of the periodic box
@@ -108,7 +112,7 @@ program InitCond
       write(*, '(A,3F10.3)') 'Periodic domain size = ', Lb
   
       Nt0 = 0; time = 0.
-      vBkg(1:2) = 0.; vBkg(3) = 0.
+      vBkg(1:2) = 0.; vBkg(3) = 8.
   
       ! Write intial conditions
       if (nrbc > 0) then

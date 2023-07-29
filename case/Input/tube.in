@@ -2,19 +2,19 @@
 1.E-3                   ! eps_Ewld
 8                       ! PBspln_Ewld
 
-1                       ! nCellTypes
-1                       ! viscRat
-1.                      ! refRad
+3                       ! nCellTypes
+1 1 1                   ! viscRat
+1. 1. 1.                ! refRad
 .false.                 ! Deflate
 
 0.0     !
 0.0     !
 0.0     !
 
-1                        ! Nt (originally 10000)
+10000                    ! Nt (originally 10000)
 0.00014                  ! Ts (originally 0.0014)
 
-1                        ! cell_out
+50                       ! cell_out
 -10000                   ! wall_out
 -10                      ! pGrad_out
 -10                      ! flow_out

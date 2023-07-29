@@ -75,7 +75,7 @@ contains
     call ReadRestart(restart_file)
 
     ! Reference cells
-    allocate(rbcRefs(2))
+    allocate(rbcRefs(3))
 
     if (nrbc > 0) then
       radEqv = 1.
@@ -83,12 +83,16 @@ contains
       
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeBiconcave(rbcRef, radEqv)
+      call RBC_MakeBiconcave(rbcRef, radEqv) 
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(2)
       call RBC_Create(rbcRef, nlat0)
       call RBC_MakeSphere(rbcRef, radEqv)
+      call RBC_ComputeGeometry(rbcRef)
+
+      rbcRef => rbcRefs(3)
+      call ReadRBCPlain('Input/SickleCell.dat', rbcRef)
       call RBC_ComputeGeometry(rbcRef)
 
     end if
@@ -112,6 +116,10 @@ contains
        rbc%ES = 10.
        rbc%ED = 50.
        rbc%EB = 6.D-2
+      case(3)
+       rbc%ES = 12.4 * 3
+       rbc%ED = 200
+       rbc%EB = 6.69D-2 * 4
       case default
        stop "bad cellcase"
       end select 
@@ -124,7 +132,7 @@ contains
     ! Background velocity
 !    if (Nt0 == 0) then
       vbkg(1:2) = 0.
-      vbkg(3) = 0.
+      vbkg(3) = 8.
 !    end if
      print *,vbkg
 
