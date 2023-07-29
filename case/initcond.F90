@@ -9,7 +9,6 @@ program InitCond
     use ModData
     use ModIO
     use ModBasicMath
-    use ModSphpk
   
     implicit none
   
@@ -144,26 +143,6 @@ program InitCond
       stop
   
   contains
-  
-  subroutine BackAndForth(cell)
-    type(t_RBC), intent(inout) :: cell
-    integer :: nlat, nlon
-    real(WP), dimension( : , : , :), allocatable :: va, vb
-
-    nlat = cell%nlat
-    nlon = cell%nlon
-
-    allocate(va(nlon/2+1,nlat,3), vb(nlon/2+1,nlat,3) )
-
-    call ShAnalGau(nlat, nlon, 3, cell%x, size(cell%x, 1), size(cell%x, 2), &
-        va, vb, size(va, 1), size(va, 2), cell%wshags)
-
-    call ShSynthGau(nlat, nlon, 3, cell%x, size(cell%x, 1), size(cell%x, 2), &
-        va, vb, size(va, 1), size(va, 2), cell%wshsgs)
-
-    deallocate(va, vb)
-
-  end subroutine BackAndForth
 
   subroutine Recenter_Cells_and_Walls
       integer :: irbc, iwall, ii, gen, repeat, j

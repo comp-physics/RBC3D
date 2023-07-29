@@ -5,7 +5,6 @@ module ModRbc
   use ModDataStruct
   use ModSphpk
   use ModSpline
-  use ModPolyRoots
   use ModConf
 
   implicit none
@@ -305,7 +304,7 @@ contains
 
     rplat = 4.*3./(2.*2.82)/2.*r   ! Platelet expansion factor
     call RBC_MakeEllipsoid(cell, rplat, xc, 0.7) !0.39685)
-
+  
   end subroutine RBC_MakePlatelet
 
 
