@@ -31,7 +31,9 @@ module ModIO
     ReadWallMesh, &
     WriteRestart, &
     ReadRestart, &
-        ReadRestart_NoWalls, ExportWriteRBC, ImportReadRBC
+        ReadRestart_NoWalls, &
+        ExportWriteRBC, &
+        ImportReadRBC
 
 contains
 
@@ -134,9 +136,9 @@ contains
 
     ! Convert the mesh from Gaussian to uniform
     call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-           xa, xb, size(xa,1), size(xa,2), rbc%wshags )
+            xa, xb, size(xa,1), size(xa,2), rbc%wshags )
     call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-           xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+            xa, xb, size(xa,1), size(xa,2), rbc%wshses )
 
     open(cell_unit, file=trim(fn), action='write')
     write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'

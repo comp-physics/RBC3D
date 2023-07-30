@@ -75,7 +75,7 @@ contains
     call ReadRestart(restart_file)
 
     ! Reference cells
-    allocate(rbcRefs(3))
+    allocate(rbcRefs(2))
 
     if (nrbc > 0) then
       radEqv = 1.
@@ -83,7 +83,7 @@ contains
       
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeBiconcave(rbcRef, radEqv) 
+      call RBC_MakeBiconcave(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(2)

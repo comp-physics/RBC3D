@@ -320,7 +320,7 @@ contains
 
     rplat = 4.*3./(2.*2.82)/2.*r   ! Platelet expansion factor
     call RBC_MakeEllipsoid(cell, rplat, xc, 0.7) !0.39685)
-  
+
   end subroutine RBC_MakePlatelet
 
 
@@ -357,7 +357,7 @@ contains
     end if
 
   end subroutine RBC_MakeEllipsoid
-
+    
 !**********************************************************************
 ! Make a bioconcave shaped red blood cell
 ! Arguments:
