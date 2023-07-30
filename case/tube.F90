@@ -91,10 +91,6 @@ contains
       call RBC_MakeSphere(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
-      rbcRef => rbcRefs(3)
-      call ReadRBCPlain('Input/SickleCell.dat', rbcRef)
-      call RBC_ComputeGeometry(rbcRef)
-
     end if
 
     ! Wall periodic boundary condition
@@ -116,10 +112,6 @@ contains
        rbc%ES = 10.
        rbc%ED = 50.
        rbc%EB = 6.D-2
-      case(3)
-       rbc%ES = 12.4 * 3
-       rbc%ED = 200
-       rbc%EB = 6.69D-2 * 4
       case default
        stop "bad cellcase"
       end select 

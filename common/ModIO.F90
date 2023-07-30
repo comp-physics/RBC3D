@@ -31,7 +31,7 @@ module ModIO
     ReadWallMesh, &
     WriteRestart, &
     ReadRestart, &
-        ReadRestart_NoWalls, ReadRBCPlain, WriteRBCPlain
+        ReadRestart_NoWalls, ExportWriteRBC, ImportReadRBC
 
 contains
 
@@ -521,7 +521,12 @@ contains
 
 
 !*********************************************************************
-  subroutine WriteRBCPlain(fn, rbc)
+  ! Given a cell (rbc) and a file name (fn), this writes the rbc's
+  ! plain coordinate values, celltype, and resolution (nlat & nlon) to the external file.
+  ! This file can later be reread into a later simulation to replicate the cell-shape of the inputted rbc.
+  ! This method was used after inducing an "UncurvedSickleSpheroid" (see ModRbc RBC_MakeUncurvedSickleSpheroid)
+  ! inside a flow, so that we can export the final curved sickle cell shape to a file for later usage.
+  subroutine ExportWriteRBC(fn, rbc)
     character(*) :: fn
     type(t_rbc) :: rbc
 
@@ -533,9 +538,14 @@ contains
     write(cell_unit, *) rbc%x
 
     close(cell_unit)
-  end subroutine WriteRBCPlain
+  end subroutine ExportWriteRBC
 
-  subroutine ReadRBCPlain(fn, rbc, xc)
+
+  ! Works in-tandem with ModIO ExportWriteRBC:
+  ! Given a cell (rbc), file name (fn), and optionally center (xc), import the data from the file
+  ! into the cell. The cell will be created with the resolution defined from the file data (and cannot be modified).
+  ! Used to import Sickle Cell model from the input file.
+  subroutine ImportReadRBC(fn, rbc, xc)
     character(*) :: fn
     type(t_rbc) :: rbc
     Real(WP),optional :: xc(3)
@@ -587,7 +597,7 @@ contains
       end do ! ii
     end if
 
-  end subroutine ReadRBCPlain
+  end subroutine ImportReadRBC
 
 !**********************************************************************
 ! Read a wall mesh file in dat format

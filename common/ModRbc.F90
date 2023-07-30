@@ -24,7 +24,7 @@ module ModRbc
     RBC_SphProject, &
     RBC_Integral, &
     RBC_BuildSurfaceSource, &
-    RBC_MakeSickleGraham
+    RBC_MakeUncurvedSickleSpheroid
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
@@ -178,7 +178,14 @@ contains
 
   end subroutine RBC_MakeSphere
   
-  subroutine RBC_MakeSickleGraham(cell, r, xc)
+  ! Subroutine creatse an uncurved shape with the size of a sickle cell. This prolate spheroid shape is then
+  ! run through a flow to create a curve in the shape. The resulting curved shape after the flow was then 
+  ! exported and used as a sickle cell.
+  ! Reference:
+  !   Xiao Zhang, Wilbur A. Lam and Michael D. Graham
+  !   Dynamics of deformable straight and curved prolate capsules in simple shear flow
+  !   PHYSICAL REVIEW FLUIDS 5, 053101 (2020)
+  subroutine RBC_MakeUncurvedSickleSpheroid(cell, r, xc)
   
     type(t_RBC) :: cell
     real(WP) :: r
@@ -209,7 +216,15 @@ contains
       end do ! ii
     end if
   
-    end subroutine RBC_MakeSickleGraham    
+    end subroutine RBC_MakeUncurvedSickleSpheroid    
+
+  ! Make Sickle Cell based on the shape given by Reference:
+  !   Kviatkovsky, I. Zeidan, A. Yeheskely-Hayon, D. Shabad, E. L. Dann, E. J. & Yelin, D. 
+  !   Measuring Sickle Cell morphology during blood flow
+  !   Biomedical optics express, 8(3), 1996–2003
+  !   doi: 10.1364/BOE.8.001996
+  ! Unfortunately this shape doesn't work very well since points are ill-conditioned
+  ! and diverge for this type of simulation, so we do not proceed with this sickle-cell model
 
   ! subroutine RBC_MakeSickle(cell, rad, xc)
   !   type(t_RBC) :: cell
@@ -253,6 +268,7 @@ contains
 
   ! end subroutine RBC_MakeSickle
 
+  ! Helper function for RBC_MakeSickle
   ! function RBC_SolveSickleRho(th, phi, a) result(r)
   !   real(WP) :: th, phi, r, ct2, st2, cp2, sp2
   !   real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
