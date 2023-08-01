@@ -3,7 +3,7 @@
 8                       ! PBspln_Ewld
 
 3                       ! nCellTypes
-1 1 3                   ! viscRat (Sickle Cells experience ~3 to 4x viscosity as a healthy RBC) Reference: https://doi.org/10.1016/j.actbio.2012.07.011
+1 1 1                   ! viscRat
 1. 1. 1.                ! refRad
 .false.                 ! Deflate
 
