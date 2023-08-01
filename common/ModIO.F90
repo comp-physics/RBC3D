@@ -31,7 +31,9 @@ module ModIO
     ReadWallMesh, &
     WriteRestart, &
     ReadRestart, &
-        ReadRestart_NoWalls
+        ReadRestart_NoWalls, &
+        ExportWriteRBC, &
+        ImportReadRBC
 
 contains
 
@@ -518,6 +520,86 @@ contains
     ierr = nf90_close(ncid)
 
   end subroutine ReadWallMesh
+
+
+!*********************************************************************
+  ! Given a cell (rbc) and a file name (fn), this writes the rbc's
+  ! plain coordinate values, celltype, and resolution (nlat & nlon) to the external file.
+  ! This file can later be reread into a later simulation to replicate the cell-shape of the inputted rbc.
+  ! This method was used after inducing an "UncurvedSickleSpheroid" (see ModRbc RBC_MakeUncurvedSickleSpheroid)
+  ! inside a flow, so that we can export the final curved sickle cell shape to a file for later usage.
+  subroutine ExportWriteRBC(fn, rbc)
+    character(*) :: fn
+    type(t_rbc) :: rbc
+
+    open(cell_unit, file=trim(fn), action='write')
+
+    write(cell_unit, *) rbc%nlat0, rbc%nlon0
+    write(cell_unit, *) rbc%nlat, rbc%nlon
+    write(cell_unit, *) rbc%celltype
+    write(cell_unit, *) rbc%x
+
+    close(cell_unit)
+  end subroutine ExportWriteRBC
+
+
+  ! Works in-tandem with ModIO ExportWriteRBC:
+  ! Given a cell (rbc), file name (fn), and optionally center (xc), import the data from the file
+  ! into the cell. The cell will be created with the resolution defined from the file data (and cannot be modified).
+  ! Used to import Sickle Cell model from the input file.
+  subroutine ImportReadRBC(fn, rbc, xc)
+    character(*) :: fn
+    type(t_rbc) :: rbc
+    Real(WP),optional :: xc(3)
+
+    integer :: nlat0, nlon0, nlat, nlon, dealias_fac, celltype, ilat, ilon, ierr, ii
+    if (rootWorld) then
+      open(unit=cell_unit, file= trim(fn), status='old', action='read')
+
+      read(cell_unit, *) nlat0, nlon0
+      read(cell_unit, *) nlat, nlon
+      read(cell_unit, *) celltype
+    end if !root world
+
+    call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlat, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+
+    if (nlat/real(nlat0).lt.1.5) then
+      dealias_fac = 100
+    else
+        dealias_fac = nlat/nlat0
+    end if !dealias factor
+
+    rbc%celltype = celltype
+    call Rbc_Create(rbc, nlat0, dealias_fac)
+    rbc%nlat = nlat
+    rbc%nlon = nlon
+
+    if (rootWorld) then
+      read(cell_unit, *) rbc%x
+    end if !root world
+    close(cell_unit)
+    call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
+
+    ! recenter to zero - the exported cell was offset to fit in the box
+    do ilon = 1, nlon
+    do ilat = 1, nlat
+      rbc%x(ilat, ilon, 1) = rbc%x(ilat, ilon, 1) - 5.25
+      rbc%x(ilat, ilon, 2) = rbc%x(ilat, ilon, 2) - 5.25
+      rbc%x(ilat, ilon, 3) = rbc%x(ilat, ilon, 3) - (5 / 7.0)
+    end do
+    end do
+    
+    if (present(xc)) then
+      do ii = 1, 3
+        rbc%x(:,:,ii) = rbc%x(:,:,ii) + xc(ii)
+      end do ! ii
+    end if
+
+  end subroutine ImportReadRBC
 
 !**********************************************************************
 ! Read a wall mesh file in dat format

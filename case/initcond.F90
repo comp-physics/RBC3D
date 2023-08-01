@@ -154,7 +154,7 @@ subroutine Recenter_Cells_and_Walls
         rbc%x(:,:,1) = rbc%x(:,:,1) + 0.5*Lb(1)
         rbc%x(:,:,2) = rbc%x(:,:,2) + 0.5*Lb(2)
         print*,'Zc', sum(rbc%x(:,:,3))/real(rbc%nlat*rbc%nlon)
-   end do
+    end do
 
     ! walls
     ! find the bounding box

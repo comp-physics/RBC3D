@@ -5,6 +5,8 @@ module ModRbc
   use ModDataStruct
   use ModSphpk
   use ModSpline
+  use ModConf
+  use ModPolyRoots
 
   implicit none
 
@@ -22,7 +24,9 @@ module ModRbc
     RBC_CovarGrad_Tensor, &
     RBC_SphProject, &
     RBC_Integral, &
-    RBC_BuildSurfaceSource
+    RBC_BuildSurfaceSource, &
+    RBC_MakeUncurvedSickleSpheroid, &
+    RBC_MakeSickle
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
@@ -175,6 +179,134 @@ contains
     end if
 
   end subroutine RBC_MakeSphere
+  
+  ! Subroutine creatse an uncurved shape with the size of a sickle cell. This prolate spheroid shape is then
+  ! run through a flow to create a curve in the shape. The resulting curved shape after the flow was then 
+  ! exported and used as a sickle cell.
+  ! Reference:
+  !   Xiao Zhang, Wilbur A. Lam and Michael D. Graham
+  !   Dynamics of deformable straight and curved prolate capsules in simple shear flow
+  !   PHYSICAL REVIEW FLUIDS 5, 053101 (2020)
+  subroutine RBC_MakeUncurvedSickleSpheroid(cell, r, xc)
+  
+    type(t_RBC) :: cell
+    real(WP) :: r
+    real(WP),optional :: xc(3)
+    integer :: ilat, ilon, ii
+    real(WP) :: th, phi
+    real(WP) :: pol, eq, curv
+  
+    pol = 1.2 * r
+    eq = 0.25 * r
+    curv = 0.2 * r
+  
+    do ilon = 1, cell%nlon
+    do ilat = 1, cell%nlat
+      th = cell%th(ilat)
+      phi = cell%phi(ilon)
+      cell%x(ilat,ilon,1) = pol*sin(th)*cos(phi)
+      cell%x(ilat,ilon,2) = eq*sin(th)*sin(phi)
+      cell%x(ilat,ilon,3) = eq*cos(th)
+  
+      !curve capsule
+      !cell%x(ilon, ilat, 2) = cell%x(ilon, ilat, 2) - (curv * (cell%x(ilon, ilat, 3)**2))
+    end do ! ilat
+    end do ! ilon
+    if (present(xc)) then
+      do ii = 1, 3
+        cell%x(:,:,ii) = cell%x(:,:,ii) + xc(ii)
+      end do ! ii
+    end if
+  
+    end subroutine RBC_MakeUncurvedSickleSpheroid    
+
+  ! Make Sickle Cell based on the shape given by Reference:
+  !   Kviatkovsky, I. Zeidan, A. Yeheskely-Hayon, D. Shabad, E. L. Dann, E. J. & Yelin, D. 
+  !   Measuring Sickle Cell morphology during blood flow
+  !   Biomedical optics express, 8(3), 1996–2003
+  !   doi: 10.1364/BOE.8.001996
+  ! Unfortunately this shape doesn't work very well since points are ill-conditioned
+  ! and diverge for this type of simulation, so we do not proceed with this sickle-cell model
+
+  subroutine RBC_MakeSickle(cell, rad, xc)
+    type(t_RBC) :: cell
+    real(WP),optional :: xc(3)
+
+    integer :: ilat, ilon, ii
+    real(WP) :: th, phi, r_u, r_l, r, p, rad
+
+    real(WP), dimension(0:5) :: a_l, a_u
+    real(WP), dimension(2) :: b
+
+    print *, "The RBC_MakeSickle Cell Configuration is Not Confirmed Working Yet - Aborting"
+    call MPI_Abort(MPI_COMM_WORLD, 1, 1)
+
+    a_u = (/ 1.36 , -0.0403, 0.306, -0.00169, -0.0360, -0.0277 /)
+    a_l = (/ -0.806, -0.1141, -0.00678, 0.00212, 0.0201,  0.0284 /)
+
+    b = (/ 5.8, 3.05 /)
+    p = 1.54
+
+    do ilon = 1, cell%nlon
+    do ilat = 1, cell%nlat
+      th = cell%th(ilat)
+      phi = cell%phi(ilon)
+
+      r_u = RBC_SolveSickleRho(th, phi, a_u)
+      r_l = RBC_SolveSickleRho(th, phi, a_l)
+      r = min(r_u, r_l)
+      r = r * rad / b(1)
+
+      cell%x(ilat,ilon,1) = r*sin(th)*cos(phi)
+      cell%x(ilat,ilon,2) = r*sin(th)*sin(phi)
+      cell%x(ilat,ilon,3) = r*cos(th)
+
+    end do ! ilat
+    end do !ilon
+
+
+    if (present(xc)) then
+      do ii = 1, 3
+        cell%x(:,:,ii) = cell%x(:,:,ii) + xc(ii)
+      end do ! ii
+    end if
+
+  end subroutine RBC_MakeSickle
+
+  ! Helper function for RBC_MakeSickle
+  function RBC_SolveSickleRho(th, phi, a) result(r)
+    real(WP) :: th, phi, r, ct2, st2, cp2, sp2
+    real(WP),dimension(0:5) :: a ! parameter, coefficients for cartesian
+    real(WP),dimension(5) :: quarticCoeffs
+    complex(WP), dimension(4) :: all_roots
+    integer :: i
+
+    if (sin(th) .eq. 0) then
+      r = a(0) / cos(th)
+      return
+    end if
+
+    ct2 = cos(th) ** 2
+    st2 = sin(th) ** 2
+    cp2 = cos(phi) ** 2
+    sp2 = sin(phi) ** 2
+
+    quarticCoeffs(1) = a(0)
+    quarticCoeffs(2) = -1 * cos(th)
+    quarticCoeffs(3) = a(1) * cp2 * st2 + a(2) * sp2 * st2
+    quarticCoeffs(4) = 0
+    quarticCoeffs(5) = a(3) * ((cp2 * st2)**2) + a(4) * ((sp2 * st2)**2) + a(5) * (cp2 * sp2 *(st2 ** 2))
+
+    call QuarticRoots(quarticCoeffs, all_roots)
+
+    r = huge(r)
+    do i = 1, 4
+      if (REAL(AIMAG(all_roots(i))) .eq. 0 .and. REAL(REAL(all_roots(i))) .ge. 0) then
+        r = min(r, REAL(REAL(all_roots(i))))
+      end if
+    end do
+
+  end function RBC_SolveSickleRho
     
   
 !**********************************************************************
