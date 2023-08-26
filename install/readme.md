@@ -14,9 +14,13 @@ At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix.
 
 ## Ensure you have compilers and wrappers
 
-You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
+You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
 * On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
+* On a RG cluster (like hawksbill) you can issue `locate mpirun` which returns `/opt/OpenMPI/4.0.5/bin/mpirun` for me and then put that in your path `export PATH="/opt/OpenMPI/4.0.5/bin/:$PATH"`
+  
+* To check for gfortran, issue `which gfortran`
+* To check for an MPI wrapper, issue `which mpirun` or `which mpif90`
 
 ## Build libraries
 
