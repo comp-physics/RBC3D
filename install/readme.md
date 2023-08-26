@@ -17,8 +17,8 @@ At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix.
 You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
 * On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
-* On a RG cluster (like hawksbill) you can issue `locate mpirun` which returns `/opt/OpenMPI/4.0.5/bin/mpirun` for me and then put that in your path `export PATH="/opt/OpenMPI/4.0.5/bin/:$PATH"`
-  
+* On a RG cluster (like hawksbill) you can issue `locate mpirun` which returns `/opt/OpenMPI/4.0.5/bin/mpirun` for me and then put that in your path `export PATH="/opt/OpenMPI/4.0.5/bin/:$PATH"`  
+
 * To check for gfortran, issue `which gfortran`
 * To check for an MPI wrapper, issue `which mpirun` or `which mpif90`
 
@@ -39,6 +39,8 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
     * `1. Install`
     * `2. Provide the absolute path for an existing license file.`
     * `Please type a selection or License file name or port@hostname: /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mkl-licenses/l_GVJ78MLJ.lic`
+      * Via another terminal move into the `RBC3D/packages/mkl-licenses/` directory and issue `pwd`
+      * Use the location + `l_GVJ78MLJ.lic` for the file name
     * `2. Install the software without using RPM database (root password not required).`
     * `Enter`
     * `Enter`
