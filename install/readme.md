@@ -87,7 +87,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 * Easiest if this is already available or can be loaded.
 * PACE Phoenix has this available as a module: `module load valgrind`
-* `module show valgrind` tells you where the library is.
+* `module show valgrind` or `which valgrind` can tell you where the library is.
 * At time of writing, it is here: `/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5`
     * You will need this path to build PETSc-lite
 
