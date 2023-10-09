@@ -38,7 +38,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
     * `1. Install`
     * `2. Provide the absolute path for an existing license file.`
     * `Please type a selection or License file name or port@hostname: /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mkl-licenses/l_GVJ78MLJ.lic`
-      * Via another terminal move into the `RBC3D/packages/mkl-licenses/` directory and issue `pwd`
+      * Via another terminal window, move into the `RBC3D/packages/mkl-licenses/` directory and issue `pwd`
       * Use the location + `l_GVJ78MLJ.lic` for the file name
     * `2. Install the software without using RPM database (root password not required).`
     * `Enter`
@@ -63,7 +63,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
 * Unpack it: `tar -xvf blas-3.11.0.tgz`
 * `cd BLAS-3.11.0`
-* Modify `make.inc` line 18 as `FC = `
+* Modify `make.inc` line 18 as `FC = mpif90`
 * Execute `make`, which will create the library file `blas_LINUX.a`
 * Later, You will need the absolute path of `blas_LINUX.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
