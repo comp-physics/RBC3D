@@ -16,11 +16,10 @@ At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix.
 
 You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
-* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
-* On a RG cluster (like hawksbill) you can issue `locate mpirun` which returns `/opt/OpenMPI/4.0.5/bin/mpirun` for me and then put that in your path `export PATH="/opt/OpenMPI/4.0.5/bin/:$PATH"`  
+* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2` 
 
-* To check for gfortran, issue `which gfortran`
-* To check for an MPI wrapper, issue `which mpirun` or `which mpif90`
+* To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
+* Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
 ## Build libraries
 
@@ -64,7 +63,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
 * Unpack it: `tar -xvf blas-3.11.0.tgz`
 * `cd BLAS-3.11.0`
-* Modify `make.inc` line 18 as `FC = mpif90`
+* Modify `make.inc` line 18 as `FC = `
 * Execute `make`, which will create the library file `blas_LINUX.a`
 * Later, You will need the absolute path of `blas_LINUX.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
