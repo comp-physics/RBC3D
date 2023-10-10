@@ -207,3 +207,7 @@ In `case/` you should be able to
 * `mpiexec -n 2 ./initcond`
 * `mpiexec -n 2 ./tube`
 or substitute in your mpi runner like `srun`.
+
+## Data
+
+After running `srun -n 2 ./tube`, you should see x000*.dat, xe000*.dat, wall000*.dat, and restart files. You can load the dat files into paraview to simulate.
