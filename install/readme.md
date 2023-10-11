@@ -10,7 +10,7 @@
 
 * RBC3D __will not__ build on non-x86 hardware (like a new Mac M1+) at time of writing. Use an x86 machine (AMD or Intel processors).
 * RBC3D has not been tested on WSL or Windows computers broadly. We do not recommend using WSL. Instead, use a Linux partition or a *nix-based computing cluster.
-At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix. 
+At Georgia Tech we have several, including ICE and PACE Phoenix. 
 
 ## Ensure you have compilers and wrappers
 
