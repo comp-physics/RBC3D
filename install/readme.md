@@ -208,6 +208,8 @@ In `case/` you should be able to
 * `mpiexec -n 2 ./tube`
 or substitute in your mpi runner like `srun`.
 
+Note that on Phoenix, `srun` only works if you [salloc](https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/) a new node.
+
 ## Data
 
-After running `srun -n 2 ./tube`, you should see x000*.dat, xe000*.dat, wall000*.dat, and restart files. You can load the dat files into paraview to simulate.
+After running `srun -n 2 ./tube` or the equivalent, you should see x000*.dat, xe000*.dat, wall000*.dat, and restart files. You can load the dat files into paraview to simulate.
