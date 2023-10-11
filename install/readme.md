@@ -14,9 +14,12 @@ At Georgia Tech we have several, including PACE-ICE, COC-ICE, and PACE Phoenix.
 
 ## Ensure you have compilers and wrappers
 
-You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
+You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or the like).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
-* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2`
+* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2` 
+
+* To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
+* Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
 ## Build libraries
 
@@ -35,6 +38,8 @@ You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
     * `1. Install`
     * `2. Provide the absolute path for an existing license file.`
     * `Please type a selection or License file name or port@hostname: /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mkl-licenses/l_GVJ78MLJ.lic`
+      * Via another terminal window, move into the `RBC3D/packages/mkl-licenses/` directory and issue `pwd`
+      * Use the location + `l_GVJ78MLJ.lic` for the file name
     * `2. Install the software without using RPM database (root password not required).`
     * `Enter`
     * `Enter`
@@ -81,7 +86,7 @@ You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
 
 * Easiest if this is already available or can be loaded.
 * PACE Phoenix has this available as a module: `module load valgrind`
-* `module show valgrind` tells you where the library is.
+* `module show valgrind` or `which valgrind` can tell you where the library is.
 * At time of writing, it is here: `/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5`
     * You will need this path to build PETSc-lite
 
@@ -97,7 +102,7 @@ You will need `gcc` and a suitable MPI wrapper like `mvapich` (or the like).
    * If you are using something other than bash, look up how to set environment variables for it, otherwise:
       * Execute (notice this is the path from above): `export PETSC_DIR=/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
       * Execute: `export PETSC_ARCH=linux-gnu-c-opt`
-* Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc`
+* Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc` then cd back into `petsc-3.0.0-p3`
 * Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc), and notice the `--with-mpiexec=srun` line where you should replace `srun` with what is relevant for your system (`srun` if available, `mpirun` or `mpiexec` are two other options):
 ```
 ./configure --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native' --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
@@ -202,3 +207,9 @@ In `case/` you should be able to
 * `mpiexec -n 2 ./initcond`
 * `mpiexec -n 2 ./tube`
 or substitute in your mpi runner like `srun`.
+
+Note that on Phoenix, `srun` only works if you [salloc](https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/) a new node.
+
+## Data
+
+After running `srun -n 2 ./tube` or the equivalent, you should see x000*.dat, xe000*.dat, wall000*.dat, and restart files. You can load the dat files into paraview to simulate.
