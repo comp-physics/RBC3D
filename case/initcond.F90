@@ -24,7 +24,10 @@ program InitCond
   integer :: iz, i, p, l, dealias
   integer,parameter :: ranseed = 161269
   character(CHRLEN) :: fn
+  ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
+  real(WP) :: rand(8, 3)
+  integer :: j
 
     ! Initialize
     call InitMPI
@@ -87,12 +90,28 @@ program InitCond
         szCell(ii) = maxval(rbcRef%x(:,:,ii)) - minval(rbcRef%x(:,:,ii))
     end do
 
-    ! place cells
-    do iz = 1,nrbc
-        xc(1:2) = 0.
-        xc(3) = lengspacing*(iz-0.5)
-        print*, 'Xc', iz, xc
+    ! real :: rand(8, 3)
+    call random_number(rand)
 
+    print*, '8 x 3 rand num array'
+    do j = 1, nrbc
+        print *, rand(j, :)
+    end do
+
+    ! place cells
+    do iz = 1, nrbc
+        ! coord 0 in x and y direction
+        ! gen rand # 4 every coord
+        ! xc(1:2) = 0.
+        xc(1) = rand(iz, 1)
+        xc(2) = rand(iz, 2)
+        ! iz = index of cell
+        ! diff z value to get single file line
+        ! add it to z
+        xc(3) = lengspacing*(iz-0.5) + (rand(iz, 3) / 2)
+        print*, 'Xc', iz, xc
+        ! pointer
+        ! rbcs contain rbc object- mesh data + loc coord
         rbc => rbcs(iz)
         rbc%celltype = 1
         call Rbc_Create(rbc, nlat0, dealias)
