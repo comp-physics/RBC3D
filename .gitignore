@@ -1,2 +1,11 @@
-./case/D
-./packages
+case/D
+case/run_logs
+case_different_celltypes/D
+packages
+*.o
+*.mod
+.depend
+initcond
+Makefile.in
+tube
+libcommon.a
