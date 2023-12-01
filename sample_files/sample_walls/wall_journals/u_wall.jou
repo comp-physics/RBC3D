@@ -1,0 +1,13 @@
+#!python
+cubit.cmd('create surface circle radius 3.0')
+cubit.cmd('create curve arc center 0 -5 0 radius 5 normal 1 0 0 start angle 90 stop angle 180')
+cubit.cmd('create curve arc center 0 -5 10 radius 5 normal 1 0 0 start angle 270 stop angle 360')
+cubit.cmd('create curve arc center 0 -5 10 radius 5 normal 1 0 0 start angle 180 stop angle 360')
+cubit.cmd('create curve arc center 0 -5 20 radius 5 normal 1 0 0 start angle 0 stop angle 90')
+cubit.cmd('merge curve 2 with curve 3 force')
+cubit.cmd('sweep surface 1 along curve 2 4 5')
+cubit.cmd('graphics tolerance angle 1')
+cubit.cmd('curve 1 2 4 5 6 7 8 9 10 11 interval size 0.05')
+cubit.cmd('mesh surface 2 3 4')
+cubit.cmd('block 1 surface 2 3 4')
+cubit.cmd('export mesh "u_wall.e" block 1 dimension 3 overwrite')
