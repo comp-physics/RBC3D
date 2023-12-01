@@ -1,0 +1,8 @@
+#!python
+cubit.cmd('create cylinder radius 5.0 height 13.33')
+cubit.cmd('curve 1 interval size 0.15')
+cubit.cmd('curve 2 interval size 0.15')
+cubit.cmd('surface 1 scheme trimesh')
+cubit.cmd('mesh surface 1')
+cubit.cmd('block 1 surface 1')
+cubit.cmd('export mesh "new_cyl_D10_L13_33.e" dimension 3 block 1 overwrite')

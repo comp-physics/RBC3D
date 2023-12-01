@@ -40,7 +40,7 @@ program InitCond
         call ReadMyWallMesh('Input/cylinder_D_8.01_L_13.39.dat', wall)
         actlen = 13.3921
     else
-        call ReadWallMesh('Input/cylinder_D_6.0_L_13.33.g',wall)
+        call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
         actlen = 13.33
     end if
 

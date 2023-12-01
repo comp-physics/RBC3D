@@ -1,0 +1,12 @@
+#!python
+cubit.cmd('create surface circle radius 3')
+cubit.cmd('sweep surface 1 vector 0 0 1 distance 5')
+cubit.cmd('sweep surface 1 vector 0 1 1 distance 5')
+cubit.cmd('sweep surface 1 vector 0 -1 1 distance 5')
+cubit.cmd('sweep surface 1 vector 0 -1 -1 distance 5')
+cubit.cmd('sweep surface 7 vector 0 1 -1 distance 5')
+cubit.cmd('sweep surface 1 vector 0 0 1 distance 5')
+cubit.cmd('surface 2 4 5 6 8 9 10 11 scheme trimesh')
+cubit.cmd('mesh surface 2 4 6 8 9 10 11')
+cubit.cmd('block 1 surface 2 4 6 8 9 10 11')
+cubit.cmd('export mesh "loop.e" block 1 dimension 3 overwrite')
