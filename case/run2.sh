@@ -15,26 +15,10 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/celltypes3.log"
+#SBATCH -o "./run_logs/celltypes32.log"
 
 cd $SLURM_SUBMIT_DIR
 
-cd D
-rm -rf x*
-rm -rf r*
-rm -rf w*
-cd ../
-
 ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 
-cd ../common
-make clean
-make .depend
-make
-
-cd ../case
-make clean
-make .depend
-make
-srun -n 2 ./initcond
 srun -n 4 -p 24 ./tube

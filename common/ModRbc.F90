@@ -310,7 +310,7 @@ contains
     
   
 !**********************************************************************
-! Make a spherical shaped cell for modeling a larger leukocyte --- r factor is hard coded here (for now at least)
+! Make an eliptically shaped cell for modeling a platelet --- r factor is hard coded here (for now at least)
 ! Arguments:
 !  cell -- red blood cell
 !  r -- spherical radius

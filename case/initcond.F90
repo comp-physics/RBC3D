@@ -9,6 +9,7 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
+  use MPI
 
   implicit none
 
@@ -19,15 +20,16 @@ program InitCond
   type(t_wall),pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
-  real(WP) :: theta, th, rc, xc(3)
+  real(WP) :: theta, th, rc, xc(3), ztemp
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, p, l, dealias
   integer,parameter :: ranseed = 161269
   character(CHRLEN) :: fn
   ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
-  real(WP) :: rand(8, 3)
-  integer :: j
+  real(WP) :: rand(16, 3)
+  integer :: j, ierr, half2
+  real :: wbcs(8)
 
     ! Initialize
     call InitMPI
@@ -47,7 +49,7 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 8
+    nrbc = 16
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
@@ -55,10 +57,14 @@ program InitCond
 
     lengspacing = lengtube/Real(nrbc)
 
+    print*, 'lengtube 1', lengtube
+    print*, 'lengspacing 1', lengspacing
+
     wall%f = 0.
 
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
+        ! 10 is the radius
         wall%x(i,1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
@@ -78,9 +84,13 @@ program InitCond
     Lb(3) = zmax - zmin
     lengtube = Lb(3)
     lengspacing = lengtube/real(nrbc)
+    print*, 'lengtube 2', lengtube
+    print*, 'lengspacing 2', lengspacing
 
-    ! Reference cell 
+    ! Reference cell i
     xc = 0.
+    ! radius of cell gets trans to ~1.4
+    ! if you want rad of 8, pass in 5.7 for 8/1.4 (5.7*1.4=8)
     radEqv = 1.0
 
     call Rbc_Create(rbcRef, nlat0, dealias)
@@ -90,32 +100,63 @@ program InitCond
         szCell(ii) = maxval(rbcRef%x(:,:,ii)) - minval(rbcRef%x(:,:,ii))
     end do
 
-    ! real :: rand(8, 3)
-    call random_number(rand)
+    if (rootWorld) then
+        call random_number(rand)
+        call random_number(wbcs)
+    end if
+    call MPI_Bcast(rand, 16*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+    call MPI_Bcast(wbcs, 8, MPI_WP, 0, MPI_COMM_WORLD, ierr)
 
-    print*, '8 x 3 rand num array'
+    wbcs = 1 + FLOOR(16*wbcs)
+
+    print*, '16 x 3 rand num array'
     do j = 1, nrbc
         print *, rand(j, :)
     end do
 
+
     ! place cells
     do iz = 1, nrbc
-        ! coord 0 in x and y direction
-        ! gen rand # 4 every coord
-        ! xc(1:2) = 0.
-        xc(1) = rand(iz, 1)
-        xc(2) = rand(iz, 2)
-        ! iz = index of cell
-        ! diff z value to get single file line
-        ! add it to z
-        xc(3) = lengspacing*(iz-0.5) + (rand(iz, 3) / 2)
-        print*, 'Xc', iz, xc
-        ! pointer
-        ! rbcs contain rbc object- mesh data + loc coord
-        rbc => rbcs(iz)
-        rbc%celltype = 1
-        call Rbc_Create(rbc, nlat0, dealias)
-        call Rbc_MakeBiConcave(rbc, radEqv, xc)
+        half2 = (iz + 1) / 2
+        if (modulo(iz, 2) .eq. 1) then
+            ! xc(1:2) = -1.
+            xc(1) = -1 - rand(iz, 1)
+            xc(2) = -1 - rand(iz, 2)
+            xc(3) = lengspacing*(half2-0.5)*2 + (rand(iz, 3) / 2)
+            ! xc(3) = lengspacing*(half2-0.5)*2 
+            ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
+            print*, 'iz1:', iz, 'half2', half2, 'xc:', xc
+            rbc => rbcs(iz)
+            if (modulo(half2, 2) .eq. 1) then
+                ! print*, 'make leukocyte at', iz
+                rbc%celltype = 2
+                call Rbc_Create(rbc, nlat0, dealias)
+                call Rbc_MakeLeukocyte(rbc, radEqv, xc)
+            else
+                rbc%celltype = 1
+                call Rbc_Create(rbc, nlat0, dealias)
+                call Rbc_MakeBiConcave(rbc, radEqv, xc)
+            end if
+        else
+            ! xc(1:2) = 1.
+            xc(1) = 1 + rand(iz, 1)
+            xc(2) = 1 + rand(iz, 2)
+            xc(3) = lengspacing*(half2-0.5)*2 + (rand(iz, 3) / 2)
+            ! xc(3) = lengspacing*(half2-0.5)*2
+            ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
+            print*, 'iz2:', iz, 'half2', half2, 'xc:', xc
+            rbc => rbcs(iz)
+            if (modulo(half2, 2) .eq. 1) then
+                ! print*, 'make leukocyte at', iz
+                rbc%celltype = 2
+                call Rbc_Create(rbc, nlat0, dealias)
+                call Rbc_MakeLeukocyte(rbc, radEqv, xc)
+            else
+                rbc%celltype = 1
+                call Rbc_Create(rbc, nlat0, dealias)
+                call Rbc_MakeBiConcave(rbc, radEqv, xc)
+            end if
+        end if
     end do
 
     ! Put things in the middle of the periodic box
