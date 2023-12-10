@@ -504,8 +504,18 @@ contains
     call Wall_Create(wall, nvert, nele)
 
     ! Read node coordinates
-    ierr = NF90_INQ_VARID(ncid, "coord", varid)
-    ierr = NF90_GET_VAR(ncid, varid, wall%x)
+    ! ierr = NF90_INQ_VARID(ncid, "coord", varid)
+    ! ierr = NF90_GET_VAR(ncid, varid, wall%x)
+
+    ierr = NF90_INQ_VARID(ncid, "coordx", varid)
+    ierr = NF90_GET_VAR(ncid, varid, wall%x(:, 1))
+
+    ierr = NF90_INQ_VARID(ncid, "coordy", varid)
+    ierr = NF90_GET_VAR(ncid, varid, wall%x(:, 2))
+
+    ierr = NF90_INQ_VARID(ncid, "coordz", varid)
+    ierr = NF90_GET_VAR(ncid, varid, wall%x(:, 3))
+
 
     ! Read mesh connectivity
     allocate(connect(3,nele))
