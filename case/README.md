@@ -13,4 +13,6 @@ One way to make sure WBC's are added correctly:
 2. In `tube.F90`, edit the reference cell array initialization so that the `rbcRefs(2)` is initialized with `RBC_MakeLeukocyte()`.
 
 ## Adding Sickle Cells
-Sickle cells need a reference cell too, but they're created via the `ImportReadRBC()` function instead. An example is available in `/case_different_celltypes`.
+Sickle cells need a reference cell too, but they're created via the `ImportReadRBC()` function instead. An example is available in `/case_different_celltypes`. 
+
+Note: The ts size in `~/case_different_celltypes/tube.in` is adjusted from .0014 to .00014 so the sickle cell simulation won't break if you run it.
