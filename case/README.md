@@ -3,7 +3,7 @@
 Right now, if you visualize the cells for this case you will see 8 RBC's in a file because that's what the place cells loop in `initoncd.F90` adds.
 
 ## Different Cell Types
-Currently, the different cell types we have are Leukocytes aks WBC's and sickle cells. We also have functions to create shapes like spheres and ellipsoids in `ModRbc.F90`.
+Currently, the different cell types we have are Leukocytes aka WBC's and sickle cells. We also have functions to create shapes like spheres and ellipsoids in `ModRbc.F90`.
 
 ## Adding WBC's
 One way to add WBC's:
