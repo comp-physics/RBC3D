@@ -1,6 +1,9 @@
 case/D/*
 case/run_logs
 case_different_celltypes/D
+case/*.py
+case/v.*
+case/run*
 packages
 *.o
 *.mod
