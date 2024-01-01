@@ -12,3 +12,4 @@ initcond
 Makefile.in
 tube
 libcommon.a
+.vscode
