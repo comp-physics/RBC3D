@@ -1,5 +1,0 @@
-{
-    "fortran.preferredCase":       "lowercase",
-    "fortran.linter.includePaths": [ "${workspacefolder}/case/**" ],
-    "fortran.fortls.path": "/storage/home/hcoda1/4/smanasreh6/.local/bin/fortls"
-}
