@@ -88,7 +88,7 @@ contains
 
       rbcRef => rbcRefs(2)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeLeukocyte(rbcRef, radEqv)
+      call Rbc_MakeLeukocyte(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
@@ -113,9 +113,13 @@ contains
        rbc%EB = 6.69D-2
       case(2)
        print *,"CASE 2 --- celltype"
-       rbc%ES = 10.
-       rbc%ED = 50.
-       rbc%EB = 6.D-2
+       rbc%ES = 88.652
+       ! 10^2 = 887
+       ! 10^1 = 88.652
+       rbc%ED = 200.
+       ! want to set ED so that local area change of WBC stays below 2%. how?
+       ! rbc%EB = 6.D-2
+       rbc%EB = 2.44D-2 ! check = .024
       case(3)
        rbc%ES = 12.4 * 20 / 7.1
        rbc%ED = 200 * 49.4 / 15.4

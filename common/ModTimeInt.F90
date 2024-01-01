@@ -104,7 +104,7 @@ contains
     integer :: irbc, iwall
     type(t_rbc),pointer :: rbc
     type(t_wall),pointer :: wall
-    real(WP) :: clockBgn, clockEnd
+    real(WP) :: clockBgn, clockEnd, areaExp
     integer :: ierr
 
     ! Time integration
@@ -117,6 +117,19 @@ contains
 !      print *,"NO VEL"
       call Compute_Rbc_Vel
 
+      ! Log area expansion for cells every 100 ts
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        if (rootWorld) then
+          if (lt == 1) then
+            rbc%startingArea = rbc%area
+          end if
+          if (modulo(lt, 100) == 0) then
+            areaExp = RBC_AreaExpansion(rbc)
+            print *, "area expansion of cell ", irbc, ": ", areaExp
+          end if
+        end if
+      end do
 
       ! Enforce no-slip condition on the wall
 !      print *,"NO NO SLIP"
@@ -125,9 +138,9 @@ contains
       ! Evolve RBC
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
-!        call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
-    rbc%x = rbc%x + Ts*rbc%v
-!   rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
+!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
+        rbc%x = rbc%x + Ts*rbc%v
+!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
       end do ! irbc
 
 
@@ -585,6 +598,9 @@ subroutine OneTimeIntModVC
     ! Update rbc surface geometry
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
+      ! if (rootWorld) then
+      !   print *, "area of rbc ", irbc, ": ", rbc%area
+      ! end if
       call RBC_ComputeGeometry(rbc)
       call Rbc_BuildSurfaceSource(rbc, xFlag=.true.)
     end do ! irbc

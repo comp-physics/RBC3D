@@ -26,7 +26,8 @@ module ModRbc
     RBC_Integral, &
     RBC_BuildSurfaceSource, &
     RBC_MakeUncurvedSickleSpheroid, &
-    RBC_MakeSickle
+    RBC_MakeSickle, &
+    RBC_AreaExpansion
 
   public :: Shell_ResForce
   private :: Shell_ElasStrs, &
@@ -38,7 +39,7 @@ contains
 !**********************************************************************
 ! Create a red blood cell surface mesh
 ! Arguments:
-!  cell -- 
+!  cell -- rbc object
 !  nlat0 -- number of latitudinal modes
 !  dealias_fac -- dealiasing factor
   subroutine RBC_Create(cell, nlat0, dealias_fac)
@@ -974,6 +975,18 @@ contains
     end do ! ilat
 
   end subroutine Shell_Bend
+
+!**********************************************************************
+! Compute the percent change in area for a cell
+! Arguments:
+! cell - rbc object
+  function RBC_AreaExpansion(cell) result(percent)
+    type(t_rbc) :: cell
+    real(WP) :: percent
+    ! print *, "cell%startingArea ", cell%startingArea
+    ! print *, "cell%area: ", cell%area
+    percent = ((cell%area - cell%startingArea) / cell%startingArea) * 100
+  end function RBC_AreaExpansion
 
 !**********************************************************************
 

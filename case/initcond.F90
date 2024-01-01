@@ -29,7 +29,7 @@ program InitCond
   real :: lengtube,lengspacing, phi, actlen
   real(WP) :: rand(16, 3)
   integer :: j, ierr, half2
-  real :: wbcs(8)
+  real :: wbcs(2)
 
     ! Initialize
     call InitMPI
@@ -64,7 +64,7 @@ program InitCond
 
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
-        ! 10 is the radius
+        ! 10 is the radius or 5?
         wall%x(i,1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
@@ -105,7 +105,7 @@ program InitCond
         call random_number(wbcs)
     end if
     call MPI_Bcast(rand, 16*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-    call MPI_Bcast(wbcs, 8, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+    call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
 
     wbcs = 1 + FLOOR(16*wbcs)
 
@@ -114,6 +114,10 @@ program InitCond
         print *, rand(j, :)
     end do
 
+    print*, 'wbcs index array'
+    do j = 1, 2
+        print *, wbcs(j)
+    end do
 
     ! place cells
     do iz = 1, nrbc
@@ -127,7 +131,7 @@ program InitCond
             ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
             print*, 'iz1:', iz, 'half2', half2, 'xc:', xc
             rbc => rbcs(iz)
-            if (modulo(half2, 2) .eq. 1) then
+            if (ANY(wbcs == iz)) then
                 ! print*, 'make leukocyte at', iz
                 rbc%celltype = 2
                 call Rbc_Create(rbc, nlat0, dealias)
@@ -146,7 +150,7 @@ program InitCond
             ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
             print*, 'iz2:', iz, 'half2', half2, 'xc:', xc
             rbc => rbcs(iz)
-            if (modulo(half2, 2) .eq. 1) then
+            if (ANY(wbcs == iz)) then
                 ! print*, 'make leukocyte at', iz
                 rbc%celltype = 2
                 call Rbc_Create(rbc, nlat0, dealias)
