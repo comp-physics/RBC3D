@@ -1,0 +1,14 @@
+*/run_logs
+*/*.py
+*/v.*
+*/*.sh
+*/D/*
+!*/D/.gittouch
+*.o
+*.mod
+.depend
+initcond
+tube
+libcommon.a
+.vscode
+field

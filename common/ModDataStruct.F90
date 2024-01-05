@@ -120,7 +120,7 @@ module ModDataStruct
 
     real(WP),dimension(:,:,:,:),pointer :: qq
 
-    real(WP) :: xc(3), vol, area
+    real(WP) :: xc(3), vol, area, starting_area
     real(WP) :: meshSize
 
     type(t_spline) :: spln_x, spln_a3, spln_detJ, spln_FdetJ, spln_GdetJ
