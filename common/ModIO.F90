@@ -693,6 +693,7 @@ contains
       write(restart_unit) rbc%nlat0, rbc%nlon0
       write(restart_unit) rbc%nlat, rbc%nlon
       write(restart_unit) rbc%celltype
+      write(restart_unit) rbc%starting_area
       write(restart_unit) rbcs(irbc)%x
     end do ! irbc
 
@@ -723,6 +724,7 @@ contains
     integer :: irbc, iwall
     integer :: nlat0, nlon0, nlat, nlon, nvert, nele, celltype
     integer :: dealias_fac
+    real(WP) :: starting_area
     type(t_Rbc),pointer :: rbc
     type(t_Wall),pointer :: wall
     integer :: ierr
@@ -777,7 +779,8 @@ print*,'3'
     read(restart_unit) nlat, nlon
        ! celltype = 1; print *,"NO READ CELL TYPE" 
         read(restart_unit) celltype
-    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+        read(restart_unit) starting_area
+    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype, 'starting_area = ', starting_area
         write(*,*) 'nlat =',nlat
       end if
       call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -785,9 +788,11 @@ print*,'3'
       call MPI_Bcast(nlat, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+      call MPI_Bcast(starting_area, 1, MPI_WP, 0, MPI_Comm_World, ierr)
 
       
       rbc%celltype = celltype
+      rbc%starting_area = starting_area
 
     if (nlat/real(nlat0).lt.1.5) then
         dealias_fac = 100
