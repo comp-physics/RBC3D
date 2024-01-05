@@ -117,7 +117,7 @@ contains
 !      print *,"NO VEL"
       call Compute_Rbc_Vel
 
-      ! Log area expansion for cells every 100 ts
+      ! Log area expansion of cells every 100 ts
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
         if (rootWorld) then
