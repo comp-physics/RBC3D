@@ -3,10 +3,8 @@ case/run_logs
 case/*.py
 case/v.*
 case/*.sh
-case/D/*
-!case/D/.gittouch
-case_different_celltypes/D/*
-!case_different_celltypes/D/.gittouch
+*/D/*
+!*/D/.gittouch
 mypackages
 *.o
 *.mod
