@@ -1,11 +1,9 @@
-case_wbcs
 */run_logs
 */*.py
 */v.*
 */*.sh
 */D/*
 !*/D/.gittouch
-mypackages
 *.o
 *.mod
 .depend
