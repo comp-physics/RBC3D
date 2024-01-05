@@ -983,9 +983,7 @@ contains
   function RBC_AreaExpansion(cell) result(percent)
     type(t_rbc) :: cell
     real(WP) :: percent
-    ! print *, "cell%startingArea ", cell%startingArea
-    ! print *, "cell%area: ", cell%area
-    percent = ((cell%area - cell%startingArea) / cell%startingArea) * 100
+    percent = ((cell%area - cell%starting_area) / cell%starting_area) * 100
   end function RBC_AreaExpansion
 
 !**********************************************************************

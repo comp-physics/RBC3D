@@ -27,15 +27,17 @@ program InitCond
   character(CHRLEN) :: fn
   ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
-  real(WP) :: rand(16, 3)
-  integer :: j, ierr, half2
-  real :: wbcs(2)
+  real(WP) :: rand(27, 3)
+  integer :: j, ierr, half2, index, layer, newiz
+  real :: wbcs(2), tubeDiam, layerx(3), layery(3)
 
     ! Initialize
     call InitMPI
     ! Allocate working arrays
     allocate(rbcs(nrbcMax))
     allocate(walls(nwallMax))
+
+    tubeDiam = 22.0 / 2.82
 
     ! Wall
     nwall = 1
@@ -49,13 +51,13 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 16
+    nrbc = 25
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-    lengtube = nrbc/real(phi) !XXLL
+    lengtube = 32.0 / 2.82 ! nrbc/real(phi) !XXLL
 
-    lengspacing = lengtube/Real(nrbc)
+    lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
 
     print*, 'lengtube 1', lengtube
     print*, 'lengspacing 1', lengspacing
@@ -64,9 +66,9 @@ program InitCond
 
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
-        ! 10 is the radius or 5?
-        wall%x(i,1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
-        wall%x(i,2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+        ! 10 is the diameter
+        wall%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+        wall%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
     end do
     xmin = minval(wall%x(:,1))
@@ -83,7 +85,7 @@ program InitCond
     Lb(2) = Lb(1)
     Lb(3) = zmax - zmin
     lengtube = Lb(3)
-    lengspacing = lengtube/real(nrbc)
+    ! lengspacing = lengtube/real(nrbc)
     print*, 'lengtube 2', lengtube
     print*, 'lengspacing 2', lengspacing
 
@@ -104,12 +106,12 @@ program InitCond
         call random_number(rand)
         call random_number(wbcs)
     end if
-    call MPI_Bcast(rand, 16*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+    call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
     call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
 
-    wbcs = 1 + FLOOR(16*wbcs)
+    wbcs = 1 + FLOOR(27*wbcs)
 
-    print*, '16 x 3 rand num array'
+    print*, '27 x 3 rand num array'
     do j = 1, nrbc
         print *, rand(j, :)
     end do
@@ -119,47 +121,37 @@ program InitCond
         print *, wbcs(j)
     end do
 
+    layerx = (/-1.63, 1.63, 0.0/)
+    layery = (/-.943, -.943, 1.89/)
+
     ! place cells
-    do iz = 1, nrbc
-        half2 = (iz + 1) / 2
-        if (modulo(iz, 2) .eq. 1) then
-            ! xc(1:2) = -1.
-            xc(1) = -1 - rand(iz, 1)
-            xc(2) = -1 - rand(iz, 2)
-            xc(3) = lengspacing*(half2-0.5)*2 + (rand(iz, 3) / 2)
-            ! xc(3) = lengspacing*(half2-0.5)*2 
-            ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
-            print*, 'iz1:', iz, 'half2', half2, 'xc:', xc
-            rbc => rbcs(iz)
-            if (ANY(wbcs == iz)) then
-                ! print*, 'make leukocyte at', iz
-                rbc%celltype = 2
-                call Rbc_Create(rbc, nlat0, dealias)
-                call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-            else
-                rbc%celltype = 1
-                call Rbc_Create(rbc, nlat0, dealias)
-                call Rbc_MakeBiConcave(rbc, radEqv, xc)
-            end if
+    do iz = 1, (nrbc + 2)
+        if (iz > 23) then
+            newiz = iz - 2
+        else if (iz > 17) then
+            newiz = iz - 1
         else
-            ! xc(1:2) = 1.
-            xc(1) = 1 + rand(iz, 1)
-            xc(2) = 1 + rand(iz, 2)
-            xc(3) = lengspacing*(half2-0.5)*2 + (rand(iz, 3) / 2)
-            ! xc(3) = lengspacing*(half2-0.5)*2
-            ! xc(3) = (iz - 0.5) * lengspacing + (rand(iz, 3) / 2) 
-            print*, 'iz2:', iz, 'half2', half2, 'xc:', xc
-            rbc => rbcs(iz)
-            if (ANY(wbcs == iz)) then
-                ! print*, 'make leukocyte at', iz
-                rbc%celltype = 2
-                call Rbc_Create(rbc, nlat0, dealias)
-                call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-            else
-                rbc%celltype = 1
-                call Rbc_Create(rbc, nlat0, dealias)
-                call Rbc_MakeBiConcave(rbc, radEqv, xc)
-            end if
+            newiz = iz
+        end if
+        index = (modulo(iz, 3) + 1)
+        layer = (iz - 1) / 3
+        xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
+        xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
+        xc(3) = (layer + .5) + (lengspacing * layer) + ((rand(iz, 3) - 0.5) / 3)
+        if (iz == 20) then
+            print*, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
+            rbc => rbcs(newiz)
+            rbc%celltype = 2
+            call Rbc_Create(rbc, nlat0, dealias)
+            call Rbc_MakeLeukocyte(rbc, radEqv, xc)
+        else if((iz == 17) .or. (iz == 23)) then
+            cycle
+        else
+            print*, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
+            rbc => rbcs(newiz)
+            rbc%celltype = 1
+            call Rbc_Create(rbc, nlat0, dealias)
+            call Rbc_MakeBiConcave(rbc, radEqv, xc)
         end if
     end do
 

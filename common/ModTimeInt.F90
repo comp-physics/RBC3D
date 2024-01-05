@@ -122,11 +122,12 @@ contains
         rbc => rbcs(irbc)
         if (rootWorld) then
           if (lt == 1) then
-            rbc%startingArea = rbc%area
+            rbc%starting_area = rbc%area
           end if
           if (modulo(lt, 100) == 0) then
             areaExp = RBC_AreaExpansion(rbc)
-            print *, "area expansion of cell ", irbc, ": ", areaExp
+            write(*, '(A, I3, A, F10.5, A)') &
+            "area expansion of cell ", irbc, ": ", areaExp, "%"
           end if
         end if
       end do

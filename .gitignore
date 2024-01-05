@@ -3,7 +3,7 @@ case/run_logs
 case_different_celltypes/D
 case/*.py
 case/v.*
-case/run*
+case/*.sh
 packages
 *.o
 *.mod
@@ -13,3 +13,4 @@ Makefile.in
 tube
 libcommon.a
 .vscode
+case/field

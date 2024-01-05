@@ -120,7 +120,7 @@ module ModDataStruct
 
     real(WP),dimension(:,:,:,:),pointer :: qq
 
-    real(WP) :: xc(3), vol, area, startingArea !is area here the local area value?
+    real(WP) :: xc(3), vol, area, starting_area !is area here the local area value?
     real(WP) :: meshSize
 
     type(t_spline) :: spln_x, spln_a3, spln_detJ, spln_FdetJ, spln_GdetJ

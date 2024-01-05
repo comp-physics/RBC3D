@@ -112,7 +112,7 @@ contains
        rbc%ED = 200.
        rbc%EB = 6.69D-2
       case(2)
-       print *,"CASE 2 --- celltype"
+       ! print *,"CASE 2 --- celltype"
        rbc%ES = 88.652
        ! 10^2 = 887
        ! 10^1 = 88.652
