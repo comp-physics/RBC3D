@@ -5,12 +5,11 @@ case_different_celltypes/D
 case/*.py
 case/v.*
 case/*.sh
-packages
+mypackages
 *.o
 *.mod
 .depend
 initcond
-Makefile.in
 tube
 libcommon.a
 .vscode
