@@ -9,7 +9,6 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
-  use MPI
 
   implicit none
 
@@ -20,24 +19,18 @@ program InitCond
   type(t_wall),pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
-  real(WP) :: theta, th, rc, xc(3), ztemp
+  real(WP) :: theta, th, rc, xc(3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, p, l, dealias
   integer,parameter :: ranseed = 161269
   character(CHRLEN) :: fn
-  ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
-  real(WP) :: rand(27, 3)
-  integer :: j, ierr, half2, index, layer, newiz
-  real :: wbcs(2), tubeDiam, layerx(3), layery(3)
 
     ! Initialize
     call InitMPI
     ! Allocate working arrays
     allocate(rbcs(nrbcMax))
     allocate(walls(nwallMax))
-
-    tubeDiam = 22.0 / 2.82
 
     ! Wall
     nwall = 1
@@ -51,24 +44,20 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 25
+    nrbc = 8
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-    lengtube = 32.0 / 2.82 ! nrbc/real(phi) !XXLL
+    lengtube = nrbc/real(phi) !XXLL
 
-    lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
-
-    print*, 'lengtube 1', lengtube
-    print*, 'lengspacing 1', lengspacing
+    lengspacing = lengtube/Real(nrbc)
 
     wall%f = 0.
 
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
-        ! 10 is the diameter
-        wall%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+        wall%x(i,1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+        wall%x(i,2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
     end do
     xmin = minval(wall%x(:,1))
@@ -85,14 +74,10 @@ program InitCond
     Lb(2) = Lb(1)
     Lb(3) = zmax - zmin
     lengtube = Lb(3)
-    ! lengspacing = lengtube/real(nrbc)
-    print*, 'lengtube 2', lengtube
-    print*, 'lengspacing 2', lengspacing
+    lengspacing = lengtube/real(nrbc)
 
-    ! Reference cell i
+    ! Reference cell 
     xc = 0.
-    ! radius of cell gets trans to ~1.4
-    ! if you want rad of 8, pass in 5.7 for 8/1.4 (5.7*1.4=8)
     radEqv = 1.0
 
     call Rbc_Create(rbcRef, nlat0, dealias)
@@ -102,57 +87,16 @@ program InitCond
         szCell(ii) = maxval(rbcRef%x(:,:,ii)) - minval(rbcRef%x(:,:,ii))
     end do
 
-    if (rootWorld) then
-        call random_number(rand)
-        call random_number(wbcs)
-    end if
-    call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-    call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-
-    wbcs = 1 + FLOOR(27*wbcs)
-
-    print*, '27 x 3 rand num array'
-    do j = 1, nrbc
-        print *, rand(j, :)
-    end do
-
-    print*, 'wbcs index array'
-    do j = 1, 2
-        print *, wbcs(j)
-    end do
-
-    layerx = (/-1.63, 1.63, 0.0/)
-    layery = (/-.943, -.943, 1.89/)
-
     ! place cells
-    do iz = 1, (nrbc + 2)
-        if (iz > 23) then
-            newiz = iz - 2
-        else if (iz > 17) then
-            newiz = iz - 1
-        else
-            newiz = iz
-        end if
-        index = (modulo(iz, 3) + 1)
-        layer = (iz - 1) / 3
-        xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
-        xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
-        xc(3) = (layer + .5) + (lengspacing * layer) + ((rand(iz, 3) - 0.5) / 3)
-        if (iz == 20) then
-            print*, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-            rbc => rbcs(newiz)
-            rbc%celltype = 2
-            call Rbc_Create(rbc, nlat0, dealias)
-            call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-        else if((iz == 17) .or. (iz == 23)) then
-            cycle
-        else
-            print*, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-            rbc => rbcs(newiz)
-            rbc%celltype = 1
-            call Rbc_Create(rbc, nlat0, dealias)
-            call Rbc_MakeBiConcave(rbc, radEqv, xc)
-        end if
+    do iz = 1,nrbc
+        xc(1:2) = 0.
+        xc(3) = lengspacing*(iz-0.5)
+        print*, 'Xc', iz, xc
+
+        rbc => rbcs(iz)
+        rbc%celltype = 1
+        call Rbc_Create(rbc, nlat0, dealias)
+        call Rbc_MakeBiConcave(rbc, radEqv, xc)
     end do
 
     ! Put things in the middle of the periodic box
