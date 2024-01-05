@@ -1,8 +1,8 @@
 case_wbcs
-case/run_logs
-case/*.py
-case/v.*
-case/*.sh
+*/run_logs
+*/*.py
+*/v.*
+*/*.sh
 */D/*
 !*/D/.gittouch
 mypackages
