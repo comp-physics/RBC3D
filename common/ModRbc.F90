@@ -979,7 +979,7 @@ contains
 !**********************************************************************
 ! Compute the percent change in area for a cell
 ! Arguments:
-! cell - rbc object
+! cell -- rbc object
   function RBC_AreaExpansion(cell) result(percent)
     type(t_rbc) :: cell
     real(WP) :: percent

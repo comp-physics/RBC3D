@@ -599,9 +599,6 @@ subroutine OneTimeIntModVC
     ! Update rbc surface geometry
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      ! if (rootWorld) then
-      !   print *, "area of rbc ", irbc, ": ", rbc%area
-      ! end if
       call RBC_ComputeGeometry(rbc)
       call Rbc_BuildSurfaceSource(rbc, xFlag=.true.)
     end do ! irbc
