@@ -4,7 +4,7 @@
 ! and adds specified # of Sickle Cells
 ! Then writes the new cells-setup out to separate restart-file
 
-program sickle_injection
+program randomized_cell_gen
     
     use ModDataTypes
     use ModDataStruct
@@ -26,7 +26,7 @@ program sickle_injection
     real(WP) :: th, actlen
     
     real(WP), parameter :: hematocrit = 0.25
-    integer :: nrbcMax, numSickles ! how many cells, and how many of them are sickles?
+    integer :: nrbcMax ! how many cells
     real(WP) :: tuber, tubelen
 
     real(WP) :: clockBgn, clockEnd
@@ -45,9 +45,6 @@ program sickle_injection
     Lb(2) = tuber * 2 + 0.5
     Lb(3) = tubelen
 
-    !10% of the RBCs are sickle, rest are healthy
-    numSickles = 0! nrbcMax * 0.1
-
     !set other initialization params
     vBkg(1:2) = 0.; vBkg(3) = 8.
     Nt = 0; time = 0.
@@ -58,7 +55,7 @@ program sickle_injection
     allocate(walls(nwall))
     wall=>walls(1)
     
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
+    call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
     actlen = 13.33
 
     wall%f = 0.
@@ -263,4 +260,4 @@ end subroutine rotate_cell
 
 
 
-end program sickle_injection
+end program randomized_cell_gen
