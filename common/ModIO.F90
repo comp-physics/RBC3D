@@ -33,7 +33,8 @@ module ModIO
     ReadRestart, &
         ReadRestart_NoWalls, &
         ExportWriteRBC, &
-        ImportReadRBC
+        ImportReadRBC, &
+        WriteManyRBCsByType
 
 contains
 
@@ -94,6 +95,13 @@ contains
     call WriteManyRBCs(fn, nrbc, rbcs)
         write(fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
         call WriteExactPts(fn, nrbc, rbcs) 
+
+        ! Write out only type-1 cells (healthy RBC cells)
+        write(fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
+        call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+        ! Write out only type-3 cells (sickle cells)
+        write(fn, FMT=fn_FMT) 'D/', '3x', lt, '.dat'
+        call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
       end if
 
       if (wall_out > 0 .and. mod(lt,wall_out) == 0) then
@@ -212,6 +220,67 @@ contains
     close(cell_unit)
 
   end subroutine WriteManyRBCs
+
+!*********************************************************************
+! Write the shape of blood cells of specified type to file
+! Arguments:
+!  fn -- file suffix name
+!  nrbc -- nubmer of cells
+!  rbcs -- blood cells
+!  type -- type filter (1: rbc, 2: leukocyte, 3: sickle cell)
+  subroutine WriteManyRBCsByType(fn, nrbc, rbcs, type)
+    character(*) :: fn
+    integer :: nrbc
+    type(t_rbc),target :: rbcs(:)
+    integer :: type
+
+    type(t_Rbc),pointer :: rbc
+    real(WP),dimension(:,:,:),allocatable :: x, xa, xb
+    integer :: irbc, nlat, nlon, ilat, ilon
+
+    ! Argument check
+    if (nrbc <= 0) return
+
+    ! Write file head
+    open(cell_unit, file=trim(fn), action='write')
+    write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
+
+    ! Write the record of every cell
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      nlat = rbc%nlat;    nlon = rbc%nlon
+
+      if (rbc%celltype .ne. type) then
+        cycle
+      end if
+
+      ! Allocate working arrays
+      allocate(x(0:nlat,nlon,3), xa(nlon/2+1,nlat+1,3), xb(nlon/2+1,nlat+1,3) )
+
+      call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
+          xa, xb, size(xa,1), size(xa,2), rbc%wshags )
+      call ShFilter(nlat, nlon, 3, xa, xb, size(xa,1), size(xa,2), rbc%nlat0, rbc%nlon0 )
+      call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
+          xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+
+      write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat+1, '  J=', nlon+1, '  F=POINT'
+     
+      do ilon = 1, nlon
+      do ilat = 0, nlat
+    write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
+      end do ! ilat
+      end do ! ilon
+      do ilat = 0, nlat
+    write(cell_unit, '(3F20.10)') x(ilat,1,:)
+      end do ! ilat
+
+      ! Deallocate working arrays
+      deallocate(x, xa, xb )
+    end do ! irbc
+
+    close(cell_unit)
+  
+  end subroutine WriteManyRBCsByType
 
   subroutine WriteManyRBCsNoFilt(fn, nrbc, rbcs)
     character(*) :: fn
