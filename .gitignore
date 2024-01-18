@@ -9,6 +9,7 @@
 .depend
 initcond
 tube
+libcommon.a
 .vscode
 field
 packages
