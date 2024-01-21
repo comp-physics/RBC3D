@@ -16,7 +16,7 @@ program cells_in_tube
   integer :: cutoff
   character(CHRLEN) :: fn
 
-#include "../petsc_include.h"
+#include "../../petsc_include.h"
 
   call InitAll
 

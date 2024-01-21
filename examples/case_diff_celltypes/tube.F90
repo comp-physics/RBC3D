@@ -16,7 +16,7 @@ program cells_in_tube
   integer :: cutoff
   character(CHRLEN) :: fn
 
-#include "../petsc_include.h"
+#include "../../petsc_include.h"
 
   call InitAll
 
@@ -83,12 +83,12 @@ contains
       
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeBiconcave(rbcRef, radEqv) 
+      call RBC_MakeBiconcave(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(2)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeSphere(rbcRef, radEqv)
+      call RBC_MakeLeukocyte(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
@@ -111,11 +111,17 @@ contains
        rbc%ES = 12.4
        rbc%ED = 200.
        rbc%EB = 6.69D-2
+      ! Mechanical properties of leukocytes
+      ! Calculated according to section 6 of reference paper with WBC radius of 1.4 sim units
+      ! and Es* scaled by 10^2
+      ! Reference:
+      !   Zhao, H., Isfahani, A. H., Olson, L. N., & Freund, J. B. (2010). 
+      !   A spectral boundary integral method for flowing blood cells. 
+      !   Journal of Computational Physics, 229(10), 3726-3744.
       case(2)
-       print *,"CASE 2 --- celltype"
-       rbc%ES = 10.
-       rbc%ED = 50.
-       rbc%EB = 6.D-2
+       rbc%ES = 887
+       rbc%ED = 200.
+       rbc%EB = 2.44D-2 ! check = .024
 
       ! Mechanical properties for sickle cell roughly determined to be
       ! Es = (20 / 7.1) * Es for a healthy RBC (case(1) cell)

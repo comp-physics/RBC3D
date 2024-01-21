@@ -100,6 +100,10 @@ program InitCond
           call Rbc_Create(rbc, nlat0, dealias)
           call RBC_MakeBiconcave(rbc, radEqv, xc)
         else 
+        !   for leukocytes use
+        !   rbc%celltype = 2
+        !   call Rbc_Create(rbc, nlat0, dealias)
+        !   call RBC_MakeLeukocyte(rbc, radEqv, xc)
           call ImportReadRBC('Input/SickleCell.dat', rbc, xc)
         end if
     end do
