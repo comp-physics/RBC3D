@@ -1,0 +1,569 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-25-2023 23:42:46
+Job ID:    4219617
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+rm -f *.o *.mod *.a core*
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataTypes.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModFFT.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataStruct.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModConf.F90
+ModConf.F90:581:24:
+
+  567 |     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
+      |                        2
+......
+  581 |     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
+      |                        1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).
+ModConf.F90:405:21:
+
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+......
+  405 |       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
+      |                     1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModConf.F90:290:19:
+
+  290 |     call MPI_Bcast(viscRat, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:291:19:
+
+  291 |     call MPI_Bcast(refRad, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:296:19:
+
+  296 |     call MPI_Bcast(pgradTar, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:314:19:
+
+  314 |     call MPI_Bcast(fmags, 4, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:136:18:
+
+  135 |         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
+      |                      2
+  136 |     call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+      |                  1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+ModConf.F90:141:20:
+
+  140 |       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    2
+  141 |       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModQuadRule.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModBasicMath.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolarPatch.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSpline.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModEwaldFunc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbcSingInt.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModHashTable.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTargetList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSourceList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModData.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnWalls.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRepulsion.F90
+ModRepulsion.F90:461:29:
+
+  459 |           call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             2
+  460 |           if (distMin.ne.distMin_Glb) dx = HUGE(dx)
+  461 |           call MPI_AllReduce(dx, dx, 3, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModRepulsion.F90:341:23:
+
+  341 |     call MPI_AllReduce(cntDx, cntDx_Glb, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr)
+      |                       1
+......
+  459 |           call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             2
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnRbcs.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPFFTW.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPME.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPostProcess.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSphpk.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModWall.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolyRoots.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIO.F90
+ModIO.F90:47:25:
+
+   47 |     write(fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:52:25:
+
+   52 |     write(fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:57:25:
+
+   57 |     write(fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:957:19:
+
+  954 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+  957 |     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModIO.F90:958:19:
+
+  954 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+  958 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:877:19:
+
+  877 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  954 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:749:19:
+
+  749 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  954 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModVelSolver.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModNoSlip.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTimeInt.F90
+ar ru libcommon.a ModFFT.o ModConf.o ModRbcSingInt.o ModRepulsion.o ModTargetList.o ModBasicMath.o ModIntOnRbcs.o ModPolarPatch.o ModIO.o ModVelSolver.o ModDataTypes.o ModIntOnWalls.o ModRbc.o ModNoSlip.o ModDataStruct.o ModEwaldFunc.o ModSphpk.o ModPolyRoots.o ModPME.o ModPostProcess.o ModHashTable.o ModData.o ModSourceList.o ModTimeInt.o ModSpline.o ModQuadRule.o ModWall.o ModPFFTW.o
+ar: creating libcommon.a
+ranlib libcommon.a
+rm -f tube initcond *.o *.mod *.a core
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c tube.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o tube tube.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c initcond.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o initcond initcond.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+ Node            0  of            2  running on atl1-1-02-003-9-2.pace.gatech.edu
+ Node            1  of            2  running on atl1-1-02-003-16-2.pace.gatech.edu
+ Number of nodes for physical Ewald sum =            2
+ Number of nodes for Fourier Ewald sum =            2
+
+ lengtube 1   22.857142857142858     
+ lengspacing 1  0.71428571428571430     
+ lengtube 2   22.857142857142858     
+ lengspacing 2  0.71428571428571430     
+ 32 x 3 rand num array
+  0.56465187400714467       0.39142930596507641       0.50380045540310270     
+  0.55062491788864343       0.40099363944198285       0.30341652212272541     
+  0.29026571654812205       0.46843519332276784       0.93289169834033747     
+  0.73441586068742781       0.98396626091415129       0.44445703345717158     
+  0.86099546011921158       0.78116971509561628       0.88098172938007835     
+  0.84014937019761704       0.27600398065859133       0.43963543621480805     
+   2.4038976613304786E-002  0.56581744372321396       0.89043332859736912     
+  0.59031057582497926       0.53304083881882924       0.87949829619750675     
+  0.37566948506415021       0.19282377311618049       0.41566482878638555     
+  0.39051361275869956        6.3576878897170119E-002   2.0894811602889529E-002
+  0.16514965047860153       0.38591637914044441       0.39031841666267297     
+  0.19345308506945391       0.62796898639984899       0.90681247555217204     
+   2.4012946310514427E-002  0.72739329843361811       0.52642095633070329     
+  0.54629635503628715       0.72684113221219715       0.38946668687984554     
+  0.45156637784179332        8.5677369584748808E-002  0.76402005828224651     
+  0.11807103140499375       0.58667089948576112       0.80595370230203722     
+  0.95322508856280652       0.55046869480262572       0.91594307120114493     
+  0.34611193419760533       0.26803500603256381       0.60138967476858507     
+  0.60378317733511389        7.7544019904131067E-003  0.70895174053946908     
+  0.40652690480865250       0.41341969248077126       0.97204830947217247     
+  0.42494136806218608       0.94495203865508803       0.53851067587669665     
+  0.16995280323947159       0.35192236186698345       0.50974279929185118     
+  0.14907111217371005       0.76543028561973814       0.52950312817714351     
+  0.43122352624415650       0.35055197646769731       0.80631244239108801     
+  0.36780324931606001       0.96455921228968722        4.9656283183211247E-002
+  0.68687287627167515       0.89903741702988715       0.11132803766894661     
+  0.96710711201770783       0.14767938397708891       0.77241012192864777     
+   9.9923899358628665E-002  0.85953170889022035       0.15732556398738273     
+  0.68834616756680367       0.46126375440543699       0.35735980688668345     
+  0.72483664854949770       0.18371179312071451        1.1051368148770502E-002
+  0.59684160895190908        7.5093684923889348E-002  0.43544073251143967     
+  0.30013531456574938       0.93411333716414024       0.44936691570679343     
+ 4 rand nums from [1, 32]
+ wbc:   24.000000000000000     
+ sc:   29.000000000000000     
+ wbc:   18.000000000000000     
+ sc:   12.000000000000000     
+ wbc:   6.0000000000000000     
+ sc:   3.0000000000000000     
+ wbc:   30.000000000000000     
+ sc:   10.000000000000000     
+ Xc           1  -2.0646518740071444       -1.8914293059650764       0.60904308484440850     
+ Xc2           2  -1.6376562294721608        1.6002484098604957        1.2231368324899341     
+ Xc3           3   1.5725664291370305       -1.6171087983306920        2.2521601348844547     
+ lengtube 1   22.857142857142858     
+ lengspacing 1  0.71428571428571430     
+ Xc4           4   2.2344158606874278        2.4839662609141513        2.7222285167285856     
+ Xc           5  -2.3609954601192116       -2.2811697150956163        3.6547765789757536     
+ Xc2           6  -1.7100373425494042        1.5690009951646477        4.1483891466788325     
+ make leukocyte at           6
+ Xc3           7   1.5060097441533262       -1.6414543609308034        5.0880738071558280     
+ Xc4           8   2.0903105758249794        2.0330408388188292        5.7968920052416113     
+ Xc           9  -1.8756694850641502       -1.6928237731161806        6.2792609858217636     
+ Xc2          10  -1.5976284031896748        1.5158942197242926        6.7961616915157306     
+ Xc3          11   1.5412874126196503       -1.5964790947851111        7.6951592083313365     
+ Xc4          12   1.6934530850694540        2.1279689863998490        8.6676919520618014     
+ Xc          13  -1.5240129463105143       -2.2273932984336180        9.1917819067367805     
+ Xc2          14  -1.6365740887590718        1.6817102830530493        9.8375904862970653     
+ Xc3          15   1.6128915944604483       -1.5214193423961873        10.739152886283980     
+ Xc4          16   1.6180710314049938        2.0866708994857612        11.474405422579590     
+ Xc          17  -2.4532250885628066       -2.0504686948026256        12.243685821314859     
+ lengtube 2   22.857142857142858     
+ lengspacing 2  0.71428571428571430     
+ 32 x 3 rand num array
+  0.56465187400714467       0.39142930596507641       0.50380045540310270     
+  0.55062491788864343       0.40099363944198285       0.30341652212272541     
+  0.29026571654812205       0.46843519332276784       0.93289169834033747     
+  0.73441586068742781       0.98396626091415129       0.44445703345717158     
+  0.86099546011921158       0.78116971509561628       0.88098172938007835     
+  0.84014937019761704       0.27600398065859133       0.43963543621480805     
+   2.4038976613304786E-002  0.56581744372321396       0.89043332859736912     
+  0.59031057582497926       0.53304083881882924       0.87949829619750675     
+  0.37566948506415021       0.19282377311618049       0.41566482878638555     
+  0.39051361275869956        6.3576878897170119E-002   2.0894811602889529E-002
+  0.16514965047860153       0.38591637914044441       0.39031841666267297     
+  0.19345308506945391       0.62796898639984899       0.90681247555217204     
+   2.4012946310514427E-002  0.72739329843361811       0.52642095633070329     
+  0.54629635503628715       0.72684113221219715       0.38946668687984554     
+  0.45156637784179332        8.5677369584748808E-002  0.76402005828224651     
+  0.11807103140499375       0.58667089948576112       0.80595370230203722     
+  0.95322508856280652       0.55046869480262572       0.91594307120114493     
+  0.34611193419760533       0.26803500603256381       0.60138967476858507     
+  0.60378317733511389        7.7544019904131067E-003  0.70895174053946908     
+  0.40652690480865250       0.41341969248077126       0.97204830947217247     
+  0.42494136806218608       0.94495203865508803       0.53851067587669665     
+  0.16995280323947159       0.35192236186698345       0.50974279929185118     
+  0.14907111217371005       0.76543028561973814       0.52950312817714351     
+  0.43122352624415650       0.35055197646769731       0.80631244239108801     
+  0.36780324931606001       0.96455921228968722        4.9656283183211247E-002
+  0.68687287627167515       0.89903741702988715       0.11132803766894661     
+  0.96710711201770783       0.14767938397708891       0.77241012192864777     
+   9.9923899358628665E-002  0.85953170889022035       0.15732556398738273     
+  0.68834616756680367       0.46126375440543699       0.35735980688668345     
+  0.72483664854949770       0.18371179312071451        1.1051368148770502E-002
+  0.59684160895190908        7.5093684923889348E-002  0.43544073251143967     
+  0.30013531456574938       0.93411333716414024       0.44936691570679343     
+ 4 rand nums from [1, 32]
+ wbc:   24.000000000000000     
+ sc:   29.000000000000000     
+ wbc:   18.000000000000000     
+ sc:   12.000000000000000     
+ wbc:   6.0000000000000000     
+ sc:   3.0000000000000000     
+ wbc:   30.000000000000000     
+ sc:   10.000000000000000     
+ Xc           1  -2.0646518740071444       -1.8914293059650764       0.60904308484440850     
+ Xc2           2  -1.6376562294721608        1.6002484098604957        1.2231368324899341     
+ Xc3           3   1.5725664291370305       -1.6171087983306920        2.2521601348844547     
+ Xc4           4   2.2344158606874278        2.4839662609141513        2.7222285167285856     
+ Xc           5  -2.3609954601192116       -2.2811697150956163        3.6547765789757536     
+ Xc2           6  -1.7100373425494042        1.5690009951646477        4.1483891466788325     
+ make leukocyte at           6
+ Xc3           7   1.5060097441533262       -1.6414543609308034        5.0880738071558280     
+ Xc4           8   2.0903105758249794        2.0330408388188292        5.7968920052416113     
+ Xc           9  -1.8756694850641502       -1.6928237731161806        6.2792609858217636     
+ Xc2          10  -1.5976284031896748        1.5158942197242926        6.7961616915157306     
+ Xc3          11   1.5412874126196503       -1.5964790947851111        7.6951592083313365     
+ Xc4          12   1.6934530850694540        2.1279689863998490        8.6676919520618014     
+ Xc          13  -1.5240129463105143       -2.2273932984336180        9.1917819067367805     
+ Xc2          14  -1.6365740887590718        1.6817102830530493        9.8375904862970653     
+ Xc3          15   1.6128915944604483       -1.5214193423961873        10.739152886283980     
+ Xc4          16   1.6180710314049938        2.0866708994857612        11.474405422579590     
+ Xc          17  -2.4532250885628066       -2.0504686948026256        12.243685821314859     
+ Xc2          18  -1.5865279835494013        1.5670087515081410        12.800694837384292     
+ Xc2          18  -1.5865279835494013        1.5670087515081410        12.800694837384292     
+ make leukocyte at          18
+ make leukocyte at          18
+ Xc3          19   1.6509457943337784       -1.5019386004976032        13.568761584555450     
+ Xc3          19   1.6509457943337784       -1.5019386004976032        13.568761584555450     
+ Xc4          20   1.9065269048086524        1.9134196924807712        14.414595583307515     
+ Xc4          20   1.9065269048086524        1.9134196924807712        14.414595583307515     
+ Xc          21  -1.9249413680621861       -2.4449520386550878        14.912112480795491     
+ Xc          21  -1.9249413680621861       -2.4449520386550878        14.912112480795491     
+ Xc2          22  -1.5424882008098679        1.5879805904667459        15.612014256788783     
+ Xc2          22  -1.5424882008098679        1.5879805904667459        15.612014256788783     
+ Xc3          23   1.5372677780434274       -1.6913575714049345        16.336180135517143     
+ Xc3          23   1.5372677780434274       -1.6913575714049345        16.336180135517143     
+ Xc4          24   1.9312235262441564        1.8505519764676972        17.188870506909829     
+ Xc4          24   1.9312235262441564        1.8505519764676972        17.188870506909829     
+ make leukocyte at          24
+ make leukocyte at          24
+ Xc          25  -1.8678032493160601       -2.4645592122896871        17.524828141591605     
+ Xc          25  -1.8678032493160601       -2.4645592122896871        17.524828141591605     
+ Xc2          26  -1.6717182190679187        1.7247593542574717        18.269949733120189     
+ Xc2          26  -1.6717182190679187        1.7247593542574717        18.269949733120189     
+ Xc3          27   1.7417767780044269       -1.5369198459942721        19.314776489535756     
+ Xc3          27   1.7417767780044269       -1.5369198459942721        19.314776489535756     
+ Xc4          28   1.5999238993586287        2.3595317088902203        19.721519924850835     
+ Xc4          28   1.5999238993586287        2.3595317088902203        19.721519924850835     
+ Xc          29  -2.1883461675668037       -1.9612637544054370        20.535822760586200     
+ Xc          29  -2.1883461675668037       -1.9612637544054370        20.535822760586200     
+ Xc2          30  -1.6812091621373744        1.5459279482801787        21.076954255502958     
+ Xc2          30  -1.6812091621373744        1.5459279482801787        21.076954255502958     
+ make leukocyte at          30
+ make leukocyte at          30
+ Xc3          31   1.6492104022379772       -1.5187734212309723        22.003434651970004     
+ Xc3          31   1.6492104022379772       -1.5187734212309723        22.003434651970004     
+ Xc4          32   1.8001353145657495        2.4341133371641401        22.724683457853395     
+ Xc4          32   1.8001353145657495        2.4341133371641401        22.724683457853395     
+ Zc  0.60904308484440850     
+ Zc   1.2231368324899348     
+ Zc   2.0488484218158609     
+ Zc   2.7222285167285896     
+ Zc   3.6547765789757571     
+ Zc   4.1483891466788183     
+ Zc   5.0880738071558254     
+ Zc  0.60904308484440850     
+ Zc   5.7968920052415953     
+ Zc   6.2792609858217476     
+ Zc   1.2231368324899348     
+ Zc   6.5928499784471439     
+ Zc   7.6951592083313392     
+ Zc   2.0488484218158609     
+ Zc   2.7222285167285896     
+ Zc   8.4643802389932006     
+ Zc   3.6547765789757571     
+ Zc   9.1917819067368054     
+ Zc   9.8375904862970778     
+ Zc   10.739152886283934     
+ Zc   4.1483891466788183     
+ Zc   5.0880738071558254     
+ Zc   5.7968920052415953     
+ Zc   11.474405422579578     
+ Zc   12.243685821314880     
+ Zc   6.2792609858217476     
+ Zc   12.800694837384315     
+ Zc   6.5928499784471439     
+ Zc   7.6951592083313392     
+ Zc   8.4643802389932006     
+ Zc   13.568761584555460     
+ Zc   14.414595583307564     
+ Zc   9.1917819067368054     
+ Zc   9.8375904862970778     
+ Zc   14.912112480795408     
+ Zc   15.612014256788797     
+ Zc   10.739152886283934     
+ Zc   16.336180135517107     
+ Zc   11.474405422579578     
+ Zc   12.243685821314880     
+ Zc   17.188870506909840     
+ Zc   17.524828141591595     
+ Zc   18.269949733120182     
+ Zc   12.800694837384315     
+ Zc   13.568761584555460     
+ Zc   19.314776489535710     
+ Zc   14.414595583307564     
+ Zc   14.912112480795408     
+ Zc   19.721519924850845     
+ Zc   15.612014256788797     
+ Zc   16.336180135517107     
+ Zc   20.332511047517571     
+ Zc   21.076954255502983     
+ Zc   22.003434651969958     
+ Zc   17.188870506909840     
+ Zc   17.524828141591595     
+ Zc   22.724683457853505     
+ Zc   18.269949733120182     
+ Zc   19.314776489535710     
+ Zc   19.721519924850845     
+ Zc   20.332511047517571     
+ Zc   21.076954255502983     
+ Zc   22.003434651969958     
+ Zc   22.724683457853505     
+Periodic domain size =     10.500    10.500    22.857
+Periodic domain size =     10.500    10.500    22.857
+Cell file: D/x000000000.dat
+Cell file: D/x000000000.dat
+Binary restart file: D/restart.LATEST.dat
+Binary restart file: D/restart.LATEST.dat
+Wall file: D/wall000000000.dat
+Wall file: D/wall000000000.dat
+Binary restart file: D/restart000000000.dat
+Binary restart file: D/restart000000000.dat
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+ Node            0  of            2  running on atl1-1-02-003-9-2.pace.gatech.edu
+ Node            1  of            2  running on atl1-1-02-003-16-2.pace.gatech.edu
+ Number of nodes for physical Ewald sum =            2
+ Number of nodes for Fourier Ewald sum =            2
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ alpha_Ewd =   0.44000000000000000     
+ eps_Ewd =    1.0000000000000000E-003
+ PBspln_Ewd =            8
+ nCellTypes =            1
+ viscRat =    1.0000000000000000     
+ refRad =    1.0000000000000000     
+ Deflate =  F
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ Nt =        10000
+ Ts =    1.4000000000000000E-003
+ cell_out =           50
+ wall_out =       -10000
+ pgrad_out =          -10
+ flow_out =          -10
+ flow_out =           -1
+ restart_out =          100
+ restart file = D/restart.LATEST.dat
+ epsDist =    1.0000000000000000E-010
+ ForceCoef =    10.000000000000000     
+ viscRatThresh =    10.000000000000000     
+ rigidsep =  F
+ fmags =    0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ Read restart file D/restart.LATEST.dat
+ error 0
+ error 1
+ error 2
+ z
+ a
+ b
+ 0
+ Lb =    10.500000000000000        10.500000000000000        22.857142857142858     
+ Nt0 =            0
+ time0 =    0.0000000000000000     
+ vBkg =    0.0000000000000000        0.0000000000000000        8.0000000000000000     
+ 1
+ 2
+ nrbc =           32
+ 3
+ irbc :            1  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            2  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            3  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :            4  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            5  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            6  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            7  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            8  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            9  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           10  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           11  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           12  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           13  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           14  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           15  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           16  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           17  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           18  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           19  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           20  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           21  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           22  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           23  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           24  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           25  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           26  nlat0 =           12 type =            1
+ nlat =          36
+ 2
+ 3
+ irbc :           27  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           28  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           29  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           30  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           31  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           32  nlat0 =           12 type =            1
+ nlat =          36
+ 4
+ nwall =            1
+ iwall :            1  nvert =        12978  nele =        25704
+ 4
+
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+STOP bad cellcase
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+STOP bad cellcase
+---------------------------------------
+Begin Slurm Epilog: Nov-25-2023 23:43:08
+Job ID:        4219617
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run.sh
+Resources:     cpu=48,mem=96G,node=2
+Rsrc Used:     cput=00:17:36,vmem=4544K,walltime=00:00:22,mem=0,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-003-9-2,atl1-1-02-003-16-2
+---------------------------------------

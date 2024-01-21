@@ -1,0 +1,3764 @@
+---------------------------------------
+Begin Slurm Prolog: Jan-18-2024 20:29:55
+Job ID:    4609708
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run2.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+rm -f *.o *.mod *.a core*
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataTypes.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModFFT.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataStruct.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModConf.F90
+ModConf.F90:581:24:
+
+  567 |     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
+      |                        2
+......
+  581 |     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
+      |                        1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).
+ModConf.F90:405:21:
+
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+......
+  405 |       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
+      |                     1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModConf.F90:290:19:
+
+  290 |     call MPI_Bcast(viscRat, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:291:19:
+
+  291 |     call MPI_Bcast(refRad, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:296:19:
+
+  296 |     call MPI_Bcast(pgradTar, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:314:19:
+
+  314 |     call MPI_Bcast(fmags, 4, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  386 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:136:18:
+
+  135 |         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
+      |                      2
+  136 |     call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+      |                  1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+ModConf.F90:141:20:
+
+  140 |       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    2
+  141 |       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModQuadRule.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModBasicMath.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolarPatch.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSpline.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModEwaldFunc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbcSingInt.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModHashTable.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTargetList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSourceList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModData.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnWalls.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRepulsion.F90
+ModRepulsion.F90:461:29:
+
+  459 |           call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             2
+  460 |           if (distMin.ne.distMin_Glb) dx = HUGE(dx)
+  461 |           call MPI_AllReduce(dx, dx, 3, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModRepulsion.F90:341:23:
+
+  341 |     call MPI_AllReduce(cntDx, cntDx_Glb, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr)
+      |                       1
+......
+  459 |           call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                             2
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnRbcs.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPFFTW.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPME.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPostProcess.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSphpk.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModWall.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolyRoots.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIO.F90
+ModIO.F90:48:25:
+
+   48 |     write(fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:53:25:
+
+   53 |     write(fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:58:25:
+
+   58 |     write(fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+      |                         1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:1045:19:
+
+ 1042 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1045 |     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModIO.F90:1046:19:
+
+ 1042 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1046 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:965:19:
+
+  965 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1042 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:834:19:
+
+  834 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1042 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:864:21:
+
+  864 |       call MPI_Bcast(starting_area, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                     1
+......
+ 1042 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2  
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModVelSolver.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModNoSlip.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTimeInt.F90
+ar ru libcommon.a ModFFT.o ModConf.o ModRbcSingInt.o ModRepulsion.o ModTargetList.o ModBasicMath.o ModIntOnRbcs.o ModPolarPatch.o ModIO.o ModVelSolver.o ModDataTypes.o ModIntOnWalls.o ModRbc.o ModNoSlip.o ModDataStruct.o ModEwaldFunc.o ModSphpk.o ModPolyRoots.o ModPME.o ModPostProcess.o ModHashTable.o ModData.o ModSourceList.o ModTimeInt.o ModSpline.o ModQuadRule.o ModWall.o ModPFFTW.o
+ar: creating libcommon.a
+ranlib libcommon.a
+rm -f tube initcond field *.o *.mod *.a core
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c tube.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o tube tube.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c initcond.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o initcond initcond.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c field.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o field field.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+ Node            0  of            4  running on atl1-1-02-012-23-2.pace.gatech.edu
+ Node            1  of            4  running on atl1-1-02-012-24-1.pace.gatech.edu
+ Node            2  of            4  running on atl1-1-02-012-24-2.pace.gatech.edu
+ Node            3  of            4  running on atl1-1-02-012-25-1.pace.gatech.edu
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ Number of nodes for physical Ewald sum =            4
+ Number of nodes for Fourier Ewald sum =            4
+
+ alpha_Ewd =   0.44000000000000000     
+ eps_Ewd =    1.0000000000000000E-003
+ PBspln_Ewd =            8
+ nCellTypes =            3
+ viscRat =    1.0000000000000000        1.0000000000000000        1.0000000000000000     
+ refRad =    1.0000000000000000        1.0000000000000000        1.0000000000000000     
+ Deflate =  F
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ Nt =        10000
+ Ts =    8.0000000000000004E-004
+ cell_out =           50
+ wall_out =       -10000
+ pgrad_out =          -10
+ flow_out =          -10
+ flow_out =           -1
+ restart_out =          100
+ restart file = D/restart.LATEST.dat
+ epsDist =    1.0000000000000000E-010
+ ForceCoef =    10.000000000000000     
+ viscRatThresh =    10.000000000000000     
+ rigidsep =  F
+ fmags =    0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ Read restart file D/restart.LATEST.dat
+ error 0
+ error 1
+ error 2
+ z
+ a
+ b
+ 0
+ Lb =    8.3014128185164164        8.3014128185164164        17.730496453900713     
+ Nt0 =          600
+ time0 =   0.48000000000000553     
+ vBkg =    0.0000000000000000        0.0000000000000000        8.0000000000000000     
+ 1
+ 2
+ 2
+ 2
+ nrbc =           38
+ 3
+ irbc :            1  nlat0 =           12 type =            1 starting_area =    16.844790346298538     
+ nlat =          36
+ 3
+ 2
+ 3
+ 3
+ irbc :            2  nlat0 =           12 type =            1 starting_area =    16.844790346298570     
+ nlat =          36
+ irbc :            3  nlat0 =           12 type =            1 starting_area =    16.844790346298602     
+ nlat =          36
+ irbc :            4  nlat0 =           12 type =            1 starting_area =    16.844790346298513     
+ nlat =          36
+ irbc :            5  nlat0 =           12 type =            1 starting_area =    16.844790346298559     
+ nlat =          36
+ irbc :            6  nlat0 =           12 type =            1 starting_area =    16.844790346298559     
+ nlat =          36
+ irbc :            7  nlat0 =           12 type =            1 starting_area =    16.844790346298630     
+ nlat =          36
+ irbc :            8  nlat0 =           12 type =            1 starting_area =    16.844790346298542     
+ nlat =          36
+ irbc :            9  nlat0 =           12 type =            1 starting_area =    16.844790346298566     
+ nlat =          36
+ irbc :           10  nlat0 =           12 type =            1 starting_area =    16.844790346298566     
+ nlat =          36
+ irbc :           11  nlat0 =           12 type =            1 starting_area =    16.844790346298588     
+ nlat =          36
+ irbc :           12  nlat0 =           12 type =            1 starting_area =    16.844790346298538     
+ nlat =          36
+ irbc :           13  nlat0 =           12 type =            1 starting_area =    16.844790346298542     
+ nlat =          36
+ irbc :           14  nlat0 =           12 type =            1 starting_area =    16.844790346298559     
+ nlat =          36
+ irbc :           15  nlat0 =           12 type =            1 starting_area =    16.844790346298595     
+ nlat =          36
+ irbc :           16  nlat0 =           12 type =            1 starting_area =    16.844790346298605     
+ nlat =          36
+ irbc :           17  nlat0 =           12 type =            1 starting_area =    16.844790346298602     
+ nlat =          36
+ irbc :           18  nlat0 =           12 type =            1 starting_area =    16.844790346298645     
+ nlat =          36
+ irbc :           19  nlat0 =           12 type =            2 starting_area =    24.630086404143931     
+ nlat =          36
+ irbc :           20  nlat0 =           12 type =            1 starting_area =    16.844790346298669     
+ nlat =          36
+ irbc :           21  nlat0 =           12 type =            1 starting_area =    16.844790346298669     
+ nlat =          36
+ irbc :           22  nlat0 =           12 type =            1 starting_area =    16.844790346298652     
+ nlat =          36
+ irbc :           23  nlat0 =           12 type =            1 starting_area =    16.844790346298634     
+ nlat =          36
+ irbc :           24  nlat0 =           12 type =            1 starting_area =    16.844790346298620     
+ nlat =          36
+ irbc :           25  nlat0 =           12 type =            1 starting_area =    16.844790346298630     
+ nlat =          36
+ irbc :           26  nlat0 =           12 type =            1 starting_area =    16.844790346298613     
+ nlat =          36
+ irbc :           27  nlat0 =           12 type =            1 starting_area =    16.844790346298687     
+ nlat =          36
+ irbc :           28  nlat0 =           12 type =            1 starting_area =    16.844790346298680     
+ nlat =          36
+ irbc :           29  nlat0 =           12 type =            1 starting_area =    16.844790346298694     
+ nlat =          36
+ irbc :           30  nlat0 =           12 type =            1 starting_area =    16.844790346298637     
+ nlat =          36
+ irbc :           31  nlat0 =           12 type =            1 starting_area =    16.844790346298694     
+ nlat =          36
+ irbc :           32  nlat0 =           12 type =            1 starting_area =    16.844790346298634     
+ nlat =          36
+ irbc :           33  nlat0 =           12 type =            1 starting_area =    16.844790346298620     
+ nlat =          36
+ irbc :           34  nlat0 =           12 type =            1 starting_area =    16.844790346298659     
+ nlat =          36
+ irbc :           35  nlat0 =           12 type =            1 starting_area =    16.844790346298666     
+ nlat =          36
+ irbc :           36  nlat0 =           12 type =            1 starting_area =    16.844790346298705     
+ nlat =          36
+ irbc :           37  nlat0 =           12 type =            1 starting_area =    16.844790346298637     
+ nlat =          36
+ irbc :           38  nlat0 =           12 type =            1 starting_area =    16.844790346298616     
+ nlat =          36
+ 4
+ nwall =            1
+ iwall :            1  nvert =         1315  nele =         2370
+ 4
+ 4
+ 4
+
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Derived Ewald sum parameters:
+rc =         1.19861
+Nc =     6    6   14
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Nb =    38   38   80
+NbC =    20   38   80
+
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ Just calculated dof, it is        16416
+ Set up GMRES solver
+ Just calculated dof, it is        16416
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is        16416
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is        16416
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.23E+00   -1.63E+00
+cells: vymax vymin =     2.09E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.61E+00
+Wall iteration:
+niter =    60 residual =     5.84E-02
+Residual velocity: vmax =     1.59E-02 vzmax =     5.55E-03
+lt =       601  T =         0.48080 time cost =        29.85
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.22E+00   -1.62E+00
+cells: vymax vymin =     2.09E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     5.95E-02
+Residual velocity: vmax =     1.53E-02 vzmax =     5.67E-03
+lt =       602  T =         0.48160 time cost =        29.21
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.22E+00   -1.62E+00
+cells: vymax vymin =     2.09E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     6.04E-02
+Residual velocity: vmax =     1.61E-02 vzmax =     5.56E-03
+lt =       603  T =         0.48240 time cost =        29.21
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.22E+00   -1.62E+00
+cells: vymax vymin =     2.09E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.63E+00
+Wall iteration:
+niter =    60 residual =     6.14E-02
+Residual velocity: vmax =     1.54E-02 vzmax =     5.75E-03
+lt =       604  T =         0.48320 time cost =        29.24
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.22E+00   -1.61E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     6.23E-02
+Residual velocity: vmax =     1.64E-02 vzmax =     5.65E-03
+lt =       605  T =         0.48400 time cost =        29.20
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.22E+00   -1.61E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.34E-02
+Residual velocity: vmax =     1.57E-02 vzmax =     5.88E-03
+lt =       606  T =         0.48480 time cost =        29.24
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.21E+00   -1.61E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.44E-02
+Residual velocity: vmax =     1.66E-02 vzmax =     5.81E-03
+lt =       607  T =         0.48560 time cost =        29.25
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.21E+00   -1.60E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.55E-02
+Residual velocity: vmax =     1.61E-02 vzmax =     6.00E-03
+lt =       608  T =         0.48640 time cost =        29.15
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.21E+00   -1.60E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.66E-02
+Residual velocity: vmax =     1.69E-02 vzmax =     6.02E-03
+lt =       609  T =         0.48720 time cost =        29.16
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.21E+00   -1.60E+00
+cells: vymax vymin =     2.09E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.77E-02
+Residual velocity: vmax =     1.65E-02 vzmax =     6.14E-03
+lt =       610  T =         0.48800 time cost =        29.18
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.20E+00   -1.60E+00
+cells: vymax vymin =     2.09E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     6.87E-02
+Residual velocity: vmax =     1.72E-02 vzmax =     6.18E-03
+lt =       611  T =         0.48880 time cost =        29.19
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.20E+00   -1.60E+00
+cells: vymax vymin =     2.09E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     6.98E-02
+Residual velocity: vmax =     1.69E-02 vzmax =     6.30E-03
+lt =       612  T =         0.48960 time cost =        29.23
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.20E+00   -1.60E+00
+cells: vymax vymin =     2.08E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     7.09E-02
+Residual velocity: vmax =     1.76E-02 vzmax =     6.32E-03
+lt =       613  T =         0.49040 time cost =        29.26
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.19E+00   -1.60E+00
+cells: vymax vymin =     2.08E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     7.19E-02
+Residual velocity: vmax =     1.72E-02 vzmax =     6.45E-03
+lt =       614  T =         0.49120 time cost =        29.29
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.19E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     7.29E-02
+Residual velocity: vmax =     1.79E-02 vzmax =     6.46E-03
+lt =       615  T =         0.49200 time cost =        29.30
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.18E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     7.40E-02
+Residual velocity: vmax =     1.76E-02 vzmax =     6.58E-03
+lt =       616  T =         0.49280 time cost =        29.32
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.18E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.49E-02
+Residual velocity: vmax =     1.82E-02 vzmax =     6.58E-03
+lt =       617  T =         0.49360 time cost =        29.35
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.17E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.59E-02
+Residual velocity: vmax =     1.79E-02 vzmax =     6.70E-03
+lt =       618  T =         0.49440 time cost =        29.38
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.17E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.68E-02
+Residual velocity: vmax =     1.85E-02 vzmax =     6.70E-03
+lt =       619  T =         0.49520 time cost =        29.41
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.16E+00   -1.59E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.76E-02
+Residual velocity: vmax =     1.82E-02 vzmax =     6.82E-03
+lt =       620  T =         0.49600 time cost =        29.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.16E+00   -1.60E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.85E-02
+Residual velocity: vmax =     1.87E-02 vzmax =     6.81E-03
+lt =       621  T =         0.49680 time cost =        29.47
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.16E+00   -1.60E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     7.92E-02
+Residual velocity: vmax =     1.85E-02 vzmax =     6.92E-03
+lt =       622  T =         0.49760 time cost =        29.49
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.15E+00   -1.60E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.00E-02
+Residual velocity: vmax =     1.88E-02 vzmax =     6.89E-03
+lt =       623  T =         0.49840 time cost =        29.49
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.15E+00   -1.61E+00
+cells: vymax vymin =     2.08E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.06E-02
+Residual velocity: vmax =     1.86E-02 vzmax =     7.01E-03
+lt =       624  T =         0.49920 time cost =        29.50
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.14E+00   -1.61E+00
+cells: vymax vymin =     2.07E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.12E-02
+Residual velocity: vmax =     1.89E-02 vzmax =     6.96E-03
+lt =       625  T =         0.50000 time cost =        29.51
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.14E+00   -1.61E+00
+cells: vymax vymin =     2.07E+00   -1.40E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.18E-02
+Residual velocity: vmax =     1.87E-02 vzmax =     7.08E-03
+lt =       626  T =         0.50080 time cost =        29.52
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.13E+00   -1.62E+00
+cells: vymax vymin =     2.07E+00   -1.41E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.23E-02
+Residual velocity: vmax =     1.89E-02 vzmax =     7.02E-03
+lt =       627  T =         0.50160 time cost =        29.55
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.13E+00   -1.62E+00
+cells: vymax vymin =     2.07E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     8.27E-02
+Residual velocity: vmax =     1.87E-02 vzmax =     7.12E-03
+lt =       628  T =         0.50240 time cost =        29.61
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.12E+00   -1.62E+00
+cells: vymax vymin =     2.07E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.31E-02
+Residual velocity: vmax =     1.89E-02 vzmax =     7.04E-03
+lt =       629  T =         0.50320 time cost =        29.63
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.12E+00   -1.63E+00
+cells: vymax vymin =     2.07E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.34E-02
+Residual velocity: vmax =     1.87E-02 vzmax =     7.14E-03
+lt =       630  T =         0.50400 time cost =        29.65
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.11E+00   -1.63E+00
+cells: vymax vymin =     2.07E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.35E-02
+Residual velocity: vmax =     1.88E-02 vzmax =     7.04E-03
+lt =       631  T =         0.50480 time cost =        29.66
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.11E+00   -1.63E+00
+cells: vymax vymin =     2.07E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.37E-02
+Residual velocity: vmax =     1.86E-02 vzmax =     7.13E-03
+lt =       632  T =         0.50560 time cost =        29.68
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.10E+00   -1.63E+00
+cells: vymax vymin =     2.07E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.37E-02
+Residual velocity: vmax =     1.87E-02 vzmax =     7.00E-03
+lt =       633  T =         0.50640 time cost =        29.70
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.10E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.37E-02
+Residual velocity: vmax =     1.84E-02 vzmax =     7.09E-03
+lt =       634  T =         0.50720 time cost =        29.73
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.09E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     8.36E-02
+Residual velocity: vmax =     1.85E-02 vzmax =     6.93E-03
+lt =       635  T =         0.50800 time cost =        29.74
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.09E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.34E-02
+Residual velocity: vmax =     1.82E-02 vzmax =     7.01E-03
+lt =       636  T =         0.50880 time cost =        29.73
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.08E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.31E-02
+Residual velocity: vmax =     1.82E-02 vzmax =     6.83E-03
+lt =       637  T =         0.50960 time cost =        29.74
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.07E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.27E-02
+Residual velocity: vmax =     1.79E-02 vzmax =     6.89E-03
+lt =       638  T =         0.51040 time cost =        29.71
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.07E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.22E-02
+Residual velocity: vmax =     1.79E-02 vzmax =     6.68E-03
+lt =       639  T =         0.51120 time cost =        29.79
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.06E+00   -1.64E+00
+cells: vymax vymin =     2.06E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.17E-02
+Residual velocity: vmax =     1.75E-02 vzmax =     6.74E-03
+lt =       640  T =         0.51200 time cost =        29.83
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.06E+00   -1.64E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.10E-02
+Residual velocity: vmax =     1.76E-02 vzmax =     6.51E-03
+lt =       641  T =         0.51280 time cost =        29.85
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.05E+00   -1.64E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     8.03E-02
+Residual velocity: vmax =     1.70E-02 vzmax =     6.57E-03
+lt =       642  T =         0.51360 time cost =        29.85
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.05E+00   -1.64E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     7.96E-02
+Residual velocity: vmax =     1.71E-02 vzmax =     6.32E-03
+lt =       643  T =         0.51440 time cost =        29.86
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.04E+00   -1.64E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.87E-02
+Residual velocity: vmax =     1.64E-02 vzmax =     6.28E-03
+lt =       644  T =         0.51520 time cost =        29.89
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.03E+00   -1.64E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.77E-02
+Residual velocity: vmax =     1.67E-02 vzmax =     6.08E-03
+lt =       645  T =         0.51600 time cost =        29.91
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.03E+00   -1.63E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.67E-02
+Residual velocity: vmax =     1.58E-02 vzmax =     6.03E-03
+lt =       646  T =         0.51680 time cost =        29.96
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.02E+00   -1.63E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.56E-02
+Residual velocity: vmax =     1.61E-02 vzmax =     5.81E-03
+lt =       647  T =         0.51760 time cost =        29.98
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.02E+00   -1.63E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.45E-02
+Residual velocity: vmax =     1.52E-02 vzmax =     5.76E-03
+lt =       648  T =         0.51840 time cost =        30.00
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.01E+00   -1.63E+00
+cells: vymax vymin =     2.05E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.32E-02
+Residual velocity: vmax =     1.56E-02 vzmax =     5.48E-03
+lt =       649  T =         0.51920 time cost =        30.03
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.00E+00   -1.63E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.20E-02
+Residual velocity: vmax =     1.48E-02 vzmax =     5.50E-03
+lt =       650  T =         0.52000 time cost =        30.01
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     2.00E+00   -1.62E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     7.06E-02
+Residual velocity: vmax =     1.51E-02 vzmax =     5.12E-03
+lt =       651  T =         0.52080 time cost =        30.00
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.99E+00   -1.62E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     6.91E-02
+Residual velocity: vmax =     1.44E-02 vzmax =     5.05E-03
+lt =       652  T =         0.52160 time cost =        30.06
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.99E+00   -1.62E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     6.76E-02
+Residual velocity: vmax =     1.46E-02 vzmax =     4.86E-03
+lt =       653  T =         0.52240 time cost =        30.04
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.98E+00   -1.62E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     6.63E-02
+Residual velocity: vmax =     1.41E-02 vzmax =     4.81E-03
+lt =       654  T =         0.52320 time cost =        30.07
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.97E+00   -1.61E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     6.49E-02
+Residual velocity: vmax =     1.43E-02 vzmax =     4.62E-03
+lt =       655  T =         0.52400 time cost =        30.09
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.97E+00   -1.61E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     6.35E-02
+Residual velocity: vmax =     1.38E-02 vzmax =     4.56E-03
+lt =       656  T =         0.52480 time cost =        30.13
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.96E+00   -1.61E+00
+cells: vymax vymin =     2.04E+00   -1.46E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     6.21E-02
+Residual velocity: vmax =     1.40E-02 vzmax =     4.35E-03
+lt =       657  T =         0.52560 time cost =        30.17
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.96E+00   -1.60E+00
+cells: vymax vymin =     2.04E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     6.07E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     4.25E-03
+lt =       658  T =         0.52640 time cost =        30.20
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.95E+00   -1.60E+00
+cells: vymax vymin =     2.04E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.93E-02
+Residual velocity: vmax =     1.37E-02 vzmax =     4.10E-03
+lt =       659  T =         0.52720 time cost =        30.26
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.94E+00   -1.60E+00
+cells: vymax vymin =     2.04E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.79E-02
+Residual velocity: vmax =     1.32E-02 vzmax =     4.00E-03
+lt =       660  T =         0.52800 time cost =        30.27
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.94E+00   -1.59E+00
+cells: vymax vymin =     2.03E+00   -1.45E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.65E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     3.87E-03
+lt =       661  T =         0.52880 time cost =        30.30
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.93E+00   -1.59E+00
+cells: vymax vymin =     2.03E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.53E-02
+Residual velocity: vmax =     1.30E-02 vzmax =     3.81E-03
+lt =       662  T =         0.52960 time cost =        30.34
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.93E+00   -1.59E+00
+cells: vymax vymin =     2.03E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.40E-02
+Residual velocity: vmax =     1.32E-02 vzmax =     3.65E-03
+lt =       663  T =         0.53040 time cost =        30.36
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.92E+00   -1.58E+00
+cells: vymax vymin =     2.03E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.28E-02
+Residual velocity: vmax =     1.28E-02 vzmax =     3.65E-03
+lt =       664  T =         0.53120 time cost =        30.37
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.92E+00   -1.58E+00
+cells: vymax vymin =     2.03E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.17E-02
+Residual velocity: vmax =     1.29E-02 vzmax =     3.57E-03
+lt =       665  T =         0.53200 time cost =        30.39
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.91E+00   -1.58E+00
+cells: vymax vymin =     2.03E+00   -1.44E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     5.07E-02
+Residual velocity: vmax =     1.26E-02 vzmax =     3.58E-03
+lt =       666  T =         0.53280 time cost =        30.32
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.91E+00   -1.57E+00
+cells: vymax vymin =     2.03E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.97E-02
+Residual velocity: vmax =     1.26E-02 vzmax =     3.58E-03
+lt =       667  T =         0.53360 time cost =        30.35
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.90E+00   -1.57E+00
+cells: vymax vymin =     2.03E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.87E-02
+Residual velocity: vmax =     1.24E-02 vzmax =     3.57E-03
+lt =       668  T =         0.53440 time cost =        30.34
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.90E+00   -1.57E+00
+cells: vymax vymin =     2.03E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.78E-02
+Residual velocity: vmax =     1.23E-02 vzmax =     3.58E-03
+lt =       669  T =         0.53520 time cost =        30.38
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.89E+00   -1.56E+00
+cells: vymax vymin =     2.02E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.68E-02
+Residual velocity: vmax =     1.20E-02 vzmax =     3.57E-03
+lt =       670  T =         0.53600 time cost =        30.39
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.89E+00   -1.56E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.60E-02
+Residual velocity: vmax =     1.19E-02 vzmax =     3.55E-03
+lt =       671  T =         0.53680 time cost =        30.47
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.88E+00   -1.56E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.51E-02
+Residual velocity: vmax =     1.16E-02 vzmax =     3.54E-03
+lt =       672  T =         0.53760 time cost =        30.49
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.88E+00   -1.56E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.42E-02
+Residual velocity: vmax =     1.15E-02 vzmax =     3.49E-03
+lt =       673  T =         0.53840 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.87E+00   -1.55E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.33E-02
+Residual velocity: vmax =     1.11E-02 vzmax =     3.47E-03
+lt =       674  T =         0.53920 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.87E+00   -1.55E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.25E-02
+Residual velocity: vmax =     1.10E-02 vzmax =     3.41E-03
+lt =       675  T =         0.54000 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.87E+00   -1.55E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.16E-02
+Residual velocity: vmax =     1.06E-02 vzmax =     3.38E-03
+lt =       676  T =         0.54080 time cost =        30.44
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.86E+00   -1.55E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.08E-02
+Residual velocity: vmax =     1.05E-02 vzmax =     3.31E-03
+lt =       677  T =         0.54160 time cost =        30.44
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.86E+00   -1.54E+00
+cells: vymax vymin =     2.02E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.99E-02
+Residual velocity: vmax =     1.01E-02 vzmax =     3.26E-03
+lt =       678  T =         0.54240 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.85E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.42E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.91E-02
+Residual velocity: vmax =     9.91E-03 vzmax =     3.19E-03
+lt =       679  T =         0.54320 time cost =        30.43
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.85E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.82E-02
+Residual velocity: vmax =     9.47E-03 vzmax =     3.14E-03
+lt =       680  T =         0.54400 time cost =        30.44
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.85E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.73E-02
+Residual velocity: vmax =     9.34E-03 vzmax =     3.07E-03
+lt =       681  T =         0.54480 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.84E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.65E-02
+Residual velocity: vmax =     8.89E-03 vzmax =     3.01E-03
+lt =       682  T =         0.54560 time cost =        30.44
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.84E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.56E-02
+Residual velocity: vmax =     8.76E-03 vzmax =     2.94E-03
+lt =       683  T =         0.54640 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.84E+00   -1.54E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.47E-02
+Residual velocity: vmax =     8.31E-03 vzmax =     2.87E-03
+lt =       684  T =         0.54720 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.83E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.39E-02
+Residual velocity: vmax =     8.23E-03 vzmax =     2.78E-03
+lt =       685  T =         0.54800 time cost =        30.45
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.83E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.30E-02
+Residual velocity: vmax =     7.71E-03 vzmax =     2.71E-03
+lt =       686  T =         0.54880 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.83E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.22E-02
+Residual velocity: vmax =     7.67E-03 vzmax =     2.62E-03
+lt =       687  T =         0.54960 time cost =        30.41
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.83E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.13E-02
+Residual velocity: vmax =     7.16E-03 vzmax =     2.56E-03
+lt =       688  T =         0.55040 time cost =        30.40
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.82E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     3.05E-02
+Residual velocity: vmax =     7.13E-03 vzmax =     2.46E-03
+lt =       689  T =         0.55120 time cost =        30.41
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.82E+00   -1.53E+00
+cells: vymax vymin =     2.01E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     2.96E-02
+Residual velocity: vmax =     6.63E-03 vzmax =     2.40E-03
+lt =       690  T =         0.55200 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.82E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.88E-02
+Residual velocity: vmax =     6.65E-03 vzmax =     2.30E-03
+lt =       691  T =         0.55280 time cost =        30.39
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.82E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.79E-02
+Residual velocity: vmax =     6.24E-03 vzmax =     2.25E-03
+lt =       692  T =         0.55360 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.82E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.71E-02
+Residual velocity: vmax =     6.19E-03 vzmax =     2.15E-03
+lt =       693  T =         0.55440 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.62E-02
+Residual velocity: vmax =     5.83E-03 vzmax =     2.10E-03
+lt =       694  T =         0.55520 time cost =        30.42
+
+cells: vmax =     1.45E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.43E+00
+cells: vzmax vzmin =     1.45E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.54E-02
+Residual velocity: vmax =     5.71E-03 vzmax =     2.01E-03
+lt =       695  T =         0.55600 time cost =        30.42
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     2.00E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.45E-02
+Residual velocity: vmax =     5.43E-03 vzmax =     1.95E-03
+lt =       696  T =         0.55680 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.54E+00
+cells: vymax vymin =     2.00E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.37E-02
+Residual velocity: vmax =     5.32E-03 vzmax =     1.87E-03
+lt =       697  T =         0.55760 time cost =        30.42
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.28E-02
+Residual velocity: vmax =     4.99E-03 vzmax =     1.80E-03
+lt =       698  T =         0.55840 time cost =        30.42
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.21E-02
+Residual velocity: vmax =     5.12E-03 vzmax =     1.74E-03
+lt =       699  T =         0.55920 time cost =        30.40
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+area expansion of cell   1:    4.26121%
+area expansion of cell   2:    3.62325%
+area expansion of cell   3:    5.57531%
+area expansion of cell   4:    5.82317%
+area expansion of cell   5:    3.88126%
+area expansion of cell   6:    3.20437%
+area expansion of cell   7:    3.43097%
+area expansion of cell   8:    2.31009%
+area expansion of cell   9:    3.11929%
+area expansion of cell  10:    3.47931%
+area expansion of cell  11:    2.47157%
+area expansion of cell  12:    2.87948%
+area expansion of cell  13:    3.72460%
+area expansion of cell  14:    3.64715%
+area expansion of cell  15:    2.85159%
+area expansion of cell  16:    3.69215%
+area expansion of cell  17:    3.32392%
+area expansion of cell  18:    2.89484%
+area expansion of cell  19:    3.22247%
+area expansion of cell  20:    2.92434%
+area expansion of cell  21:    2.97994%
+area expansion of cell  22:    3.35041%
+area expansion of cell  23:    3.85004%
+area expansion of cell  24:    3.49980%
+area expansion of cell  25:    3.98918%
+area expansion of cell  26:    3.10805%
+area expansion of cell  27:    3.85899%
+area expansion of cell  28:    3.76773%
+area expansion of cell  29:    3.63620%
+area expansion of cell  30:    3.55354%
+area expansion of cell  31:    3.14308%
+area expansion of cell  32:    3.95560%
+area expansion of cell  33:    4.32022%
+area expansion of cell  34:    4.86971%
+area expansion of cell  35:    3.87221%
+area expansion of cell  36:    3.51459%
+area expansion of cell  37:    4.82522%
+area expansion of cell  38:    6.03070%
+Wall iteration:
+niter =    60 residual =     2.13E-02
+Residual velocity: vmax =     4.79E-03 vzmax =     1.65E-03
+lt =       700  T =         0.56000 time cost =        30.42
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     2.06E-02
+Residual velocity: vmax =     4.67E-03 vzmax =     1.58E-03
+lt =       701  T =         0.56080 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.99E-02
+Residual velocity: vmax =     4.65E-03 vzmax =     1.54E-03
+lt =       702  T =         0.56160 time cost =        30.40
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.93E-02
+Residual velocity: vmax =     4.52E-03 vzmax =     1.46E-03
+lt =       703  T =         0.56240 time cost =        30.39
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.99E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.88E-02
+Residual velocity: vmax =     4.45E-03 vzmax =     1.45E-03
+lt =       704  T =         0.56320 time cost =        30.39
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.98E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.81E-02
+Residual velocity: vmax =     4.18E-03 vzmax =     1.40E-03
+lt =       705  T =         0.56400 time cost =        30.38
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.54E+00
+cells: vymax vymin =     1.98E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.75E-02
+Residual velocity: vmax =     4.13E-03 vzmax =     1.37E-03
+lt =       706  T =         0.56480 time cost =        30.40
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.53E+00
+cells: vymax vymin =     1.98E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     1.70E-02
+Residual velocity: vmax =     4.03E-03 vzmax =     1.35E-03
+lt =       707  T =         0.56560 time cost =        30.40
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.98E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.66E-02
+Residual velocity: vmax =     3.90E-03 vzmax =     1.26E-03
+lt =       708  T =         0.56640 time cost =        30.40
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.98E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.62E-02
+Residual velocity: vmax =     3.90E-03 vzmax =     1.31E-03
+lt =       709  T =         0.56720 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.97E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.59E-02
+Residual velocity: vmax =     3.62E-03 vzmax =     1.21E-03
+lt =       710  T =         0.56800 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.97E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.56E-02
+Residual velocity: vmax =     3.74E-03 vzmax =     1.28E-03
+lt =       711  T =         0.56880 time cost =        30.43
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.97E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.54E-02
+Residual velocity: vmax =     3.40E-03 vzmax =     1.15E-03
+lt =       712  T =         0.56960 time cost =        30.43
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.97E+00   -1.44E+00
+cells: vzmax vzmin =     1.46E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     1.52E-02
+Residual velocity: vmax =     3.56E-03 vzmax =     1.24E-03
+lt =       713  T =         0.57040 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.53E+00
+cells: vymax vymin =     1.97E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.51E-02
+Residual velocity: vmax =     3.16E-03 vzmax =     1.12E-03
+lt =       714  T =         0.57120 time cost =        30.41
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.52E+00
+cells: vymax vymin =     1.96E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.50E-02
+Residual velocity: vmax =     3.36E-03 vzmax =     1.20E-03
+lt =       715  T =         0.57200 time cost =        30.47
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.52E+00
+cells: vymax vymin =     1.96E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.49E-02
+Residual velocity: vmax =     2.91E-03 vzmax =     1.06E-03
+lt =       716  T =         0.57280 time cost =        30.50
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.52E+00
+cells: vymax vymin =     1.96E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.49E-02
+Residual velocity: vmax =     3.16E-03 vzmax =     1.14E-03
+lt =       717  T =         0.57360 time cost =        30.50
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.52E+00
+cells: vymax vymin =     1.95E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.49E-02
+Residual velocity: vmax =     2.69E-03 vzmax =     1.00E-03
+lt =       718  T =         0.57440 time cost =        30.51
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.52E+00
+cells: vymax vymin =     1.95E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     1.50E-02
+Residual velocity: vmax =     2.96E-03 vzmax =     1.06E-03
+lt =       719  T =         0.57520 time cost =        30.44
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.51E+00
+cells: vymax vymin =     1.95E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.49E-02
+Residual velocity: vmax =     2.67E-03 vzmax =     1.10E-03
+lt =       720  T =         0.57600 time cost =        30.53
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.51E+00
+cells: vymax vymin =     1.94E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.51E-02
+Residual velocity: vmax =     2.78E-03 vzmax =     1.13E-03
+lt =       721  T =         0.57680 time cost =        30.52
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.51E+00
+cells: vymax vymin =     1.94E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.51E-02
+Residual velocity: vmax =     2.91E-03 vzmax =     1.17E-03
+lt =       722  T =         0.57760 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.51E+00
+cells: vymax vymin =     1.94E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.52E-02
+Residual velocity: vmax =     3.01E-03 vzmax =     1.18E-03
+lt =       723  T =         0.57840 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.51E+00
+cells: vymax vymin =     1.93E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.53E-02
+Residual velocity: vmax =     3.11E-03 vzmax =     1.22E-03
+lt =       724  T =         0.57920 time cost =        30.56
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.93E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.54E-02
+Residual velocity: vmax =     3.23E-03 vzmax =     1.24E-03
+lt =       725  T =         0.58000 time cost =        30.53
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.93E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.55E-02
+Residual velocity: vmax =     3.30E-03 vzmax =     1.28E-03
+lt =       726  T =         0.58080 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.92E+00   -1.45E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.56E-02
+Residual velocity: vmax =     3.42E-03 vzmax =     1.31E-03
+lt =       727  T =         0.58160 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.92E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.56E-02
+Residual velocity: vmax =     3.44E-03 vzmax =     1.32E-03
+lt =       728  T =         0.58240 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.50E+00
+cells: vymax vymin =     1.92E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.58E-02
+Residual velocity: vmax =     3.54E-03 vzmax =     1.36E-03
+lt =       729  T =         0.58320 time cost =        30.53
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.49E+00
+cells: vymax vymin =     1.91E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.58E-02
+Residual velocity: vmax =     3.54E-03 vzmax =     1.35E-03
+lt =       730  T =         0.58400 time cost =        30.54
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.49E+00
+cells: vymax vymin =     1.91E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.59E-02
+Residual velocity: vmax =     3.59E-03 vzmax =     1.40E-03
+lt =       731  T =         0.58480 time cost =        30.56
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.49E+00
+cells: vymax vymin =     1.91E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.59E-02
+Residual velocity: vmax =     3.59E-03 vzmax =     1.37E-03
+lt =       732  T =         0.58560 time cost =        30.58
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.80E+00   -1.49E+00
+cells: vymax vymin =     1.90E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.60E-02
+Residual velocity: vmax =     3.61E-03 vzmax =     1.39E-03
+lt =       733  T =         0.58640 time cost =        30.59
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.79E+00   -1.49E+00
+cells: vymax vymin =     1.90E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.60E-02
+Residual velocity: vmax =     3.78E-03 vzmax =     1.43E-03
+lt =       734  T =         0.58720 time cost =        30.61
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.79E+00   -1.49E+00
+cells: vymax vymin =     1.89E+00   -1.46E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.60E-02
+Residual velocity: vmax =     3.72E-03 vzmax =     1.38E-03
+lt =       735  T =         0.58800 time cost =        30.62
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.79E+00   -1.48E+00
+cells: vymax vymin =     1.89E+00   -1.47E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.59E-02
+Residual velocity: vmax =     3.98E-03 vzmax =     1.50E-03
+lt =       736  T =         0.58880 time cost =        30.59
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.79E+00   -1.48E+00
+cells: vymax vymin =     1.88E+00   -1.47E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.59E-02
+Residual velocity: vmax =     3.92E-03 vzmax =     1.39E-03
+lt =       737  T =         0.58960 time cost =        30.61
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.88E+00   -1.47E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.58E-02
+Residual velocity: vmax =     4.16E-03 vzmax =     1.57E-03
+lt =       738  T =         0.59040 time cost =        30.62
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.87E+00   -1.47E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.57E-02
+Residual velocity: vmax =     4.10E-03 vzmax =     1.48E-03
+lt =       739  T =         0.59120 time cost =        30.64
+
+cells: vmax =     1.46E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.87E+00   -1.47E+00
+cells: vzmax vzmin =     1.46E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.55E-02
+Residual velocity: vmax =     4.32E-03 vzmax =     1.62E-03
+lt =       740  T =         0.59200 time cost =        30.67
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.87E+00   -1.47E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.54E-02
+Residual velocity: vmax =     4.25E-03 vzmax =     1.56E-03
+lt =       741  T =         0.59280 time cost =        30.69
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.47E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.51E-02
+Residual velocity: vmax =     4.44E-03 vzmax =     1.62E-03
+lt =       742  T =         0.59360 time cost =        30.69
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.48E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.49E-02
+Residual velocity: vmax =     4.35E-03 vzmax =     1.56E-03
+lt =       743  T =         0.59440 time cost =        30.69
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.48E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.46E-02
+Residual velocity: vmax =     4.51E-03 vzmax =     1.61E-03
+lt =       744  T =         0.59520 time cost =        30.70
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.76E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.48E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.44E-02
+Residual velocity: vmax =     4.39E-03 vzmax =     1.55E-03
+lt =       745  T =         0.59600 time cost =        30.72
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.76E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.48E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.41E-02
+Residual velocity: vmax =     4.49E-03 vzmax =     1.68E-03
+lt =       746  T =         0.59680 time cost =        30.72
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.76E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.48E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.39E-02
+Residual velocity: vmax =     4.36E-03 vzmax =     1.55E-03
+lt =       747  T =         0.59760 time cost =        30.76
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.49E+00
+cells: vymax vymin =     1.83E+00   -1.49E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.36E-02
+Residual velocity: vmax =     4.41E-03 vzmax =     1.68E-03
+lt =       748  T =         0.59840 time cost =        30.80
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.83E+00   -1.49E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.34E-02
+Residual velocity: vmax =     4.24E-03 vzmax =     1.55E-03
+lt =       749  T =         0.59920 time cost =        30.82
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.83E+00   -1.49E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.31E-02
+Residual velocity: vmax =     4.27E-03 vzmax =     1.65E-03
+lt =       750  T =         0.60000 time cost =        30.83
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.82E+00   -1.49E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.29E-02
+Residual velocity: vmax =     4.05E-03 vzmax =     1.51E-03
+lt =       751  T =         0.60080 time cost =        30.86
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.77E+00   -1.48E+00
+cells: vymax vymin =     1.82E+00   -1.49E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.28E-02
+Residual velocity: vmax =     4.11E-03 vzmax =     1.58E-03
+lt =       752  T =         0.60160 time cost =        30.90
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.81E+00   -1.50E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.27E-02
+Residual velocity: vmax =     3.94E-03 vzmax =     1.43E-03
+lt =       753  T =         0.60240 time cost =        30.93
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.81E+00   -1.50E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.28E-02
+Residual velocity: vmax =     3.99E-03 vzmax =     1.50E-03
+lt =       754  T =         0.60320 time cost =        30.96
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.80E+00   -1.50E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.29E-02
+Residual velocity: vmax =     3.83E-03 vzmax =     1.38E-03
+lt =       755  T =         0.60400 time cost =        30.99
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.78E+00   -1.48E+00
+cells: vymax vymin =     1.80E+00   -1.50E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.31E-02
+Residual velocity: vmax =     3.81E-03 vzmax =     1.42E-03
+lt =       756  T =         0.60480 time cost =        31.00
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.79E+00   -1.48E+00
+cells: vymax vymin =     1.79E+00   -1.51E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.33E-02
+Residual velocity: vmax =     3.63E-03 vzmax =     1.28E-03
+lt =       757  T =         0.60560 time cost =        31.00
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.79E+00   -1.48E+00
+cells: vymax vymin =     1.79E+00   -1.51E+00
+cells: vzmax vzmin =     1.47E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     1.35E-02
+Residual velocity: vmax =     3.57E-03 vzmax =     1.30E-03
+lt =       758  T =         0.60640 time cost =        31.04
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.79E+00   -1.48E+00
+cells: vymax vymin =     1.79E+00   -1.51E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.38E-02
+Residual velocity: vmax =     3.34E-03 vzmax =     1.14E-03
+lt =       759  T =         0.60720 time cost =        31.08
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.79E+00   -1.47E+00
+cells: vymax vymin =     1.78E+00   -1.51E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.42E-02
+Residual velocity: vmax =     3.28E-03 vzmax =     1.15E-03
+lt =       760  T =         0.60800 time cost =        31.12
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.79E+00   -1.47E+00
+cells: vymax vymin =     1.78E+00   -1.52E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.46E-02
+Residual velocity: vmax =     3.16E-03 vzmax =     1.05E-03
+lt =       761  T =         0.60880 time cost =        31.11
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.80E+00   -1.47E+00
+cells: vymax vymin =     1.77E+00   -1.52E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.50E-02
+Residual velocity: vmax =     3.34E-03 vzmax =     1.09E-03
+lt =       762  T =         0.60960 time cost =        31.11
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.80E+00   -1.47E+00
+cells: vymax vymin =     1.77E+00   -1.52E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.55E-02
+Residual velocity: vmax =     3.38E-03 vzmax =     1.17E-03
+lt =       763  T =         0.61040 time cost =        31.13
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.80E+00   -1.47E+00
+cells: vymax vymin =     1.76E+00   -1.52E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.61E-02
+Residual velocity: vmax =     3.70E-03 vzmax =     1.20E-03
+lt =       764  T =         0.61120 time cost =        31.15
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.80E+00   -1.46E+00
+cells: vymax vymin =     1.76E+00   -1.53E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.67E-02
+Residual velocity: vmax =     3.57E-03 vzmax =     1.27E-03
+lt =       765  T =         0.61200 time cost =        31.17
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.76E+00   -1.53E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.75E-02
+Residual velocity: vmax =     4.02E-03 vzmax =     1.29E-03
+lt =       766  T =         0.61280 time cost =        31.24
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.75E+00   -1.53E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.82E-02
+Residual velocity: vmax =     3.81E-03 vzmax =     1.36E-03
+lt =       767  T =         0.61360 time cost =        31.31
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.75E+00   -1.54E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     1.91E-02
+Residual velocity: vmax =     4.30E-03 vzmax =     1.38E-03
+lt =       768  T =         0.61440 time cost =        31.34
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.75E+00   -1.54E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     2.00E-02
+Residual velocity: vmax =     4.16E-03 vzmax =     1.44E-03
+lt =       769  T =         0.61520 time cost =        31.27
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.74E+00   -1.54E+00
+cells: vzmax vzmin =     1.47E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     2.10E-02
+Residual velocity: vmax =     4.56E-03 vzmax =     1.44E-03
+lt =       770  T =         0.61600 time cost =        31.28
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.74E+00   -1.54E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.20E-02
+Residual velocity: vmax =     4.64E-03 vzmax =     1.51E-03
+lt =       771  T =         0.61680 time cost =        31.30
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.74E+00   -1.55E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.31E-02
+Residual velocity: vmax =     5.01E-03 vzmax =     1.58E-03
+lt =       772  T =         0.61760 time cost =        31.29
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.45E+00
+cells: vymax vymin =     1.73E+00   -1.55E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.43E-02
+Residual velocity: vmax =     5.37E-03 vzmax =     1.64E-03
+lt =       773  T =         0.61840 time cost =        31.28
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.44E+00
+cells: vymax vymin =     1.73E+00   -1.55E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.55E-02
+Residual velocity: vmax =     5.75E-03 vzmax =     1.72E-03
+lt =       774  T =         0.61920 time cost =        31.30
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.44E+00
+cells: vymax vymin =     1.73E+00   -1.55E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.67E-02
+Residual velocity: vmax =     6.12E-03 vzmax =     1.79E-03
+lt =       775  T =         0.62000 time cost =        31.29
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.44E+00
+cells: vymax vymin =     1.73E+00   -1.56E+00
+cells: vzmax vzmin =     1.47E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     2.80E-02
+Residual velocity: vmax =     6.49E-03 vzmax =     1.87E-03
+lt =       776  T =         0.62080 time cost =        31.30
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.44E+00
+cells: vymax vymin =     1.72E+00   -1.56E+00
+cells: vzmax vzmin =     1.47E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     2.93E-02
+Residual velocity: vmax =     6.87E-03 vzmax =     1.96E-03
+lt =       777  T =         0.62160 time cost =        31.31
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.56E+00
+cells: vzmax vzmin =     1.47E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     3.07E-02
+Residual velocity: vmax =     7.22E-03 vzmax =     2.05E-03
+lt =       778  T =         0.62240 time cost =        31.32
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.56E+00
+cells: vzmax vzmin =     1.47E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     3.20E-02
+Residual velocity: vmax =     7.62E-03 vzmax =     2.15E-03
+lt =       779  T =         0.62320 time cost =        31.34
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.57E+00
+cells: vzmax vzmin =     1.47E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     3.34E-02
+Residual velocity: vmax =     7.94E-03 vzmax =     2.25E-03
+lt =       780  T =         0.62400 time cost =        31.33
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.43E+00
+cells: vymax vymin =     1.71E+00   -1.57E+00
+cells: vzmax vzmin =     1.47E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     3.48E-02
+Residual velocity: vmax =     8.35E-03 vzmax =     2.35E-03
+lt =       781  T =         0.62480 time cost =        31.32
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.43E+00
+cells: vymax vymin =     1.71E+00   -1.57E+00
+cells: vzmax vzmin =     1.47E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     3.62E-02
+Residual velocity: vmax =     8.64E-03 vzmax =     2.44E-03
+lt =       782  T =         0.62560 time cost =        31.34
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.57E+00
+cells: vzmax vzmin =     1.47E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     3.76E-02
+Residual velocity: vmax =     9.06E-03 vzmax =     2.63E-03
+lt =       783  T =         0.62640 time cost =        31.35
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.58E+00
+cells: vzmax vzmin =     1.47E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     3.90E-02
+Residual velocity: vmax =     9.32E-03 vzmax =     2.67E-03
+lt =       784  T =         0.62720 time cost =        31.34
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.58E+00
+cells: vzmax vzmin =     1.47E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     4.04E-02
+Residual velocity: vmax =     9.75E-03 vzmax =     2.98E-03
+lt =       785  T =         0.62800 time cost =        31.35
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.58E+00
+cells: vzmax vzmin =     1.47E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.18E-02
+Residual velocity: vmax =     9.96E-03 vzmax =     3.04E-03
+lt =       786  T =         0.62880 time cost =        31.35
+
+cells: vmax =     1.47E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.58E+00
+cells: vzmax vzmin =     1.47E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.31E-02
+Residual velocity: vmax =     1.04E-02 vzmax =     3.32E-03
+lt =       787  T =         0.62960 time cost =        31.35
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.59E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.45E-02
+Residual velocity: vmax =     1.06E-02 vzmax =     3.38E-03
+lt =       788  T =         0.63040 time cost =        31.37
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.59E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.58E-02
+Residual velocity: vmax =     1.10E-02 vzmax =     3.64E-03
+lt =       789  T =         0.63120 time cost =        31.39
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.59E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.71E-02
+Residual velocity: vmax =     1.11E-02 vzmax =     3.71E-03
+lt =       790  T =         0.63200 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.59E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.84E-02
+Residual velocity: vmax =     1.16E-02 vzmax =     3.94E-03
+lt =       791  T =         0.63280 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.59E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     4.96E-02
+Residual velocity: vmax =     1.18E-02 vzmax =     4.04E-03
+lt =       792  T =         0.63360 time cost =        31.39
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.69E+00   -1.60E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.08E-02
+Residual velocity: vmax =     1.22E-02 vzmax =     4.24E-03
+lt =       793  T =         0.63440 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.69E+00   -1.60E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.19E-02
+Residual velocity: vmax =     1.24E-02 vzmax =     4.37E-03
+lt =       794  T =         0.63520 time cost =        31.37
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.42E+00
+cells: vymax vymin =     1.69E+00   -1.60E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.30E-02
+Residual velocity: vmax =     1.30E-02 vzmax =     4.53E-03
+lt =       795  T =         0.63600 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.60E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.41E-02
+Residual velocity: vmax =     1.30E-02 vzmax =     4.71E-03
+lt =       796  T =         0.63680 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.60E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.51E-02
+Residual velocity: vmax =     1.37E-02 vzmax =     4.80E-03
+lt =       797  T =         0.63760 time cost =        31.40
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.60E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     4.94E-03
+lt =       798  T =         0.63840 time cost =        31.41
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.69E-02
+Residual velocity: vmax =     1.43E-02 vzmax =     5.01E-03
+lt =       799  T =         0.63920 time cost =        31.44
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+area expansion of cell   1:    4.00994%
+area expansion of cell   2:    3.32546%
+area expansion of cell   3:    5.32989%
+area expansion of cell   4:    5.65077%
+area expansion of cell   5:    3.61910%
+area expansion of cell   6:    3.08622%
+area expansion of cell   7:    3.34113%
+area expansion of cell   8:    2.04597%
+area expansion of cell   9:    2.99373%
+area expansion of cell  10:    3.29745%
+area expansion of cell  11:    2.26720%
+area expansion of cell  12:    2.75764%
+area expansion of cell  13:    3.50767%
+area expansion of cell  14:    3.46996%
+area expansion of cell  15:    2.73446%
+area expansion of cell  16:    3.47634%
+area expansion of cell  17:    3.07904%
+area expansion of cell  18:    2.71215%
+area expansion of cell  19:    2.80358%
+area expansion of cell  20:    2.79429%
+area expansion of cell  21:    2.79565%
+area expansion of cell  22:    3.07625%
+area expansion of cell  23:    3.71206%
+area expansion of cell  24:    3.35821%
+area expansion of cell  25:    3.74639%
+area expansion of cell  26:    3.03711%
+area expansion of cell  27:    3.74218%
+area expansion of cell  28:    3.63249%
+area expansion of cell  29:    3.38531%
+area expansion of cell  30:    3.45041%
+area expansion of cell  31:    3.07079%
+area expansion of cell  32:    3.91988%
+area expansion of cell  33:    4.01766%
+area expansion of cell  34:    4.65296%
+area expansion of cell  35:    3.69794%
+area expansion of cell  36:    3.37784%
+area expansion of cell  37:    4.65782%
+area expansion of cell  38:    5.72274%
+Wall iteration:
+niter =    60 residual =     5.78E-02
+Residual velocity: vmax =     1.40E-02 vzmax =     5.12E-03
+lt =       800  T =         0.64000 time cost =        31.42
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.86E-02
+Residual velocity: vmax =     1.49E-02 vzmax =     5.26E-03
+lt =       801  T =         0.64080 time cost =        31.42
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     5.94E-02
+Residual velocity: vmax =     1.46E-02 vzmax =     5.36E-03
+lt =       802  T =         0.64160 time cost =        31.45
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.61E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     6.01E-02
+Residual velocity: vmax =     1.53E-02 vzmax =     5.47E-03
+lt =       803  T =         0.64240 time cost =        31.48
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.68E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     6.07E-02
+Residual velocity: vmax =     1.50E-02 vzmax =     5.55E-03
+lt =       804  T =         0.64320 time cost =        31.46
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.68E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     6.13E-02
+Residual velocity: vmax =     1.58E-02 vzmax =     5.60E-03
+lt =       805  T =         0.64400 time cost =        31.48
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.68E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.82E+00
+Wall iteration:
+niter =    60 residual =     6.17E-02
+Residual velocity: vmax =     1.54E-02 vzmax =     5.70E-03
+lt =       806  T =         0.64480 time cost =        31.48
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.68E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.21E-02
+Residual velocity: vmax =     1.62E-02 vzmax =     5.71E-03
+lt =       807  T =         0.64560 time cost =        31.47
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.68E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.24E-02
+Residual velocity: vmax =     1.57E-02 vzmax =     5.81E-03
+lt =       808  T =         0.64640 time cost =        31.46
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.26E-02
+Residual velocity: vmax =     1.65E-02 vzmax =     5.81E-03
+lt =       809  T =         0.64720 time cost =        31.47
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.62E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.28E-02
+Residual velocity: vmax =     1.60E-02 vzmax =     5.98E-03
+lt =       810  T =         0.64800 time cost =        31.46
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.30E-02
+Residual velocity: vmax =     1.65E-02 vzmax =     5.90E-03
+lt =       811  T =         0.64880 time cost =        31.44
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.30E-02
+Residual velocity: vmax =     1.60E-02 vzmax =     6.03E-03
+lt =       812  T =         0.64960 time cost =        31.43
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.30E-02
+Residual velocity: vmax =     1.66E-02 vzmax =     5.98E-03
+lt =       813  T =         0.65040 time cost =        31.43
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.69E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.30E-02
+Residual velocity: vmax =     1.61E-02 vzmax =     6.08E-03
+lt =       814  T =         0.65120 time cost =        31.43
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.82E+00   -1.41E+00
+cells: vymax vymin =     1.70E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.30E-02
+Residual velocity: vmax =     1.66E-02 vzmax =     6.05E-03
+lt =       815  T =         0.65200 time cost =        31.43
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.41E+00
+cells: vymax vymin =     1.70E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.29E-02
+Residual velocity: vmax =     1.62E-02 vzmax =     6.16E-03
+lt =       816  T =         0.65280 time cost =        31.41
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.41E+00
+cells: vymax vymin =     1.70E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.81E+00
+Wall iteration:
+niter =    60 residual =     6.28E-02
+Residual velocity: vmax =     1.67E-02 vzmax =     6.09E-03
+lt =       817  T =         0.65360 time cost =        31.38
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.70E+00   -1.63E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.27E-02
+Residual velocity: vmax =     1.63E-02 vzmax =     6.22E-03
+lt =       818  T =         0.65440 time cost =        31.40
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.26E-02
+Residual velocity: vmax =     1.67E-02 vzmax =     6.10E-03
+lt =       819  T =         0.65520 time cost =        31.37
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.24E-02
+Residual velocity: vmax =     1.63E-02 vzmax =     6.23E-03
+lt =       820  T =         0.65600 time cost =        31.33
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.21E-02
+Residual velocity: vmax =     1.66E-02 vzmax =     6.10E-03
+lt =       821  T =         0.65680 time cost =        31.30
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.71E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.18E-02
+Residual velocity: vmax =     1.62E-02 vzmax =     6.19E-03
+lt =       822  T =         0.65760 time cost =        31.30
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.42E+00
+cells: vymax vymin =     1.72E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.15E-02
+Residual velocity: vmax =     1.65E-02 vzmax =     6.07E-03
+lt =       823  T =         0.65840 time cost =        31.28
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.80E+00
+Wall iteration:
+niter =    60 residual =     6.11E-02
+Residual velocity: vmax =     1.60E-02 vzmax =     6.13E-03
+lt =       824  T =         0.65920 time cost =        31.29
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     6.07E-02
+Residual velocity: vmax =     1.62E-02 vzmax =     6.01E-03
+lt =       825  T =         0.66000 time cost =        31.26
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.43E+00
+cells: vymax vymin =     1.72E+00   -1.64E+00
+cells: vzmax vzmin =     1.48E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     6.02E-02
+Residual velocity: vmax =     1.58E-02 vzmax =     6.04E-03
+lt =       826  T =         0.66080 time cost =        31.23
+
+cells: vmax =     1.48E+01
+cells: vxmax vxmin =     1.81E+00   -1.43E+00
+cells: vymax vymin =     1.73E+00   -1.65E+00
+cells: vzmax vzmin =     1.48E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     5.97E-02
+Residual velocity: vmax =     1.59E-02 vzmax =     5.94E-03
+lt =       827  T =         0.66160 time cost =        31.21
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.44E+00
+cells: vymax vymin =     1.73E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     5.91E-02
+Residual velocity: vmax =     1.55E-02 vzmax =     5.92E-03
+lt =       828  T =         0.66240 time cost =        31.19
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.44E+00
+cells: vymax vymin =     1.73E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     5.86E-02
+Residual velocity: vmax =     1.55E-02 vzmax =     5.84E-03
+lt =       829  T =         0.66320 time cost =        31.19
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.44E+00
+cells: vymax vymin =     1.74E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.79E+00
+Wall iteration:
+niter =    60 residual =     5.80E-02
+Residual velocity: vmax =     1.51E-02 vzmax =     5.80E-03
+lt =       830  T =         0.66400 time cost =        31.15
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.44E+00
+cells: vymax vymin =     1.74E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     5.74E-02
+Residual velocity: vmax =     1.51E-02 vzmax =     5.77E-03
+lt =       831  T =         0.66480 time cost =        31.11
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.74E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     5.67E-02
+Residual velocity: vmax =     1.49E-02 vzmax =     5.72E-03
+lt =       832  T =         0.66560 time cost =        31.05
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.74E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     5.61E-02
+Residual velocity: vmax =     1.47E-02 vzmax =     5.69E-03
+lt =       833  T =         0.66640 time cost =        31.03
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.75E+00   -1.65E+00
+cells: vzmax vzmin =     1.49E+01    9.78E+00
+Wall iteration:
+niter =    60 residual =     5.54E-02
+Residual velocity: vmax =     1.47E-02 vzmax =     5.57E-03
+lt =       834  T =         0.66720 time cost =        31.04
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.45E+00
+cells: vymax vymin =     1.75E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     5.48E-02
+Residual velocity: vmax =     1.43E-02 vzmax =     5.55E-03
+lt =       835  T =         0.66800 time cost =        31.01
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.75E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     5.41E-02
+Residual velocity: vmax =     1.44E-02 vzmax =     5.42E-03
+lt =       836  T =         0.66880 time cost =        30.99
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.76E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     5.35E-02
+Residual velocity: vmax =     1.40E-02 vzmax =     5.42E-03
+lt =       837  T =         0.66960 time cost =        30.97
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.46E+00
+cells: vymax vymin =     1.76E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.77E+00
+Wall iteration:
+niter =    60 residual =     5.28E-02
+Residual velocity: vmax =     1.41E-02 vzmax =     5.27E-03
+lt =       838  T =         0.67040 time cost =        30.93
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.47E+00
+cells: vymax vymin =     1.76E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     5.22E-02
+Residual velocity: vmax =     1.37E-02 vzmax =     5.29E-03
+lt =       839  T =         0.67120 time cost =        30.91
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.47E+00
+cells: vymax vymin =     1.76E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     5.15E-02
+Residual velocity: vmax =     1.38E-02 vzmax =     5.13E-03
+lt =       840  T =         0.67200 time cost =        30.90
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.47E+00
+cells: vymax vymin =     1.77E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     5.09E-02
+Residual velocity: vmax =     1.34E-02 vzmax =     5.16E-03
+lt =       841  T =         0.67280 time cost =        30.89
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.47E+00
+cells: vymax vymin =     1.77E+00   -1.66E+00
+cells: vzmax vzmin =     1.49E+01    9.76E+00
+Wall iteration:
+niter =    60 residual =     5.03E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     4.99E-03
+lt =       842  T =         0.67360 time cost =        30.89
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.48E+00
+cells: vymax vymin =     1.77E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     4.98E-02
+Residual velocity: vmax =     1.31E-02 vzmax =     5.05E-03
+lt =       843  T =         0.67440 time cost =        30.85
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.48E+00
+cells: vymax vymin =     1.77E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     4.92E-02
+Residual velocity: vmax =     1.33E-02 vzmax =     4.87E-03
+lt =       844  T =         0.67520 time cost =        30.82
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.48E+00
+cells: vymax vymin =     1.78E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.75E+00
+Wall iteration:
+niter =    60 residual =     4.86E-02
+Residual velocity: vmax =     1.28E-02 vzmax =     4.95E-03
+lt =       845  T =         0.67600 time cost =        30.81
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.48E+00
+cells: vymax vymin =     1.78E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     4.81E-02
+Residual velocity: vmax =     1.30E-02 vzmax =     4.76E-03
+lt =       846  T =         0.67680 time cost =        30.79
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.49E+00
+cells: vymax vymin =     1.78E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     4.76E-02
+Residual velocity: vmax =     1.25E-02 vzmax =     4.86E-03
+lt =       847  T =         0.67760 time cost =        30.79
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.49E+00
+cells: vymax vymin =     1.78E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     4.72E-02
+Residual velocity: vmax =     1.27E-02 vzmax =     4.66E-03
+lt =       848  T =         0.67840 time cost =        30.78
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.49E+00
+cells: vymax vymin =     1.79E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.74E+00
+Wall iteration:
+niter =    60 residual =     4.68E-02
+Residual velocity: vmax =     1.23E-02 vzmax =     4.79E-03
+lt =       849  T =         0.67920 time cost =        30.78
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.49E+00
+cells: vymax vymin =     1.79E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     4.63E-02
+Residual velocity: vmax =     1.23E-02 vzmax =     4.56E-03
+lt =       850  T =         0.68000 time cost =        30.75
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.79E+00   -1.67E+00
+cells: vzmax vzmin =     1.49E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     4.60E-02
+Residual velocity: vmax =     1.20E-02 vzmax =     4.72E-03
+lt =       851  T =         0.68080 time cost =        30.76
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.79E+00   -1.68E+00
+cells: vzmax vzmin =     1.49E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     4.56E-02
+Residual velocity: vmax =     1.19E-02 vzmax =     4.47E-03
+lt =       852  T =         0.68160 time cost =        30.74
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.80E+00   -1.68E+00
+cells: vzmax vzmin =     1.49E+01    9.73E+00
+Wall iteration:
+niter =    60 residual =     4.52E-02
+Residual velocity: vmax =     1.18E-02 vzmax =     4.66E-03
+lt =       853  T =         0.68240 time cost =        30.74
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.80E+00   -1.68E+00
+cells: vzmax vzmin =     1.49E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.48E-02
+Residual velocity: vmax =     1.12E-02 vzmax =     4.34E-03
+lt =       854  T =         0.68320 time cost =        30.76
+
+cells: vmax =     1.49E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.80E+00   -1.68E+00
+cells: vzmax vzmin =     1.49E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.44E-02
+Residual velocity: vmax =     1.14E-02 vzmax =     4.57E-03
+lt =       855  T =         0.68400 time cost =        30.75
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.81E+00   -1.50E+00
+cells: vymax vymin =     1.80E+00   -1.68E+00
+cells: vzmax vzmin =     1.50E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.38E-02
+Residual velocity: vmax =     1.07E-02 vzmax =     4.02E-03
+lt =       856  T =         0.68480 time cost =        30.75
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.80E+00   -1.68E+00
+cells: vzmax vzmin =     1.50E+01    9.72E+00
+Wall iteration:
+niter =    60 residual =     4.34E-02
+Residual velocity: vmax =     1.10E-02 vzmax =     4.45E-03
+lt =       857  T =         0.68560 time cost =        30.73
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.68E+00
+cells: vzmax vzmin =     1.50E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     4.28E-02
+Residual velocity: vmax =     1.02E-02 vzmax =     3.92E-03
+lt =       858  T =         0.68640 time cost =        30.74
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.68E+00
+cells: vzmax vzmin =     1.50E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     4.23E-02
+Residual velocity: vmax =     1.07E-02 vzmax =     4.40E-03
+lt =       859  T =         0.68720 time cost =        30.74
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.68E+00
+cells: vzmax vzmin =     1.50E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     4.19E-02
+Residual velocity: vmax =     1.07E-02 vzmax =     3.73E-03
+lt =       860  T =         0.68800 time cost =        30.74
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     4.16E-02
+Residual velocity: vmax =     1.05E-02 vzmax =     4.27E-03
+lt =       861  T =         0.68880 time cost =        30.73
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.71E+00
+Wall iteration:
+niter =    60 residual =     4.16E-02
+Residual velocity: vmax =     1.05E-02 vzmax =     3.90E-03
+lt =       862  T =         0.68960 time cost =        30.73
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.81E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     4.17E-02
+Residual velocity: vmax =     1.06E-02 vzmax =     4.25E-03
+lt =       863  T =         0.69040 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.82E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     4.19E-02
+Residual velocity: vmax =     1.08E-02 vzmax =     4.10E-03
+lt =       864  T =         0.69120 time cost =        30.69
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     4.22E-02
+Residual velocity: vmax =     1.09E-02 vzmax =     4.31E-03
+lt =       865  T =         0.69200 time cost =        30.72
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.70E+00
+Wall iteration:
+niter =    60 residual =     4.25E-02
+Residual velocity: vmax =     1.11E-02 vzmax =     4.26E-03
+lt =       866  T =         0.69280 time cost =        30.72
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     4.28E-02
+Residual velocity: vmax =     1.11E-02 vzmax =     4.35E-03
+lt =       867  T =         0.69360 time cost =        30.72
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     4.31E-02
+Residual velocity: vmax =     1.13E-02 vzmax =     4.35E-03
+lt =       868  T =         0.69440 time cost =        30.73
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     4.35E-02
+Residual velocity: vmax =     1.14E-02 vzmax =     4.45E-03
+lt =       869  T =         0.69520 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     4.39E-02
+Residual velocity: vmax =     1.16E-02 vzmax =     4.43E-03
+lt =       870  T =         0.69600 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.69E+00
+cells: vzmax vzmin =     1.50E+01    9.69E+00
+Wall iteration:
+niter =    60 residual =     4.43E-02
+Residual velocity: vmax =     1.18E-02 vzmax =     4.59E-03
+lt =       871  T =         0.69680 time cost =        30.72
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.82E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.48E-02
+Residual velocity: vmax =     1.19E-02 vzmax =     4.53E-03
+lt =       872  T =         0.69760 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.83E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.52E-02
+Residual velocity: vmax =     1.21E-02 vzmax =     4.72E-03
+lt =       873  T =         0.69840 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.57E-02
+Residual velocity: vmax =     1.22E-02 vzmax =     4.65E-03
+lt =       874  T =         0.69920 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.61E-02
+Residual velocity: vmax =     1.24E-02 vzmax =     4.85E-03
+lt =       875  T =         0.70000 time cost =        30.70
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.66E-02
+Residual velocity: vmax =     1.25E-02 vzmax =     4.77E-03
+lt =       876  T =         0.70080 time cost =        30.72
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.68E+00
+Wall iteration:
+niter =    60 residual =     4.70E-02
+Residual velocity: vmax =     1.27E-02 vzmax =     4.97E-03
+lt =       877  T =         0.70160 time cost =        30.70
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.51E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     4.75E-02
+Residual velocity: vmax =     1.27E-02 vzmax =     4.89E-03
+lt =       878  T =         0.70240 time cost =        30.68
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     4.79E-02
+Residual velocity: vmax =     1.29E-02 vzmax =     5.09E-03
+lt =       879  T =         0.70320 time cost =        30.66
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     4.83E-02
+Residual velocity: vmax =     1.29E-02 vzmax =     5.00E-03
+lt =       880  T =         0.70400 time cost =        30.71
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     4.86E-02
+Residual velocity: vmax =     1.31E-02 vzmax =     5.19E-03
+lt =       881  T =         0.70480 time cost =        30.66
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.67E+00
+Wall iteration:
+niter =    60 residual =     4.90E-02
+Residual velocity: vmax =     1.31E-02 vzmax =     5.11E-03
+lt =       882  T =         0.70560 time cost =        30.63
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     4.93E-02
+Residual velocity: vmax =     1.33E-02 vzmax =     5.29E-03
+lt =       883  T =         0.70640 time cost =        30.60
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.70E+00
+cells: vzmax vzmin =     1.50E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     4.96E-02
+Residual velocity: vmax =     1.33E-02 vzmax =     5.20E-03
+lt =       884  T =         0.70720 time cost =        30.58
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.84E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.71E+00
+cells: vzmax vzmin =     1.50E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     4.99E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     5.37E-03
+lt =       885  T =         0.70800 time cost =        30.57
+
+cells: vmax =     1.50E+01
+cells: vxmax vxmin =     1.85E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.71E+00
+cells: vzmax vzmin =     1.50E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     5.01E-02
+Residual velocity: vmax =     1.34E-02 vzmax =     5.28E-03
+lt =       886  T =         0.70880 time cost =        30.63
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.50E+00
+cells: vymax vymin =     1.83E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.66E+00
+Wall iteration:
+niter =    60 residual =     5.03E-02
+Residual velocity: vmax =     1.36E-02 vzmax =     5.43E-03
+lt =       887  T =         0.70960 time cost =        30.63
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.83E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     5.05E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     5.35E-03
+lt =       888  T =         0.71040 time cost =        30.57
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     5.06E-02
+Residual velocity: vmax =     1.37E-02 vzmax =     5.48E-03
+lt =       889  T =         0.71120 time cost =        30.58
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     5.07E-02
+Residual velocity: vmax =     1.36E-02 vzmax =     5.39E-03
+lt =       890  T =         0.71200 time cost =        30.52
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     5.08E-02
+Residual velocity: vmax =     1.38E-02 vzmax =     5.51E-03
+lt =       891  T =         0.71280 time cost =        30.51
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.65E+00
+Wall iteration:
+niter =    60 residual =     5.08E-02
+Residual velocity: vmax =     1.36E-02 vzmax =     5.42E-03
+lt =       892  T =         0.71360 time cost =        30.53
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.08E-02
+Residual velocity: vmax =     1.38E-02 vzmax =     5.52E-03
+lt =       893  T =         0.71440 time cost =        30.52
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.07E-02
+Residual velocity: vmax =     1.35E-02 vzmax =     5.43E-03
+lt =       894  T =         0.71520 time cost =        30.52
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.06E-02
+Residual velocity: vmax =     1.37E-02 vzmax =     5.52E-03
+lt =       895  T =         0.71600 time cost =        30.50
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.05E-02
+Residual velocity: vmax =     1.34E-02 vzmax =     5.42E-03
+lt =       896  T =         0.71680 time cost =        30.48
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.03E-02
+Residual velocity: vmax =     1.36E-02 vzmax =     5.49E-03
+lt =       897  T =         0.71760 time cost =        30.45
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.64E+00
+Wall iteration:
+niter =    60 residual =     5.00E-02
+Residual velocity: vmax =     1.33E-02 vzmax =     5.39E-03
+lt =       898  T =         0.71840 time cost =        30.44
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.63E+00
+Wall iteration:
+niter =    60 residual =     4.97E-02
+Residual velocity: vmax =     1.34E-02 vzmax =     5.44E-03
+lt =       899  T =         0.71920 time cost =        30.44
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.63E+00
+area expansion of cell   1:    3.67517%
+area expansion of cell   2:    3.08601%
+area expansion of cell   3:    4.99621%
+area expansion of cell   4:    5.43173%
+area expansion of cell   5:    3.35844%
+area expansion of cell   6:    2.97803%
+area expansion of cell   7:    3.25979%
+area expansion of cell   8:    1.81175%
+area expansion of cell   9:    2.93648%
+area expansion of cell  10:    3.10342%
+area expansion of cell  11:    2.11315%
+area expansion of cell  12:    2.65006%
+area expansion of cell  13:    3.26161%
+area expansion of cell  14:    3.28336%
+area expansion of cell  15:    2.62613%
+area expansion of cell  16:    3.36482%
+area expansion of cell  17:    2.90199%
+area expansion of cell  18:    2.54833%
+area expansion of cell  19:    2.43351%
+area expansion of cell  20:    2.67621%
+area expansion of cell  21:    2.63712%
+area expansion of cell  22:    2.89619%
+area expansion of cell  23:    3.58580%
+area expansion of cell  24:    3.23535%
+area expansion of cell  25:    3.51085%
+area expansion of cell  26:    2.95594%
+area expansion of cell  27:    3.64414%
+area expansion of cell  28:    3.60379%
+area expansion of cell  29:    3.16185%
+area expansion of cell  30:    3.36827%
+area expansion of cell  31:    3.05884%
+area expansion of cell  32:    3.88435%
+area expansion of cell  33:    3.62665%
+area expansion of cell  34:    4.53506%
+area expansion of cell  35:    3.48110%
+area expansion of cell  36:    3.12245%
+area expansion of cell  37:    4.41152%
+area expansion of cell  38:    5.36734%
+Wall iteration:
+niter =    60 residual =     4.94E-02
+Residual velocity: vmax =     1.31E-02 vzmax =     5.34E-03
+lt =       900  T =         0.72000 time cost =        30.44
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.63E+00
+Wall iteration:
+niter =    60 residual =     4.90E-02
+Residual velocity: vmax =     1.32E-02 vzmax =     5.37E-03
+lt =       901  T =         0.72080 time cost =        30.43
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.63E+00
+Wall iteration:
+niter =    60 residual =     4.85E-02
+Residual velocity: vmax =     1.28E-02 vzmax =     5.28E-03
+lt =       902  T =         0.72160 time cost =        30.41
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.84E+00   -1.71E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.80E-02
+Residual velocity: vmax =     1.29E-02 vzmax =     5.27E-03
+lt =       903  T =         0.72240 time cost =        30.40
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.75E-02
+Residual velocity: vmax =     1.25E-02 vzmax =     5.18E-03
+lt =       904  T =         0.72320 time cost =        30.45
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.69E-02
+Residual velocity: vmax =     1.26E-02 vzmax =     5.12E-03
+lt =       905  T =         0.72400 time cost =        30.45
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.62E-02
+Residual velocity: vmax =     1.22E-02 vzmax =     4.97E-03
+lt =       906  T =         0.72480 time cost =        30.36
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.55E-02
+Residual velocity: vmax =     1.22E-02 vzmax =     4.79E-03
+lt =       907  T =         0.72560 time cost =        30.34
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.62E+00
+Wall iteration:
+niter =    60 residual =     4.47E-02
+Residual velocity: vmax =     1.18E-02 vzmax =     4.76E-03
+lt =       908  T =         0.72640 time cost =        30.33
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.61E+00
+Wall iteration:
+niter =    60 residual =     4.38E-02
+Residual velocity: vmax =     1.17E-02 vzmax =     4.49E-03
+lt =       909  T =         0.72720 time cost =        30.30
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.61E+00
+Wall iteration:
+niter =    60 residual =     4.31E-02
+Residual velocity: vmax =     1.14E-02 vzmax =     4.61E-03
+lt =       910  T =         0.72800 time cost =        30.29
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.61E+00
+Wall iteration:
+niter =    60 residual =     4.22E-02
+Residual velocity: vmax =     1.13E-02 vzmax =     4.26E-03
+lt =       911  T =         0.72880 time cost =        30.29
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.61E+00
+Wall iteration:
+niter =    60 residual =     4.15E-02
+Residual velocity: vmax =     1.10E-02 vzmax =     4.50E-03
+lt =       912  T =         0.72960 time cost =        30.27
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.85E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     4.04E-02
+Residual velocity: vmax =     1.08E-02 vzmax =     3.99E-03
+lt =       913  T =         0.73040 time cost =        30.25
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     3.96E-02
+Residual velocity: vmax =     1.05E-02 vzmax =     4.24E-03
+lt =       914  T =         0.73120 time cost =        30.24
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     3.84E-02
+Residual velocity: vmax =     1.03E-02 vzmax =     3.69E-03
+lt =       915  T =         0.73200 time cost =        30.27
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     3.73E-02
+Residual velocity: vmax =     9.90E-03 vzmax =     3.90E-03
+lt =       916  T =         0.73280 time cost =        30.18
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     3.62E-02
+Residual velocity: vmax =     9.80E-03 vzmax =     3.47E-03
+lt =       917  T =         0.73360 time cost =        30.15
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.60E+00
+Wall iteration:
+niter =    60 residual =     3.50E-02
+Residual velocity: vmax =     9.37E-03 vzmax =     3.59E-03
+lt =       918  T =         0.73440 time cost =        30.15
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.48E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.59E+00
+Wall iteration:
+niter =    60 residual =     3.41E-02
+Residual velocity: vmax =     9.17E-03 vzmax =     3.34E-03
+lt =       919  T =         0.73520 time cost =        30.14
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.59E+00
+Wall iteration:
+niter =    60 residual =     3.31E-02
+Residual velocity: vmax =     8.88E-03 vzmax =     3.25E-03
+lt =       920  T =         0.73600 time cost =        30.09
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.59E+00
+Wall iteration:
+niter =    60 residual =     3.23E-02
+Residual velocity: vmax =     8.63E-03 vzmax =     3.19E-03
+lt =       921  T =         0.73680 time cost =        30.05
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.86E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.59E+00
+Wall iteration:
+niter =    60 residual =     3.13E-02
+Residual velocity: vmax =     8.39E-03 vzmax =     3.01E-03
+lt =       922  T =         0.73760 time cost =        30.00
+
+cells: vmax =     1.51E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.51E+01    9.59E+00
+Wall iteration:
+niter =    60 residual =     3.04E-02
+Residual velocity: vmax =     8.14E-03 vzmax =     3.02E-03
+lt =       923  T =         0.73840 time cost =        30.03
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.58E+00
+Wall iteration:
+niter =    60 residual =     2.95E-02
+Residual velocity: vmax =     7.85E-03 vzmax =     2.78E-03
+lt =       924  T =         0.73920 time cost =        29.95
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.58E+00
+Wall iteration:
+niter =    60 residual =     2.86E-02
+Residual velocity: vmax =     7.63E-03 vzmax =     2.80E-03
+lt =       925  T =         0.74000 time cost =        29.95
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.58E+00
+Wall iteration:
+niter =    60 residual =     2.77E-02
+Residual velocity: vmax =     7.31E-03 vzmax =     2.55E-03
+lt =       926  T =         0.74080 time cost =        29.92
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.58E+00
+Wall iteration:
+niter =    60 residual =     2.68E-02
+Residual velocity: vmax =     7.11E-03 vzmax =     2.59E-03
+lt =       927  T =         0.74160 time cost =        29.88
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.58E+00
+Wall iteration:
+niter =    60 residual =     2.59E-02
+Residual velocity: vmax =     6.78E-03 vzmax =     2.32E-03
+lt =       928  T =         0.74240 time cost =        29.83
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.57E+00
+Wall iteration:
+niter =    60 residual =     2.50E-02
+Residual velocity: vmax =     6.59E-03 vzmax =     2.37E-03
+lt =       929  T =         0.74320 time cost =        29.80
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.57E+00
+Wall iteration:
+niter =    60 residual =     2.41E-02
+Residual velocity: vmax =     6.26E-03 vzmax =     2.15E-03
+lt =       930  T =         0.74400 time cost =        29.79
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.87E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.57E+00
+Wall iteration:
+niter =    60 residual =     2.32E-02
+Residual velocity: vmax =     6.05E-03 vzmax =     2.10E-03
+lt =       931  T =         0.74480 time cost =        29.74
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.57E+00
+Wall iteration:
+niter =    60 residual =     2.23E-02
+Residual velocity: vmax =     5.74E-03 vzmax =     1.90E-03
+lt =       932  T =         0.74560 time cost =        29.72
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.56E+00
+Wall iteration:
+niter =    60 residual =     2.15E-02
+Residual velocity: vmax =     5.54E-03 vzmax =     1.85E-03
+lt =       933  T =         0.74640 time cost =        29.70
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.85E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.56E+00
+Wall iteration:
+niter =    60 residual =     2.06E-02
+Residual velocity: vmax =     5.24E-03 vzmax =     1.66E-03
+lt =       934  T =         0.74720 time cost =        29.66
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.56E+00
+Wall iteration:
+niter =    60 residual =     1.98E-02
+Residual velocity: vmax =     5.03E-03 vzmax =     1.60E-03
+lt =       935  T =         0.74800 time cost =        29.62
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.56E+00
+Wall iteration:
+niter =    60 residual =     1.90E-02
+Residual velocity: vmax =     4.75E-03 vzmax =     1.54E-03
+lt =       936  T =         0.74880 time cost =        29.61
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.88E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.55E+00
+Wall iteration:
+niter =    60 residual =     1.83E-02
+Residual velocity: vmax =     4.55E-03 vzmax =     1.47E-03
+lt =       937  T =         0.74960 time cost =        29.57
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.89E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.55E+00
+Wall iteration:
+niter =    60 residual =     1.75E-02
+Residual velocity: vmax =     4.32E-03 vzmax =     1.42E-03
+lt =       938  T =         0.75040 time cost =        29.54
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.89E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.55E+00
+Wall iteration:
+niter =    60 residual =     1.68E-02
+Residual velocity: vmax =     4.11E-03 vzmax =     1.36E-03
+lt =       939  T =         0.75120 time cost =        29.50
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.49E+00
+cells: vymax vymin =     1.89E+00   -1.72E+00
+cells: vzmax vzmin =     1.52E+01    9.55E+00
+Wall iteration:
+niter =    60 residual =     1.61E-02
+Residual velocity: vmax =     3.99E-03 vzmax =     1.31E-03
+lt =       940  T =         0.75200 time cost =        29.49
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.50E+00
+cells: vymax vymin =     1.89E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.54E+00
+Wall iteration:
+niter =    60 residual =     1.55E-02
+Residual velocity: vmax =     3.81E-03 vzmax =     1.24E-03
+lt =       941  T =         0.75280 time cost =        29.47
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.50E+00
+cells: vymax vymin =     1.89E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.54E+00
+Wall iteration:
+niter =    60 residual =     1.48E-02
+Residual velocity: vmax =     3.66E-03 vzmax =     1.20E-03
+lt =       942  T =         0.75360 time cost =        29.45
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.50E+00
+cells: vymax vymin =     1.89E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.54E+00
+Wall iteration:
+niter =    60 residual =     1.43E-02
+Residual velocity: vmax =     3.51E-03 vzmax =     1.13E-03
+lt =       943  T =         0.75440 time cost =        29.40
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.50E+00
+cells: vymax vymin =     1.89E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.54E+00
+Wall iteration:
+niter =    60 residual =     1.37E-02
+Residual velocity: vmax =     3.34E-03 vzmax =     1.09E-03
+lt =       944  T =         0.75520 time cost =        29.40
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.86E+00   -1.50E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.53E+00
+Wall iteration:
+niter =    60 residual =     1.33E-02
+Residual velocity: vmax =     3.22E-03 vzmax =     1.03E-03
+lt =       945  T =         0.75600 time cost =        29.35
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.50E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.53E+00
+Wall iteration:
+niter =    60 residual =     1.28E-02
+Residual velocity: vmax =     3.09E-03 vzmax =     9.71E-04
+lt =       946  T =         0.75680 time cost =        29.33
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.50E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.53E+00
+Wall iteration:
+niter =    60 residual =     1.25E-02
+Residual velocity: vmax =     2.93E-03 vzmax =     9.26E-04
+lt =       947  T =         0.75760 time cost =        29.33
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.51E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.53E+00
+Wall iteration:
+niter =    60 residual =     1.21E-02
+Residual velocity: vmax =     3.04E-03 vzmax =     8.57E-04
+lt =       948  T =         0.75840 time cost =        29.30
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.51E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.53E+00
+Wall iteration:
+niter =    60 residual =     1.20E-02
+Residual velocity: vmax =     2.71E-03 vzmax =     8.37E-04
+lt =       949  T =         0.75920 time cost =        29.26
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.51E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.52E+00
+Wall iteration:
+niter =    60 residual =     1.17E-02
+Residual velocity: vmax =     2.95E-03 vzmax =     7.87E-04
+lt =       950  T =         0.76000 time cost =        29.24
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.87E+00   -1.51E+00
+cells: vymax vymin =     1.90E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.52E+00
+Wall iteration:
+niter =    60 residual =     1.17E-02
+Residual velocity: vmax =     2.71E-03 vzmax =     7.45E-04
+lt =       951  T =         0.76080 time cost =        29.20
+
+cells: vmax =     1.52E+01
+cells: vxmax vxmin =     1.88E+00   -1.51E+00
+cells: vymax vymin =     1.91E+00   -1.73E+00
+cells: vzmax vzmin =     1.52E+01    9.52E+00
+Wall iteration:
+niter =    60 residual =     1.15E-02
+Residual velocity: vmax =     2.82E-03 vzmax =     6.95E-04
+lt =       952  T =         0.76160 time cost =        29.17
+
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 4609708 ON atl1-1-02-012-23-2 CANCELLED AT 2024-01-18T23:29:41 ***
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[1]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[1]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[1]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[1]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[1]PETSC ERROR: to get more information on the crash.
+[1]PETSC ERROR: --------------------- Error Message ------------------------------------
+[1]PETSC ERROR: Signal received!
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[1]PETSC ERROR: See docs/changes/index.html for recent updates.
+[1]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[1]PETSC ERROR: See docs/index.html for manual pages.
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs/./tube on a linux-gnu named atl1-1-02-012-24-1.pace.gatech.edu by smanasreh6 Thu Jan 18 20:30:25 2024
+[1]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[1]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[1]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[2]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[2]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[2]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[2]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[2]PETSC ERROR: to get more information on the crash.
+[2]PETSC ERROR: --------------------- Error Message ------------------------------------
+[2]PETSC ERROR: Signal received!
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[2]PETSC ERROR: See docs/changes/index.html for recent updates.
+[2]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[2]PETSC ERROR: See docs/index.html for manual pages.
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs/./tube on a linux-gnu named atl1-1-02-012-24-2.pace.gatech.edu by smanasreh6 Thu Jan 18 20:30:25 2024
+[2]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[2]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[2]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[3]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[3]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[3]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[3]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[3]PETSC ERROR: to get more information on the crash.
+[3]PETSC ERROR: --------------------- Error Message ------------------------------------
+[3]PETSC ERROR: Signal received!
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[3]PETSC ERROR: See docs/changes/index.html for recent updates.
+[3]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[3]PETSC ERROR: See docs/index.html for manual pages.
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs/./tube on a linux-gnu named atl1-1-02-012-25-1.pace.gatech.edu by smanasreh6 Thu Jan 18 20:30:25 2024
+[3]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[3]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[3]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+slurmstepd: error: *** STEP 4609708.0 ON atl1-1-02-012-23-2 CANCELLED AT 2024-01-18T23:29:41 ***
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[0]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[0]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[0]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[0]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[0]PETSC ERROR: to get more information on the crash.
+[0]PETSC ERROR: --------------------- Error Message ------------------------------------
+[0]PETSC ERROR: Signal received!
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[0]PETSC ERROR: See docs/changes/index.html for recent updates.
+[0]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[0]PETSC ERROR: See docs/index.html for manual pages.
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case_wbcs/./tube on a linux-gnu named atl1-1-02-012-23-2.pace.gatech.edu by smanasreh6 Thu Jan 18 20:30:25 2024
+[0]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[0]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[0]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[atl1-1-02-012-24-1.pace.gatech.edu:mpi_rank_1][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 1: No such file or directory (2)
+[atl1-1-02-012-24-2.pace.gatech.edu:mpi_rank_2][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 2: No such file or directory (2)
+[atl1-1-02-012-25-1.pace.gatech.edu:mpi_rank_3][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 3: No such file or directory (2)
+[atl1-1-02-012-23-2.pace.gatech.edu:mpi_rank_0][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 0: No such file or directory (2)
+---------------------------------------
+Begin Slurm Epilog: Jan-18-2024 23:29:44
+Job ID:        4609708
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run2.sh
+Resources:     cpu=96,mem=192G,node=4
+Rsrc Used:     cput=11-23:37:36,vmem=57800K,walltime=02:59:46,mem=8576K,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-012-23-2,atl1-1-02-012-24-[1-2],atl1-1-02-012-25-1
+---------------------------------------

@@ -1,0 +1,147 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-25-2023 23:10:09
+Job ID:    4219595
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run2.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+srun: warning: can't run 2 processes on 4 nodes, setting nnodes to 2
+ Node            0  of            2  running on atl1-1-02-002-21-1.pace.gatech.edu
+ Node            1  of            2  running on atl1-1-02-002-21-2.pace.gatech.edu
+ Number of nodes for physical Ewald sum =            2
+ Number of nodes for Fourier Ewald sum =            2
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ alpha_Ewd =   0.44000000000000000     
+ eps_Ewd =    1.0000000000000000E-003
+ PBspln_Ewd =            8
+ nCellTypes =            1
+ viscRat =    1.0000000000000000     
+ refRad =    1.0000000000000000     
+ Deflate =  F
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ Nt =        10000
+ Ts =    1.4000000000000000E-003
+ cell_out =           50
+ wall_out =       -10000
+ pgrad_out =          -10
+ flow_out =          -10
+ flow_out =           -1
+ restart_out =          100
+ restart file = D/restart.LATEST.dat
+ epsDist =    1.0000000000000000E-010
+ ForceCoef =    10.000000000000000     
+ viscRatThresh =    10.000000000000000     
+ rigidsep =  F
+ fmags =    0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ Read restart file D/restart.LATEST.dat
+ error 0
+ error 1
+ error 2
+ z
+ a
+ b
+ 0
+ Lb =    10.500000000000000        10.500000000000000        22.857142857142858     
+ Nt0 =            0
+ time0 =    0.0000000000000000     
+ vBkg =    0.0000000000000000        0.0000000000000000        8.0000000000000000     
+ 1
+ 2
+ nrbc =           32
+ 3
+ irbc :            1  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            2  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            3  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            4  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :            5  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            6  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            7  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            8  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :            9  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           10  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           11  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           12  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           13  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           14  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           15  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           16  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           17  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           18  nlat0 =           12 type =            3
+ nlat =          36
+ irbc :           19  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           20  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           21  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           22  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           23  nlat0 =           12 type =            1
+ nlat =          36
+ 2
+ 3
+ irbc :           24  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           25  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           26  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           27  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           28  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           29  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           30  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           31  nlat0 =           12 type =            1
+ nlat =          36
+ irbc :           32  nlat0 =           12 type =            1
+ nlat =          36
+ 4
+ nwall =            1
+ iwall :            1  nvert =        12978  nele =        25704
+ 4
+
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+STOP bad cellcase
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+STOP bad cellcase
+---------------------------------------
+Begin Slurm Epilog: Nov-25-2023 23:10:12
+Job ID:        4219595
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run2.sh
+Resources:     cpu=96,mem=192G,node=4
+Rsrc Used:     cput=00:04:48,vmem=368K,walltime=00:00:03,mem=0,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-002-21-[1-2],atl1-1-02-002-23-[1-2]
+---------------------------------------
