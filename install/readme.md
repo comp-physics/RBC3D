@@ -4,7 +4,7 @@
 1. Ensure you have compilers and wrappers
 2. Build libraries
 3. Cnfigure the `Makefile.inc` in the base directory
-4. Build `common/` and `case/`
+4. Build `common/` and `examples/case/`
 
 ## Use an appropriate computer
 
@@ -197,7 +197,7 @@ This is the main codebase.
 
 This is an example case.
 
-* Descend into `RBC3D/case`
+* Descend into `RBC3D/examples/case`
 * Execute `make .depend`
 * Execute `make`
 
