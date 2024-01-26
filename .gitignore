@@ -1,8 +1,8 @@
 */run_logs
-*/*.py
+*/*/*.py
 */v.*
-*/*.sh
-*/D/*
+*/*/*.sh
+*/*/D/*
 !*/D/.gittouch
 *.o
 *.mod
