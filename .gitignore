@@ -13,3 +13,4 @@ libcommon.a
 .vscode
 field
 packages
+./examples/case_wbcs/init.sh

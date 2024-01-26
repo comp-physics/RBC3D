@@ -27,9 +27,9 @@ program InitCond
   character(CHRLEN) :: fn
   ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
-  real(WP) :: rand(40, 3)
-  integer :: j, ierr, half2, index, layer, newiz, numlayers
-  real :: wbcs(2), tubeDiam, layerx(4), layery(4)
+  real(WP) :: rand(27, 3)
+  integer :: j, ierr, half2, index, layer, newiz
+  real :: wbcs(2), tubeDiam, layerx(3), layery(3)
 
     ! Initialize
     call InitMPI
@@ -43,19 +43,21 @@ program InitCond
     nwall = 1
     wall=>walls(1)
 
-    call ReadWallMesh('Input/cylwithhole.e',wall)
-    actlen = 13.33
-    ! nwall = 2
-    ! wall=>walls(2)
+    if (10.ge.12) then
+        call ReadMyWallMesh('Input/cylinder_D_8.01_L_13.39.dat', wall)
+        actlen = 13.3921
+    else
+        call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
+        actlen = 13.33
+    end if
 
-    nrbc = 38
+    nrbc = 25
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-    lengtube = 50.0 / 2.82 ! nrbc/real(phi) !XXLL
+    lengtube = 32.0 / 2.82 ! nrbc/real(phi) !XXLL
 
-    numlayers = 10
-    lengspacing = (lengtube - ((2.62 / 2.82) * numlayers)) / numlayers ! lengtube/Real(nrbc)
+    lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
 
     print*, 'lengtube 1', lengtube
     print*, 'lengspacing 1', lengspacing
@@ -104,10 +106,10 @@ program InitCond
         call random_number(rand)
         call random_number(wbcs)
     end if
-    call MPI_Bcast(rand, 40*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+    call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
     call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
 
-    wbcs = 1 + FLOOR(40*wbcs)
+    wbcs = 1 + FLOOR(27*wbcs)
 
     print*, '27 x 3 rand num array'
     do j = 1, nrbc
@@ -119,44 +121,30 @@ program InitCond
         print *, wbcs(j)
     end do
 
-    ! layerx = (/-1.63, 1.63, 0.0/)
-    ! layery = (/-.943, -.943, 1.89/)
-    layerx = (/-1.55, -1.55, 1.55, 1.55/)
-    layery = (/-1.55, 1.55, -1.55, 1.55/)
+    layerx = (/-1.63, 1.63, 0.0/)
+    layery = (/-.943, -.943, 1.89/)
 
     ! place cells
     do iz = 1, (nrbc + 2)
-        if (iz > 24) then
+        if (iz > 23) then
             newiz = iz - 2
-        else if (iz > 16) then
+        else if (iz > 17) then
             newiz = iz - 1
         else
             newiz = iz
         end if
-        index = (modulo(iz, 4) + 1)
-        layer = (iz - 1) / 4
-        ! if (layerx(index) < 0) then
-        !     xc(1) = layerx(index) + (rand(iz, 1) - .5) / 2
-        ! else
-        !     xc(1) = layerx(index) + (rand(iz, 1) - .5) / 2
-        ! end if
-        ! if (layery(index) < 0) then
-        !     xc(2) = layery(index) + (rand(iz, 1) - .5)
-        ! else
-        !     xc(2) = layery(index) + (rand(iz, 1) - .5)
-        ! end if
-        xc(1) = layerx(index) + ((rand(iz, 1) - .5) / 2.5)
-        xc(2) = layery(index) + ((rand(iz, 1) - .5) / 2.5)
-        ! xc(1) = layerx(index)
-        ! xc(2) = layery(index)
-        xc(3) = (layer + .5) + (lengspacing * layer) + ((rand(iz, 3) - 0.5) / 1.5)
+        index = (modulo(iz, 3) + 1)
+        layer = (iz - 1) / 3
+        xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
+        xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
+        xc(3) = (layer + .5) + (lengspacing * layer) + ((rand(iz, 3) - 0.5) / 3)
         if (iz == 20) then
             print*, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
             rbc => rbcs(newiz)
             rbc%celltype = 2
             call Rbc_Create(rbc, nlat0, dealias)
             call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-        else if((iz == 16) .or. (iz == 24)) then
+        else if((iz == 17) .or. (iz == 23)) then
             cycle
         else
             print*, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
@@ -178,10 +166,8 @@ program InitCond
 
     ! Write intial conditions
     if (nrbc > 0) then
-        write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
-        write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
+        write(fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
+        call WriteManyRBCs(fn, nrbc, rbcs )
         write(*, '(A,A)') 'Cell file: ', trim(fn)
 
         fn = 'D/restart.LATEST.dat'
