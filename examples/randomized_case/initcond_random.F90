@@ -1,9 +1,3 @@
-! takes a RESTART file
-! Reads RESTART file
-! Adds spaces between the RBCs
-! and adds specified # of Sickle Cells
-! Then writes the new cells-setup out to separate restart-file
-
 program randomized_cell_gen
     
     use ModDataTypes
@@ -17,28 +11,26 @@ program randomized_cell_gen
     
     integer,parameter :: ranseed = 484
 
+    !initial condition setup parameters
+    real(WP), parameter :: hematocrit = 0.20
+    real(WP), parameter :: tuber = 7
+    real(WP), parameter :: tubelen = 20
+
+    integer :: nrbcMax ! how many cells
+    
     type(t_Rbc),pointer :: rbc
     type(t_Wall),pointer :: wall
     character(CHRLEN) :: fn
-
     integer :: zmax
     integer :: i
     real(WP) :: th, actlen
-    
-    real(WP), parameter :: hematocrit = 0.25
-    integer :: nrbcMax ! how many cells
-    real(WP) :: tuber, tubelen
-
     real(WP) :: clockBgn, clockEnd
     
     call InitMPI
 
-    !initialize parameter variables, ensuring for the defined hematocrit
-    ! hematocrit = 4 * nrbc / (tube_radius^2 * tube_length) 
-    ! assuming all blood cells are healthy for the calculation
-    tuber = 7
-    nrbcMax = 50
-    tubelen = 4 * nrbcMax / (tuber ** 2 * hematocrit)
+    !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
+    !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
+    nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
 
     !set periodic boundary box based on tube shape
     Lb(1) = tuber * 2 + 0.5
@@ -49,12 +41,10 @@ program randomized_cell_gen
     vBkg(1:2) = 0.; vBkg(3) = 8.
     Nt = 0; time = 0.
 
-
     !Create wall
     nwall = 1
     allocate(walls(nwall))
-    wall=>walls(1)
-    
+    wall=>walls(1)    
     call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
     actlen = 13.33
 
@@ -65,7 +55,6 @@ program randomized_cell_gen
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
         wall%x(i,3) = tubelen/actlen*wall%x(i,3)
     end do
-
 
     !for each cell to add
     allocate(rbcs(nrbcMax))
@@ -106,6 +95,7 @@ stop
 
 contains
 
+
 !offset everything to be positive
 subroutine recenter
     integer :: i, ii
@@ -137,24 +127,31 @@ subroutine recenter
 
 end subroutine recenter
 
+!find an open spot in the simulation to place a cell 
 subroutine place_cell
 
     type(t_Rbc) :: newcell
     type(t_Rbc), pointer :: cell 
     real(WP) :: tmp_xc(3)
 
-    integer :: celli, ii, i, j, i2, j2
-    real(WP) :: c1p(3), c2p(3), sp(3)
+    integer :: celli, ii
+    integer :: nlat0
+    logical :: place_success
 
-    !create new template rbc
-    call Rbc_Create(newcell, 12, 3)
+    nlat0 = 12
+
+    !create template newcell
+    call Rbc_Create(newcell, nlat0, 3)
     call Rbc_MakeBiconcave(newcell, 1.)
     newcell%celltype = 1
+
+    place_success = .false.
     
-    do
+    !choose a location & orientation for newcell to fit into the simulation
+    do while (.not. place_success)
 
         !randomly rotate cell
-888        call rotate_cell(newcell)
+        call rotate_cell(newcell)
         
         !randomly select a tmp_xc
         tmp_xc(2) = RandomNumber(ranseed) * 2*PI
@@ -163,71 +160,45 @@ subroutine place_cell
         tmp_xc(2) = tmp_xc(3) * sin(tmp_xc(2))
         tmp_xc(3) = RandomNumber(ranseed) * tubelen - tubelen/2
 
-        !shift sickle by the xc
+        !shift newcell by the xc
         do ii = 1, 3
             newcell%x(:,:,ii) = newcell%x(:,:,ii) + tmp_xc(ii)
         end do
 
-        !check if cell sticks outside the wall
-        !assume only cylinder walls for now
-        !for other wall-shapes, run collision detection algorithm between newcell & wall-mesh
+        !check if newcell collides with wall, assume cylinder wall for now
         if (any(abs(newcell%x(:,:,3)) .ge. tubelen/2 .or. &
             newcell%x(:,:,1)**2+newcell%x(:,:,2)**2 .ge. tuber**2)) then
+            
+            !placement collides with wall, so try again
             do ii = 1, 3
                 newcell%x(:,:,ii) = newcell%x(:,:,ii) - tmp_xc(ii)
             end do
-
-            goto 888
+            cycle 
         end if
 
+        !set boolean success to true (reset to false if we find a collision)
+        place_success = .true.
         do celli = 1, nrbc
             cell => rbcs(celli)
 
-            !all combinations of 2 vertices on the cell
-            ! forall (i = 1:cell%nlat - 1, j=1:cell%nlon - 1)
-            do i = 1, cell%nlat -1
-            do j = 1, cell%nlon -1
-
-            c1p = cell%x(i, j, : )
-            c2p = cell%x(i + 1, j + 1, : )
-
-            !each point on the new cell
-            do i2 = 1,newcell%nlat
-            do j2=1,newcell%nlon
-
-                sp = newcell%x(i2, j2, : )
-
-                if ( &
-                    ((c1p(1).le.sp(1) .and. sp(1).le.c2p(1)) .or. (c2p(1).le.sp(1) .and. sp(1).le.c1p(1))) .and. &  !x direction overlap
-                    ((c1p(2).le.sp(2) .and. sp(2).le.c2p(2)) .or. (c2p(2).le.sp(2) .and. sp(2).le.c1p(2))) .and. &  !y direction overlap
-                    ((c1p(3).le.sp(3) .and. sp(3).le.c2p(3)) .or. (c2p(3).le.sp(3) .and. sp(3).le.c1p(3))) &        !z direction overlap
-                ) then
-                    !shift new cell back to center by the xc
-                    do ii = 1, 3
-                        newcell%x(:,:,ii) = newcell%x(:,:,ii) - tmp_xc(ii)
-                    end do !ii
-
-                    ! if (rootWorld) write(*,*) "Cell # ", nrbc + 1, " attempt failed"
-                    goto 888
-                end if 
-            
-            end do
-            end do
-            end do
-            end do
-
+            !we find a collision
+            if (check_cell_collision(cell, newcell)) then
+                !placement collides with existing cell, so try again
+                do ii = 1, 3
+                    newcell%x(:,:,ii) = newcell%x(:,:,ii) - tmp_xc(ii)
+                end do
+                place_success = .false.
+                exit
+            end if
         end do !celli
-    
-        !the cell is fine
-        !replace an existing rbc in rbcs[] with the new sickle
-        !exit out
-        rbcs(nrbc + 1) = newcell
-        exit
 
-    end do
+    end do !while not place_success
 
+    !the cell placement location was successful
+    rbcs(nrbc + 1) = newcell
 end subroutine place_cell
 
+!helper for place cell, chooses a random orientation and rotates the cell
 subroutine rotate_cell(cell)
     type(t_Rbc) :: cell
 
@@ -258,6 +229,45 @@ subroutine rotate_cell(cell)
 
 end subroutine rotate_cell
 
+!helper for place_cell, checks if cell1 and cell2 intersect/collide
+logical function check_cell_collision(cell1, cell2)
+    type(t_Rbc) :: cell1, cell2
+
+    integer :: i, j, i2, j2
+    real(WP) :: c1p(3), c2p(3), sp(3)
+
+    check_cell_collision = .false.
+
+    !each point in cell1
+    do i = 1, cell1%nlat
+    do j = 1, cell1%nlon
+
+    !define 2 diagonal points c1p & c2p for collision detection
+    c1p = cell1%x(i, j, : )
+    c2p = cell1%x(modulo(i + 1, cell1%nlat), modulo(j + 1, cell1%nlon), : )
+
+    !each point in cell2
+    do i2 = 1, cell2%nlat
+    do j2 = 1, cell2%nlon
+
+        sp = cell2%x(i, j, : )
+
+        !check if the cell2 point lies inside the cube delineated by c1p & c2p
+        if ( &
+            ((c1p(1).le.sp(1) .and. sp(1).le.c2p(1)) .or. (c2p(1).le.sp(1) .and. sp(1).le.c1p(1))) .and. &  !x direction overlap
+            ((c1p(2).le.sp(2) .and. sp(2).le.c2p(2)) .or. (c2p(2).le.sp(2) .and. sp(2).le.c1p(2))) .and. &  !y direction overlap
+            ((c1p(3).le.sp(3) .and. sp(3).le.c2p(3)) .or. (c2p(3).le.sp(3) .and. sp(3).le.c1p(3))) &        !z direction overlap
+        ) then
+            ! since we found a collision, return true
+            check_cell_collision = .true.
+            return
+        end if
+
+    end do !j2
+    end do !i2
+    end do !j
+    end do !i
+end function check_cell_collision
 
 
 end program randomized_cell_gen
