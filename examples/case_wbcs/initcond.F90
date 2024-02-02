@@ -63,13 +63,15 @@ program InitCond
     print*, 'lengspacing 1', lengspacing
 
     wall%f = 0.
-
+    print*, 'wall%nvert', wall%nvert
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
-        ! 10 is the diameter
         wall%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
         wall%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
-        wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
+        wall%x(i,3) = (1.0/actlen*wall%x(i,3)) + (lengtube - 2.0)   !!!!!!!!!!!!!!!!!!!
+        ! if (wall%nvert > 1300) then
+        !     wall%x(i,3) = (1.0/actlen*wall%x(i,3))
+        ! end if
     end do
     xmin = minval(wall%x(:,1))
     xmax = maxval(wall%x(:,1))
@@ -168,6 +170,10 @@ program InitCond
     if (nrbc > 0) then
         write(fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
         call WriteManyRBCs(fn, nrbc, rbcs )
+        write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
+        call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+        write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
+        call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
         write(*, '(A,A)') 'Cell file: ', trim(fn)
 
         fn = 'D/restart.LATEST.dat'
@@ -227,10 +233,10 @@ subroutine Recenter_Cells_and_Walls
 
     ! translate walls
     do iwall = 1,nwall
-        wall => walls(iwall)
-        do ii = 1,3
-            wall%x(:,ii) = wall%x(:,ii) + 0.5*Lb(ii) - xc(ii)
-        end do
+       wall => walls(iwall)
+       do ii = 1,3
+           wall%x(:,ii) = wall%x(:,ii) + 0.5*Lb(ii) - xc(ii)
+       end do
     end do
 
 end subroutine Recenter_Cells_and_Walls

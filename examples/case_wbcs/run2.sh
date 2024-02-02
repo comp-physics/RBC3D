@@ -15,18 +15,18 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/holesim5.log"
+#SBATCH -o "./run_logs/papersim3.log"
 
 cd $SLURM_SUBMIT_DIR
 
 ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 
-cd ../common
+cd ../../common
 make clean
 make .depend
 make
 
-cd ../case_wbcs
+cd ../examples/case_wbcs
 make clean
 make .depend
 make
