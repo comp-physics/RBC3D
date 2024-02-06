@@ -27,7 +27,7 @@ program randomized_cell_gen
     
     real(WP), parameter :: hematocrit = 0.25
     integer :: nrbcMax ! how many cells
-    real(WP) :: tuber, tubelen, halflen
+    real(WP) :: tuber, tubelen
 
     real(WP) :: clockBgn, clockEnd
     
@@ -49,7 +49,7 @@ program randomized_cell_gen
     vBkg(1:2) = 0.; vBkg(3) = 8.
     Nt = 0; time = 0.
 
-    
+
     !Create wall
     nwall = 2
     allocate(walls(nwall))
@@ -57,17 +57,17 @@ program randomized_cell_gen
     
     call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
     actlen = 13.33
-    halflen = (tubelen - 1.0) / 2.0
 
     wall%f = 0.
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = (halflen/actlen*wall%x(i,3)) - (halflen / 2) - .5
+        wall%x(i,3) = tubelen/actlen*wall%x(i,3)
     end do
 
-    wall=>walls(2)    
+    wall=>walls(1)
+    
     call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
     actlen = 13.33
 
@@ -76,7 +76,7 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = (halflen/actlen*wall%x(i,3)) + (halflen / 2) + .5
+        wall%x(i,3) = tubelen/actlen*wall%x(i,3)
     end do
 
 

@@ -44,7 +44,7 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 8
+    nrbc = 2
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
@@ -94,7 +94,7 @@ program InitCond
         print*, 'Xc', iz, xc
 
         rbc => rbcs(iz)
-        rbc%celltype = 1
+        rbc%celltype = 2
         call Rbc_Create(rbc, nlat0, dealias)
         call Rbc_MakeBiConcave(rbc, radEqv, xc)
     end do

@@ -29,71 +29,48 @@ program InitCond
   real :: lengtube,lengspacing, phi, actlen
   real(WP) :: rand(27, 3)
   integer :: j, ierr, half2, index, layer, newiz
-  real :: wbcs(2), tubeDiam, layerx(3), layery(3), halflen
+  real :: wbcs(2), tubeDiam, layerx(3), layery(3)
 
     ! Initialize
     call InitMPI
     ! Allocate working arrays
     allocate(rbcs(nrbcMax))
-    ! allocate(walls(nwallMax))
+    allocate(walls(nwallMax))
 
     tubeDiam = 22.0 / 2.82
+
+    ! Wall
+    nwall = 1
+    wall=>walls(1)
+
+    if (10.ge.12) then
+        call ReadMyWallMesh('Input/cylinder_D_8.01_L_13.39.dat', wall)
+        actlen = 13.3921
+    else
+        call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
+        actlen = 13.33
+    end if
 
     nrbc = 25
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-
     lengtube = 32.0 / 2.82 ! nrbc/real(phi) !XXLL
 
     lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
 
-    nwall = 3
-    allocate(walls(nwall))
-    wall=>walls(1)
-
-    halflen = (lengtube) / 2.0
-
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
-    actlen = 13.33
+    print*, 'lengtube 1', lengtube
+    print*, 'lengspacing 1', lengspacing
 
     wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
+
     do i = 1,wall%nvert
         th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (1.0/actlen*wall%x(i,3)) - (halflen - 1.0)
+        ! 10 is the diameter
+        wall%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+        wall%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+        wall%x(i,3) = lengtube/actlen*wall%x(i,3)   !!!!!!!!!!!!!!!!!!!
     end do
-
-    wall=>walls(2)
-
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
-    actlen = 13.33
-
-    wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
-    do i = 1,wall%nvert
-        th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (2.0/actlen*wall%x(i,3)) + (halflen - 1.0)
-    end do
-
-    wall=>walls(3)
-
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
-    actlen = 13.33
-
-    wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
-    do i = 1,wall%nvert
-        th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (1.0/actlen*wall%x(i,3)) + (lengtube + 3.0)
-    end do
-
     xmin = minval(wall%x(:,1))
     xmax = maxval(wall%x(:,1))
 
@@ -254,10 +231,10 @@ subroutine Recenter_Cells_and_Walls
 
     ! translate walls
     do iwall = 1,nwall
-       wall => walls(iwall)
-       do ii = 1,3
-           wall%x(:,ii) = wall%x(:,ii) + 0.5*Lb(ii) - xc(ii)
-       end do
+        wall => walls(iwall)
+        do ii = 1,3
+            wall%x(:,ii) = wall%x(:,ii) + 0.5*Lb(ii) - xc(ii)
+        end do
     end do
 
 end subroutine Recenter_Cells_and_Walls

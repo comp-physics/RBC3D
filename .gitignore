@@ -1,9 +1,9 @@
-*/run_logs
+*/*/run_logs
 */*/*.py
 */v.*
 */*/*.sh
 */*/D/*
-!*/D/.gittouch
+!*/*/D/.gittouch
 *.o
 *.mod
 .depend
@@ -13,4 +13,3 @@ libcommon.a
 .vscode
 field
 packages
-./examples/case_wbcs/init.sh
