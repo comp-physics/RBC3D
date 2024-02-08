@@ -9,7 +9,7 @@ program randomized_cell_gen
     use ModIO
     use ModBasicMath
     
-    integer,parameter :: ranseed = 484
+    integer,parameter :: ranseed = 161269
 
     !initial condition setup parameters
     real(WP), parameter :: hematocrit = 0.20
@@ -31,7 +31,7 @@ program randomized_cell_gen
     !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
     !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
     nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
-
+    
     !set periodic boundary box based on tube shape
     Lb(1) = tuber * 2 + 0.5
     Lb(2) = tuber * 2 + 0.5
@@ -62,7 +62,7 @@ program randomized_cell_gen
     do i = 1,nrbcMax
         
         clockBgn = MPI_Wtime()
-        call place_cell
+        call place_cell(1)    
         clockEnd = MPI_Wtime()
         
         nrbc = nrbc + 1
@@ -75,10 +75,15 @@ program randomized_cell_gen
     !Write Cells Out to Cell TecPlot File
     write(fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
     call WriteManyRBCs(fn, nrbc, rbcs )
-    write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
-    call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
-    write(fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
-    call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
+    
+    !Uncomment these lines to write cells to separate files by their celltype
+    !write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
+    !call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+    !write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
+    !call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+    !write(fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
+    !call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
+    
     !Write Walls Out to Wall TecPlot File
     write(fn, FMT=fn_FMT) 'D/', 'wall', 0, '.dat'
     call WriteManyWalls(fn, nwall, walls )    
@@ -128,7 +133,7 @@ subroutine recenter
 end subroutine recenter
 
 !find an open spot in the simulation to place a cell 
-subroutine place_cell
+subroutine place_cell(celltype)
 
     type(t_Rbc) :: newcell
     type(t_Rbc), pointer :: cell 
@@ -138,12 +143,24 @@ subroutine place_cell
     integer :: nlat0
     logical :: place_success
 
+    integer :: celltype
+
     nlat0 = 12
 
     !create template newcell
-    call Rbc_Create(newcell, nlat0, 3)
-    call Rbc_MakeBiconcave(newcell, 1.)
-    newcell%celltype = 1
+    select case(celltype)
+        case(1)
+            call RBC_Create(newcell, nlat0)
+            call RBC_MakeBiconcave(newcell, 1.)
+        case(2)
+            call RBC_Create(newcell, nlat0)
+            call RBC_MakeLeukocyte(newcell, 1.)
+        case(3)
+            call ImportReadRBC('Input/SickleCell.dat', newcell)
+        case default
+            stop "bad cellcase"
+    end select
+    newcell%celltype = celltype
 
     place_success = .false.
     
@@ -239,18 +256,18 @@ logical function check_cell_collision(cell1, cell2)
     check_cell_collision = .false.
 
     !each point in cell1
-    do i = 1, cell1%nlat
-    do j = 1, cell1%nlon
+    do i = 1, cell1%nlat-1
+    do j = 1, cell1%nlon-1
 
     !define 2 diagonal points c1p & c2p for collision detection
     c1p = cell1%x(i, j, : )
-    c2p = cell1%x(modulo(i + 1, cell1%nlat), modulo(j + 1, cell1%nlon), : )
+    c2p = cell1%x(i + 1, j + 1, : )
 
     !each point in cell2
     do i2 = 1, cell2%nlat
     do j2 = 1, cell2%nlon
 
-        sp = cell2%x(i, j, : )
+        sp = cell2%x(i2, j2, : )
 
         !check if the cell2 point lies inside the cube delineated by c1p & c2p
         if ( &
