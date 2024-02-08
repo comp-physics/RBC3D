@@ -33,7 +33,7 @@ module ModTimeInt
     TimeInt_Finalize, &
     Compute_Rbc_Vel, &
     Compute_Rbc_Vel_SHB, &
-    TimeInt_AB, &
+    TimeInt_AB2, &
     TimeInt_RK2
 
   private :: FilterRbcs, &
@@ -201,7 +201,7 @@ contains
 
 !***********************************************************************
 ! Time Integrate using Adams-Bashforth 2nd Order
-  subroutine TimeInt_AB
+  subroutine TimeInt_AB2
 
     integer :: lt
     integer :: irbc, iwall
@@ -268,7 +268,7 @@ contains
       deallocate(v_1(irbc)%v)
     end do
     deallocate(v_1)
-  end subroutine TimeInt_AB
+  end subroutine TimeInt_AB2
 
 
 !**********************************************************************
