@@ -22,7 +22,7 @@ module ModTimeInt
 
   private
 
-  public :: TimeInt, &
+  public :: TimeInt_Euler, &
     TimeInt_AxiSymm, &
     TimeIntModVC, &
     OneTimeInt, &
@@ -275,7 +275,7 @@ contains
 ! Time integrate using 
 ! Note:
 !  Time steps from Nt0+1 to Nt
-  subroutine TimeInt
+  subroutine TimeInt_Euler
 
     integer :: lt
     integer :: irbc, iwall
@@ -369,7 +369,7 @@ contains
       end if
     end do ! lt
 
-  end subroutine TimeInt
+  end subroutine TimeInt_Euler
 
   subroutine TimeInt_AxiSymm
 
