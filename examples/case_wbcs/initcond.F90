@@ -17,7 +17,7 @@ program InitCond
   integer,parameter :: nwallMax = 4
   type(t_rbc),pointer :: rbc
   type(t_rbc)         :: rbcRef
-  type(t_wall),pointer :: wall
+  type(t_wall),pointer :: wall1, wall2
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
   real(WP) :: theta, th, rc, xc(3), ztemp
@@ -48,60 +48,44 @@ program InitCond
 
     lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
 
-    nwall = 3
+    nwall = 2
     allocate(walls(nwall))
-    wall=>walls(1)
+    wall1=>walls(1)
 
-    halflen = (lengtube) / 2.0
-
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
+    halflen = ((lengtube) / 2.0)
+    
+    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall1)
     actlen = 13.33
 
-    wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
-    do i = 1,wall%nvert
-        th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (1.0/actlen*wall%x(i,3)) - (halflen - 1.0)
+    wall1%f = 0.
+    do i = 1,wall1%nvert
+        th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
+        wall1%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+        wall1%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+        wall1%x(i,3) = halflen/actlen*wall1%x(i,3)
     end do
 
-    wall=>walls(2)
-
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
+    wall2=>walls(2)
+    
+    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall2)
     actlen = 13.33
 
-    wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
-    do i = 1,wall%nvert
-        th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (2.0/actlen*wall%x(i,3)) + (halflen - 1.0)
+    wall2%f = 0.
+    do i = 1,wall2%nvert
+        th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
+        wall2%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+        wall2%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+        wall2%x(i,3) = halflen/actlen*wall2%x(i,3) + halflen + 1.0
     end do
 
-    wall=>walls(3)
+    xmin = minval(wall1%x(:,1))
+    xmax = maxval(wall1%x(:,1))
 
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall)
-    actlen = 13.33
+    ymin = minval(wall1%x(:,2))
+    ymax = maxval(wall1%x(:,2))
 
-    wall%f = 0.
-    print*, 'wall%nvert', wall%nvert
-    do i = 1,wall%nvert
-        th = ATAN2(wall%x(i,1),wall%x(i,2))
-        wall%x(i,1) = tubeDiam/2.0*COS(th)  
-        wall%x(i,2) = tubeDiam/2.0*SIN(th)
-        wall%x(i,3) = (1.0/actlen*wall%x(i,3)) + (lengtube + 3.0)
-    end do
-
-    xmin = minval(wall%x(:,1))
-    xmax = maxval(wall%x(:,1))
-
-    ymin = minval(wall%x(:,2))
-    ymax = maxval(wall%x(:,2))
-
-    zmin = minval(wall%x(:,3))
-    zmax = maxval(wall%x(:,3))
+    zmin = minval(wall1%x(:,3))
+    zmax = maxval(wall2%x(:,3))
 
     ! size of the periodic box
     Lb(1) = xmax - xmin + 0.5
