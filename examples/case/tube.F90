@@ -20,7 +20,7 @@ program cells_in_tube
 
   call InitAll
 
-  call TimeInt
+  call TimeInt_Euler
 
   call FinalizeAll
 

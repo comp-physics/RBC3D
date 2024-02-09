@@ -22,7 +22,7 @@ module ModTimeInt
 
   private
 
-  public :: TimeInt, &
+  public :: TimeInt_Euler, &
     TimeInt_AxiSymm, &
     TimeIntModVC, &
     OneTimeInt, &
@@ -32,12 +32,21 @@ module ModTimeInt
     TimeInt_Init, &
     TimeInt_Finalize, &
     Compute_Rbc_Vel, &
-    Compute_Rbc_Vel_SHB
+    Compute_Rbc_Vel_SHB, &
+    TimeInt_AB2, &
+    TimeInt_RK2
 
   private :: FilterRbcs, &
     ReboxRbcs, &
     PeriodicWall, &
-    AdjustBkgVel
+    AdjustBkgVel, &
+    t_rbcv
+
+  
+  ! To store cell velocities for higher-order time integrator method
+  type t_rbcv
+    real(WP), dimension(:,:,:), pointer :: v
+  end type t_rbcv
 
 contains
 
@@ -94,11 +103,179 @@ contains
 
   end subroutine TimeInt_Finalize
 
+
+
+
+!***********************************************************************
+! Time Integrate using generic Runge-Kutta 2nd Order method
+! Implementation from Chapter 5.1 of "Numerical Methods for Ordinary Differential Systems, the Initial Value Problem" by JD Lambert
+  subroutine TimeInt_RK2(alpha)
+    real(WP) :: alpha
+
+    integer :: lt
+    integer :: irbc, iwall
+    type(t_rbc),pointer :: rbc
+    type(t_wall),pointer :: wall
+    real(WP) :: clockBgn, clockEnd
+    integer :: ierr
+
+    real(WP) :: b1, b2, c1, c2
+    type(t_rbcv), dimension(:), allocatable :: k1 ! temporary velocities storage
+
+    ! Set up RK2 constants from alpha
+    c1 = 0
+    c2 = alpha
+    b2 = 1 / (2 * alpha)
+    b1 = 1 - b2
+
+    !set up time
+    time = time0
+
+    !allocate for k1
+    allocate(k1(nrbc))
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      allocate(k1(irbc)%v, MOLD=rbc%v)
+    end do
+
+    !evaluate with RK2 generalized
+    do lt = Nt0+1, Nt
+      clockBgn = MPI_Wtime()
+
+      !compute velocity (k1)
+      call Compute_Rbc_Vel
+      call NoSlipWall
+
+      !save current velocity into k1 tmp-var
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        k1(irbc)%v = rbc%v
+      end do
+
+      !step rbcs forward so that cells are at (x_n + c2*h*U_k)
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        rbc%x = rbc%x + c2*Ts*(k1(irbc)%v)
+      end do
+
+      !calculate velocity (k2)
+      call Compute_Rbc_Vel
+      call NoSlipWall
+
+      !revert cell positions back to x_n
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        rbc%x = rbc%x - c2*Ts*(k1(irbc)%v)
+      end do
+
+      !Use RK2 formula to find x_n+1
+      !note that k1 is stored in the k1 tmp-var, and k2 is in each rbc%v
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        rbc%x = rbc%x + Ts * (b1*(k1(irbc)%v) + b2*rbc%v)
+      end do
+
+      call ReboxRbcs
+
+      !update time
+      time = time + Ts
+
+      !output results
+      clockEnd = MPI_Wtime()
+      call WriteAll(lt, time)
+      if (rootWorld) then
+        write(*, '(A,I9,A,F15.5,A,F12.2)')  &
+        'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        write(*, *)
+      end if
+    end do
+
+    !deallocate k1 tmp var
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      deallocate(k1(irbc)%v)
+    end do
+    deallocate(k1)
+
+  end subroutine TimeInt_RK2
+
+!***********************************************************************
+! Time Integrate using Adams-Bashforth 2nd Order
+  subroutine TimeInt_AB2
+
+    integer :: lt
+    integer :: irbc, iwall
+    type(t_rbc),pointer :: rbc
+    type(t_wall),pointer ::wall
+    real(WP) :: clockBgn, clockEnd
+    integer :: ierr
+    !Velocity at k-1
+    type(t_rbcv), dimension(:), allocatable :: v_1
+
+    !evaluate first timestep with Euler-Forward
+    call Compute_Rbc_Vel
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      rbc%x = rbc%x + Ts * rbc%v
+    end do
+
+
+    !allocate space for each cell's previous velocity in v_1
+    allocate(v_1(nrbc))
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      allocate(v_1(irbc)%v, MOLD=rbc%v)
+    end do
+
+    !evaluate X_2...n with AB2
+    do lt = Nt0+2, Nt
+      clockBgn = MPI_WTime() !Start timing
+
+      !save previous velocity (U_n-1)
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        v_1(irbc)%v = rbc%v
+      end do
+    
+      !compute current velocity (U_n)
+      call Compute_Rbc_Vel
+      call NoSlipWall
+
+      !Evolve RBCs with AB2:
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        rbc%x = rbc%x + Ts*(3*rbc%v - v_1(irbc)%v)/2
+      end do
+
+      call ReboxRbcs
+
+      !update time
+      time = time + Ts
+      clockEnd = MPI_WTime()
+
+      !Output results
+      call WriteAll(lt, time)
+      if (rootWorld) then
+        write(*, '(A,I9,A,F15.5,A,F12.2)')  &
+        'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        write(*, *)
+      end if
+    end do
+
+    !deallocate tmp-var
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      deallocate(v_1(irbc)%v)
+    end do
+    deallocate(v_1)
+  end subroutine TimeInt_AB2
+
+
 !**********************************************************************
 ! Time integrate using 
 ! Note:
 !  Time steps from Nt0+1 to Nt
-  subroutine TimeInt
+  subroutine TimeInt_Euler
 
     integer :: lt
     integer :: irbc, iwall
@@ -192,7 +369,7 @@ contains
       end if
     end do ! lt
 
-  end subroutine TimeInt
+  end subroutine TimeInt_Euler
 
   subroutine TimeInt_AxiSymm
 
