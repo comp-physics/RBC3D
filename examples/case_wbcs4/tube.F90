@@ -117,7 +117,6 @@ contains
        ! 10^2 = 887
        ! 10^1 = 88.652
        rbc%ED = 200.
-       ! want to set ED so that local area change of WBC stays below 2%. how?
        ! rbc%EB = 6.D-2
        rbc%EB = 2.44D-2 ! check = .024
       case(3)
@@ -137,7 +136,7 @@ contains
 !    if (Nt0 == 0) then
       vbkg(1:2) = 0.
       ! vbkg(1:2) = something
-      vbkg(3) = 8.
+      vbkg(3) = 12.
 !    end if
      print *,vbkg
 

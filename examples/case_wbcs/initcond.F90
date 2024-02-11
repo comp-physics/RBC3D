@@ -54,7 +54,7 @@ program InitCond
 
     halflen = ((lengtube) / 2.0)
     
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall1)
+    call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall1)
     actlen = 13.33
 
     wall1%f = 0.
@@ -67,7 +67,7 @@ program InitCond
 
     wall2=>walls(2)
     
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall2)
+    call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall2)
     actlen = 13.33
 
     wall2%f = 0.

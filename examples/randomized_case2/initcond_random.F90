@@ -12,9 +12,9 @@ program randomized_cell_gen
     integer,parameter :: ranseed = 161269
 
     !initial condition setup parameters
-    real(WP), parameter :: hematocrit = 0.20
-    real(WP), parameter :: tuber = 7
-    real(WP), parameter :: tubelen = 20
+    real(WP), parameter :: hematocrit = 0.2
+    real(WP), parameter :: tuber = 4.0
+    real(WP), parameter :: tubelen = 12.0
 
     integer :: nrbcMax ! how many cells
     
@@ -23,14 +23,16 @@ program randomized_cell_gen
     character(CHRLEN) :: fn
     integer :: zmax
     integer :: i
-    real(WP) :: th, actlen
+    real(WP) :: th, actlen, halflen
     real(WP) :: clockBgn, clockEnd
     
     call InitMPI
 
     !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
     !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
-    nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
+    ! nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
+    nrbcMax = ((3 * (tubelen * tuber**2 * hematocrit)) / 4) - 1
+    print *, "nrbcMax: ", nrbcMax
     
     !set periodic boundary box based on tube shape
     Lb(1) = tuber * 2 + 0.5
@@ -42,8 +44,13 @@ program randomized_cell_gen
     Nt = 0; time = 0.
 
     !Create wall
-    nwall = 1
+    nwall = 2
     allocate(walls(nwall))
+
+     print *, "tubelen: ", tubelen
+    halflen = (tubelen / 2.0) - 0.5
+    print *, "halflen: ", halflen
+
     wall=>walls(1)    
     call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
     actlen = 13.33
@@ -53,7 +60,19 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = tubelen/actlen*wall%x(i,3)
+        wall%x(i,3) = halflen/actlen*wall%x(i,3)
+    end do
+
+    wall=>walls(2)    
+    call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall)
+    actlen = 13.33
+
+    wall%f = 0.
+    do i = 1,wall%nvert
+        th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+        wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
+        wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
+        wall%x(i,3) = halflen/actlen*wall%x(i,3) + halflen + 1.0
     end do
 
     !for each cell to add
@@ -177,7 +196,7 @@ subroutine place_cell(celltype)
         !randomly select a tmp_xc
         tmp_xc(2) = RandomNumber(ranseed) * 2*PI ! random angle
         ! subtract to make smaller circle
-        tmp_xc(3) = sqrt(RandomNumber(ranseed)) * (tuber - 2.0) ! random radius
+        tmp_xc(3) = sqrt(RandomNumber(ranseed)) * (tuber - 1.0) ! random radius
         tmp_xc(1) = tmp_xc(3) * cos(tmp_xc(2)) ! x
         tmp_xc(2) = tmp_xc(3) * sin(tmp_xc(2)) ! y
         tmp_xc(3) = RandomNumber(ranseed) * tubelen - tubelen/2 ! z
