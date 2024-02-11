@@ -17,7 +17,7 @@ program InitCond
   integer,parameter :: nwallMax = 4
   type(t_rbc),pointer :: rbc
   type(t_rbc)         :: rbcRef
-  type(t_wall),pointer :: wall1, wall2
+  type(t_wall),pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
   real(WP) :: theta, th, rc, xc(3), ztemp
@@ -28,8 +28,8 @@ program InitCond
   ! real = double, fp
   real :: lengtube,lengspacing, phi, actlen
   real(WP) :: rand(27, 3)
-  integer :: j, ierr, half2, index, layer, newiz
-  real :: wbcs(2), tubeDiam, layerx(3), layery(3), halflen
+  integer :: j, ierr, half2, index, layer, newiz, wbc
+  real :: wbcs(2), tubeDiam, layerx(3), layery(3)
 
     ! Initialize
     call InitMPI
@@ -48,44 +48,42 @@ program InitCond
 
     lengspacing = (lengtube - ((2.62 / 2.82) * 9)) / 9 ! lengtube/Real(nrbc)
 
-    nwall = 2
+    nwall = 1
     allocate(walls(nwall))
-    wall1=>walls(1)
-
-    halflen = ((lengtube) / 2.0)
+    wall=>walls(1)
     
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall1)
+    call ReadWallMesh('Input/cylwithslit2.e',wall)
     actlen = 13.33
 
-    wall1%f = 0.
-    do i = 1,wall1%nvert
-        th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-        wall1%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-        wall1%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-        wall1%x(i,3) = halflen/actlen*wall1%x(i,3)
+    wall%f = 0.
+    do i = 1,wall%nvert
+        th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+        wall%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+        wall%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+        wall%x(i,3) = lengtube/actlen*wall%x(i,3)
     end do
 
-    wall2=>walls(2)
+    ! wall2=>walls(2)
     
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall2)
-    actlen = 13.33
+    ! call ReadWallMesh('Input/new_cyl_D6_L13_33.e',wall2)
+    ! actlen = 13.33
 
-    wall2%f = 0.
-    do i = 1,wall2%nvert
-        th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
-        wall2%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-        wall2%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-        wall2%x(i,3) = halflen/actlen*wall2%x(i,3) + halflen + 1.0
-    end do
+    ! wall2%f = 0.
+    ! do i = 1,wall2%nvert
+    !     th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
+    !     wall2%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+    !     wall2%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+    !     wall2%x(i,3) = halflen/actlen*wall2%x(i,3) + halflen + 1.0
+    ! end do
 
-    xmin = minval(wall1%x(:,1))
-    xmax = maxval(wall1%x(:,1))
+    xmin = minval(wall%x(:,1))
+    xmax = maxval(wall%x(:,1))
 
-    ymin = minval(wall1%x(:,2))
-    ymax = maxval(wall1%x(:,2))
+    ymin = minval(wall%x(:,2))
+    ymax = maxval(wall%x(:,2))
 
-    zmin = minval(wall1%x(:,3))
-    zmax = maxval(wall2%x(:,3))
+    zmin = minval(wall%x(:,3))
+    zmax = maxval(wall%x(:,3))
 
     ! size of the periodic box
     Lb(1) = xmax - xmin + 0.5
@@ -116,7 +114,7 @@ program InitCond
     call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
     call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
 
-    wbcs = 1 + FLOOR(27*wbcs)
+    wbcs = 1 + FLOOR(22*wbcs)
 
     print*, '27 x 3 rand num array'
     do j = 1, nrbc
@@ -131,11 +129,13 @@ program InitCond
     layerx = (/-1.63, 1.63, 0.0/)
     layery = (/-.943, -.943, 1.89/)
 
+    wbc = int(wbcs(0))
+
     ! place cells
     do iz = 1, (nrbc + 2)
-        if (iz > 23) then
+        if (iz > (wbc + 3)) then
             newiz = iz - 2
-        else if (iz > 17) then
+        else if (iz > (wbc + 3)) then
             newiz = iz - 1
         else
             newiz = iz
@@ -145,13 +145,13 @@ program InitCond
         xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
         xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
         xc(3) = (layer + .5) + (lengspacing * layer) + ((rand(iz, 3) - 0.5) / 3)
-        if (iz == 20) then
+        if (iz == wbc) then
             print*, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
             rbc => rbcs(newiz)
             rbc%celltype = 2
             call Rbc_Create(rbc, nlat0, dealias)
             call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-        else if((iz == 17) .or. (iz == 23)) then
+        else if((iz == (wbc + 3)) .or. (iz == (wbc + 3))) then
             cycle
         else
             print*, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
