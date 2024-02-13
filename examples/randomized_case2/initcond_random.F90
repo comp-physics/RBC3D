@@ -31,7 +31,7 @@ program randomized_cell_gen
     !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
     !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
     ! nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
-    nrbcMax = ((3 * (tubelen * tuber**2 * hematocrit)) / 4) - 1
+    nrbcMax = ((3 * (tubelen * tuber**2 * hematocrit)) / 4) - 2
     print *, "nrbcMax: ", nrbcMax
     
     !set periodic boundary box based on tube shape
@@ -40,15 +40,15 @@ program randomized_cell_gen
     Lb(3) = tubelen
 
     !set other initialization params
-    vBkg(1:2) = 0.; vBkg(3) = 8.
+    ! vBkg(1:2) = 0.; vBkg(3) = 8.
     Nt = 0; time = 0.
 
     !Create wall
     nwall = 2
     allocate(walls(nwall))
 
-     print *, "tubelen: ", tubelen
-    halflen = (tubelen / 2.0) - 0.5
+    print *, "tubelen: ", tubelen
+    halflen = (tubelen / 2.0) - 1.0
     print *, "halflen: ", halflen
 
     wall=>walls(1)    
@@ -60,7 +60,7 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = halflen/actlen*wall%x(i,3)
+        wall%x(i,3) = halflen/actlen*wall%x(i,3) - (halflen / 2.0) - 0.5
     end do
 
     wall=>walls(2)    
@@ -72,7 +72,7 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = halflen/actlen*wall%x(i,3) + halflen + 1.0
+        wall%x(i,3) = (halflen/actlen*wall%x(i,3)) + (halflen / 2.0) + 0.5
     end do
 
     !for each cell to add
@@ -81,7 +81,7 @@ program randomized_cell_gen
     do i = 1,nrbcMax
         
         clockBgn = MPI_Wtime()
-        if (i .le. 2) then
+        if (i .le. 1) then
             call place_cell(2)
         else
             call place_cell(1)   
