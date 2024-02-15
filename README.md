@@ -41,6 +41,7 @@ This is an attempt to document the papers that make use of RBC3D.
 * Bryngelson, S. H., & Freund, J. B. (2018). Floquet stability analysis of capsules in viscous shear flow. Joural of Fluid Mechanics, 852, 663–677. http://doi.org/10.1017/jfm.2018.574
 * Bryngelson, S. H., & Freund, J. B. (2019). Non-modal Floquet stability of a capsule in large amplitude oscillatory extension. European Journal of Mechanics B/Fluids, 77, 171–176. http://doi.org/10.1016/j.euromechflu.2019.04.012
 * Bryngelson, S. H., Guéniat, F., & Freund, J. B. (2019). Irregular dynamics of cellular blood flow in a model microvessel. Physical Review E, 100, 012203. http://doi.org/10.1103/PhysRevE.100.012203
+* Firouznia, M., Bryngelson, S. H., & Saintillan, D. (2023). A spectral boundary integral method for simulating electrohydrodynamic flows in viscous drops. Journal of Computational Physics, 489, 112248. http://doi.org/10.1016/j.jcp.2023.112248
 
 ### License
 
