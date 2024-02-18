@@ -3,7 +3,7 @@
 0. Use an appropriate computer
 1. Ensure you have compilers and wrappers
 2. Build libraries
-3. Cnfigure the `Makefile.inc` in the base directory
+3. Configure the `Makefile.inc` in the base directory
 4. Build `common/` and `examples/case/`
 
 ## Use an appropriate computer

@@ -30,7 +30,7 @@ program randomized_cell_gen
 
     !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
     !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
-    nrbcMax = (tubelen * tuber**2 * hematocrit) / 4
+    nrbcMax = ((3 * (tubelen * tuber**2 * hematocrit)) / 4) - 1
     
     !set periodic boundary box based on tube shape
     Lb(1) = tuber * 2 + 0.5
@@ -80,7 +80,7 @@ program randomized_cell_gen
     !write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
     !call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
     !write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
-    !call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+    !call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
     !write(fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
     !call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
     
