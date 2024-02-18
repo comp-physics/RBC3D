@@ -852,7 +852,7 @@ print*,'3'
     read(restart_unit) nlat, nlon
        ! celltype = 1; print *,"NO READ CELL TYPE" 
         read(restart_unit) celltype
-        ! read(restart_unit) starting_area
+        read(restart_unit) starting_area
     write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype, 'starting_area = ', starting_area
         write(*,*) 'nlat =',nlat
       end if
