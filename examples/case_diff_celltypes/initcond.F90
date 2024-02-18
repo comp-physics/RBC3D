@@ -44,11 +44,11 @@ program InitCond
         actlen = 13.33
     end if
 
-    nrbc = 2
+    nrbc = 8
     nlat0 = 12
     dealias = 3
     phi = 70/real(100)
-    lengtube = (nrbc + 10)/real(phi) !XXLL
+    lengtube = nrbc/real(phi) !XXLL
 
     lengspacing = lengtube/Real(nrbc)
 
