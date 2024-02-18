@@ -52,7 +52,7 @@ program InitCond
     allocate(walls(nwall))
     wall1=>walls(1)
 
-    halflen = ((lengtube) / 2.0)
+    halflen = ((lengtube) / 2.0) - 0.5
     
     call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e',wall1)
     actlen = 13.33
@@ -75,7 +75,7 @@ program InitCond
         th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
         wall2%x(i,1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
         wall2%x(i,2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-        wall2%x(i,3) = halflen/actlen*wall2%x(i,3) + halflen + 1.0
+        wall2%x(i,3) = halflen/actlen*wall2%x(i,3) + halflen + 1.5
     end do
 
     xmin = minval(wall1%x(:,1))
@@ -88,6 +88,8 @@ program InitCond
     zmax = maxval(wall2%x(:,3))
 
     ! size of the periodic box
+    ! Lb(1) = xmax - xmin + 0.5
+    ! is this box centered?
     Lb(1) = xmax - xmin + 0.5
     Lb(2) = Lb(1)
     Lb(3) = zmax - zmin

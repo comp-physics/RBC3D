@@ -135,7 +135,6 @@ contains
     ! Background velocity
 !    if (Nt0 == 0) then
       vbkg(1:2) = 0.
-      ! vbkg(1:2) = something
       vbkg(3) = 10.
 !    end if
      print *,vbkg

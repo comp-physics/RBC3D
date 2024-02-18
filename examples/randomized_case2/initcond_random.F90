@@ -48,7 +48,7 @@ program randomized_cell_gen
     allocate(walls(nwall))
 
     print *, "tubelen: ", tubelen
-    halflen = (tubelen / 2.0) - 1.0
+    halflen = (tubelen / 2.0) - 1.5
     print *, "halflen: ", halflen
 
     wall=>walls(1)    
@@ -60,7 +60,7 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = halflen/actlen*wall%x(i,3) - (halflen / 2.0) - 0.5
+        wall%x(i,3) = halflen/actlen*wall%x(i,3) - (halflen / 2.0) - 0.75
     end do
 
     wall=>walls(2)    
@@ -72,7 +72,7 @@ program randomized_cell_gen
         th = ATAN2(wall%x(i, 1), wall%x(i, 2))
         wall%x(i,1) = tuber*COS(th)    !!!!!!!!!
         wall%x(i,2) = tuber*SIN(th)    !!!!!!!!!
-        wall%x(i,3) = (halflen/actlen*wall%x(i,3)) + (halflen / 2.0) + 0.5
+        wall%x(i,3) = (halflen/actlen*wall%x(i,3)) + (halflen / 2.0) + 0.75
     end do
 
     !for each cell to add
