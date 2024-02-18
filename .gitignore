@@ -12,7 +12,7 @@ tube
 libcommon.a
 .vscode
 field
-packages
+mypackages
 examples/case_rwbcs
 examples/case_rwbcs
 examples/case_wbcs
@@ -25,3 +25,5 @@ examples/randomized_case2
 examples/case_exleukocytes
 examples/random_case_rbc
 examples/random_case_wbc
+sample_files/sample_walls/wall_meshes/cylwithslit.e
+sample_files/sample_walls/wall_meshes/cylwithslit2.e
