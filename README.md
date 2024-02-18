@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="install/cells-3.png" alt="RBC3D Banner" width="800"/>
+  <img src="install/images/cells-3.png" alt="RBC3D Banner" width="800"/>
 </p>
 <p align="center">
   <a href="https://zenodo.org/badge/latestdoi/412637841">

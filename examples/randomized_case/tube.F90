@@ -121,7 +121,7 @@ contains
       case(2)
        rbc%ES = 887
        rbc%ED = 200.
-       rbc%EB = 2.44D-2 ! check = .024
+       rbc%EB = 2.44D-2
 
       ! Mechanical properties for sickle cell roughly determined to be
       ! Es = (20 / 7.1) * Es for a healthy RBC (case(1) cell)
@@ -146,11 +146,9 @@ contains
     end do ! iwall
 
     ! Background velocity
-!    if (Nt0 == 0) then
-      vbkg(1:2) = 0.
-      vbkg(3) = 8.
-!    end if
-     print *,vbkg
+    vbkg(1:2) = 0.
+    vbkg(3) = 8.
+    print *,vbkg
 
   end subroutine InitSystem
 
