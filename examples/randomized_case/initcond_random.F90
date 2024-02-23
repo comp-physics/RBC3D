@@ -30,7 +30,7 @@ program randomized_cell_gen
 
     !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
     !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
-    nrbcMax = (3 * (tubelen * tuber**2 * hematocrit)) / 4
+    nrbcMax = ((3 * (tubelen * tuber**2 * hematocrit)) / 4) - 1
     
     !set periodic boundary box based on tube shape
     Lb(1) = tuber * 2 + 0.5
