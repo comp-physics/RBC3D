@@ -3,6 +3,7 @@
 */*/v.*
 */*/*.sh
 */*/D/*
+*/*/Droll/*
 !*/*/D/.gittouch
 *.o
 *.mod
@@ -12,3 +13,4 @@ tube
 libcommon.a
 .vscode
 field
+packages
