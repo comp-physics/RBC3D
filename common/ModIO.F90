@@ -14,27 +14,27 @@ module ModIO
   implicit none
 
   private
-  
+
   public :: IO_Init, &
-    IO_Finalize, &
-    WriteAll, &
-    WriteRBC, &
-    WriteManyRBCs, &
-        WriteManyRBCsNoFilt, &
-    WriteWall, &
-    WriteManyWalls, &
-    WritePressGrad, &
-    WriteFlowRate, &
-!   WriteVelField, &
-!   WriteViscStress, &
-    ReadMyWallMesh, &
-    ReadWallMesh, &
-    WriteRestart, &
-    ReadRestart, &
-        ReadRestart_NoWalls, &
-        ExportWriteRBC, &
-        ImportReadRBC, &
-        WriteManyRBCsByType
+            IO_Finalize, &
+            WriteAll, &
+            WriteRBC, &
+            WriteManyRBCs, &
+            WriteManyRBCsNoFilt, &
+            WriteWall, &
+            WriteManyWalls, &
+            WritePressGrad, &
+            WriteFlowRate, &
+            !   WriteVelField, &
+            !   WriteViscStress, &
+            ReadMyWallMesh, &
+            ReadWallMesh, &
+            WriteRestart, &
+            ReadRestart, &
+            ReadRestart_NoWalls, &
+            ExportWriteRBC, &
+            ImportReadRBC, &
+            WriteManyRBCsByType
 
 contains
 
@@ -45,18 +45,18 @@ contains
 
     if (rootWorld) then
       if (pgrad_out > 0) then
-    write(fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
-    open(pGrad_unit, file=trim(fn), action='write')
+        write (fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+        open (pGrad_unit, file=trim(fn), action='write')
       end if
 
       if (flow_out > 0) then
-    write(fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
-    open(flow_unit, file=trim(fn), action='write')
+        write (fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+        open (flow_unit, file=trim(fn), action='write')
       end if
 
       if (ftot_out > 0) then
-    write(fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
-    open(ftot_unit, file=trim(fn), action='write')
+        write (fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+        open (ftot_unit, file=trim(fn), action='write')
       end if
 
     end if
@@ -69,11 +69,11 @@ contains
     logical :: file_opened
 
     if (rootWorld) then
-      inquire(pgrad_unit, opened=file_opened)
-      if (file_opened) close(pgrad_unit)
+      inquire (pgrad_unit, opened=file_opened)
+      if (file_opened) close (pgrad_unit)
 
-      inquire(flow_unit, opened=file_opened)
-      if (file_opened) close(flow_unit)
+      inquire (flow_unit, opened=file_opened)
+      if (file_opened) close (flow_unit)
     end if
 
   end subroutine IO_Finalize
@@ -90,26 +90,26 @@ contains
     character(CHRLEN) :: fn
 
     if (rootWorld) then
-      if (cell_out > 0 .and. mod(lt,cell_out) == 0) then
-        write(fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
+      if (cell_out > 0 .and. mod(lt, cell_out) == 0) then
+        write (fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
         call WriteManyRBCs(fn, nrbc, rbcs)
-        write(fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
-        call WriteExactPts(fn, nrbc, rbcs) 
+        write (fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
+        call WriteExactPts(fn, nrbc, rbcs)
 
         ! Comment these 9 lines if you're only generating cells of 1 type
         ! Write out only type-1 cells (healthy RBCs)
-        write(fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+        ! write(fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
         ! Write out only type-2 cells (WBCs)
-        write(fn, FMT=fn_FMT) 'D/', '2x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
+        ! write(fn, FMT=fn_FMT) 'D/', '2x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
         ! Write out only type-3 cells (sickle cells)
-        write(fn, FMT=fn_FMT) 'D/', '3x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
+        ! write(fn, FMT=fn_FMT) 'D/', '3x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
       end if
 
-      if (wall_out > 0 .and. mod(lt,wall_out) == 0) then
-        write(fn, FMT=fn_FMT) 'D/', 'wall', lt, '.dat'
+      if (wall_out > 0 .and. mod(lt, wall_out) == 0) then
+        write (fn, FMT=fn_FMT) 'D/', 'wall', lt, '.dat'
         call WriteManyWalls(fn, nwall, walls)
       end if
 
@@ -121,8 +121,8 @@ contains
         call WriteFlowRate(lt, time)
       end if
 
-      if (restart_out > 0 .and. mod(lt,restart_out) == 0) then
-        write(fn, FMT=fn_FMT) 'D/', 'restart', lt, '.dat'
+      if (restart_out > 0 .and. mod(lt, restart_out) == 0) then
+        write (fn, FMT=fn_FMT) 'D/', 'restart', lt, '.dat'
         call WriteRestart(fn, lt, time)
         fn = 'D/restart.LATEST.dat'
         call WriteRestart(fn, lt, time)
@@ -137,36 +137,36 @@ contains
     character(*) :: fn
     type(t_rbc) :: rbc
 
-    real(WP),dimension(:,:,:),allocatable :: x, xa, xb
+    real(WP), dimension(:, :, :), allocatable :: x, xa, xb
     integer :: nlat, nlon, ilat, ilon
 
     nlat = rbc%nlat
     nlon = rbc%nlon
 
     ! Allocate working array
-    allocate(x(0:nlat,nlon,3), xa(nlon/2+1,nlat+1,3), xb(nlon/2+1,nlat+1,3) )
+    allocate (x(0:nlat, nlon, 3), xa(nlon/2 + 1, nlat + 1, 3), xb(nlon/2 + 1, nlat + 1, 3))
 
     ! Convert the mesh from Gaussian to uniform
-    call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-            xa, xb, size(xa,1), size(xa,2), rbc%wshags )
-    call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-            xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+    call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x, 1), size(rbc%x, 2), &
+                   xa, xb, size(xa, 1), size(xa, 2), rbc%wshags)
+    call ShSynthEqu(nlat + 1, nlon, 3, x, size(x, 1), size(x, 2), &
+                    xa, xb, size(xa, 1), size(xa, 2), rbc%wshses)
 
-    open(cell_unit, file=trim(fn), action='write')
-    write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
-    write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat+1, ' J=', nlon+1, ' F=POINT'
+    open (cell_unit, file=trim(fn), action='write')
+    write (cell_unit, '(A)') 'VARIABLES = X, Y, Z'
+    write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat + 1, ' J=', nlon + 1, ' F=POINT'
     do ilon = 1, nlon
     do ilat = 0, nlat
-      write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
+      write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
     end do ! ilat
     end do ! ilon
     do ilat = 0, nlat
-      write(cell_unit, '(3F20.10)') x(ilat,1,:)
+      write (cell_unit, '(3F20.10)') x(ilat, 1, :)
     end do ! ilat
-    close(cell_unit)
-   
+    close (cell_unit)
+
     ! Deallocate working arrays
-    deallocate(x, xa, xb)
+    deallocate (x, xa, xb)
 
   end subroutine WriteRBC
 
@@ -179,49 +179,49 @@ contains
   subroutine WriteManyRBCs(fn, nrbc, rbcs)
     character(*) :: fn
     integer :: nrbc
-    type(t_rbc),target :: rbcs(:)
+    type(t_rbc), target :: rbcs(:)
 
-    type(t_Rbc),pointer :: rbc
-    real(WP),dimension(:,:,:),allocatable :: x, xa, xb
+    type(t_Rbc), pointer :: rbc
+    real(WP), dimension(:, :, :), allocatable :: x, xa, xb
     integer :: irbc, nlat, nlon, ilat, ilon
 
     ! Argument check
     if (nrbc <= 0) return
 
     ! Write file head
-    open(cell_unit, file=trim(fn), action='write')
-    write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
+    open (cell_unit, file=trim(fn), action='write')
+    write (cell_unit, '(A)') 'VARIABLES = X, Y, Z'
 
     ! Write the record of every cell
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      nlat = rbc%nlat;    nlon = rbc%nlon
+      nlat = rbc%nlat; nlon = rbc%nlon
 
       ! Allocate working arrays
-      allocate(x(0:nlat,nlon,3), xa(nlon/2+1,nlat+1,3), xb(nlon/2+1,nlat+1,3) )
+      allocate (x(0:nlat, nlon, 3), xa(nlon/2 + 1, nlat + 1, 3), xb(nlon/2 + 1, nlat + 1, 3))
 
-      call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-          xa, xb, size(xa,1), size(xa,2), rbc%wshags )
-      call ShFilter(nlat, nlon, 3, xa, xb, size(xa,1), size(xa,2), rbc%nlat0, rbc%nlon0 )
-      call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-          xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+      call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x, 1), size(rbc%x, 2), &
+                     xa, xb, size(xa, 1), size(xa, 2), rbc%wshags)
+      call ShFilter(nlat, nlon, 3, xa, xb, size(xa, 1), size(xa, 2), rbc%nlat0, rbc%nlon0)
+      call ShSynthEqu(nlat + 1, nlon, 3, x, size(x, 1), size(x, 2), &
+                      xa, xb, size(xa, 1), size(xa, 2), rbc%wshses)
 
-      write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat+1, '  J=', nlon+1, '  F=POINT'
-     
+      write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat + 1, '  J=', nlon + 1, '  F=POINT'
+
       do ilon = 1, nlon
       do ilat = 0, nlat
-    write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
+        write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
       end do ! ilat
       end do ! ilon
       do ilat = 0, nlat
-    write(cell_unit, '(3F20.10)') x(ilat,1,:)
+        write (cell_unit, '(3F20.10)') x(ilat, 1, :)
       end do ! ilat
 
       ! Deallocate working arrays
-      deallocate(x, xa, xb )
+      deallocate (x, xa, xb)
     end do ! irbc
 
-    close(cell_unit)
+    close (cell_unit)
 
   end subroutine WriteManyRBCs
 
@@ -235,63 +235,63 @@ contains
   subroutine WriteManyRBCsByType(fn, nrbc, rbcs, type)
     character(*) :: fn
     integer :: nrbc
-    type(t_rbc),target :: rbcs(:)
+    type(t_rbc), target :: rbcs(:)
     integer :: type
 
-    type(t_Rbc),pointer :: rbc
-    real(WP),dimension(:,:,:),allocatable :: x, xa, xb
+    type(t_Rbc), pointer :: rbc
+    real(WP), dimension(:, :, :), allocatable :: x, xa, xb
     integer :: irbc, nlat, nlon, ilat, ilon
 
     ! Argument check
     if (nrbc <= 0) return
 
     ! Write file head
-    open(cell_unit, file=trim(fn), action='write')
-    write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
+    open (cell_unit, file=trim(fn), action='write')
+    write (cell_unit, '(A)') 'VARIABLES = X, Y, Z'
 
     ! Write the record of every cell
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      nlat = rbc%nlat;    nlon = rbc%nlon
+      nlat = rbc%nlat; nlon = rbc%nlon
 
       if (rbc%celltype .ne. type) then
         cycle
       end if
 
       ! Allocate working arrays
-      allocate(x(0:nlat,nlon,3), xa(nlon/2+1,nlat+1,3), xb(nlon/2+1,nlat+1,3) )
+      allocate (x(0:nlat, nlon, 3), xa(nlon/2 + 1, nlat + 1, 3), xb(nlon/2 + 1, nlat + 1, 3))
 
-      call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x,1), size(rbc%x,2), &
-          xa, xb, size(xa,1), size(xa,2), rbc%wshags )
-      call ShFilter(nlat, nlon, 3, xa, xb, size(xa,1), size(xa,2), rbc%nlat0, rbc%nlon0 )
-      call ShSynthEqu(nlat+1, nlon, 3, x, size(x,1), size(x,2), &
-          xa, xb, size(xa,1), size(xa,2), rbc%wshses )
+      call ShAnalGau(nlat, nlon, 3, rbc%x, size(rbc%x, 1), size(rbc%x, 2), &
+                     xa, xb, size(xa, 1), size(xa, 2), rbc%wshags)
+      call ShFilter(nlat, nlon, 3, xa, xb, size(xa, 1), size(xa, 2), rbc%nlat0, rbc%nlon0)
+      call ShSynthEqu(nlat + 1, nlon, 3, x, size(x, 1), size(x, 2), &
+                      xa, xb, size(xa, 1), size(xa, 2), rbc%wshses)
 
-      write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat+1, '  J=', nlon+1, '  F=POINT'
-     
+      write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat + 1, '  J=', nlon + 1, '  F=POINT'
+
       do ilon = 1, nlon
       do ilat = 0, nlat
-    write(cell_unit, '(3F20.10)') x(ilat,ilon,:)
+        write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
       end do ! ilat
       end do ! ilon
       do ilat = 0, nlat
-    write(cell_unit, '(3F20.10)') x(ilat,1,:)
+        write (cell_unit, '(3F20.10)') x(ilat, 1, :)
       end do ! ilat
 
       ! Deallocate working arrays
-      deallocate(x, xa, xb )
+      deallocate (x, xa, xb)
     end do ! irbc
 
-    close(cell_unit)
-  
+    close (cell_unit)
+
   end subroutine WriteManyRBCsByType
 
   subroutine WriteManyRBCsNoFilt(fn, nrbc, rbcs)
     character(*) :: fn
     integer :: nrbc
-    type(t_rbc),target :: rbcs(:)
+    type(t_rbc), target :: rbcs(:)
 
-    type(t_Rbc),pointer :: rbc
+    type(t_Rbc), pointer :: rbc
     !real(WP),dimension(:,:,:),allocatable :: x, xa, xb
     integer :: irbc, nlat, nlon, ilat, ilon
 
@@ -299,59 +299,59 @@ contains
     if (nrbc <= 0) return
 
     ! Write file head
-    open(cell_unit, file=trim(fn), action='write')
-    write(cell_unit, '(A)') 'VARIABLES = X, Y, Z'
+    open (cell_unit, file=trim(fn), action='write')
+    write (cell_unit, '(A)') 'VARIABLES = X, Y, Z'
 
     ! Write the record of every cell
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      nlat = rbc%nlat;    nlon = rbc%nlon
+      nlat = rbc%nlat; nlon = rbc%nlon
 
-      write(cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat, '  J=', nlon+1, '  F=POINT'
-     
+      write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat, '  J=', nlon + 1, '  F=POINT'
+
       do ilon = 1, nlon
       do ilat = 1, nlat
-    write(cell_unit, '(3F20.10)') rbc%x(ilat,ilon,:)
+        write (cell_unit, '(3F20.10)') rbc%x(ilat, ilon, :)
       end do ! ilat
       end do ! ilon
       do ilat = 1, nlat
-    write(cell_unit, '(3F20.10)') rbc%x(ilat,1,:)
+        write (cell_unit, '(3F20.10)') rbc%x(ilat, 1, :)
       end do ! ilat
 
     end do ! irbc
 
-    close(cell_unit)
+    close (cell_unit)
 
   end subroutine WriteManyRBCsNoFilt
 
   subroutine WriteExactPts(fn, nrbc, rbcs)
     character(*) :: fn
     integer :: nrbc
-    type(t_rbc),target :: rbcs(:)
+    type(t_rbc), target :: rbcs(:)
 
-    type(t_Rbc),pointer :: rbc
-    real(WP),dimension(:,:,:),allocatable :: x, xa, xb
+    type(t_Rbc), pointer :: rbc
+    real(WP), dimension(:, :, :), allocatable :: x, xa, xb
     integer :: irbc, nlat, nlon, ilat, ilon, iz
 
     ! Argument check
     if (nrbc <= 0) return
 
     ! Write file head
-    open(cell_unit, file=trim(fn), action='write')
+    open (cell_unit, file=trim(fn), action='write')
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      nlat = rbc%nlat;    nlon = rbc%nlon
+      nlat = rbc%nlat; nlon = rbc%nlon
 
       do ilon = 1, nlon
       do ilat = 1, nlat
-      do iz = 1,3
-        write(cell_unit, '(F25.15)') rbc%x(ilat,ilon,iz)
+      do iz = 1, 3
+        write (cell_unit, '(F25.15)') rbc%x(ilat, ilon, iz)
       end do
-      end do 
-      end do 
-   end do 
+      end do
+      end do
+    end do
 
-    close(cell_unit)
+    close (cell_unit)
 
   end subroutine WriteExactPts
 
@@ -362,20 +362,20 @@ contains
 
     integer :: ivert, iele
 
-    open(wall_unit, file=trim(fn), action='write')
-    write(wall_unit, '(A)') 'VARIABLES = X, Y, Z'
-    write(wall_unit, '(A,I9,A,I9,A)') &
-        'ZONE N = ', wall%nvert, ' E = ', wall%nele, ' F=FEPOINT ET=TRIANGLE'
+    open (wall_unit, file=trim(fn), action='write')
+    write (wall_unit, '(A)') 'VARIABLES = X, Y, Z'
+    write (wall_unit, '(A,I9,A,I9,A)') &
+      'ZONE N = ', wall%nvert, ' E = ', wall%nele, ' F=FEPOINT ET=TRIANGLE'
 
     do ivert = 1, wall%nvert
-      write(wall_unit, '(3F20.10)') wall%x(ivert,:)
+      write (wall_unit, '(3F20.10)') wall%x(ivert, :)
     end do ! ivert
 
     do iele = 1, wall%nele
-      write(wall_unit, '(3I9)') wall%e2v(iele,:)
+      write (wall_unit, '(3I9)') wall%e2v(iele, :)
     end do ! iele
 
-    close(wall_unit)
+    close (wall_unit)
 
   end subroutine WriteWall
 
@@ -388,16 +388,16 @@ contains
   subroutine WriteManyWalls(fn, nwall, walls)
     character(*) :: fn
     integer :: nwall
-    type(t_wall),target :: walls(:)
+    type(t_wall), target :: walls(:)
 
     integer :: iwall, nvert, nele, ivert, iele
-    type(t_wall),pointer :: wall
+    type(t_wall), pointer :: wall
 
     ! Argument check
     if (nwall <= 0) return
 
-    open(wall_unit, file=trim(fn), action='write')
-    write(wall_unit, '(A)') 'VARIABLES = X, Y, Z'
+    open (wall_unit, file=trim(fn), action='write')
+    write (wall_unit, '(A)') 'VARIABLES = X, Y, Z'
 
     do iwall = 1, nwall
       wall => walls(iwall)
@@ -405,19 +405,19 @@ contains
       nvert = wall%nvert
       nele = wall%nele
 
-      write(wall_unit, '(A,I9,A,I9,A)') &
-      'ZONE N = ', nvert, ' E = ', nele, ' F=FEPOINT ET=TRIANGLE'
+      write (wall_unit, '(A,I9,A,I9,A)') &
+        'ZONE N = ', nvert, ' E = ', nele, ' F=FEPOINT ET=TRIANGLE'
 
       do ivert = 1, nvert
-    write(wall_unit, '(3F20.10)') wall%x(ivert,:)
+        write (wall_unit, '(3F20.10)') wall%x(ivert, :)
       end do ! ivert
 
       do iele = 1, nele
-    write(wall_unit, '(3I9)') wall%e2v(iele,:)
+        write (wall_unit, '(3I9)') wall%e2v(iele, :)
       end do ! iele
     end do ! iwall
 
-    close(wall_unit)
+    close (wall_unit)
 
   end subroutine WriteManyWalls
 
@@ -435,7 +435,7 @@ contains
     pgrad = WallShearForce()
     pgrad = pGrad*product(iLb)
 
-    write(pGrad_unit, '(F15.5, 3ES15.5)') time, pGrad
+    write (pGrad_unit, '(F15.5, 3ES15.5)') time, pGrad
 
   end subroutine WritePressGrad
 
@@ -452,7 +452,7 @@ contains
 
     flow = CellFlowRate()
 
-    write(flow_unit, '(F15.5, ES15.5)') time, flow
+    write (flow_unit, '(F15.5, ES15.5)') time, flow
 
   end subroutine WriteFlowRate
 
@@ -547,25 +547,25 @@ contains
     character(*) :: fn
     type(t_wall) :: wall
 
-    integer :: ncid, dimid,  varid, ierr
+    integer :: ncid, dimid, varid, ierr
     integer :: nvert, nele, num_nod_per_el
-    integer,allocatable :: connect(:,:)
-    character(*),parameter :: func_name = "ReadWallMesh"
+    integer, allocatable :: connect(:, :)
+    character(*), parameter :: func_name = "ReadWallMesh"
 
     ! Check whether the file exists
     ierr = NF90_OPEN(trim(fn), NF90_NOWRITE, ncid)
     if (ierr .ne. 0) then
-      write(*, *) 'Subroutine ', func_name
-      write(*, *) 'Error: file ', trim(fn), ' does not exist'
+      write (*, *) 'Subroutine ', func_name
+      write (*, *) 'Error: file ', trim(fn), ' does not exist'
       stop
     end if
-    
+
     ! Check whether the mesh is Tri3
     ierr = nf90_inq_dimid(ncid, "num_nod_per_el1", dimid)
     ierr = nf90_inquire_dimension(ncid, dimid, len=num_nod_per_el)
     if (num_nod_per_el .ne. 3) then
-      write(*, *) 'Subroutine ', func_name
-      write(*, *) 'Error: the input mesh is not of Tri3 type'
+      write (*, *) 'Subroutine ', func_name
+      write (*, *) 'Error: the input mesh is not of Tri3 type'
       stop
     end if
 
@@ -589,21 +589,19 @@ contains
     ierr = NF90_INQ_VARID(ncid, "coordz", varid)
     ierr = NF90_GET_VAR(ncid, varid, wall%x(:, 3))
 
-
     ! Read mesh connectivity
-    allocate(connect(3,nele))
+    allocate (connect(3, nele))
 
     ierr = NF90_INQ_VARID(ncid, "connect1", varid)
     ierr = NF90_GET_VAR(ncid, varid, connect)
     wall%e2v = transpose(connect)
 
-    deallocate(connect)
+    deallocate (connect)
 
     ! Close file
     ierr = nf90_close(ncid)
 
   end subroutine ReadWallMesh
-
 
 !*********************************************************************
   ! Given a cell (rbc) and a file name (fn), this writes the rbc's
@@ -615,16 +613,15 @@ contains
     character(*) :: fn
     type(t_rbc) :: rbc
 
-    open(cell_unit, file=trim(fn), action='write')
+    open (cell_unit, file=trim(fn), action='write')
 
-    write(cell_unit, *) rbc%nlat0, rbc%nlon0
-    write(cell_unit, *) rbc%nlat, rbc%nlon
-    write(cell_unit, *) rbc%celltype
-    write(cell_unit, *) rbc%x
+    write (cell_unit, *) rbc%nlat0, rbc%nlon0
+    write (cell_unit, *) rbc%nlat, rbc%nlon
+    write (cell_unit, *) rbc%celltype
+    write (cell_unit, *) rbc%x
 
-    close(cell_unit)
+    close (cell_unit)
   end subroutine ExportWriteRBC
-
 
   ! Works in-tandem with ModIO ExportWriteRBC:
   ! Given a cell (rbc), file name (fn), and optionally center (xc), import the data from the file
@@ -633,15 +630,15 @@ contains
   subroutine ImportReadRBC(fn, rbc, xc)
     character(*) :: fn
     type(t_rbc) :: rbc
-    Real(WP),optional :: xc(3)
+    Real(WP), optional :: xc(3)
 
     integer :: nlat0, nlon0, nlat, nlon, dealias_fac, celltype, ilat, ilon, ierr, ii
     if (rootWorld) then
-      open(unit=cell_unit, file= trim(fn), status='old', action='read')
+      open (unit=cell_unit, file=trim(fn), status='old', action='read')
 
-      read(cell_unit, *) nlat0, nlon0
-      read(cell_unit, *) nlat, nlon
-      read(cell_unit, *) celltype
+      read (cell_unit, *) nlat0, nlon0
+      read (cell_unit, *) nlat, nlon
+      read (cell_unit, *) celltype
     end if !root world
 
     call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -650,10 +647,10 @@ contains
     call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
 
-    if (nlat/real(nlat0).lt.1.5) then
+    if (nlat/real(nlat0) .lt. 1.5) then
       dealias_fac = 100
     else
-        dealias_fac = nlat/nlat0
+      dealias_fac = nlat/nlat0
     end if !dealias factor
 
     rbc%celltype = celltype
@@ -662,9 +659,9 @@ contains
     rbc%nlon = nlon
 
     if (rootWorld) then
-      read(cell_unit, *) rbc%x
+      read (cell_unit, *) rbc%x
     end if !root world
-    close(cell_unit)
+    close (cell_unit)
     call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
 
     ! recenter to zero - the exported cell was offset to fit in the box
@@ -672,13 +669,13 @@ contains
     do ilat = 1, nlat
       rbc%x(ilat, ilon, 1) = rbc%x(ilat, ilon, 1) - 5.25
       rbc%x(ilat, ilon, 2) = rbc%x(ilat, ilon, 2) - 5.25
-      rbc%x(ilat, ilon, 3) = rbc%x(ilat, ilon, 3) - (5 / 7.0)
+      rbc%x(ilat, ilon, 3) = rbc%x(ilat, ilon, 3) - (5/7.0)
     end do
     end do
-    
+
     if (present(xc)) then
       do ii = 1, 3
-        rbc%x(:,:,ii) = rbc%x(:,:,ii) + xc(ii)
+        rbc%x(:, :, ii) = rbc%x(:, :, ii) + xc(ii)
       end do ! ii
     end if
 
@@ -690,48 +687,48 @@ contains
     character(*) :: fn
     type(t_wall) :: wall
 
-    integer :: ncid, dimid,  varid, ierr
+    integer :: ncid, dimid, varid, ierr
     integer :: nvert, nele, num_nod_per_el
-    integer,allocatable :: connect(:,:)
-    character(*),parameter :: func_name = "ReadMyWallMesh"
+    integer, allocatable :: connect(:, :)
+    character(*), parameter :: func_name = "ReadMyWallMesh"
 
     LOGICAL :: file_exists
 
-    INQUIRE(FILE=trim(fn), EXIST=file_exists)
+    INQUIRE (FILE=trim(fn), EXIST=file_exists)
 
-    open (unit=99, file= trim(fn), status='old', action='read')
+    open (unit=99, file=trim(fn), status='old', action='read')
 
-    write(*, *) 'Mesh File: ', trim(fn)
+    write (*, *) 'Mesh File: ', trim(fn)
 
     ! Check whether the file exists
     if (file_exists .neqv. .TRUE.) then
-      write(*, *) 'Subroutine ', func_name
-      write(*, *) 'Error: file ', trim(fn), ' does not exist'
-      stop  
-    end if
- 
-    read(99, *) num_nod_per_el
-    read(99, *) nvert
-    read(99, *) nele
-
-    ! Check whether the mesh is Tri3
-    if (num_nod_per_el .ne. 3) then
-      write(*, *) 'Subroutine ', func_name
-      write(*, *) 'Error: the input mesh is not of Tri3 type'
+      write (*, *) 'Subroutine ', func_name
+      write (*, *) 'Error: file ', trim(fn), ' does not exist'
       stop
     end if
 
-    write(*, *) 'Number of Nodes per Element: ', num_nod_per_el
-    write(*, *) 'Number of Nodes: ', nvert
-    write(*, *) 'Number of Elements: ', nele
+    read (99, *) num_nod_per_el
+    read (99, *) nvert
+    read (99, *) nele
+
+    ! Check whether the mesh is Tri3
+    if (num_nod_per_el .ne. 3) then
+      write (*, *) 'Subroutine ', func_name
+      write (*, *) 'Error: the input mesh is not of Tri3 type'
+      stop
+    end if
+
+    write (*, *) 'Number of Nodes per Element: ', num_nod_per_el
+    write (*, *) 'Number of Nodes: ', nvert
+    write (*, *) 'Number of Elements: ', nele
 
     call Wall_Create(wall, nvert, nele)
 
-    read(99,*) wall%x
-    read(99,*) wall%e2v
+    read (99, *) wall%x
+    read (99, *) wall%e2v
 
     ! Close file
-    close(99)
+    close (99)
     ierr = nf90_close(ncid)
 
   end subroutine ReadMyWallMesh
@@ -747,41 +744,41 @@ contains
     real(WP) :: time
 
     integer :: irbc, iwall
-    type(t_rbc),pointer :: rbc
-    type(t_wall),pointer :: wall
+    type(t_rbc), pointer :: rbc
+    type(t_wall), pointer :: wall
 
-    open(restart_unit, file=trim(fn), form='unformatted', action='write')
+    open (restart_unit, file=trim(fn), form='unformatted', action='write')
 
-    write(restart_unit) Lb
+    write (restart_unit) Lb
 
-    write(restart_unit) lt
-    write(restart_unit) time
-    write(restart_unit) vBkg
+    write (restart_unit) lt
+    write (restart_unit) time
+    write (restart_unit) vBkg
 
     ! Cells
-    write(restart_unit) nrbc
+    write (restart_unit) nrbc
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
 
-      write(restart_unit) rbc%nlat0, rbc%nlon0
-      write(restart_unit) rbc%nlat, rbc%nlon
-      write(restart_unit) rbc%celltype
+      write (restart_unit) rbc%nlat0, rbc%nlon0
+      write (restart_unit) rbc%nlat, rbc%nlon
+      write (restart_unit) rbc%celltype
       ! write(restart_unit) rbc%starting_area
-      write(restart_unit) rbcs(irbc)%x
+      write (restart_unit) rbcs(irbc)%x
     end do ! irbc
 
     ! Walls
-    write(restart_unit) nwall
+    write (restart_unit) nwall
     do iwall = 1, nwall
       wall => walls(iwall)
 
-      write(restart_unit) wall%nvert, wall%nele
-      write(restart_unit) wall%x
-      write(restart_unit) wall%f
-      write(restart_unit) wall%e2v
+      write (restart_unit) wall%nvert, wall%nele
+      write (restart_unit) wall%x
+      write (restart_unit) wall%f
+      write (restart_unit) wall%e2v
     end do ! iwall
 
-    close(restart_unit)
+    close (restart_unit)
 
   end subroutine WriteRestart
 
@@ -798,64 +795,64 @@ contains
     integer :: nlat0, nlon0, nlat, nlon, nvert, nele, celltype
     integer :: dealias_fac
     ! real(WP) :: starting_area
-    type(t_Rbc),pointer :: rbc
-    type(t_Wall),pointer :: wall
+    type(t_Rbc), pointer :: rbc
+    type(t_Wall), pointer :: wall
     integer :: ierr
-    character(*),parameter :: func_name = 'ReadRestart'
+    character(*), parameter :: func_name = 'ReadRestart'
 
     ! global parameters
     if (rootWorld) then
-      write(*, *) 'Read restart file ', TRIM(fn)
+      write (*, *) 'Read restart file ', TRIM(fn)
       print *, 'error 0'
-      open(restart_unit, file=trim(fn), form='unformatted', action='read')
+      open (restart_unit, file=trim(fn), form='unformatted', action='read')
 
       print *, 'error 1'
-      read(restart_unit) Lb
+      read (restart_unit) Lb
       iLb = 1./Lb
       print *, 'error 2'
-print*,'z'
-      read(restart_unit) Nt0
-print*,'a'
-      read(restart_unit) time0
-print*,'b'
-      read(restart_unit) vBkg
-print*, '0'
-      write(*, *) 'Lb = ', Lb
-      write(*, *) 'Nt0 = ', Nt0
-      write(*, *) 'time0 = ', time0
-      write(*, *) 'vBkg = ', vBkg
+      print *, 'z'
+      read (restart_unit) Nt0
+      print *, 'a'
+      read (restart_unit) time0
+      print *, 'b'
+      read (restart_unit) vBkg
+      print *, '0'
+      write (*, *) 'Lb = ', Lb
+      write (*, *) 'Nt0 = ', Nt0
+      write (*, *) 'time0 = ', time0
+      write (*, *) 'vBkg = ', vBkg
     end if
 
-print*,'1'
+    print *, '1'
     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
 
     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-print*,'2'
+    print *, '2'
     ! cells
     if (rootWorld) then
-      read(restart_unit) nrbc
+      read (restart_unit) nrbc
 
-      write(*, *) 'nrbc = ', nrbc
+      write (*, *) 'nrbc = ', nrbc
     end if
     call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-print*,'3'
-    allocate(rbcs(nrbc))
+    print *, '3'
+    allocate (rbcs(nrbc))
 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
 
       if (rootWorld) then
-    read(restart_unit) nlat0, nlon0
-    read(restart_unit) nlat, nlon
-       ! celltype = 1; print *,"NO READ CELL TYPE" 
-        read(restart_unit) celltype
+        read (restart_unit) nlat0, nlon0
+        read (restart_unit) nlat, nlon
+        ! celltype = 1; print *,"NO READ CELL TYPE"
+        read (restart_unit) celltype
         ! read(restart_unit) starting_area
-    ! write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype, 'starting_area = ', starting_area
-    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
-        write(*,*) 'nlat =',nlat
+        ! write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype, 'starting_area = ', starting_area
+        write (*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+        write (*, *) 'nlat =', nlat
       end if
       call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -864,52 +861,51 @@ print*,'3'
       call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       ! call MPI_Bcast(starting_area, 1, MPI_WP, 0, MPI_Comm_World, ierr)
 
-      
       rbc%celltype = celltype
       ! rbc%starting_area = starting_area
 
-    if (nlat/real(nlat0).lt.1.5) then
+      if (nlat/real(nlat0) .lt. 1.5) then
         dealias_fac = 100
-    else
+      else
         dealias_fac = nlat/nlat0
-    end if      
-        
-        call Rbc_Create(rbc, nlat0, dealias_fac)
+      end if
+
+      call Rbc_Create(rbc, nlat0, dealias_fac)
 
       ! Check array dimension
       if (rootWorld) then
-    if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
-        print*, 'nlat,nlon =', nlat, nlon
-        print*, 'rbc nlat,nlon =', rbc%nlat, rbc%nlon
-        write(*, *) 'Subroutine ', func_name
-        write(*, *) 'Error: invalid array dimension'
-      stop
-    end if
+        if (rbc%nlat .ne. nlat .or. rbc%nlon .ne. nlon) then
+          print *, 'nlat,nlon =', nlat, nlon
+          print *, 'rbc nlat,nlon =', rbc%nlat, rbc%nlon
+          write (*, *) 'Subroutine ', func_name
+          write (*, *) 'Error: invalid array dimension'
+          stop
+        end if
       end if
 
       if (rootWorld) then
-        read(restart_unit) rbc%x
+        read (restart_unit) rbc%x
       end if
       call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
     end do ! irbc
-print*,'4'
+    print *, '4'
     ! Walls
     if (rootWorld) then
-      read(restart_unit) nwall
-      
-      write(*, *) 'nwall = ', nwall
+      read (restart_unit) nwall
+
+      write (*, *) 'nwall = ', nwall
     end if
     call MPI_Bcast(nwall, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
 
-    allocate(walls(nwall))
+    allocate (walls(nwall))
 
     do iwall = 1, nwall
       wall => walls(iwall)
 
       if (rootWorld) then
-        read(restart_unit) nvert, nele
+        read (restart_unit) nvert, nele
 
-    write(*, *) 'iwall : ', iwall, ' nvert = ', nvert, ' nele = ', nele
+        write (*, *) 'iwall : ', iwall, ' nvert = ', nvert, ' nele = ', nele
       end if
       call MPI_Bcast(nvert, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(nele, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -917,9 +913,9 @@ print*,'4'
       call Wall_Create(wall, nvert, nele)
 
       if (rootWorld) then
-    read(restart_unit) wall%x
-    read(restart_unit) wall%f
-    read(restart_unit) wall%e2v
+        read (restart_unit) wall%x
+        read (restart_unit) wall%f
+        read (restart_unit) wall%e2v
       end if
       call MPI_Bcast(wall%x, size(wall%x), MPI_WP, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(wall%f, size(wall%f), MPI_WP, 0, MPI_Comm_World, ierr)
@@ -927,8 +923,8 @@ print*,'4'
     end do ! iwall
 
     if (rootWorld) then
-      close(restart_unit)
-      write(*, *)
+      close (restart_unit)
+      write (*, *)
     end if
 
   end subroutine ReadRestart
@@ -939,107 +935,26 @@ print*,'4'
     integer :: irbc, iwall
     integer :: nlat0, nlon0, nlat, nlon, nvert, nele, celltype
     integer :: dealias_fac
-    type(t_Rbc),pointer :: rbc
-    type(t_Wall),pointer :: wall
+    type(t_Rbc), pointer :: rbc
+    type(t_Wall), pointer :: wall
     integer :: ierr
-    character(*),parameter :: func_name = 'ReadRestart'
+    character(*), parameter :: func_name = 'ReadRestart'
 
     if (rootWorld) then
-        write(*, *) 'Read restart file ', TRIM(fn)
-        open(restart_unit, file=trim(fn), form='unformatted', action='read')
+      write (*, *) 'Read restart file ', TRIM(fn)
+      open (restart_unit, file=trim(fn), form='unformatted', action='read')
 
-        read(restart_unit) Lb
-        iLb = 1./Lb
-        read(restart_unit) Nt0
-        read(restart_unit) time0
-        read(restart_unit) vBkg
-
-        write(*, *) 'Lb = ', Lb
-        write(*, *) 'Nt0 = ', Nt0
-        write(*, *) 'time0 = ', time0
-        write(*, *) 'vBkg = ', vBkg
-    end if
-    call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-    call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-
-    call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
-    call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
-    call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-
-    ! cells
-    if (rootWorld) then
-        read(restart_unit) nrbc
-        write(*, *) 'nrbc = ', nrbc
-    end if
-    call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-
-    allocate(rbcs(nrbc))
-
-    do irbc = 1, nrbc
-        rbc => rbcs(irbc)
-
-        if (rootWorld) then
-            read(restart_unit) nlat0, nlon0
-            read(restart_unit) nlat, nlon
-            read(restart_unit) celltype
-            write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
-            write(*,*) 'nlat =',nlat
-        end if
-        call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-        call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-        call MPI_Bcast(nlat, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-        call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-        call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-
-        rbc%celltype = celltype
-        dealias_fac = nlat/nlat0
-
-        call Rbc_Create(rbc, nlat0, dealias_fac)
-
-        if (rootWorld) then
-            read(restart_unit) rbc%x
-        end if
-        call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
-    end do
-
-    if (rootWorld) then
-        close(restart_unit)
-    end if
-
-  end subroutine 
-
- subroutine ReadRestart_NoWalls(fn)
-    character(*) :: fn
-
-    integer :: irbc, iwall
-    integer :: nlat0, nlon0, nlat, nlon, nvert, nele, celltype
-    integer :: dealias_fac
-    type(t_Rbc),pointer :: rbc
-    type(t_Wall),pointer :: wall
-    integer :: ierr
-    character(*),parameter :: func_name = 'ReadRestart'
-
-    ! global parameters
-    if (rootWorld) then
-      write(*, *) 'Read restart file ', TRIM(fn)
-      print *, 'error 0'
-      open(restart_unit, file=trim(fn), form='unformatted', action='read')
-
-      print *, 'error 1'
-      read(restart_unit) Lb
+      read (restart_unit) Lb
       iLb = 1./Lb
-      print *, 'error 2'
-      read(restart_unit) Nt0
-      read(restart_unit) time0
-      read(restart_unit) vBkg
+      read (restart_unit) Nt0
+      read (restart_unit) time0
+      read (restart_unit) vBkg
 
-      write(*, *) 'Lb = ', Lb
-      write(*, *) 'Nt0 = ', Nt0
-      write(*, *) 'time0 = ', time0
-      write(*, *) 'vBkg = ', vBkg
+      write (*, *) 'Lb = ', Lb
+      write (*, *) 'Nt0 = ', Nt0
+      write (*, *) 'time0 = ', time0
+      write (*, *) 'vBkg = ', vBkg
     end if
-
-
     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
 
@@ -1049,24 +964,22 @@ print*,'4'
 
     ! cells
     if (rootWorld) then
-      read(restart_unit) nrbc
-
-      write(*, *) 'nrbc = ', nrbc
+      read (restart_unit) nrbc
+      write (*, *) 'nrbc = ', nrbc
     end if
     call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
 
-    allocate(rbcs(nrbc))
+    allocate (rbcs(nrbc))
 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
 
       if (rootWorld) then
-    read(restart_unit) nlat0, nlon0
-    read(restart_unit) nlat, nlon
-       ! celltype = 1; print *,"NO READ CELL TYPE" 
-        read(restart_unit) celltype
-    write(*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
-        write(*,*) 'nlat =',nlat
+        read (restart_unit) nlat0, nlon0
+        read (restart_unit) nlat, nlon
+        read (restart_unit) celltype
+        write (*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+        write (*, *) 'nlat =', nlat
       end if
       call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
@@ -1074,7 +987,88 @@ print*,'4'
       call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
       call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
 
-     
+      rbc%celltype = celltype
+      dealias_fac = nlat/nlat0
+
+      call Rbc_Create(rbc, nlat0, dealias_fac)
+
+      if (rootWorld) then
+        read (restart_unit) rbc%x
+      end if
+      call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
+    end do
+
+    if (rootWorld) then
+      close (restart_unit)
+    end if
+
+  end subroutine
+
+  subroutine ReadRestart_NoWalls(fn)
+    character(*) :: fn
+
+    integer :: irbc, iwall
+    integer :: nlat0, nlon0, nlat, nlon, nvert, nele, celltype
+    integer :: dealias_fac
+    type(t_Rbc), pointer :: rbc
+    type(t_Wall), pointer :: wall
+    integer :: ierr
+    character(*), parameter :: func_name = 'ReadRestart'
+
+    ! global parameters
+    if (rootWorld) then
+      write (*, *) 'Read restart file ', TRIM(fn)
+      print *, 'error 0'
+      open (restart_unit, file=trim(fn), form='unformatted', action='read')
+
+      print *, 'error 1'
+      read (restart_unit) Lb
+      iLb = 1./Lb
+      print *, 'error 2'
+      read (restart_unit) Nt0
+      read (restart_unit) time0
+      read (restart_unit) vBkg
+
+      write (*, *) 'Lb = ', Lb
+      write (*, *) 'Nt0 = ', Nt0
+      write (*, *) 'time0 = ', time0
+      write (*, *) 'vBkg = ', vBkg
+    end if
+
+    call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+
+    call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+    call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+
+    ! cells
+    if (rootWorld) then
+      read (restart_unit) nrbc
+
+      write (*, *) 'nrbc = ', nrbc
+    end if
+    call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+
+    allocate (rbcs(nrbc))
+
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+
+      if (rootWorld) then
+        read (restart_unit) nlat0, nlon0
+        read (restart_unit) nlat, nlon
+        ! celltype = 1; print *,"NO READ CELL TYPE"
+        read (restart_unit) celltype
+        write (*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype
+        write (*, *) 'nlat =', nlat
+      end if
+      call MPI_Bcast(nlat0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+      call MPI_Bcast(nlon0, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+      call MPI_Bcast(nlat, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+      call MPI_Bcast(nlon, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+      call MPI_Bcast(celltype, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
+
       rbc%celltype = celltype
 
       dealias_fac = nlat/nlat0
@@ -1082,34 +1076,34 @@ print*,'4'
 
       ! Check array dimension
       if (rootWorld) then
-    if (rbc%nlat.ne.nlat .or. rbc%nlon.ne.nlon) then
-        write(*, *) 'Subroutine ', func_name
-        write(*, *) 'Error: invalid array dimension'
-      stop
-    end if
+        if (rbc%nlat .ne. nlat .or. rbc%nlon .ne. nlon) then
+          write (*, *) 'Subroutine ', func_name
+          write (*, *) 'Error: invalid array dimension'
+          stop
+        end if
       end if
 
       if (rootWorld) then
-        read(restart_unit) rbc%x
+        read (restart_unit) rbc%x
       end if
       call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
     end do ! irbc
 
     ! Walls
     if (rootWorld) then
-      read(restart_unit) nwall
-      
-      write(*, *) 'nwall = ', nwall
+      read (restart_unit) nwall
+
+      write (*, *) 'nwall = ', nwall
     end if
-    print*, 'sending walls'
+    print *, 'sending walls'
     call MPI_Bcast(nwall, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
 
     if (rootWorld) then
-      close(restart_unit)
-      write(*, *)
+      close (restart_unit)
+      write (*, *)
     end if
 
   end subroutine ReadRestart_NoWalls
 !**********************************************************************
-  
+
 end module ModIO

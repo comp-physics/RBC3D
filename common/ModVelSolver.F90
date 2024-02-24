@@ -25,14 +25,14 @@ module ModVelSolver
   private
 
   public :: Solve_RBC_Vel, &
-    MyMatMult, &
-    Glob_Sph_Trans, & 
-        DeflateGetSBModes, & !TEMP
-        BuildMat !TEMP
+            MyMatMult, &
+            Glob_Sph_Trans, &
+            DeflateGetSBModes, & !TEMP
+            BuildMat !TEMP
 
   private :: Compute_Rhs, &
-    My_VecGetValues, &
-    My_VecSetValues
+             My_VecGetValues, &
+             My_VecSetValues
 
 contains
 
@@ -41,15 +41,15 @@ contains
 ! Note:
 !   v -- rbc surface veocities
   subroutine Solve_RBC_Vel(v)
-    real(WP) :: v(:,:)
+    real(WP) :: v(:, :)
 
-    logical,save :: solver_inited = .false.
+    logical, save :: solver_inited = .false.
     integer :: dof
     integer :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat, nlon
     integer :: ii, p
-    real(WP),allocatable,save :: rhs(:), sol(:)
+    real(WP), allocatable, save :: rhs(:), sol(:)
     integer :: niter
     real(WP) :: residual
     integer :: ierr
@@ -64,11 +64,11 @@ contains
         rbc => rbcs(irbc)
         dof = dof + 3*(rbc%nlat0**2)
       end do ! irbc
-    write(*,*) "Just calculated dof, it is ",dof
-      
+      write (*, *) "Just calculated dof, it is ", dof
+
       ! Set up petsc matrix-free GMRES solver
-      allocate(rhs(dof), sol(dof) )
-    write(*,*) "Set up GMRES solver"
+      allocate (rhs(dof), sol(dof))
+      write (*, *) "Set up GMRES solver"
 
       call VecCreateSeq(PETSC_COMM_SELF, dof, vec_rhs, ierr)
       call VecCreateSeq(PETSC_COMM_SELF, dof, vec_sol, ierr)
@@ -84,9 +84,9 @@ contains
       call PCSetType(pc_lhs, PCNONE, ierr)
 
       call KSPSetTolerances(ksp_lhs, 1.D-11, &
-            PETSC_DEFAULT_DOUBLE_PRECISION, &
-                PETSC_DEFAULT_DOUBLE_PRECISION, &
-        200, ierr); print *,"SETTING HIGH MAX ITER/ERR"
+                            PETSC_DEFAULT_DOUBLE_PRECISION, &
+                            PETSC_DEFAULT_DOUBLE_PRECISION, &
+                            200, ierr); print *, "SETTING HIGH MAX ITER/ERR"
 
       solver_inited = .true.
     end if
@@ -95,8 +95,8 @@ contains
     call Compute_Rhs(rhs)
 !write(*,*) "rhs computed"
     if (Deflate) then
-       !if (rootWorld) print *,"DEFLATING --- GET SB MODES"
-       call DeflateGetSBModes
+      !if (rootWorld) print *,"DEFLATING --- GET SB MODES"
+      call DeflateGetSBModes
     end if
 
     ! Solve the equation
@@ -114,9 +114,9 @@ contains
       call KSPGetIterationNumber(ksp_lhs, niter, ierr)
       call KSPGetResidualNorm(ksp_lhs, residual, ierr)
 
-      print*, 'iterations'
+      print *, 'iterations'
       if (rootWorld) then
-    write (*, '(A,I5,A,ES12.2)') 'niter = ', niter, ' residual = ', residual
+        write (*, '(A,I5,A,ES12.2)') 'niter = ', niter, ' residual = ', residual
       end if
     end if
 
@@ -124,8 +124,8 @@ contains
     call Glob_Sph_Trans(v, sol, FOUR_TO_PHYS)
 
     if (Deflate) then
-       if (rootWorld) print *,"DEFLATING -- SOLUTION RECOVERY"
-       call DeflateRecoverSol(size(v,1),v)
+      if (rootWorld) print *, "DEFLATING -- SOLUTION RECOVERY"
+      call DeflateRecoverSol(size(v, 1), v)
     end if
 
   end subroutine Solve_RBC_Vel
@@ -135,143 +135,138 @@ contains
 ! Deflation as laid out by Pozrikis in his book
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Recover the original solution from the solution of the deflated system by 
+! Recover the original solution from the solution of the deflated system by
 ! adding back in the necessary eigenvalues
 !
 ! x' = alpha A x' + b   ===>   recover x from x'
 !
-  subroutine DeflateRecoverSol(npoint,v)
+  subroutine DeflateRecoverSol(npoint, v)
     integer                       :: npoint
-    real(WP), dimension(:,:)      :: v
+    real(WP), dimension(:, :)      :: v
 
-    real(WP), allocatable, dimension(:,:,:) :: vv,vvw
+    real(WP), allocatable, dimension(:, :, :) :: vv, vvw
 
     integer  :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat0, nlon0, nlat, nlon, ilat, ilon, nvert
 
-    real(WP) :: alpha,afac
+    real(WP) :: alpha, afac
 
-    real(WP) :: ds,fac
-    integer  :: p,m
-
+    real(WP) :: ds, fac
+    integer  :: p, m
 
     nlat = rbcs(1)%nlat
-    nlon = rbcs(1)%nlon    
-    allocate(vv(nlat,nlon,3),vvw(nlat,nlon,3))
+    nlon = rbcs(1)%nlon
+    allocate (vv(nlat, nlon, 3), vvw(nlat, nlon, 3))
 
-    do irbc = 1,nrbc
-       rbc => rbcs(irbc)
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
 
-       alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
+      alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
 !       alpha = (1.-viscRat(rbc%celltype))/(1.+viscRat(rbc%celltype)) !COEF
 
-       nlat = rbc%nlat
-       nlon = rbc%nlon
-       p = 1 + (irbc-1)*(nlat*nlon)
+      nlat = rbc%nlat
+      nlon = rbc%nlon
+      p = 1 + (irbc - 1)*(nlat*nlon)
 
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             vv(ilat,ilon,:) = v(p,:)
-             p = p+1
-          end do
-       end do
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          vv(ilat, ilon, :) = v(p, :)
+          p = p + 1
+        end do
+      end do
 
-       if (viscRat(rbc%celltype).gt.0) then  ! FINITE VISCOSITY
-          vvw = vv
-          afac = alpha/(alpha+1.)
-       else  ! RIGID 
-          vvw = 0.
-          rbc%g = vv     ! store potential for rigid-body source 
-                         ! this is needed for no slip wall and post process
-          afac = -1./2.   ! -1./2.
-          print *,"NEGATIVE RIGID RECOVERY"
-       end if
+      if (viscRat(rbc%celltype) .gt. 0) then  ! FINITE VISCOSITY
+        vvw = vv
+        afac = alpha/(alpha + 1.)
+      else  ! RIGID
+        vvw = 0.
+        rbc%g = vv     ! store potential for rigid-body source
+        ! this is needed for no slip wall and post process
+        afac = -1./2.   ! -1./2.
+        print *, "NEGATIVE RIGID RECOVERY"
+      end if
 
-       do m = 1,6
-          fac = 0.
-          do ilon = 1, nlon
-             do ilat = 1, nlat
-                ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
-                fac = fac + SUM(vv(ilat,ilon,:)*rbc%qq(ilat,ilon,:,m))*ds
-             end do ! ilon
-          end do ! ilat  
-          vvw = vvw - afac*rbc%qq(:,:,:,m)*fac
-       end do
+      do m = 1, 6
+        fac = 0.
+        do ilon = 1, nlon
+          do ilat = 1, nlat
+            ds = rbc%detj(ilat, ilon)*rbc%w(ilat)
+            fac = fac + SUM(vv(ilat, ilon, :)*rbc%qq(ilat, ilon, :, m))*ds
+          end do ! ilon
+        end do ! ilat
+        vvw = vvw - afac*rbc%qq(:, :, :, m)*fac
+      end do
 
-       p = 1 + (irbc-1)*(nlat*nlon)
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             v(p,:) = vvw(ilat,ilon,:) 
-             p = p+1
-          end do
-       end do
+      p = 1 + (irbc - 1)*(nlat*nlon)
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          v(p, :) = vvw(ilat, ilon, :)
+          p = p + 1
+        end do
+      end do
 
     end do
 
-    deallocate(vv,vvw)
+    deallocate (vv, vvw)
 
   end subroutine DeflateRecoverSol
-
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Modify the "forcing term" in x = A x + b:   b -> b'
 !
-  subroutine DeflateRHS(npoint,v)
+  subroutine DeflateRHS(npoint, v)
     integer                       :: npoint
-    real(WP), dimension(npoint,3) :: v
+    real(WP), dimension(npoint, 3) :: v
 
-    real(WP), allocatable, dimension(:,:,:) :: FF
+    real(WP), allocatable, dimension(:, :, :) :: FF
 
     integer  :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat0, nlon0, nlat, nlon, ilat, ilon, nvert
 
     real(WP) :: alpha
 
-    real(WP) :: ds,fac
+    real(WP) :: ds, fac
     integer  :: p
 
-
     nlat = rbcs(1)%nlat
-    nlon = rbcs(1)%nlon    
-    allocate(FF(nlat,nlon,3))
+    nlon = rbcs(1)%nlon
+    allocate (FF(nlat, nlon, 3))
 
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
 
-    do irbc = 1,nrbc
-       rbc => rbcs(irbc)
-
-       alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
+      alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
 !       alpha = (1.-viscRat(rbc%celltype))/(1.+viscRat(rbc%celltype)) !COEF
 
+      nlat = rbc%nlat
+      nlon = rbc%nlon
+      p = 1 + (irbc - 1)*(nlat*nlon)
 
-       nlat = rbc%nlat
-       nlon = rbc%nlon
-       p = 1 + (irbc-1)*(nlat*nlon)
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          FF(ilat, ilon, :) = v(p, :)
+          p = p + 1
+        end do
+      end do
 
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             FF(ilat,ilon,:) = v(p,:)
-             p = p + 1
-          end do
-       end do
+      fac = 0.
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          ds = rbc%detj(ilat, ilon)*rbc%w(ilat)
+          fac = fac + SUM(FF(ilat, ilon, :)*rbc%a3(ilat, ilon, :))*ds
+        end do ! ilon
+      end do ! ilat
+      FF = FF + alpha/(1.-alpha)*rbc%a3*fac/rbc%area
 
-       fac = 0.
-       do ilon = 1, nlon
-          do ilat = 1, nlat
-             ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
-             fac = fac + SUM(FF(ilat,ilon,:)*rbc%a3(ilat,ilon,:))*ds
-          end do ! ilon
-       end do ! ilat  
-       FF = FF + alpha/(1.-alpha)*rbc%a3*fac/rbc%area
-
-       p = 1 + (irbc-1)*(nlat*nlon)
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             v(p,:) = FF(ilat,ilon,:) 
-             p = p + 1
-          end do
-       end do
+      p = 1 + (irbc - 1)*(nlat*nlon)
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          v(p, :) = FF(ilat, ilon, :)
+          p = p + 1
+        end do
+      end do
 
     end do
 
@@ -282,78 +277,75 @@ contains
 !
 !   x = A x + b  ==>  A -> A'
 !
-  subroutine DeflateMatMult(npoint,v)
+  subroutine DeflateMatMult(npoint, v)
     integer                       :: npoint
-    real(WP), dimension(npoint,3) :: v
+    real(WP), dimension(npoint, 3) :: v
 
-    real(WP), allocatable, dimension(:,:,:) :: vv
+    real(WP), allocatable, dimension(:, :, :) :: vv
 
     integer  :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat0, nlon0, nlat, nlon, ilat, ilon, nvert
 
     real(WP) :: alpha
 
-    real(WP) :: ds,fac
-    integer  :: p,m
-
+    real(WP) :: ds, fac
+    integer  :: p, m
 
     nlat = rbcs(1)%nlat
-    nlon = rbcs(1)%nlon    
-    allocate(vv(nlat,nlon,3))
+    nlon = rbcs(1)%nlon
+    allocate (vv(nlat, nlon, 3))
 
-    do irbc = 1,nrbc
-       rbc => rbcs(irbc)
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
 
-       alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
+      alpha = Bcoef(rbc%celltype)/Acoef(rbc%celltype) !COEF
 !       alpha = (1.-viscRat(rbc%celltype))/(1.+viscRat(rbc%celltype)) !COEF
 
-       nlat = rbc%nlat
-       nlon = rbc%nlon
-       p = 1 + (irbc-1)*(nlat*nlon)
+      nlat = rbc%nlat
+      nlon = rbc%nlon
+      p = 1 + (irbc - 1)*(nlat*nlon)
 
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             vv(ilat,ilon,:) = v(p,:)
-             p = p+1
-          end do
-       end do
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          vv(ilat, ilon, :) = v(p, :)
+          p = p + 1
+        end do
+      end do
 
-       fac = 0.
-       do ilon = 1, nlon
+      fac = 0.
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          ds = rbc%detj(ilat, ilon)*rbc%w(ilat)
+          fac = fac + SUM(rbc%g(ilat, ilon, :)*rbc%a3(ilat, ilon, :))*ds
+        end do ! ilon
+      end do ! ilat
+      vv = vv + alpha*rbc%a3*fac/rbc%area
+
+      do m = 1, 6
+        fac = 0.
+        do ilon = 1, nlon
           do ilat = 1, nlat
-             ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
-             fac = fac + SUM(rbc%g(ilat,ilon,:)*rbc%a3(ilat,ilon,:))*ds
+            ds = rbc%detj(ilat, ilon)*rbc%w(ilat)
+            fac = fac + SUM(rbc%g(ilat, ilon, :)*rbc%qq(ilat, ilon, :, m))*ds
           end do ! ilon
-       end do ! ilat  
-       vv = vv  + alpha*rbc%a3*fac/rbc%area
+        end do ! ilat
+        vv = vv - alpha*rbc%qq(:, :, :, m)*fac
+      end do
 
-       do m = 1,6
-          fac = 0.
-          do ilon = 1, nlon
-             do ilat = 1, nlat
-                ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
-                fac = fac + SUM(rbc%g(ilat,ilon,:)*rbc%qq(ilat,ilon,:,m))*ds
-            end do ! ilon
-          end do ! ilat  
-          vv = vv - alpha*rbc%qq(:,:,:,m)*fac
-       end do
-
-       p = 1 + (irbc-1)*(nlat*nlon)
-       do ilon = 1,nlon
-          do ilat = 1,nlat
-             v(p,:) = vv(ilat,ilon,:) 
-             p = p+1
-          end do
-       end do
+      p = 1 + (irbc - 1)*(nlat*nlon)
+      do ilon = 1, nlon
+        do ilat = 1, nlat
+          v(p, :) = vv(ilat, ilon, :)
+          p = p + 1
+        end do
+      end do
 
     end do
 
-    deallocate(vv)
+    deallocate (vv)
 
   end subroutine DeflateMatMult
-
-
 
 !!!!!!!!!!!!!
 ! Build the solid-body motion eigenvectors -- stored as rbc%qq
@@ -361,80 +353,79 @@ contains
   subroutine DeflateGetSBModes
 
     integer  :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat0, nlon0, nlat, nlon, ilat, ilon, nvert
     real(WP), dimension(3) :: XX
-    real(WP), allocatable, dimension(:,:,:,:)  :: pp,qq
-    real(WP), allocatable, dimension(:,:,:)    :: projpq
+    real(WP), allocatable, dimension(:, :, :, :)  :: pp, qq
+    real(WP), allocatable, dimension(:, :, :)    :: projpq
     real(WP)                                   :: ds
 
-    integer :: n,m
+    integer :: n, m
 
     real(WP)  :: fac
 
     do irbc = 1, nrbc
-       rbc => rbcs(irbc)
+      rbc => rbcs(irbc)
 
-       nlat0 = rbc%nlat0
-       nlon0 = rbc%nlon0
+      nlat0 = rbc%nlat0
+      nlon0 = rbc%nlon0
 
-       nlat = rbc%nlat
-       nlon = rbc%nlon
+      nlat = rbc%nlat
+      nlon = rbc%nlon
 
-       allocate(pp(nlat,nlon,3,6),qq(nlat,nlon,3,6),projpq(nlat,nlon,3))
+      allocate (pp(nlat, nlon, 3, 6), qq(nlat, nlon, 3, 6), projpq(nlat, nlon, 3))
 
-       call RBC_ComputeGeometry(rbc)
+      call RBC_ComputeGeometry(rbc)
 
-       ! the basic vectors are taken to be the coordinate directions for both 
-       ! the translation directions and the vectors omega which define rotations
-       ! w \cross (x-xc)  
-       !
-       ! All are includeded in the GS orthonomalization for simplicity...
-       !  ... it would be straighforward to normalize the translation
-       do ilon = 1, nlon
-          do ilat = 1, nlat
+      ! the basic vectors are taken to be the coordinate directions for both
+      ! the translation directions and the vectors omega which define rotations
+      ! w \cross (x-xc)
+      !
+      ! All are includeded in the GS orthonomalization for simplicity...
+      !  ... it would be straighforward to normalize the translation
+      do ilon = 1, nlon
+        do ilat = 1, nlat
 
-             pp(ilat,ilon,:,1) = (/ 1., 0., 0. /)
-             pp(ilat,ilon,:,2) = (/ 0., 1., 0. /)
-             pp(ilat,ilon,:,3) = (/ 0., 0., 1. /)
+          pp(ilat, ilon, :, 1) = (/1., 0., 0./)
+          pp(ilat, ilon, :, 2) = (/0., 1., 0./)
+          pp(ilat, ilon, :, 3) = (/0., 0., 1./)
 
-             XX = rbc%x(ilat,ilon,:) - rbc%xc(:)
+          XX = rbc%x(ilat, ilon, :) - rbc%xc(:)
 
-             pp(ilat,ilon,:,4) =  (/    0., -XX(3),  XX(2) /)
-             pp(ilat,ilon,:,5) =  (/ XX(3),     0., -XX(1) /)
-             pp(ilat,ilon,:,6) =  (/-XX(2),  XX(1),     0. /)
+          pp(ilat, ilon, :, 4) = (/0., -XX(3), XX(2)/)
+          pp(ilat, ilon, :, 5) = (/XX(3), 0., -XX(1)/)
+          pp(ilat, ilon, :, 6) = (/-XX(2), XX(1), 0./)
 
-          end do
-       end do
+        end do
+      end do
 
-       ! Gram-Schmit orthonomalization
-       do m = 1,6
+      ! Gram-Schmit orthonomalization
+      do m = 1, 6
 
-          qq(:,:,:,m) = pp(:,:,:,m)
+        qq(:, :, :, m) = pp(:, :, :, m)
 
-          do n = 2,m
-             call Proj(rbc,nlat,nlon,pp(1,1,1,m),qq(1,1,1,n-1),projpq)
-             qq(:,:,:,m) = qq(:,:,:,m) - projpq
-          end do
+        do n = 2, m
+          call Proj(rbc, nlat, nlon, pp(1, 1, 1, m), qq(1, 1, 1, n - 1), projpq)
+          qq(:, :, :, m) = qq(:, :, :, m) - projpq
+        end do
 
-       end do
+      end do
 
-       ! normalize      
-       do m = 1,6
-          fac = 0.
-          do ilat = 1, nlat
-             do ilon = 1, nlon
-                ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
-                fac = fac + SUM(qq(ilat,ilon,:,m)*qq(ilat,ilon,:,m))*ds
-             end do ! ilon
-          end do ! ilat  
-          rbc%qq(:,:,:,m) = qq(:,:,:,m)/SQRT(fac)
-       end do
+      ! normalize
+      do m = 1, 6
+        fac = 0.
+        do ilat = 1, nlat
+          do ilon = 1, nlon
+            ds = rbc%detj(ilat, ilon)*rbc%w(ilat)
+            fac = fac + SUM(qq(ilat, ilon, :, m)*qq(ilat, ilon, :, m))*ds
+          end do ! ilon
+        end do ! ilat
+        rbc%qq(:, :, :, m) = qq(:, :, :, m)/SQRT(fac)
+      end do
 
-       deallocate(pp,qq,projpq)
+      deallocate (pp, qq, projpq)
 
     end do
-
 
     ! Test orthonormalilty
 !!$   do irbc = 1,nrbc
@@ -447,7 +438,7 @@ contains
 !!$                  ds = rbc%detj(ilat,ilon)*rbc%w(ilat)
 !!$                  fac = fac + SUM(rbc%qq(ilat,ilon,:,n)*rbc%qq(ilat,ilon,:,m))*ds
 !!$               end do ! ilon
-!!$            end do ! ilat           
+!!$            end do ! ilat
 !!$            print *,n,m,fac
 !!$         end do
 !!$      end do
@@ -463,8 +454,8 @@ contains
   subroutine Compute_Rhs(rhs)
     real(WP) :: rhs(:)
 
-    type(t_TargetList),pointer :: tlist
-    real(WP),allocatable :: v(:,:)
+    type(t_TargetList), pointer :: tlist
+    real(WP), allocatable :: v(:, :)
     real(WP) :: c1, c2
     integer :: nPoint, ii
     integer :: ierr
@@ -475,8 +466,7 @@ contains
 
     ! Allocate working arrays
     npoint = tlist%nPoint
-    allocate(v(npoint,3))
-
+    allocate (v(npoint, 3))
 
     ! Compute the boundary integrals
     v = 0.
@@ -497,7 +487,7 @@ contains
       !print*, 'transform'; stop
       call PME_Add_Interp_Vel(tlist, v)
     end if
-   ! print*, 'got ewald' 
+    ! print*, 'got ewald'
 
     call TargetList_CollectArray(tlist, 3, v, MPI_COMM_WORLD)
 
@@ -505,26 +495,23 @@ contains
 !    v = 0. ;  print *,"ZERO RHS"
     ! Add background velocities
     c1 = 2.       !COEF
-    do ii = 1,npoint
-       v(ii,:) = v(ii,:) + c1*vBkg(:)/tlist%Acoef(ii)   !COEF
+    do ii = 1, npoint
+      v(ii, :) = v(ii, :) + c1*vBkg(:)/tlist%Acoef(ii)   !COEF
 !       v(ii,:) = v(ii,:) + c1*vBkg(:)/(1.+tlist%lam(ii))   !COEF
     end do
     !print*, 'got vels'
-    if (Deflate) then 
-       !if (rootWorld) print *,"DEFLATING --- RHS"
-       call DeflateRHS(npoint,v)
+    if (Deflate) then
+      !if (rootWorld) print *,"DEFLATING --- RHS"
+      call DeflateRHS(npoint, v)
     end if
 
     ! Convert to spherical harmonic coefficients
     call Glob_Sph_Trans(v, rhs, PHYS_TO_FOUR)
 
     ! Deallocate working arrays
-    deallocate(v)
+    deallocate (v)
 
   end subroutine Compute_Rhs
-
-
-
 
 !**********************************************************************
 ! Matmul for matrix-free GMRES solver
@@ -538,14 +525,14 @@ contains
     integer :: ierr
 
     integer :: nPoint, dof, nvert
-    real(WP),allocatable :: u(:), b(:)
-    real(WP),allocatable :: g(:,:), v(:,:)
+    real(WP), allocatable :: u(:), b(:)
+    real(WP), allocatable :: g(:, :), v(:, :)
     integer :: irbc, p, ii
-    type(t_RBC),pointer :: rbc
-    real(WP),allocatable :: GdetJ(:,:,:)
+    type(t_RBC), pointer :: rbc
+    real(WP), allocatable :: GdetJ(:, :, :)
     real(WP) :: c1, c2
-    type(t_SourceList),pointer :: slist
-    type(t_TargetList),pointer :: tlist
+    type(t_SourceList), pointer :: slist
+    type(t_TargetList), pointer :: tlist
 
     ! Set up parameters
     slist => slist_rbc
@@ -553,10 +540,10 @@ contains
 
     ! Allocate working arrays
     call VecGetSize(vec_u, dof, ierr)
-    allocate(u(dof), b(dof) )
+    allocate (u(dof), b(dof))
 
     nPoint = tlist%nPoint
-    allocate(g(nPoint,3), v(nPoint,3))
+    allocate (g(nPoint, 3), v(nPoint, 3))
 
     ! Transform u-array to double-layer density on cell surfaces
     call My_VecGetValues(vec_u, u)
@@ -569,7 +556,7 @@ contains
       rbc => rbcs(irbc)
       nvert = rbc%nlat*rbc%nlon
 
-      rbc%g = reshape(g(p+1:p+nvert,:), shape(rbc%g))
+      rbc%g = reshape(g(p + 1:p + nvert, :), shape(rbc%g))
       p = p + nvert
 
       call Rbc_BuildSurfaceSource(rbc, gFlag=.true.)
@@ -577,7 +564,7 @@ contains
     call SourceList_UpdateDensity(slist, rbcs=rbcs, updateG=.true.)
 
     ! Compute the off-diagonal term
-    c1 = 0.          !COEF 
+    c1 = 0.          !COEF
     c2 = -1./(4.*Pi) !COEF
 
     v = 0.
@@ -599,41 +586,38 @@ contains
     v = v + g
 
     if (Deflate) then
-       !if (rootWorld) print *,"DEFLATING --- MATMULT"
-       call DeflateMatMult(npoint,v)
+      !if (rootWorld) print *,"DEFLATING --- MATMULT"
+      call DeflateMatMult(npoint, v)
     end if
 
     call Glob_Sph_Trans(v, b, PHYS_TO_FOUR)
     call My_VecSetValues(vec_b, b)
 
     ! Deallocate working arrays
-    deallocate(u, b)
-    deallocate(g, v)
+    deallocate (u, b)
+    deallocate (g, v)
 
   end subroutine MyMatMult
 
+  subroutine Proj(cell, nlat, nlon, pp, qq, projpq)
+    type(t_RBC) :: cell
+    integer     :: nlat, nlon
+    real(WP)    :: pp(nlat, nlon, 3), qq(nlat, nlon, 3), projpq(nlat, nlon, 3)
 
+    real(WP)    :: fn, fd, ds
+    integer     :: ilat, ilon
 
-  subroutine Proj(cell,nlat,nlon,pp,qq,projpq)
-    type(t_RBC) :: cell 
-    integer     :: nlat,nlon
-    real(WP)    :: pp(nlat,nlon,3),qq(nlat,nlon,3),projpq(nlat,nlon,3)
-    
-    real(WP)    :: fn,fd,ds
-    integer     :: ilat,ilon
-    
     fn = 0.; fd = 0.
     do ilat = 1, nlat
     do ilon = 1, nlon
-      ds = cell%detj(ilat,ilon)*cell%w(ilat)
-      fn = fn + SUM(pp(ilat,ilon,:)*qq(ilat,ilon,:))*ds
-      fd = fd + SUM(qq(ilat,ilon,:)*qq(ilat,ilon,:))*ds
+      ds = cell%detj(ilat, ilon)*cell%w(ilat)
+      fn = fn + SUM(pp(ilat, ilon, :)*qq(ilat, ilon, :))*ds
+      fd = fd + SUM(qq(ilat, ilon, :)*qq(ilat, ilon, :))*ds
     end do ! ilon
     end do ! ilat
     projpq = fn/fd*qq
 
   end subroutine Proj
-
 
 !**********************************************************************
 ! Global spherical harmonci transform
@@ -654,14 +638,14 @@ contains
 !   is for longitudinal direciton, while the second is for the colatitudinal
 !   direction.
   subroutine Glob_Sph_Trans(v, c, direction)
-    real(WP) :: v(:,:), c(:)
+    real(WP) :: v(:, :), c(:)
     integer :: direction
 
     integer :: pv, pc
     integer :: irbc
-    type(t_RBC),pointer :: rbc
+    type(t_RBC), pointer :: rbc
     integer :: nlat0, nlon0, nlat, nlon, ilat, ilon, nvert
-    real(WP),allocatable :: vtmp(:,:,:), va(:,:,:), vb(:,:,:)
+    real(WP), allocatable :: vtmp(:, :, :), va(:, :, :), vb(:, :, :)
 
     pv = 0
     pc = 0
@@ -678,57 +662,57 @@ contains
       nvert = nlat*nlon
 
       ! Allocate working arrays
-      allocate(vtmp(nlat,nlon,3), va(nlat,nlat,3), vb(nlat,nlat,3) )
+      allocate (vtmp(nlat, nlon, 3), va(nlat, nlat, 3), vb(nlat, nlat, 3))
 
       if (direction == PHYS_TO_FOUR) then
         ! v to c
-    vtmp = reshape(v(pv+1:pv+nvert,:), shape(vtmp) )
-    pv = pv + nvert
+        vtmp = reshape(v(pv + 1:pv + nvert, :), shape(vtmp))
+        pv = pv + nvert
 
-    call ShAnalGau(nlat, nlon, 3, vtmp, size(vtmp,1), size(vtmp,2), &
-            va, vb, size(va,1), size(va,2), rbc%wshags )
+        call ShAnalGau(nlat, nlon, 3, vtmp, size(vtmp, 1), size(vtmp, 2), &
+                       va, vb, size(va, 1), size(va, 2), rbc%wshags)
 
-    do ilon = 1, nlat0
-    do ilat = ilon, nlat0
-      c(pc+1:pc+3) = (/ va(ilon,ilat,:) /)
-      pc = pc + 3
-    end do ! ilat
-    end do ! ilon
+        do ilon = 1, nlat0
+        do ilat = ilon, nlat0
+          c(pc + 1:pc + 3) = (/va(ilon, ilat, :)/)
+          pc = pc + 3
+        end do ! ilat
+        end do ! ilon
 
-    do ilon = 2, nlat0
-    do ilat = ilon, nlat0
-      c(pc+1:pc+3) = (/ vb(ilon,ilat,:) /)
-      pc = pc + 3
-    end do ! ilat
-    end do ! ilon
+        do ilon = 2, nlat0
+        do ilat = ilon, nlat0
+          c(pc + 1:pc + 3) = (/vb(ilon, ilat, :)/)
+          pc = pc + 3
+        end do ! ilat
+        end do ! ilon
 
       else if (direction == FOUR_TO_PHYS) then
         ! c to v
-    va = 0.
-    vb = 0.
-    do ilon = 1, nlat0
-    do ilat = ilon, nlat0
-          va(ilon,ilat,:) = c(pc+1:pc+3)
-      pc = pc + 3
-    end do ! ilat
-    end do ! ilon
+        va = 0.
+        vb = 0.
+        do ilon = 1, nlat0
+        do ilat = ilon, nlat0
+          va(ilon, ilat, :) = c(pc + 1:pc + 3)
+          pc = pc + 3
+        end do ! ilat
+        end do ! ilon
 
-    do ilon = 2, nlat0
-    do ilat = ilon, nlat0
-          vb(ilon,ilat,:) = c(pc+1:pc+3)
-      pc = pc + 3
-    end do ! ilat
-    end do ! ilon
+        do ilon = 2, nlat0
+        do ilat = ilon, nlat0
+          vb(ilon, ilat, :) = c(pc + 1:pc + 3)
+          pc = pc + 3
+        end do ! ilat
+        end do ! ilon
 
-    call ShSynthGau(nlat, nlon, 3, vtmp, size(vtmp,1), size(vtmp,2), &
-            va, vb, size(va,1), size(va,2), rbc%wshsgs )
+        call ShSynthGau(nlat, nlon, 3, vtmp, size(vtmp, 1), size(vtmp, 2), &
+                        va, vb, size(va, 1), size(va, 2), rbc%wshsgs)
 
-    v(pv+1:pv+nvert,:) = reshape(vtmp, (/nvert,3/))
+        v(pv + 1:pv + nvert, :) = reshape(vtmp, (/nvert, 3/))
         pv = pv + nvert
       end if
 
       ! Deallocate working arrays
-      deallocate(vtmp, va, vb)
+      deallocate (vtmp, va, vb)
     end do !irbc
 
   end subroutine Glob_Sph_Trans
@@ -738,18 +722,18 @@ contains
     Vec x
     real(WP) :: a(:)
 
-    integer,allocatable :: ix(:)
+    integer, allocatable :: ix(:)
     integer :: n, i, ierr
 
     ! Allocate working arrays
     call VecGetSize(x, n, ierr)
-    allocate(ix(n))
-    ix = (/ (i, i=0,n-1) /)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
 
     call VecGetValues(x, n, ix, a, ierr)
 
     ! Deallocate working arrays
-    deallocate(ix)
+    deallocate (ix)
 
   end subroutine My_VecGetValues
 
@@ -758,25 +742,24 @@ contains
     Vec :: x
     real(WP) :: a(:)
 
-    integer,allocatable :: ix(:)
+    integer, allocatable :: ix(:)
     integer :: n, i, ierr
 
     ! Allocate working arrays
     call VecGetSize(x, n, ierr)
-    allocate(ix(n))
-    ix = (/ (i, i=0,n-1) /)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
 
     call VecSetValues(x, n, ix, a, INSERT_VALUES, ierr)
-    call VecAssemblyBegin(x,ierr)
+    call VecAssemblyBegin(x, ierr)
     call VecAssemblyEnd(x, ierr)
 
     ! Deallocate working arrays
-    deallocate(ix)
+    deallocate (ix)
 
   end subroutine My_VecSetValues
 
 !**********************************************************************
-
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Testing Routine for assembling the A matrix
@@ -786,25 +769,25 @@ contains
 ! It is the eigensystem of A that is to be deflated
 
   SUBROUTINE BuildMat(dof, AA)
-    integer                   :: dof 
-    real(WP), dimension(dof,dof)  :: AA
+    integer                   :: dof
+    real(WP), dimension(dof, dof)  :: AA
 
-    real(WP),allocatable :: g(:,:), v(:,:)
+    real(WP), allocatable :: g(:, :), v(:, :)
 
-    real(WP), dimension(dof)      :: u,b  
+    real(WP), dimension(dof)      :: u, b
 
     Mat :: mat_t
     Vec :: vec_u, vec_b
 
     integer :: nPoint
-    type(t_SourceList),pointer :: slist
-    type(t_TargetList),pointer :: tlist
+    type(t_SourceList), pointer :: slist
+    type(t_TargetList), pointer :: tlist
 
-    type(t_rbc),pointer :: rbc
+    type(t_rbc), pointer :: rbc
     integer :: ierr
-    integer :: i,j,l,m,p,q, irbc
+    integer :: i, j, l, m, p, q, irbc
 
-   ! Update rbc surface geometry
+    ! Update rbc surface geometry
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
       call RBC_ComputeGeometry(rbc)
@@ -818,20 +801,20 @@ contains
                         dof, PETSC_NULL_INTEGER, mat_t, ierr)
     call MatShellSetOperation(mat_t, MATOP_MULT, MyMatMult, ierr)
 
-    do i = 1,dof
-       u = 0.
-       u(i) = 1.
+    do i = 1, dof
+      u = 0.
+      u(i) = 1.
 
-       if (rootWorld) print *,i, " of ", dof
+      if (rootWorld) print *, i, " of ", dof
 
-       call My_VecSetValues(vec_u, u)
-       call MatMult(mat_t, vec_u, vec_b, ierr) 
-       call My_VecGetValues(vec_b, b)
+      call My_VecSetValues(vec_u, u)
+      call MatMult(mat_t, vec_u, vec_b, ierr)
+      call My_VecGetValues(vec_b, b)
 
-       AA(:,i) = b
+      AA(:, i) = b
 
     end do
-    
+
   end SUBROUTINE BuildMat
 
 end module ModVelSolver

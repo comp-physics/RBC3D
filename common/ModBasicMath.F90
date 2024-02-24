@@ -2,7 +2,7 @@
 module ModBasicMath
 
   use ModDataTypes
-  use f95_lapack, only : LA_POSV
+  use f95_lapack, only: LA_POSV
 !  use mkl95_lapack, only : LA_POSV=>POSV
 
   implicit none
@@ -10,26 +10,26 @@ module ModBasicMath
   private
 
   public :: VecNorm, &
-    CrossProd, &
-    InvMat2, &
-    InvMat3, &
-    RotateMatrix, &
-    TriArea, &
-    Matrix_PseudoInvert, &
-    QuadFit_1D, &
-    QuadFit_2D, &
-    Min_Quad_2D, &
-    MaskFunc_Exact, &
-    MaskFunc, &
-    BSplineFunc, &
-    RandomNumber
+            CrossProd, &
+            InvMat2, &
+            InvMat3, &
+            RotateMatrix, &
+            TriArea, &
+            Matrix_PseudoInvert, &
+            QuadFit_1D, &
+            QuadFit_2D, &
+            Min_Quad_2D, &
+            MaskFunc_Exact, &
+            MaskFunc, &
+            BSplineFunc, &
+            RandomNumber
 
 contains
 
 !**********************************************************************
-! L2 norm of a vector 
+! L2 norm of a vector
 ! |a|
-  function VecNorm(a) result (c)
+  function VecNorm(a) result(c)
     real(WP) :: a(:), c
 
     c = sqrt(sum(a*a))
@@ -50,40 +50,40 @@ contains
 
 !**********************************************************************
 ! Inverse of a 2x2 matrix
-  function InvMat2(a) result (b)
-    real(WP) :: a(2,2), b(2,2)
+  function InvMat2(a) result(b)
+    real(WP) :: a(2, 2), b(2, 2)
 
     real(WP) :: idetA
 
-    idetA = 1./(a(1,1)*a(2,2) - a(1,2)*a(2,1))
-    b(1,1) = idetA*a(2,2)
-    b(1,2) = -idetA*a(1,2)
-    b(2,1) = -idetA*a(2,1)
-    b(2,2) = idetA*a(1,1)
+    idetA = 1./(a(1, 1)*a(2, 2) - a(1, 2)*a(2, 1))
+    b(1, 1) = idetA*a(2, 2)
+    b(1, 2) = -idetA*a(1, 2)
+    b(2, 1) = -idetA*a(2, 1)
+    b(2, 2) = idetA*a(1, 1)
 
   end function InvMat2
 
 !**********************************************************************
 ! Inverse of a 3 by 3 matrix
   function InvMat3(a) result(b)
-    real(WP) :: a(3,3), b(3,3)
+    real(WP) :: a(3, 3), b(3, 3)
 
     real(WP) :: detA
 
-    detA = a(1,1)*a(2,2)*a(3,3) + a(1,2)*a(2,3)*a(3,1) + a(1,3)*a(2,1)*a(3,2) &
-         - a(1,1)*a(2,3)*a(3,2) - a(1,2)*a(2,1)*a(3,3) - a(1,3)*a(2,2)*a(3,1)
+    detA = a(1, 1)*a(2, 2)*a(3, 3) + a(1, 2)*a(2, 3)*a(3, 1) + a(1, 3)*a(2, 1)*a(3, 2) &
+           - a(1, 1)*a(2, 3)*a(3, 2) - a(1, 2)*a(2, 1)*a(3, 3) - a(1, 3)*a(2, 2)*a(3, 1)
 
-    b(1,1) = a(2,2)*a(3,3) - a(2,3)*a(3,2)
-    b(1,2) = -(a(1,2)*a(3,3) - a(1,3)*a(3,2))
-    b(1,3) = a(1,2)*a(2,3) - a(1,3)*a(2,2)
+    b(1, 1) = a(2, 2)*a(3, 3) - a(2, 3)*a(3, 2)
+    b(1, 2) = -(a(1, 2)*a(3, 3) - a(1, 3)*a(3, 2))
+    b(1, 3) = a(1, 2)*a(2, 3) - a(1, 3)*a(2, 2)
 
-    b(2,1) = -(a(2,1)*a(3,3) - a(2,3)*a(3,1))
-    b(2,2) = a(1,1)*a(3,3) - a(1,3)*a(3,1)
-    b(2,3) = -(a(1,1)*a(2,3) - a(1,3)*a(2,1))
+    b(2, 1) = -(a(2, 1)*a(3, 3) - a(2, 3)*a(3, 1))
+    b(2, 2) = a(1, 1)*a(3, 3) - a(1, 3)*a(3, 1)
+    b(2, 3) = -(a(1, 1)*a(2, 3) - a(1, 3)*a(2, 1))
 
-    b(3,1) = a(2,1)*a(3,2) - a(2,2)*a(3,1)
-    b(3,2) = -(a(1,1)*a(3,2) - a(1,2)*a(3,1))
-    b(3,3) = a(1,1)*a(2,2) - a(1,2)*a(2,1)
+    b(3, 1) = a(2, 1)*a(3, 2) - a(2, 2)*a(3, 1)
+    b(3, 2) = -(a(1, 1)*a(3, 2) - a(1, 2)*a(3, 1))
+    b(3, 3) = a(1, 1)*a(2, 2) - a(1, 2)*a(2, 1)
 
     b = (1./detA)*b
 
@@ -97,7 +97,7 @@ contains
 !  1. c1 must have unit norm
 !  2. The transform matrix rotates the z-axis (0, 0, 1) to c1
   function RotateMatrix(c1) result(mat)
-    real(WP) :: c1(3), mat(3,3)
+    real(WP) :: c1(3), mat(3, 3)
 
     ! a -- the axis of rotation
     ! a = c x c1, where c is the z-axis
@@ -106,24 +106,24 @@ contains
     ! mat = a * a + b1 * b + c1 * c
     real(WP) :: a(3), b(3), c(3), b1(3)
     integer :: i, j
-    real(WP),parameter :: eps = 1.E-10
+    real(WP), parameter :: eps = 1.E-10
 
-    c = (/ 0._WP, 0._WP, 1._WP /)
-    a = (/ -c1(2), c1(1), 0._WP /)
+    c = (/0._WP, 0._WP, 1._WP/)
+    a = (/-c1(2), c1(1), 0._WP/)
 
     if (sum(a*a) < eps) then
       mat = 0.
-      mat(1,1) = 1.
-      mat(2,2) = 1.
-      mat(3,3) = 1.
+      mat(1, 1) = 1.
+      mat(2, 2) = 1.
+      mat(3, 3) = 1.
       return
     end if
 
     a = a/sqrt(sum(a**2))
-    b = (/ -a(2), a(1), 0._WP /)
+    b = (/-a(2), a(1), 0._WP/)
     b1 = CrossProd(c1, a)
 
-    forall (i=1:3, j=1:3) mat(i,j) = a(i)*a(j) + b1(i)*b(j) + c1(i)*c(j)
+    forall (i=1:3, j=1:3) mat(i, j) = a(i)*a(j) + b1(i)*b(j) + c1(i)*c(j)
 
   end function RotateMatrix
 
@@ -132,12 +132,12 @@ contains
 ! Argument:
 !  x(i,:) -- i-th corner coordinate
   function TriArea(x) result(area)
-    real(WP) :: x(3,3), area
+    real(WP) :: x(3, 3), area
 
     real(WP) :: a(3), b(3), c(3)
 
-    a = x(2,:) - x(1,:)
-    b = x(3,:) - x(1,:)
+    a = x(2, :) - x(1, :)
+    b = x(3, :) - x(1, :)
     c(1) = a(2)*b(3) - a(3)*b(2)
     c(2) = a(3)*b(1) - a(1)*b(3)
     c(3) = a(1)*b(2) - a(2)*b(1)
@@ -152,22 +152,22 @@ contains
 !  A -- original matrix
 !  B -- A^{-1}
   subroutine Matrix_PseudoInvert(A, B)
-    real(WP) :: A(:,:), B(:,:)
+    real(WP) :: A(:, :), B(:, :)
 
     integer :: M, N
-    real(WP),allocatable :: AtA(:,:)
+    real(WP), allocatable :: AtA(:, :)
 
     ! Allocate working arrays
-    M = size(A,1)
-    N = size(A,2)
-    allocate(AtA(N,N))
+    M = size(A, 1)
+    N = size(A, 2)
+    allocate (AtA(N, N))
 
     B = transpose(A)
     AtA = matmul(A, A)
     call LA_POSV(AtA, B)
 
     ! Deallocate working arrays
-    deallocate(AtA)
+    deallocate (AtA)
 
   end subroutine Matrix_PseudoInvert
 
@@ -181,7 +181,7 @@ contains
   subroutine QuadFit_1D(x, f, a0, a1, a2)
     real(WP) :: x(:), f(:), a0, a1, a2
 
-    real(WP) :: lhs(3,3), rhs(3)
+    real(WP) :: lhs(3, 3), rhs(3)
     real(WP) :: xi, xi2, xi3, xi4
     integer :: i
 
@@ -192,22 +192,22 @@ contains
       xi2 = xi*xi
       xi3 = xi*xi2
       xi4 = xi*xi3
-      
-      lhs(1,1) = lhs(1,1) + 1.
-      lhs(1,2) = lhs(1,2) + xi
-      lhs(1,3) = lhs(1,3) + xi2
 
-      lhs(2,2) = lhs(2,2) + xi2
-      lhs(2,3) = lhs(2,3) + xi3
+      lhs(1, 1) = lhs(1, 1) + 1.
+      lhs(1, 2) = lhs(1, 2) + xi
+      lhs(1, 3) = lhs(1, 3) + xi2
 
-      lhs(3,3) = lhs(3,3) + xi4
+      lhs(2, 2) = lhs(2, 2) + xi2
+      lhs(2, 3) = lhs(2, 3) + xi3
 
-      rhs = rhs + (/ 1._WP, xi, xi2 /)*f(i)
+      lhs(3, 3) = lhs(3, 3) + xi4
+
+      rhs = rhs + (/1._WP, xi, xi2/)*f(i)
     end do ! i
 
-    lhs(2,1) = lhs(1,2)
-    lhs(3,1) = lhs(1,3)
-    lhs(3,2) = lhs(2,3)
+    lhs(2, 1) = lhs(1, 2)
+    lhs(3, 1) = lhs(1, 3)
+    lhs(3, 2) = lhs(2, 3)
 
     call LA_POSV(lhs, rhs)
 
@@ -224,9 +224,9 @@ contains
 ! Note:
 !   f(x) = a0 + a1*x + a2*y + a11*(x**2) + a12*(x*y) + a22*(y**2)
   subroutine QuadFit_2D(x, f, a0, a1, a2, a11, a12, a22)
-    real(WP) :: x(:,:), f(:), a0, a1, a2, a11, a12, a22
+    real(WP) :: x(:, :), f(:), a0, a1, a2, a11, a12, a22
 
-    real(WP) :: lhs(6,6), rhs(6), u(6)
+    real(WP) :: lhs(6, 6), rhs(6), u(6)
     real(WP) :: xi, yi
     integer :: i, ii, jj
     integer :: ierr
@@ -235,9 +235,9 @@ contains
     lhs = 0.
     rhs = 0.
 
-    do i = 1, size(x,1)
-      xi = x(i,1)
-      yi = x(i,2)
+    do i = 1, size(x, 1)
+      xi = x(i, 1)
+      yi = x(i, 2)
 
       u(1) = 1.
       u(2) = xi
@@ -248,7 +248,7 @@ contains
 
       do ii = 1, 6
       do jj = ii, 6
-    lhs(ii,jj) = lhs(ii,jj) + u(ii)*u(jj)
+        lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
       end do ! jj
       end do ! ii
 
@@ -257,8 +257,8 @@ contains
 
     ! Compute the lower half of the symmetric lhs
     do ii = 2, 6
-    do jj = 1, ii-1
-      lhs(ii,jj) = lhs(jj,ii)
+    do jj = 1, ii - 1
+      lhs(ii, jj) = lhs(jj, ii)
     end do ! jj
     end do ! ii
 
@@ -287,30 +287,30 @@ contains
   subroutine Min_Quad_2D(a0, a1, a2, a11, a12, a22, xmin, fmin)
     real(WP) :: a0, a1, a2, a11, a12, a22
     real(WP) :: xmin(2)
-    real(WP),optional :: fmin
+    real(WP), optional :: fmin
 
-    real(WP) :: lhs(2,2), rhs(2), det, idet
+    real(WP) :: lhs(2, 2), rhs(2), det, idet
 
-    lhs(1,1) = 2.*a11
-    lhs(1,2) = a12
-    lhs(2,1) = a12
-    lhs(2,2) = 2.*a22
-    det = lhs(1,1)*lhs(2,2) - lhs(1,2)*lhs(2,1)
+    lhs(1, 1) = 2.*a11
+    lhs(1, 2) = a12
+    lhs(2, 1) = a12
+    lhs(2, 2) = 2.*a22
+    det = lhs(1, 1)*lhs(2, 2) - lhs(1, 2)*lhs(2, 1)
 
-    rhs = -(/ a1, a2 /)
+    rhs = -(/a1, a2/)
 
     if (det > 0) then
       ! Exclude saddle point
       idet = 1./det
-      xmin(1) = idet*( lhs(2,2)*rhs(1) - lhs(1,2)*rhs(2))
-      xmin(2) = idet*(-lhs(2,1)*rhs(1) + lhs(1,1)*rhs(2))
+      xmin(1) = idet*(lhs(2, 2)*rhs(1) - lhs(1, 2)*rhs(2))
+      xmin(2) = idet*(-lhs(2, 1)*rhs(1) + lhs(1, 1)*rhs(2))
     else
       xmin = 0.
     end if
 
     if (present(fmin)) then
       fmin = a0 + a1*xmin(1) + a2*xmin(2) &
-    + a11*xmin(1)**2 + a12*xmin(1)*xmin(2) + a22*xmin(2)**2
+             + a11*xmin(1)**2 + a12*xmin(1)*xmin(2) + a22*xmin(2)**2
     end if
 
   end subroutine Min_Quad_2D
@@ -331,7 +331,7 @@ contains
     else if (t > 0.99) then
       f = 0.
     else
-      f = exp( 2*(exp(-1./t))/(t - 1) )
+      f = exp(2*(exp(-1./t))/(t - 1))
     end if
 
   end function MaskFunc_Exact
@@ -341,17 +341,17 @@ contains
   function MaskFunc(x) result(f)
     real(WP) :: x, f
 
-    integer,parameter :: N = 8192
+    integer, parameter :: N = 8192
     real(WP) :: ftab(0:N)
-    logical,save :: table_inited = .false.
+    logical, save :: table_inited = .false.
     real(WP) :: s
     integer :: i
 
     ! Build look up table
-    if (.not.table_inited) then
+    if (.not. table_inited) then
       do i = 0, N
         s = real(i)/N
-    ftab(i) = MaskFunc_Exact(s)
+        ftab(i) = MaskFunc_Exact(s)
       end do ! i
       table_inited = .true.
     end if
@@ -363,7 +363,7 @@ contains
     if (i >= N) then
       f = 0.
     else
-      f = ftab(i) * (i + 1 - s) + ftab(i+1)*(s - i)
+      f = ftab(i)*(i + 1 - s) + ftab(i + 1)*(s - i)
     end if
 
   end function MaskFunc
@@ -374,7 +374,7 @@ contains
 !  xc -- position of the delta-function singularity
 !  P -- number of B-spline points
 !  imin -- start point where the B-spline function value is non-zero
-!  w(:) -- B-spline function values, it should be mapped to the physical 
+!  w(:) -- B-spline function values, it should be mapped to the physical
 !          axis as w(1) -> w(imin), w(2) -> w(imin+1), and so on
 ! Note:
 !  -- The order of B-spline function is (P-1)
@@ -391,7 +391,7 @@ contains
     imin = floor(xc) - (P - 1)
     u(1) = imin - (xc - P)
     do j = 2, P
-      u(j) = u(j-1) + 1
+      u(j) = u(j - 1) + 1
     end do ! i
 
     w(1) = 1.
@@ -399,9 +399,9 @@ contains
 
     do pp = 2, P
       do j = pp, 2, -1
-    w(j) = u(j)/(pp-1.)*w(j) + (pp - u(j))/(pp - 1.)*w(j-1)
+        w(j) = u(j)/(pp - 1.)*w(j) + (pp - u(j))/(pp - 1.)*w(j - 1)
       end do ! j
-      w(1) = u(1)/(pp-1.)*w(1)
+      w(1) = u(1)/(pp - 1.)*w(1)
     end do ! pp
 
   end subroutine BsplineFunc
@@ -409,23 +409,23 @@ contains
 !**********************************************************************
 ! Random number generator, copied from Numerical Recipies
   function RandomNumber(idum)
-    integer,intent(IN),optional :: idum
+    integer, intent(IN), optional :: idum
     real(WP)        :: RandomNumber
 
-    integer,parameter :: K4B=selected_int_kind(9)
+    integer, parameter :: K4B = selected_int_kind(9)
     integer(K4B) :: idum1
-    integer(K4B),parameter :: IA=16807, IM=2147483647, IQ=127773, IR=2836
-    real(WP),save :: am
-    integer(K4B),save :: ix=-1, iy=-1, k
+    integer(K4B), parameter :: IA = 16807, IM = 2147483647, IQ = 127773, IR = 2836
+    real(WP), save :: am
+    integer(K4B), save :: ix = -1, iy = -1, k
     !$omp threadprivate(am, ix, iy, k)
 
     ! Initialize
     if (iy < 0) then
       if (present(idum)) then
-    idum1 = idum
+        idum1 = idum
       else
-        write(*, *) 'No random number seed provided, use default value 1'
-    idum1 = 1
+        write (*, *) 'No random number seed provided, use default value 1'
+        idum1 = 1
       end if
 
       am = nearest(1.0, -1.0)/IM
@@ -433,14 +433,14 @@ contains
       ix = ieor(777755555_K4B, abs(idum1))
     end if
 
-    ix = ieor(ix, ishft(ix,13))
-    ix = ieor(ix, ishft(ix,-17))
-    ix = ieor(ix, ishft(ix,5))
+    ix = ieor(ix, ishft(ix, 13))
+    ix = ieor(ix, ishft(ix, -17))
+    ix = ieor(ix, ishft(ix, 5))
     k = iy/IQ
-    iy = IA*(iy-k*IQ) - IR*k
+    iy = IA*(iy - k*IQ) - IR*k
     if (iy < 0) iy = iy + IM
 
-    RandomNumber = am*ior(iand(IM,ieor(ix,iy)),1_K4B)
+    RandomNumber = am*ior(iand(IM, ieor(ix, iy)), 1_K4B)
 
   end function RandomNumber
 
