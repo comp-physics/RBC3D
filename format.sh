@@ -8,9 +8,8 @@ ml python/3.9.12-rkxvr6
 
 echo "formatting example cases and common directory"
 
-cd examples
-fprettify -r --indent 2
-cd ../common
-fprettify -r --indent 2
+echo "$PWD"
+fprettify ./examples -r --indent 2
+fprettify ./common -r --indent 2
 
 echo "done"

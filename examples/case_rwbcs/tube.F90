@@ -30,7 +30,7 @@ contains
 
 !**********************************************************************
   subroutine InitAll
-    
+
     ! System intialization
     call InitMPI()
     call GaussQuad_Init
@@ -66,8 +66,8 @@ contains
   subroutine InitSystem
 
     integer :: irbc, iwall
-    type(t_Rbc),pointer :: rbc,rbcRef
-    type(t_Wall),pointer :: wall
+    type(t_Rbc), pointer :: rbc, rbcRef
+    type(t_Wall), pointer :: wall
     integer :: nlat0
     real(WP) :: radEqv
     integer :: ierr
@@ -75,12 +75,12 @@ contains
     call ReadRestart(restart_file)
 
     ! Reference cells
-    allocate(rbcRefs(2))
+    allocate (rbcRefs(2))
 
     if (nrbc > 0) then
       radEqv = 1.
       nlat0 = rbcs(1)%nlat0
-      
+
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
       call RBC_MakeBiconcave(rbcRef, radEqv)
@@ -102,19 +102,19 @@ contains
     ! Mechanical properties of cells and walls
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
-      select case(rbc%celltype)
-      case(1) 
-       rbc%ES = 12.4
-       rbc%ED = 200.
-       rbc%EB = 6.69D-2
-      case(2)
-       print *,"CASE 2 --- celltype"
-       rbc%ES = 10.
-       rbc%ED = 50.
-       rbc%EB = 6.D-2
+      select case (rbc%celltype)
+      case (1)
+        rbc%ES = 12.4
+        rbc%ED = 200.
+        rbc%EB = 6.69D-2
+      case (2)
+        print *, "CASE 2 --- celltype"
+        rbc%ES = 10.
+        rbc%ED = 50.
+        rbc%EB = 6.D-2
       case default
-       stop "bad cellcase"
-      end select 
+        stop "bad cellcase"
+      end select
     end do ! irbc
 
     do iwall = 1, nwall
@@ -123,19 +123,19 @@ contains
 
     ! Background velocity
 !    if (Nt0 == 0) then
-      vbkg(1:2) = 0.
-      vbkg(3) = 8.
+    vbkg(1:2) = 0.
+    vbkg(3) = 8.
 !    end if
-     print *,vbkg
+    print *, vbkg
 
   end subroutine InitSystem
 
 !**********************************************************************
   subroutine FinalizeSystem
-    
+
     integer :: irbc, iwall
-    type(t_Rbc),pointer :: rbc
-    type(t_Wall),pointer :: wall
+    type(t_Rbc), pointer :: rbc
+    type(t_Wall), pointer :: wall
 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
@@ -147,11 +147,11 @@ contains
       call Wall_Destroy(wall)
     end do ! iwall
 
-    if (nrbc > 0) deallocate(rbcs)
-    if (nwall > 0) deallocate(walls)
+    if (nrbc > 0) deallocate (rbcs)
+    if (nwall > 0) deallocate (walls)
 
   end subroutine FinalizeSystem
 
 !**********************************************************************
 
-end program 
+end program
