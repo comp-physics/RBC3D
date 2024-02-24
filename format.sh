@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# run bash ./format.sh in RBC3D directory
-
-ml python/3.9.12-rkxvr6
-# make sure fprettify installed via this command
+# on pace cluster, run these 2 commands to install fprettify
+# ml python/3.9.12-rkxvr6
 # pip3 install --upgrade fprettify
+
+# run bash ./format.sh in RBC3D directory
 
 echo "formatting example cases and common directory"
 
