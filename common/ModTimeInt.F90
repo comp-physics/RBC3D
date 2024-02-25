@@ -331,22 +331,21 @@ contains
 
 !      call LeukWallRepulsion
 
-      ! SHB commenting out the vol constraint calls
-      !call VolConstrainRbcs
-      !call InterCellRepulsion
-      !call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      !call VolConstrainRbcs
-      !call InterCellRepulsion
-      !call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      !call VolConstrainRbcs
-      !call InterCellRepulsion
-      !call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      !call VolConstrainRbcs
-      !call InterCellRepulsion
-      !call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 !!$
 !!$      call VolConstrainRbcs
 !!$      call InterCellRepulsion
@@ -985,24 +984,16 @@ subroutine OneTimeIntModVC
     type(t_rbc),pointer :: rbc
     real(WP) :: xc
     real     :: fac
-    real(WP) :: leukVol,platVol,rbcVol
-
-    real(WP) :: cellVol(3)
-
-    leukVol = 4./3.*PI*(1.4)**3
-    rbcVol = 4./3.*PI*(1.0)**3
-    platVol = 4./3.*PI*(4.*3./(2.*2.82)/2.)**3  ! about 3 microns
-    cellVol = (/ rbcVol, leukVol, platVol /)
 
     do irbc = 1, nrbc
 
        rbc => rbcs(irbc)
 
        call RBC_ComputeGeometry(rbc)
-       fac = (cellVol(rbc%celltype)-rbc%vol)/rbc%area
+       fac = (rbcRefs(rbc%celltype)%vol-rbc%vol)/rbc%area
        fac = SIGN(MIN(ABS(fac),epsDist/20.),fac)
       if (rootWorld .and. ABS(fac).gt.epsDist/40.) then
-          print *,"VOL: ",cellVol(rbc%celltype),rbc%vol,fac
+          print *,"VOL: ",rbcRefs(rbc%celltype)%vol,rbc%vol,fac
        end if
        do ilat = 1, rbc%nlat
           do ilon = 1, rbc%nlon

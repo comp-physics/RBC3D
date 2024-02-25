@@ -195,11 +195,11 @@ contains
     real(WP),optional :: xc(3)
     integer :: ilat, ilon, ii
     real(WP) :: th, phi
-    real(WP) :: pol, eq, curv
+    real(WP) :: pol, eq
   
-    pol = 1.2 * r
-    eq = 0.25 * r
-    curv = 0.2 * r
+    ! following the cited model, scale the spheroid radii by the major radius of an RBC
+    pol = 1.2 * r * 1.4
+    eq = 0.25 * r * 1.4
   
     do ilon = 1, cell%nlon
     do ilat = 1, cell%nlat
@@ -209,8 +209,6 @@ contains
       cell%x(ilat,ilon,2) = eq*sin(th)*sin(phi)
       cell%x(ilat,ilon,3) = eq*cos(th)
   
-      !curve capsule
-      !cell%x(ilon, ilat, 2) = cell%x(ilon, ilat, 2) - (curv * (cell%x(ilon, ilat, 3)**2))
     end do ! ilat
     end do ! ilon
     if (present(xc)) then
