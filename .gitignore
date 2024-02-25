@@ -3,7 +3,6 @@
 */*/v.*
 */*/*.sh
 */*/D/*
-*/*/Droll/*
 !*/*/D/.gittouch
 *.o
 *.mod
