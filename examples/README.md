@@ -15,4 +15,4 @@ In this example, celltype 1 corresponds to RBC's, celltype 2 corresponds to Leuk
   <img src="../install/images/sicklecells.png" alt="sickle cell train" width="500"/>
 </p>
 
-## Randomized Case
+<!-- ## Randomized Case -->
