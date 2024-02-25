@@ -30,7 +30,7 @@ program randomized_cell_gen
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
   !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
-  nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4) - 1
+  nrbcMax = (3 * (tubelen * tuber**2 * hematocrit))/4
 
   !set periodic boundary box based on tube shape
   Lb(1) = tuber*2 + 0.5
@@ -171,7 +171,8 @@ contains
 
       !randomly select a tmp_xc
       tmp_xc(2) = RandomNumber(ranseed)*2*PI
-      tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber)
+      ! subtract 1 to make range for random radius choice smaller
+      tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber - 1.0) ! random radius
       tmp_xc(1) = tmp_xc(3)*cos(tmp_xc(2))
       tmp_xc(2) = tmp_xc(3)*sin(tmp_xc(2))
       tmp_xc(3) = RandomNumber(ranseed)*tubelen - tubelen/2
