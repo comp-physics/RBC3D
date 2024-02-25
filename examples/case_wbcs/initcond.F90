@@ -207,7 +207,6 @@ program InitCond
   stop
 
 contains
-  ! comment above
   subroutine Recenter_Cells_and_Walls
     integer :: irbc, iwall, ii, gen, repeat, j
     real :: x, y, a
