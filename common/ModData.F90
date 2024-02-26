@@ -11,17 +11,17 @@ module ModData
   implicit none
 
   integer :: nrbc, nwall
-  type(t_rbc),allocatable,target :: rbcRefs(:)
-  type(t_RbcPolarPatch),target :: rbcPatch
-  type(t_rbc),allocatable,target :: rbcs(:)
-  type(t_wall),allocatable,target :: walls(:)
+  type(t_rbc), allocatable, target :: rbcRefs(:)
+  type(t_RbcPolarPatch), target :: rbcPatch
+  type(t_rbc), allocatable, target :: rbcs(:)
+  type(t_wall), allocatable, target :: walls(:)
 
-  type(t_SourceList),target :: slist_rbc, slist_wall
-  type(t_TargetList),target :: tlist_rbc, tlist_wall
+  type(t_SourceList), target :: slist_rbc, slist_wall
+  type(t_TargetList), target :: tlist_rbc, tlist_wall
 
   public :: GlobData_Init, &
-    GlobData_Finalize, &
-    SyncSurfCoord
+            GlobData_Finalize, &
+            SyncSurfCoord
 
 contains
 
@@ -32,7 +32,7 @@ contains
   subroutine GlobData_Init
 
     integer :: irbc, iwall, ivert, p
-    type(t_wall),pointer :: wall
+    type(t_wall), pointer :: wall
 
     ! Assign surface Id
     p = 0
@@ -54,11 +54,11 @@ contains
 
       do ivert = 1, wall%nvert
         if (wall%v2v(ivert) == 0) then
-      p = p + 1
-      wall%indxVertGlb(ivert) = p
-    else
-      wall%indxVertGlb(ivert) = wall%indxVertGlb(wall%v2v(ivert))
-    end if
+          p = p + 1
+          wall%indxVertGlb(ivert) = p
+        else
+          wall%indxVertGlb(ivert) = wall%indxVertGlb(wall%v2v(ivert))
+        end if
       end do ! ivert
     end do ! iwall
 
@@ -68,7 +68,6 @@ contains
 
     call SourceList_Create(slist_wall, Lb, rc_Ewd, walls=walls)
     call TargetList_Create(tlist_wall, walls=walls)
-
 
   end subroutine GlobData_Init
 
@@ -91,8 +90,8 @@ contains
   subroutine SyncSurfCoord
 
     integer :: irbc, iwall
-    type(t_Rbc),pointer :: rbc
-    type(t_Wall),pointer :: wall
+    type(t_Rbc), pointer :: rbc
+    type(t_Wall), pointer :: wall
     integer :: ierr
 
     do irbc = 1, nrbc

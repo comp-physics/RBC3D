@@ -2,18 +2,18 @@
 module ModEwaldFunc
 
   use ModDataTypes
-  use ModConf, alpha=>alpha_Ewd, rc=>rc_Ewd
+  use ModConf, alpha => alpha_Ewd, rc => rc_Ewd
 
   implicit none
 
-  integer,parameter :: Ntable = 8192
+  integer, parameter :: Ntable = 8192
 
   private :: Ntable
 
   public :: EwaldCoeff_SL_Exact, &
-    EwaldCoeff_DL_Exact, &
-    EwaldCoeff_SL, &
-    EwaldCoeff_DL
+            EwaldCoeff_DL_Exact, &
+            EwaldCoeff_SL, &
+            EwaldCoeff_DL
 
 contains
 
@@ -32,8 +32,8 @@ contains
       B = 1/r
       return
     end if
-    
-    r_t = sqrt(PI/alpha) * r
+
+    r_t = sqrt(PI/alpha)*r
 
     if (r_t < 1.D-3) then
       A = 0.
@@ -86,46 +86,45 @@ contains
   subroutine EwaldCoeff_SL(r, A, B)
     real(WP) :: r, A, B
 
-    integer,parameter :: N = Ntable
-    logical,save :: table_inited = .false.
-    real(WP),save :: c1_tab(0:N), c2_tab(0:N)
-    real(WP),save :: r_eps
+    integer, parameter :: N = Ntable
+    logical, save :: table_inited = .false.
+    real(WP), save :: c1_tab(0:N), c2_tab(0:N)
+    real(WP), save :: r_eps
     integer :: i
     real(WP) :: r_t, s, c1, c2, ir, ir2
 
     ! Build look up table
     if (.not. table_inited) then
       do i = 0, N
-    r_t = sqrt(PI/alpha) * (i*rc/N)
+        r_t = sqrt(PI/alpha)*(i*rc/N)
 
-    c1_tab(i) = erfc(r_t)
-    c2_tab(i) = 2/sqrt(alpha) * exp(-r_t**2)
+        c1_tab(i) = erfc(r_t)
+        c2_tab(i) = 2/sqrt(alpha)*exp(-r_t**2)
       end do ! i
 
       r_eps = 1.D-3*sqrt(alpha/PI)
       table_inited = .true.
     end if
 
-
     if (r < r_eps) then
       A = 0.
       B = 0.
     else
-      s = N * r/rc
+      s = N*r/rc
       i = floor(s)
 
       if (i >= N) then
         A = 0.
-    B = 0.
+        B = 0.
       else
-    c1 = c1_tab(i) * (i + 1 - s) + c1_tab(i+1)*(s - i)
-    c2 = c2_tab(i) * (i + 1 - s) + c2_tab(i+1)*(s - i)
+        c1 = c1_tab(i)*(i + 1 - s) + c1_tab(i + 1)*(s - i)
+        c2 = c2_tab(i)*(i + 1 - s) + c2_tab(i + 1)*(s - i)
 
-    ir = 1./r
-    ir2 = ir*ir
+        ir = 1./r
+        ir2 = ir*ir
 
-    A = c1*ir*ir2 + c2*ir2
-    B = c1*ir - c2
+        A = c1*ir*ir2 + c2*ir2
+        B = c1*ir - c2
       end if
     end if
 
@@ -142,20 +141,20 @@ contains
   subroutine EwaldCoeff_DL(r, A)
     real(WP) :: r, A
 
-    real(WP),save :: r_eps
-    integer,parameter :: N = Ntable
-    logical,save :: table_inited = .false.
-    real(WP),save :: c1_tab(0:N)
+    real(WP), save :: r_eps
+    integer, parameter :: N = Ntable
+    logical, save :: table_inited = .false.
+    real(WP), save :: c1_tab(0:N)
     integer :: i
     real(WP) :: r_t, s, c1
 
     ! Build look up table
     if (.not. table_inited) then
       do i = 0, N
-    r_t = sqrt(PI/alpha) * (i*rc/N)
+        r_t = sqrt(PI/alpha)*(i*rc/N)
 
-    ! Now we get A*(r**5)
-    c1_tab(i) = -8/sqrt(PI) * (exp(-r_t**2)*(1.5*r_t + r_t**3) + 0.75*sqrt(pi)*erfc(r_t))
+        ! Now we get A*(r**5)
+        c1_tab(i) = -8/sqrt(PI)*(exp(-r_t**2)*(1.5*r_t + r_t**3) + 0.75*sqrt(pi)*erfc(r_t))
       end do ! i
 
       r_eps = 1.D-3*sqrt(alpha/PI)
@@ -165,14 +164,14 @@ contains
     if (r < r_eps) then
       A = 0.
     else
-      s = N * r/rc
+      s = N*r/rc
       i = floor(s)
 
       if (i >= N) then
         A = 0.
       else
-    c1 = c1_tab(i) * (i + 1 - s) + c1_tab(i+1)*(s - i)
-    A = c1/(r**5)
+        c1 = c1_tab(i)*(i + 1 - s) + c1_tab(i + 1)*(s - i)
+        A = c1/(r**5)
       end if
     end if
 
