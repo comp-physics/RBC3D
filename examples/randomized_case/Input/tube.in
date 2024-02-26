@@ -12,7 +12,7 @@
 0.0     !
 
 10000                    ! Nt
-0.00014                  ! Ts
+0.00035                  ! Ts
 
 100                      ! cell_out
 -10000                   ! wall_out
@@ -23,7 +23,7 @@
 
 'D/restart.LATEST.dat'
 
-0.0000000001        ! epsDist
+0.012               ! epsDist
 10.                 ! forceCoef
 10.                 ! viscRatThresh
 .false.             ! rigidsep
