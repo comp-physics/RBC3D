@@ -17,5 +17,5 @@ jobs:
 
     - name: Check formatting
       run: |
-        ./scripts/format.sh
+        ./.github/workflows/scripts/format.sh
         git diff --exit-code
