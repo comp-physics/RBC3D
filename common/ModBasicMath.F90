@@ -147,7 +147,7 @@ contains
   end function TriArea
 
 !**********************************************************************
-! Compute the psedo-inverse of a matrxi
+! Compute the psedo-inverse of a matrix
 ! Arguments:
 !  A -- original matrix
 !  B -- A^{-1}

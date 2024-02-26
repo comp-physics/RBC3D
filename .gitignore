@@ -5,6 +5,7 @@
 *.mod
 .depend
 initcond
+initcond_random
 tube
 libcommon.a
 .vscode
