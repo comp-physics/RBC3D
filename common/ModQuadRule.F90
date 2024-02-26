@@ -11,8 +11,8 @@ module ModQuadRule
   ! w(i) -- the i-th weight
   type t_GaussQuad1D
     integer :: n
-    real(WP),dimension(:),pointer :: rst
-    real(WP),dimension(:),pointer :: w(:)
+    real(WP), dimension(:), pointer :: rst
+    real(WP), dimension(:), pointer :: w(:)
   end type t_GaussQuad1D
 
   ! 2D Gauss-Legendre quadrature
@@ -21,19 +21,19 @@ module ModQuadRule
   ! w(i) -- the i-th weight
   type t_GaussQuad2D
     integer :: n
-    real(WP),dimension(:,:),pointer :: rst
-    real(WP),dimension(:),pointer :: w(:)
+    real(WP), dimension(:, :), pointer :: rst
+    real(WP), dimension(:), pointer :: w(:)
   end type t_GaussQuad2D
 
-  type(t_GaussQuad2D),target :: gqTri7, gqTri3
-  type(t_GaussQuad2D),target :: gqQuad9
+  type(t_GaussQuad2D), target :: gqTri7, gqTri3
+  type(t_GaussQuad2D), target :: gqQuad9
 
   public
 
   public :: GaussQuad_Init, &
-    GaussQuad_Finalize, &
-    GauLeg, &
-    GauLeg_Sinh
+            GaussQuad_Finalize, &
+            GauLeg, &
+            GauLeg_Sinh
 
   private :: MyAsinh
 
@@ -46,15 +46,15 @@ contains
 
     integer :: n
     real(WP) :: r, s, t
-    real(WP),allocatable :: xtmp(:), wtmp(:)
+    real(WP), allocatable :: xtmp(:), wtmp(:)
     integer :: i, j, m
-    
+
     !======================================================================
     ! Create 3-point quadrature for triangle
     n = 3
     gqTri3%n = n
-    allocate(gqTri3%rst(n,2) )
-    allocate(gqTri3%w(n) )
+    allocate (gqTri3%rst(n, 2))
+    allocate (gqTri3%w(n))
 
     gqTri3%w = 0.5/3.
 
@@ -62,74 +62,74 @@ contains
     s = 1./6.
     t = 1./6.
 
-    gqTri3%rst(:,1) = (/ r, s, t /)
-    gqTri3%rst(:,2) = (/ s, t, r /)
+    gqTri3%rst(:, 1) = (/r, s, t/)
+    gqTri3%rst(:, 2) = (/s, t, r/)
 
     !======================================================================
     ! Create 7-point quadrature for triangle
     n = 7
     gqTri7%n = n
-    allocate(gqTri7%rst(n,2) )
-    allocate(gqTri7%w(n) )
+    allocate (gqTri7%rst(n, 2))
+    allocate (gqTri7%w(n))
 
-    r = (6. - sqrt(15.))/21.
+    r = (6.-sqrt(15.))/21.
     s = r
     t = 1 - r - s
-    gqTri7%rst(1:3,1) = (/ r, s, t /)
-    gqTri7%rst(1:3,2) = (/ s, t, r /)
-    gqTri7%w(1:3) = (155. - sqrt(15.))/2400.
+    gqTri7%rst(1:3, 1) = (/r, s, t/)
+    gqTri7%rst(1:3, 2) = (/s, t, r/)
+    gqTri7%w(1:3) = (155.-sqrt(15.))/2400.
 
-    r = (6. + sqrt(15.))/21.
+    r = (6.+sqrt(15.))/21.
     s = r
     t = 1 - r - s
-    gqTri7%rst(4:6,1) = (/ r, s, t /)
-    gqTri7%rst(4:6,2) = (/ s, t, r /)
-    gqTri7%w(4:6) = (155. + sqrt(15.))/2400.
+    gqTri7%rst(4:6, 1) = (/r, s, t/)
+    gqTri7%rst(4:6, 2) = (/s, t, r/)
+    gqTri7%w(4:6) = (155.+sqrt(15.))/2400.
 
     r = 1./3.
     s = 1./3.
     t = 1 - r - s
-    gqTri7%rst(7,1) = r
-    gqTri7%rst(7,2) = s
+    gqTri7%rst(7, 1) = r
+    gqTri7%rst(7, 2) = s
     gqTri7%w(7) = 9./80.
 
     !======================================================================
     ! Create 9-point quadratuer for quadrilaterals
     n = 9
     gqQuad9%n = 9
-    allocate(gqQuad9%rst(n,2), gqQuad9%w(n))
-    
-    allocate(xtmp(3), wtmp(3))
+    allocate (gqQuad9%rst(n, 2), gqQuad9%w(n))
+
+    allocate (xtmp(3), wtmp(3))
     call GauLeg(-1._WP, 1._WP, 3, xtmp, wtmp)
 
     do i = 1, 3
     do j = 1, 3
-      m = i + (j-1)*3
-      gqQuad9%rst(m,1:2) = (/ xtmp(i), xtmp(j) /)
+      m = i + (j - 1)*3
+      gqQuad9%rst(m, 1:2) = (/xtmp(i), xtmp(j)/)
       gqQuad9%w(m) = wtmp(i)*wtmp(j)
     end do ! j
     end do ! i
 
-    deallocate(xtmp, wtmp)
+    deallocate (xtmp, wtmp)
 
   end subroutine GaussQuad_Init
 
 !**********************************************************************
   subroutine GaussQuad_Finalize
 
-    deallocate(gqTri3%rst, gqTri3%w)
-    deallocate(gqTri7%rst, gqTri7%w)
-    deallocate(gqQuad9%rst, gqQuad9%w)
+    deallocate (gqTri3%rst, gqTri3%w)
+    deallocate (gqTri7%rst, gqTri7%w)
+    deallocate (gqQuad9%rst, gqQuad9%w)
 
   end subroutine GaussQuad_Finalize
 
 !**********************************************************************
-! Given the lower and upper limits of integration x1 and x2, this routine 
-! returns arrays x and w of length N containing the abscissas and weights 
-! of the Gauss-Legendre N-point quadrature formula. The parameter EPS is 
-! the relative precision. Note that internal computations are done in 
+! Given the lower and upper limits of integration x1 and x2, this routine
+! returns arrays x and w of length N containing the abscissas and weights
+! of the Gauss-Legendre N-point quadrature formula. The parameter EPS is
+! the relative precision. Note that internal computations are done in
 ! double precision.
-! 
+!
 ! Note:
 !  Copied from "Numerical Recipies in Fortran 90"
   subroutine GauLeg(x1, x2, n, x, w)
@@ -137,15 +137,15 @@ contains
     integer :: n
     real(WP) :: x(:), w(:)
 
-    character(*),parameter :: func_name = 'GauLeg'
-    double precision,parameter :: EPS=3.D-14
-    integer :: its,j,m
-    integer, parameter :: MAXIT=10
+    character(*), parameter :: func_name = 'GauLeg'
+    double precision, parameter :: EPS = 3.D-14
+    integer :: its, j, m
+    integer, parameter :: MAXIT = 10
     double precision :: xl, xm
-    double precision,dimension((n+1)/2) :: p1, p2, p3, pp, z, z1
-    logical, dimension((n+1)/2) :: unfinished
+    double precision, dimension((n + 1)/2) :: p1, p2, p3, pp, z, z1
+    logical, dimension((n + 1)/2) :: unfinished
 
-    ! The roots are symmetric in the interval, so we 
+    ! The roots are symmetric in the interval, so we
     ! only have to find half of them
     m = (n + 1)/2
     xm = 0.5*(x2 + x1)
@@ -154,56 +154,56 @@ contains
     ! Initial approximations to the roots.
     z(1) = 1
     do j = 2, size(z)
-      z(j) = z(j-1) + 1
+      z(j) = z(j - 1) + 1
     end do ! j
 
     z = cos(PI*(z - 0.25)/(n + 0.5))
     unfinished = .true.
 
     ! Newton’s method carried out simultaneously on the roots
-    do its=1,MAXIT
+    do its = 1, MAXIT
       where (unfinished)
-        p1=1.0
-    p2=0.0
+        p1 = 1.0
+        p2 = 0.0
       end where
-      
-      ! Loop up the recurrence relation to get the Legendre 
+
+      ! Loop up the recurrence relation to get the Legendre
       ! polynomials evaluated at z
-      do j=1,n
+      do j = 1, n
         where (unfinished)
-      p3=p2
-      p2=p1
-      p1=((2.0*j-1.0)*z*p2-(j-1.0)*p3)/j
-    end where
+          p3 = p2
+          p2 = p1
+          p1 = ((2.0*j - 1.0)*z*p2 - (j - 1.0)*p3)/j
+        end where
       end do
 
-      ! p1 now contains the desired Legendre polynomials. 
-      ! We next compute pp, the derivatives, by a standard 
-      ! relation involving also p2, the polynomials of one 
+      ! p1 now contains the desired Legendre polynomials.
+      ! We next compute pp, the derivatives, by a standard
+      ! relation involving also p2, the polynomials of one
       ! lower order.
       where (unfinished)
-        pp=n*(z*p1-p2)/(z*z-1.0)
-    z1=z
-    z=z1-p1/pp          ! Newton’s method.
-    unfinished=(abs(z-z1) > EPS)
+        pp = n*(z*p1 - p2)/(z*z - 1.0)
+        z1 = z
+        z = z1 - p1/pp          ! Newton’s method.
+        unfinished = (abs(z - z1) > EPS)
       end where
 
       if (.not. any(unfinished)) exit
     end do
 
-    if (its == MAXIT+1) then
-      write(*, *) 'Subroutine ', func_name
-      write(*, *) 'Error: too many iterations'
+    if (its == MAXIT + 1) then
+      write (*, *) 'Subroutine ', func_name
+      write (*, *) 'Error: too many iterations'
       stop
     end if
 
-    ! Scale the root to the desired interval, and 
+    ! Scale the root to the desired interval, and
     ! put in its symmetric counterpart.
-    x(1:m)=xm-xl*z
-    x(n:n-m+1:-1)=xm+xl*z
+    x(1:m) = xm - xl*z
+    x(n:n - m + 1:-1) = xm + xl*z
     ! Compute the weight and its symmetric counterpart.
-    w(1:m)=2.0*xl/((1.0 - z**2)*pp**2)
-    w(n:n-m+1:-1)=w(1:m)
+    w(1:m) = 2.0*xl/((1.0 - z**2)*pp**2)
+    w(n:n - m + 1:-1) = w(1:m)
 
   end subroutine GauLeg
 
@@ -212,7 +212,7 @@ contains
 ! Arguments:
 !  xmin, xmax -- integration interval
 !  (a, b) -- the target point coordinate.  b is very small (but non-zero),
-!            which will cause a near singularity for the integration arond 
+!            which will cause a near singularity for the integration arond
 !            (a,0)
 !  n, x, w -- same as those in subroutine GauLeg
 !
@@ -240,10 +240,10 @@ contains
 
     ! Do sinh transformation such that
     !  y = a + b*sinh(mu*s - eta), with s in [-1,1]
-    u1 = MyAsinh( (1 + a0)/b0 )
-    u2 = MyAsinh( (1 - a0)/b0 )
-    mu =  0.5*( u1 + u2 )
-    eta = 0.5*( u1 - u2 )
+    u1 = MyAsinh((1 + a0)/b0)
+    u2 = MyAsinh((1 - a0)/b0)
+    mu = 0.5*(u1 + u2)
+    eta = 0.5*(u1 - u2)
 
     ! Compute the un-stretched Gauss quadrature rule for s in [-1, 1]
     call GauLeg(-1._WP, 1._WP, n, s, w)

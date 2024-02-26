@@ -29,13 +29,13 @@ module ModNoSlip
   private
 
   public :: NoSlipWall, &
-    Compute_Wall_Residual_Vel, &
-        WallBuildMat   !! TESTING
+            Compute_Wall_Residual_Vel, &
+            WallBuildMat   !! TESTING
 
   private :: MyMatMult, &
-    AssembleArray, &
-    My_VecGetValues, &
-    My_VecSetValues
+             AssembleArray, &
+             My_VecGetValues, &
+             My_VecSetValues
 
 contains
 
@@ -43,11 +43,11 @@ contains
 ! Update the wall force density to enforce no-slip condition on wall
   subroutine NoSlipWall
 
-    logical,save :: solver_inited = .false.
+    logical, save :: solver_inited = .false.
     integer :: iwall, ivert, p
-    type(t_wall),pointer :: wall
-    real(WP),allocatable :: v(:,:), v1D(:)
-    real(WP),allocatable :: f0(:,:), finc(:,:), finc1D(:)
+    type(t_wall), pointer :: wall
+    real(WP), allocatable :: v(:, :), v1D(:)
+    real(WP), allocatable :: f0(:, :), finc(:, :), finc1D(:)
     integer :: niter
     real(WP) :: residual, vmax, vzmax
     integer :: ierr
@@ -57,12 +57,12 @@ contains
     ! Initialize the solver
     if (.not. solver_inited) then
       ! Calcuate system size
-      npoint  = 0
+      npoint = 0
       dof = 0
-      do iwall = 1 , nwall
+      do iwall = 1, nwall
         wall => walls(iwall)
-    npoint = npoint + wall%nvert
-    dof = dof + 3*count(wall%v2v <= 0)
+        npoint = npoint + wall%nvert
+        dof = dof + 3*count(wall%v2v <= 0)
       end do ! iwall
 
       ! Set up petsc matrix-free GMRES solver
@@ -79,10 +79,10 @@ contains
 !      call KSPSetInitialGuessNonzero(ksp_lhs, PETSC_TRUE, ierr)  ! TRIAL
       call PCSetType(pc_lhs, PCNONE, ierr)
 
-       !SHB modify from 1.D-3 to 1.D-6 and now to eps_Ewd
+      !SHB modify from 1.D-3 to 1.D-6 and now to eps_Ewd
       call KSPSetTolerances(ksp_lhs, eps_Ewd, &
-            PETSC_DEFAULT_DOUBLE_PRECISION, PETSC_DEFAULT_DOUBLE_PRECISION, &
-        60, ierr)
+                            PETSC_DEFAULT_DOUBLE_PRECISION, PETSC_DEFAULT_DOUBLE_PRECISION, &
+                            60, ierr)
 !!$      print *
 !!$      print *, "SMALL WALL ITERATIONS"
 !!$      print *, "SMALL WALL ITERATIONS"
@@ -94,14 +94,14 @@ contains
     end if
 
     ! Allocate working arrays
-    allocate(v(npoint,3),v1D(dof) )
-    allocate(f0(npoint,3), finc(npoint,3), finc1D(dof) )
+    allocate (v(npoint, 3), v1D(dof))
+    allocate (f0(npoint, 3), finc(npoint, 3), finc1D(dof))
 
     ! Save current wall force density
     p = 0
     do iwall = 1, nwall
       wall => walls(iwall)
-      f0(p+1:p+wall%nvert,:) = wall%f
+      f0(p + 1:p + wall%nvert, :) = wall%f
       p = p + wall%nvert
     end do ! iwall
 
@@ -130,7 +130,7 @@ contains
     p = 0
     do iwall = 1, nwall
       wall => walls(iwall)
-      wall%f = f0(p+1:p+wall%nvert,:) + finc(p+1:p+wall%nvert,:)
+      wall%f = f0(p + 1:p + wall%nvert, :) + finc(p + 1:p + wall%nvert, :)
       p = p + wall%nvert
     end do ! iwall
 
@@ -138,27 +138,27 @@ contains
     call Compute_Wall_Residual_Vel(v)
     if (rootWorld) then
       vmax = maxval(abs(v))
-      vzmax = maxval(abs(v(:,3)))
-      write(*, '(A,ES12.2,A,ES12.2)') 'Residual velocity: vmax = ', vmax, ' vzmax = ', vzmax
+      vzmax = maxval(abs(v(:, 3)))
+      write (*, '(A,ES12.2,A,ES12.2)') 'Residual velocity: vmax = ', vmax, ' vzmax = ', vzmax
     end if
 
     ! Deallocate working arrays
-    deallocate(v, f0, finc, finc1D)
+    deallocate (v, f0, finc, finc1D)
 
   end subroutine NoSlipWall
 
 !**********************************************************************
   subroutine Compute_Wall_Residual_Vel(v)
-    real(WP) :: v(:,:)
+    real(WP) :: v(:, :)
 
-    type(t_targetlist),pointer :: tlist
+    type(t_targetlist), pointer :: tlist
     real(WP) :: c1, c2
     integer :: i, ii
     real(WP) :: vmax, vzmax
     integer :: ierr
     integer :: iwall, iele, ivert, l, offset
-    type(t_Wall),pointer :: wall
-    real(WP) :: vele(3,3), vc(3)
+    type(t_Wall), pointer :: wall
+    real(WP) :: vele(3, 3), vc(3)
 
     ! Allocate working arrays
     tlist => tlist_wall
@@ -185,7 +185,7 @@ contains
 
     ! Add background velocity
     do ii = 1, 3
-      v(:,ii) = v(:,ii) + vBkg(ii)   ! 2/(lam + 1) target = 1
+      v(:, ii) = v(:, ii) + vBkg(ii)   ! 2/(lam + 1) target = 1
     end do ! ii
 
   end subroutine Compute_Wall_Residual_Vel
@@ -198,47 +198,47 @@ contains
 ! It is the eigensystem of A that is to be deflated
 
   SUBROUTINE WallBuildMat(dof, AA)
-    integer                   :: dof 
-    real(WP), dimension(dof,dof)  :: AA
+    integer                   :: dof
+    real(WP), dimension(dof, dof)  :: AA
 
-    real(WP),allocatable :: g(:,:), v(:,:)
+    real(WP), allocatable :: g(:, :), v(:, :)
 
-    real(WP), dimension(dof)      :: u,b  
+    real(WP), dimension(dof)      :: u, b
 
     Mat :: mat_t
     Vec :: vec_u, vec_b
 
     integer :: nPoint
-    type(t_SourceList),pointer :: slist
-    type(t_TargetList),pointer :: tlist
+    type(t_SourceList), pointer :: slist
+    type(t_TargetList), pointer :: tlist
 
-    type(t_wall),pointer :: wall
+    type(t_wall), pointer :: wall
     integer :: ierr
-    integer :: i,j,l,m,p,q, iwall
+    integer :: i, j, l, m, p, q, iwall
 
-   ! do iwall = 1 , nwall
-   !    wall => walls(iwall)
-   !    call Wall_ComputeGeometry(wall)
-   ! end do ! iwall
+    ! do iwall = 1 , nwall
+    !    wall => walls(iwall)
+    !    call Wall_ComputeGeometry(wall)
+    ! end do ! iwall
 
     call VecCreateSeq(PETSC_COMM_SELF, dof, vec_u, ierr)
     call VecCreateSeq(PETSC_COMM_SELF, dof, vec_b, ierr)
 
     call MatCreateShell(PETSC_COMM_SELF, dof, dof, dof, &
-         dof, PETSC_NULL_INTEGER, mat_t, ierr)
+                        dof, PETSC_NULL_INTEGER, mat_t, ierr)
     call MatShellSetOperation(mat_t, MATOP_MULT, MyMatMult, ierr)
 
-    do i = 1,dof
-       u = 0.
-       u(i) = 1.
+    do i = 1, dof
+      u = 0.
+      u(i) = 1.
 
-       if (rootWorld) print *,i, " of ", dof
+      if (rootWorld) print *, i, " of ", dof
 
-       call My_VecSetValues(vec_u, u)
-       call MatMult(mat_t, vec_u, vec_b, ierr) 
-       call My_VecGetValues(vec_b, b)
+      call My_VecSetValues(vec_u, u)
+      call MatMult(mat_t, vec_u, vec_b, ierr)
+      call My_VecGetValues(vec_b, b)
 
-       AA(:,i) = b
+      AA(:, i) = b
 
     end do
 
@@ -255,9 +255,9 @@ contains
     Vec :: vec_u, vec_b
     integer :: ierr
 
-    real(WP),allocatable :: f1D(:), f(:,:), v(:,:), v1D(:)
-    type(t_TargetList),pointer :: tlist
-    type(t_Wall),pointer :: wall
+    real(WP), allocatable :: f1D(:), f(:, :), v(:, :), v1D(:)
+    type(t_TargetList), pointer :: tlist
+    type(t_Wall), pointer :: wall
     integer :: iwall, p
     real(WP) :: c1, c2
 
@@ -265,7 +265,7 @@ contains
     tlist => tlist_wall
 
     ! Allocate working arrays
-    allocate(f1D(dof), f(npoint,3), v(npoint,3), v1D(dof))
+    allocate (f1D(dof), f(npoint, 3), v(npoint, 3), v1D(dof))
 
     ! Transform vec_u to single-layer density on walls
     call My_VecGetValues(vec_u, f1D)
@@ -274,7 +274,7 @@ contains
     p = 0
     do iwall = 1, nwall
       wall => walls(iwall)
-      wall%f = f(p+1:p+wall%nvert,:)
+      wall%f = f(p + 1:p + wall%nvert, :)
       p = p + wall%nvert
     end do ! iwall
 
@@ -301,7 +301,7 @@ contains
     call My_VecSetValues(vec_b, v1D)
 
     ! Deallocate working arrays
-    deallocate(f1D, f, v, v1D)
+    deallocate (f1D, f, v, v1D)
 
   end subroutine MyMatMult
 
@@ -310,18 +310,18 @@ contains
     Vec x
     real(WP) :: a(:)
 
-    integer,allocatable :: ix(:)
+    integer, allocatable :: ix(:)
     integer :: n, i, ierr
 
     ! Allocate working arrays
     call VecGetSize(x, n, ierr)
-    allocate(ix(n))
-    ix = (/ (i, i=0,n-1) /)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
 
     call VecGetValues(x, n, ix, a, ierr)
 
     ! Deallocate working arrays
-    deallocate(ix)
+    deallocate (ix)
 
   end subroutine My_VecGetValues
 
@@ -330,37 +330,37 @@ contains
     Vec x
     real(WP) :: a(:)
 
-    integer,allocatable :: ix(:)
+    integer, allocatable :: ix(:)
     integer :: n, i, ierr
 
     ! Allocate working arrays
     call VecGetSize(x, n, ierr)
-    allocate(ix(n))
-    ix = (/ (i, i=0,n-1) /)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
 
     call VecSetValues(x, n, ix, a, INSERT_VALUES, ierr)
-    call VecAssemblyBegin(x,ierr)
+    call VecAssemblyBegin(x, ierr)
     call VecAssemblyEnd(x, ierr)
 
     ! Deallocate working arrays
-    deallocate(ix)
+    deallocate (ix)
 
   end subroutine My_VecSetValues
 
 !**********************************************************************
 ! Assemble to and from a 1-dimensional array that has no redundancy
 ! Arguments:
-!  u(:,:) -- 
+!  u(:,:) --
 !  u1D(:)
 !  direction --
 ! Note:
 !  direction = 1: u -> u1D
 !           = -1, u <= u1D
   subroutine AssembleArray(u, u1D, direction)
-    real(WP) :: u(:,:), u1D(:)
+    real(WP) :: u(:, :), u1D(:)
     integer :: direction
 
-    type(t_wall),pointer :: wall
+    type(t_wall), pointer :: wall
     integer :: iwall, ivert, pu, pu1D
 
     pu = 0
@@ -369,13 +369,13 @@ contains
       wall => walls(iwall)
       do ivert = 1, wall%nvert
         pu = pu + 1
-    pu1D = wall%indxVertGlb(ivert)
+        pu1D = wall%indxVertGlb(ivert)
 
-    if (direction == 1) then
-      u1D(3*pu1D-2:3*pu1D) = u(pu,:)
-    else
-      u(pu,:) = u1D(3*pu1D-2:3*pu1D)
-    end if
+        if (direction == 1) then
+          u1D(3*pu1D - 2:3*pu1D) = u(pu, :)
+        else
+          u(pu, :) = u1D(3*pu1D - 2:3*pu1D)
+        end if
       end do !ivert
     end do ! iwall
 

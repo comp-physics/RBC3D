@@ -8,12 +8,12 @@ module ModDataStruct
   private
 
   public :: t_Spline, &
-    t_Rbc, &
-    t_RbcPolarPatch, &
-    t_Wall, &
-    t_SourceList, &
-    t_TargetList, &
-    t_NbrRbcList
+            t_Rbc, &
+            t_RbcPolarPatch, &
+            t_Wall, &
+            t_SourceList, &
+            t_TargetList, &
+            t_NbrRbcList
 
 !**********************************************************************
 ! 2D periodic spline surface of periodicity 2*PI
@@ -35,11 +35,10 @@ module ModDataStruct
   type t_spline
     integer :: m, n, nvar
     real(WP) :: hx, hy, ihx, ihy
-    real(WP),pointer :: u(:,:,:)
-    real(WP),pointer :: u1(:,:,:), u2(:,:,:), u12(:,:,:)
-    real(WP),pointer :: kx(:), ky(:)
+    real(WP), pointer :: u(:, :, :)
+    real(WP), pointer :: u1(:, :, :), u2(:, :, :), u12(:, :, :)
+    real(WP), pointer :: kx(:), ky(:)
   end type t_spline
-
 
 !**********************************************************************
 ! Red blood cell surface
@@ -79,7 +78,7 @@ module ModDataStruct
 !
 ! f(ilat,ilon,:) -- surface force density
 ! g(ilat,ilon,:) -- double-layer potential density
-! 
+!
 !======================================================================
 ! Spline interpolation
 !
@@ -103,28 +102,28 @@ module ModDataStruct
 ! Material properties
 !
 ! ES, ED, EB -- shear, dilatation and bending modulus
-!  
+!
 !======================================================================
   type t_RBC
     integer :: nlat0, nlon0
     integer :: nlat, nlon
-    real(WP),dimension(:),pointer :: th, phi, w
-    real(WP),dimension(:),pointer :: wshags, wshsgs, wshses, wvhsgs
-    real(WP),dimension(:,:,:),pointer :: x
-    real(WP),dimension(:,:,:),pointer :: a1, a2, a1_rcp, a2_rcp, a3
-    real(WP),dimension(:,:),pointer :: detj
-    real(WP),dimension(:,:,:,:),pointer :: a, a_rcp, b
+    real(WP), dimension(:), pointer :: th, phi, w
+    real(WP), dimension(:), pointer :: wshags, wshsgs, wshses, wvhsgs
+    real(WP), dimension(:, :, :), pointer :: x
+    real(WP), dimension(:, :, :), pointer :: a1, a2, a1_rcp, a2_rcp, a3
+    real(WP), dimension(:, :), pointer :: detj
+    real(WP), dimension(:, :, :, :), pointer :: a, a_rcp, b
 
-    real(WP),dimension(:,:,:),pointer :: f, g, v  ! single, double, velocity
+    real(WP), dimension(:, :, :), pointer :: f, g, v  ! single, double, velocity
     ! vel and double are the same for finite viscosity ratio
 
-    real(WP),dimension(:,:,:,:),pointer :: qq
+    real(WP), dimension(:, :, :, :), pointer :: qq
 
     real(WP) :: xc(3), vol, area, starting_area
     real(WP) :: meshSize
 
     type(t_spline) :: spln_x, spln_a3, spln_detJ, spln_FdetJ, spln_GdetJ
-    type(t_RbcPolarPatch),pointer :: patch
+    type(t_RbcPolarPatch), pointer :: patch
 
     real(WP) :: ES, ED, EB
 
@@ -135,11 +134,11 @@ module ModDataStruct
   end type t_RBC
 
 !**********************************************************************
-! Polar coordinate patch for a spherical surface 
+! Polar coordinate patch for a spherical surface
 !
 ! nlat, nlon
 ! radius -- patch radius
-! nrad, nazm -- number of patch points along radial and 
+! nrad, nazm -- number of patch points along radial and
 !       azimuthal directions
 ! thL, phiL -- local coordiantes of patch mesh points
 ! w -- weight of integration weight (including masking fucntion)
@@ -150,8 +149,8 @@ module ModDataStruct
     real(WP) :: radius
 
     integer :: nrad, nazm
-    real(WP),dimension(:),pointer :: thL, phiL, w;
-    real(WP),dimension(:,:,:,:),pointer :: thG, phiG;
+    real(WP), dimension(:), pointer :: thL, phiL, w; 
+    real(WP), dimension(:, :, :, :), pointer :: thG, phiG; 
   end type t_RbcPolarPatch
 
 !**********************************************************************
@@ -177,23 +176,22 @@ module ModDataStruct
 ! areaTot -- total surface area
 !
 ! lhs -- lhs matrix for no-slip boundary condition
-! 
+!
 !**********************************************************************
   type t_Wall
     integer :: nvert, nele
-    real(WP),pointer :: x(:,:), f(:,:), g(:,:)
-    integer,pointer :: e2v(:,:), v2v(:)
+    real(WP), pointer :: x(:, :), f(:, :), g(:, :)
+    integer, pointer :: e2v(:, :), v2v(:)
 
-    integer,pointer :: indxVertGlb(:)
+    integer, pointer :: indxVertGlb(:)
 
-    real(WP),pointer :: a3(:,:), area(:), epsDist(:)
+    real(WP), pointer :: a3(:, :), area(:), epsDist(:)
     real(WP) :: areaTot
 
     Mat :: lhs
 
     integer :: ID
   end type t_Wall
-
 
 !**********************************************************************
 ! Collection of singularity sources
@@ -203,25 +201,25 @@ module ModDataStruct
 !  g(i,:) -- double-layer potential source singularity at the i-th piont
 !  a3(i,:) -- normal direction
 !  lam(i) -- viscRatio
-!  
+!
 !  indx(:,0:2) -- index
 !     for RBC surface, (surfId, ilat, ilon)
 !     for wall surface, (surfId, iele, -1)
-!  
+!
 !  Nc -- number of cells
 !  iLbNc -- Nc/Lb, for indentifying which cell a point lies in
 !  hoc -- first point in the cell
 !  next -- next point
   type t_SourceList
     integer :: nPoint
-    real(WP),pointer,dimension(:,:) :: x, f, g, a3
-    real(WP),pointer,dimension(:) :: lam
-    real(WP),pointer,dimension(:) :: Bcoef
-    integer,pointer :: indx(:,:)
+    real(WP), pointer, dimension(:, :) :: x, f, g, a3
+    real(WP), pointer, dimension(:) :: lam
+    real(WP), pointer, dimension(:) :: Bcoef
+    integer, pointer :: indx(:, :)
 
     integer :: Nc(3)
     real(WP) :: iLbNc(3)
-    integer,pointer :: hoc(:,:,:), next(:)
+    integer, pointer :: hoc(:, :, :), next(:)
   end type t_SourceList
 
 !**********************************************************************
@@ -232,11 +230,11 @@ module ModDataStruct
 !  active -- wheather the target point is active
   type t_TargetList
     integer :: nPoint
-    real(WP),pointer,dimension(:,:) :: x
-    real(WP),pointer,dimension(:) :: lam
-    real(WP),pointer,dimension(:) :: Acoef
-    integer,pointer :: indx(:,:)
-    logical,pointer :: active(:)
+    real(WP), pointer, dimension(:, :) :: x
+    real(WP), pointer, dimension(:) :: lam
+    real(WP), pointer, dimension(:) :: Acoef
+    integer, pointer :: indx(:, :)
+    logical, pointer :: active(:)
   end type t_TargetList
 
 !**********************************************************************
@@ -248,8 +246,8 @@ module ModDataStruct
 !    indx(1:2) -- mesh index on the surface
   type t_NbrRbcList
     integer :: N
-    real(WP),pointer :: dist(:)
-    integer,pointer :: indx(:,:)
+    real(WP), pointer :: dist(:)
+    integer, pointer :: indx(:, :)
   end type t_NbrRbcList
 
 !**********************************************************************
