@@ -11,3 +11,5 @@ libcommon.a
 .vscode
 field
 mypackages
+packages
+ogpackages
