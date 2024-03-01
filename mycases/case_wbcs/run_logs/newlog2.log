@@ -1,0 +1,2945 @@
+---------------------------------------
+Begin Slurm Prolog: Jan-05-2024 00:01:40
+Job ID:    4492029
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run2.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+ Node            0  of            4  running on atl1-1-02-007-28-1.pace.gatech.edu
+ Node            1  of            4  running on atl1-1-02-007-28-2.pace.gatech.edu
+ Node            2  of            4  running on atl1-1-02-007-29-1.pace.gatech.edu
+ Node            3  of            4  running on atl1-1-02-007-29-2.pace.gatech.edu
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ Number of nodes for physical Ewald sum =            4
+ Number of nodes for Fourier Ewald sum =            4
+
+ alpha_Ewd =   0.44000000000000000     
+ eps_Ewd =    1.0000000000000000E-003
+ PBspln_Ewd =            8
+ nCellTypes =            3
+ viscRat =    1.0000000000000000        1.0000000000000000        1.0000000000000000     
+ refRad =    1.0000000000000000        1.0000000000000000        1.0000000000000000     
+ Deflate =  F
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ Nt =        10000
+ Ts =    8.0000000000000004E-004
+ cell_out =           50
+ wall_out =       -10000
+ pgrad_out =          -10
+ flow_out =          -10
+ flow_out =           -1
+ restart_out =          100
+ restart file = D/restart.LATEST.dat
+ epsDist =    1.0000000000000000E-010
+ ForceCoef =    10.000000000000000     
+ viscRatThresh =    10.000000000000000     
+ rigidsep =  F
+ fmags =    0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ Read restart file D/restart.LATEST.dat
+ error 0
+ error 1
+ error 2
+ z
+ a
+ b
+ 0
+ Lb =    8.3013429849047267        8.3013429849047267        11.347517730496456     
+ Nt0 =          100
+ time0 =    7.9999999999999960E-002
+ vBkg =    0.0000000000000000        0.0000000000000000        8.0000000000000000     
+ 1
+ 2
+ nrbc =           25
+ 3
+ irbc :            1  nlat0 =           12 type =            1 starting_area =    16.844790346298556     
+ nlat =          36
+ ModIO starting area:    16.844790346298556     
+ irbc :            2  nlat0 =           12 type =            1 starting_area =    16.844790346298552     
+ nlat =          36
+ ModIO starting area:    16.844790346298552     
+ irbc :            3  nlat0 =           12 type =            1 starting_area =    16.844790346298502     
+ nlat =          36
+ ModIO starting area:    16.844790346298502     
+ irbc :            4  nlat0 =           12 type =            1 starting_area =    16.844790346298527     
+ nlat =          36
+ ModIO starting area:    16.844790346298527     
+ irbc :            5  nlat0 =           12 type =            1 starting_area =    16.844790346298598     
+ nlat =          36
+ ModIO starting area:    16.844790346298598     
+ irbc :            6  nlat0 =           12 type =            1 starting_area =    16.844790346298538     
+ nlat =          36
+ ModIO starting area:    16.844790346298538     
+ irbc :            7  nlat0 =           12 type =            1 starting_area =    16.844790346298545     
+ nlat =          36
+ ModIO starting area:    16.844790346298545     
+ irbc :            8  nlat0 =           12 type =            1 starting_area =    16.844790346298584     
+ nlat =          36
+ ModIO starting area:    16.844790346298584     
+ irbc :            9  nlat0 =           12 type =            1 starting_area =    16.844790346298517     
+ nlat =          36
+ ModIO starting area:    16.844790346298517     
+ irbc :           10  nlat0 =           12 type =            1 starting_area =    16.844790346298637     
+ nlat =          36
+ ModIO starting area:    16.844790346298637     
+ irbc :           11  nlat0 =           12 type =            1 starting_area =    16.844790346298605     
+ nlat =          36
+ ModIO starting area:    16.844790346298605     
+ 2
+ 3
+ 2
+ 2
+ ModIO starting area:    16.844790346298556     
+ 3
+ 3
+ ModIO starting area:    16.844790346298552     
+ ModIO starting area:    16.844790346298556     
+ ModIO starting area:    16.844790346298556     
+ ModIO starting area:    16.844790346298502     
+ ModIO starting area:    16.844790346298552     
+ ModIO starting area:    16.844790346298552     
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298502     
+ ModIO starting area:    16.844790346298502     
+ ModIO starting area:    16.844790346298598     
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298538     
+ ModIO starting area:    16.844790346298598     
+ ModIO starting area:    16.844790346298598     
+ ModIO starting area:    16.844790346298545     
+ ModIO starting area:    16.844790346298538     
+ ModIO starting area:    16.844790346298538     
+ ModIO starting area:    16.844790346298584     
+ ModIO starting area:    16.844790346298545     
+ ModIO starting area:    16.844790346298545     
+ ModIO starting area:    16.844790346298517     
+ ModIO starting area:    16.844790346298584     
+ ModIO starting area:    16.844790346298584     
+ ModIO starting area:    16.844790346298637     
+ ModIO starting area:    16.844790346298517     
+ ModIO starting area:    16.844790346298517     
+ ModIO starting area:    16.844790346298605     
+ ModIO starting area:    16.844790346298637     
+ ModIO starting area:    16.844790346298637     
+ ModIO starting area:    16.844790346298605     
+ ModIO starting area:    16.844790346298605     
+ irbc :           12  nlat0 =           12 type =            1 starting_area =    16.844790346298527     
+ nlat =          36
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298527     
+ ModIO starting area:    16.844790346298527     
+ irbc :           13  nlat0 =           12 type =            1 starting_area =    16.844790346298602     
+ nlat =          36
+ ModIO starting area:    16.844790346298602     
+ ModIO starting area:    16.844790346298602     
+ ModIO starting area:    16.844790346298602     
+ ModIO starting area:    16.844790346298602     
+ irbc :           14  nlat0 =           12 type =            1 starting_area =    16.844790346298605     
+ nlat =          36
+ ModIO starting area:    16.844790346298605     
+ ModIO starting area:    16.844790346298605     
+ ModIO starting area:    16.844790346298605     
+ ModIO starting area:    16.844790346298605     
+ irbc :           15  nlat0 =           12 type =            1 starting_area =    16.844790346298588     
+ nlat =          36
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ irbc :           16  nlat0 =           12 type =            1 starting_area =    16.844790346298616     
+ nlat =          36
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ irbc :           17  nlat0 =           12 type =            1 starting_area =    16.844790346298591     
+ nlat =          36
+ ModIO starting area:    16.844790346298591     
+ ModIO starting area:    16.844790346298591     
+ ModIO starting area:    16.844790346298591     
+ ModIO starting area:    16.844790346298591     
+ irbc :           18  nlat0 =           12 type =            1 starting_area =    16.844790346298620     
+ nlat =          36
+ ModIO starting area:    16.844790346298620     
+ ModIO starting area:    16.844790346298620     
+ ModIO starting area:    16.844790346298620     
+ ModIO starting area:    16.844790346298620     
+ irbc :           19  nlat0 =           12 type =            2 starting_area =    24.630086404143942     
+ nlat =          36
+ ModIO starting area:    24.630086404143942     
+ ModIO starting area:    24.630086404143942     
+ ModIO starting area:    24.630086404143942     
+ ModIO starting area:    24.630086404143942     
+ irbc :           20  nlat0 =           12 type =            1 starting_area =    16.844790346298588     
+ nlat =          36
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ ModIO starting area:    16.844790346298588     
+ irbc :           21  nlat0 =           12 type =            1 starting_area =    16.844790346298627     
+ nlat =          36
+ ModIO starting area:    16.844790346298627     
+ ModIO starting area:    16.844790346298627     
+ ModIO starting area:    16.844790346298627     
+ ModIO starting area:    16.844790346298627     
+ irbc :           22  nlat0 =           12 type =            1 starting_area =    16.844790346298581     
+ nlat =          36
+ ModIO starting area:    16.844790346298581     
+ ModIO starting area:    16.844790346298581     
+ ModIO starting area:    16.844790346298581     
+ ModIO starting area:    16.844790346298581     
+ irbc :           23  nlat0 =           12 type =            1 starting_area =    16.844790346298666     
+ nlat =          36
+ ModIO starting area:    16.844790346298666     
+ ModIO starting area:    16.844790346298666     
+ ModIO starting area:    16.844790346298666     
+ ModIO starting area:    16.844790346298666     
+ irbc :           24  nlat0 =           12 type =            1 starting_area =    16.844790346298659     
+ nlat =          36
+ ModIO starting area:    16.844790346298659     
+ ModIO starting area:    16.844790346298659     
+ ModIO starting area:    16.844790346298659     
+ ModIO starting area:    16.844790346298659     
+ irbc :           25  nlat0 =           12 type =            1 starting_area =    16.844790346298616     
+ nlat =          36
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ ModIO starting area:    16.844790346298616     
+ 4
+ nwall =            1
+ 4
+ iwall :            1  nvert =         1328  nele =         2404
+ 4
+ 4
+
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Derived Ewald sum parameters:
+rc =         1.19861
+Nc =     6    6    9
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Nb =    38   38   52
+NbC =    20   38   52
+
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ Just calculated dof, it is        10800
+ Set up GMRES solver
+ Just calculated dof, it is        10800
+ Set up GMRES solver
+ Just calculated dof, it is        10800
+ Set up GMRES solver
+ Just calculated dof, it is        10800
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+cells: vmax =     1.88E+01
+cells: vxmax vxmin =     1.62E+00   -1.55E+00
+cells: vymax vymin =     1.54E+00   -1.50E+00
+cells: vzmax vzmin =     1.88E+01    1.65E+00
+Wall iteration:
+niter =    51 residual =     8.19E-04
+Residual velocity: vmax =     1.61E-04 vzmax =     2.37E-05
+lt =       101  T =         0.08080 time cost =        24.80
+
+cells: vmax =     1.88E+01
+cells: vxmax vxmin =     1.64E+00   -1.56E+00
+cells: vymax vymin =     1.55E+00   -1.51E+00
+cells: vzmax vzmin =     1.88E+01    1.67E+00
+Wall iteration:
+niter =    51 residual =     8.22E-04
+Residual velocity: vmax =     1.64E-04 vzmax =     2.38E-05
+lt =       102  T =         0.08160 time cost =        24.55
+
+cells: vmax =     1.88E+01
+cells: vxmax vxmin =     1.65E+00   -1.57E+00
+cells: vymax vymin =     1.56E+00   -1.53E+00
+cells: vzmax vzmin =     1.88E+01    1.69E+00
+Wall iteration:
+niter =    51 residual =     8.25E-04
+Residual velocity: vmax =     1.68E-04 vzmax =     2.40E-05
+lt =       103  T =         0.08240 time cost =        24.56
+
+cells: vmax =     1.87E+01
+cells: vxmax vxmin =     1.66E+00   -1.58E+00
+cells: vymax vymin =     1.57E+00   -1.54E+00
+cells: vzmax vzmin =     1.87E+01    1.71E+00
+Wall iteration:
+niter =    51 residual =     8.28E-04
+Residual velocity: vmax =     1.72E-04 vzmax =     2.42E-05
+lt =       104  T =         0.08320 time cost =        24.57
+
+cells: vmax =     1.87E+01
+cells: vxmax vxmin =     1.67E+00   -1.59E+00
+cells: vymax vymin =     1.58E+00   -1.55E+00
+cells: vzmax vzmin =     1.87E+01    1.73E+00
+Wall iteration:
+niter =    52 residual =     8.10E-04
+Residual velocity: vmax =     1.72E-04 vzmax =     2.40E-05
+lt =       105  T =         0.08400 time cost =        24.64
+
+cells: vmax =     1.87E+01
+cells: vxmax vxmin =     1.68E+00   -1.59E+00
+cells: vymax vymin =     1.59E+00   -1.57E+00
+cells: vzmax vzmin =     1.87E+01    1.75E+00
+Wall iteration:
+niter =    52 residual =     8.12E-04
+Residual velocity: vmax =     1.76E-04 vzmax =     2.42E-05
+lt =       106  T =         0.08480 time cost =        24.66
+
+cells: vmax =     1.87E+01
+cells: vxmax vxmin =     1.69E+00   -1.60E+00
+cells: vymax vymin =     1.60E+00   -1.58E+00
+cells: vzmax vzmin =     1.87E+01    1.77E+00
+Wall iteration:
+niter =    52 residual =     8.15E-04
+Residual velocity: vmax =     1.80E-04 vzmax =     2.44E-05
+lt =       107  T =         0.08560 time cost =        24.57
+
+cells: vmax =     1.86E+01
+cells: vxmax vxmin =     1.70E+00   -1.61E+00
+cells: vymax vymin =     1.61E+00   -1.59E+00
+cells: vzmax vzmin =     1.86E+01    1.79E+00
+Wall iteration:
+niter =    52 residual =     8.17E-04
+Residual velocity: vmax =     1.84E-04 vzmax =     2.45E-05
+lt =       108  T =         0.08640 time cost =        24.65
+
+cells: vmax =     1.86E+01
+cells: vxmax vxmin =     1.71E+00   -1.62E+00
+cells: vymax vymin =     1.61E+00   -1.60E+00
+cells: vzmax vzmin =     1.86E+01    1.82E+00
+Wall iteration:
+niter =    53 residual =     7.97E-04
+Residual velocity: vmax =     1.83E-04 vzmax =     2.44E-05
+lt =       109  T =         0.08720 time cost =        24.58
+
+cells: vmax =     1.86E+01
+cells: vxmax vxmin =     1.72E+00   -1.63E+00
+cells: vymax vymin =     1.62E+00   -1.62E+00
+cells: vzmax vzmin =     1.86E+01    1.84E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.289850474459001     
+area expansion of cell   1:    2.64212%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.156170846048514     
+area expansion of cell   2:    1.84853%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.502459745259827     
+area expansion of cell   3:    3.90429%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.565986996635630     
+area expansion of cell   4:    4.28142%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.523403150287933     
+area expansion of cell   5:    4.02862%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.335922762327069     
+area expansion of cell   6:    2.91563%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.243839641810279     
+area expansion of cell   7:    2.36898%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.375688470042967     
+area expansion of cell   8:    3.15171%
+ cell%starting_area    16.844790346298517     
+ cell%area:    17.752355603627482     
+area expansion of cell   9:    5.38781%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.363625519060850     
+area expansion of cell  10:    3.08009%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.178943853206814     
+area expansion of cell  11:    1.98372%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.713995365994819     
+area expansion of cell  12:    5.16008%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.356759186595550     
+area expansion of cell  13:    3.03933%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.210991501541905     
+area expansion of cell  14:    2.17397%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.747354289189911     
+area expansion of cell  15:    5.35812%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.156158262062686     
+area expansion of cell  16:    1.84845%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.486400245780068     
+area expansion of cell  17:    3.80895%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.253990764004225     
+area expansion of cell  18:    2.42924%
+ cell%starting_area    24.630086404143942     
+ cell%area:    24.909245954965986     
+area expansion of cell  19:    1.13341%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.378972564738010     
+area expansion of cell  20:    3.17120%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.284298663750075     
+area expansion of cell  21:    2.60916%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.600152417243290     
+area expansion of cell  22:    4.48425%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.168333519373931     
+area expansion of cell  23:    1.92073%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.321607492925924     
+area expansion of cell  24:    2.83065%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.475286009180433     
+area expansion of cell  25:    3.74297%
+Wall iteration:
+niter =    53 residual =     7.98E-04
+Residual velocity: vmax =     1.87E-04 vzmax =     2.44E-05
+lt =       110  T =         0.08800 time cost =        24.61
+
+cells: vmax =     1.86E+01
+cells: vxmax vxmin =     1.72E+00   -1.63E+00
+cells: vymax vymin =     1.63E+00   -1.63E+00
+cells: vzmax vzmin =     1.86E+01    1.86E+00
+Wall iteration:
+niter =    53 residual =     7.97E-04
+Residual velocity: vmax =     1.90E-04 vzmax =     2.45E-05
+lt =       111  T =         0.08880 time cost =        24.66
+
+cells: vmax =     1.85E+01
+cells: vxmax vxmin =     1.73E+00   -1.64E+00
+cells: vymax vymin =     1.64E+00   -1.64E+00
+cells: vzmax vzmin =     1.85E+01    1.89E+00
+Wall iteration:
+niter =    53 residual =     7.96E-04
+Residual velocity: vmax =     1.94E-04 vzmax =     2.46E-05
+lt =       112  T =         0.08960 time cost =        24.68
+
+cells: vmax =     1.85E+01
+cells: vxmax vxmin =     1.74E+00   -1.65E+00
+cells: vymax vymin =     1.65E+00   -1.65E+00
+cells: vzmax vzmin =     1.85E+01    1.91E+00
+Wall iteration:
+niter =    54 residual =     7.80E-04
+Residual velocity: vmax =     1.91E-04 vzmax =     1.93E-05
+lt =       113  T =         0.09040 time cost =        24.70
+
+cells: vmax =     1.85E+01
+cells: vxmax vxmin =     1.75E+00   -1.65E+00
+cells: vymax vymin =     1.66E+00   -1.66E+00
+cells: vzmax vzmin =     1.85E+01    1.93E+00
+Wall iteration:
+niter =    54 residual =     7.76E-04
+Residual velocity: vmax =     1.94E-04 vzmax =     1.99E-05
+lt =       114  T =         0.09120 time cost =        24.76
+
+cells: vmax =     1.85E+01
+cells: vxmax vxmin =     1.76E+00   -1.66E+00
+cells: vymax vymin =     1.67E+00   -1.68E+00
+cells: vzmax vzmin =     1.85E+01    1.96E+00
+Wall iteration:
+niter =    54 residual =     7.70E-04
+Residual velocity: vmax =     1.96E-04 vzmax =     2.05E-05
+lt =       115  T =         0.09200 time cost =        24.83
+
+cells: vmax =     1.84E+01
+cells: vxmax vxmin =     1.77E+00   -1.67E+00
+cells: vymax vymin =     1.67E+00   -1.69E+00
+cells: vzmax vzmin =     1.84E+01    1.98E+00
+Wall iteration:
+niter =    54 residual =     7.61E-04
+Residual velocity: vmax =     1.98E-04 vzmax =     2.13E-05
+lt =       116  T =         0.09280 time cost =        24.81
+
+cells: vmax =     1.84E+01
+cells: vxmax vxmin =     1.77E+00   -1.67E+00
+cells: vymax vymin =     1.68E+00   -1.70E+00
+cells: vzmax vzmin =     1.84E+01    2.01E+00
+Wall iteration:
+niter =    54 residual =     7.51E-04
+Residual velocity: vmax =     1.99E-04 vzmax =     2.27E-05
+lt =       117  T =         0.09360 time cost =        24.78
+
+cells: vmax =     1.84E+01
+cells: vxmax vxmin =     1.78E+00   -1.68E+00
+cells: vymax vymin =     1.69E+00   -1.71E+00
+cells: vzmax vzmin =     1.84E+01    2.03E+00
+Wall iteration:
+niter =    54 residual =     7.39E-04
+Residual velocity: vmax =     1.99E-04 vzmax =     2.41E-05
+lt =       118  T =         0.09440 time cost =        24.76
+
+cells: vmax =     1.84E+01
+cells: vxmax vxmin =     1.79E+00   -1.68E+00
+cells: vymax vymin =     1.70E+00   -1.72E+00
+cells: vzmax vzmin =     1.84E+01    2.06E+00
+Wall iteration:
+niter =    54 residual =     7.25E-04
+Residual velocity: vmax =     1.98E-04 vzmax =     2.55E-05
+lt =       119  T =         0.09520 time cost =        24.72
+
+cells: vmax =     1.83E+01
+cells: vxmax vxmin =     1.80E+00   -1.69E+00
+cells: vymax vymin =     1.70E+00   -1.73E+00
+cells: vzmax vzmin =     1.83E+01    2.08E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.329995409386289     
+area expansion of cell   1:    2.88045%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.187847667318461     
+area expansion of cell   2:    2.03658%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.558008745160752     
+area expansion of cell   3:    4.23406%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.627433571525557     
+area expansion of cell   4:    4.64620%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.582652212524120     
+area expansion of cell   5:    4.38036%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.391522339710857     
+area expansion of cell   6:    3.24570%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.275159255981691     
+area expansion of cell   7:    2.55491%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.414863449217325     
+area expansion of cell   8:    3.38427%
+ cell%starting_area    16.844790346298517     
+ cell%area:    17.833658878921760     
+area expansion of cell   9:    5.87047%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.407364287358888     
+area expansion of cell  10:    3.33975%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.203726193096486     
+area expansion of cell  11:    2.13084%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.794282551743414     
+area expansion of cell  12:    5.63671%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.398246338559510     
+area expansion of cell  13:    3.28562%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.238726212756152     
+area expansion of cell  14:    2.33862%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.823131292098211     
+area expansion of cell  15:    5.80797%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.180332367252731     
+area expansion of cell  16:    1.99196%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.530540035421566     
+area expansion of cell  17:    4.07099%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.288295880143938     
+area expansion of cell  18:    2.63289%
+ cell%starting_area    24.630086404143942     
+ cell%area:    24.939667192373204     
+area expansion of cell  19:    1.25692%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.429242171177783     
+area expansion of cell  20:    3.46963%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.322903857569056     
+area expansion of cell  21:    2.83835%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.663772172579083     
+area expansion of cell  22:    4.86193%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.200539928289714     
+area expansion of cell  23:    2.11193%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.362927371848478     
+area expansion of cell  24:    3.07595%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.525453039638581     
+area expansion of cell  25:    4.04079%
+Wall iteration:
+niter =    54 residual =     7.12E-04
+Residual velocity: vmax =     1.96E-04 vzmax =     2.70E-05
+lt =       120  T =         0.09600 time cost =        24.70
+
+cells: vmax =     1.83E+01
+cells: vxmax vxmin =     1.80E+00   -1.69E+00
+cells: vymax vymin =     1.71E+00   -1.74E+00
+cells: vzmax vzmin =     1.83E+01    2.11E+00
+Wall iteration:
+niter =    54 residual =     6.95E-04
+Residual velocity: vmax =     1.91E-04 vzmax =     2.79E-05
+lt =       121  T =         0.09680 time cost =        24.59
+
+cells: vmax =     1.83E+01
+cells: vxmax vxmin =     1.81E+00   -1.70E+00
+cells: vymax vymin =     1.72E+00   -1.75E+00
+cells: vzmax vzmin =     1.83E+01    2.14E+00
+Wall iteration:
+niter =    54 residual =     6.99E-04
+Residual velocity: vmax =     1.85E-04 vzmax =     2.95E-05
+lt =       122  T =         0.09760 time cost =        24.56
+
+cells: vmax =     1.83E+01
+cells: vxmax vxmin =     1.82E+00   -1.70E+00
+cells: vymax vymin =     1.72E+00   -1.76E+00
+cells: vzmax vzmin =     1.83E+01    2.16E+00
+Wall iteration:
+niter =    54 residual =     7.16E-04
+Residual velocity: vmax =     1.90E-04 vzmax =     3.07E-05
+lt =       123  T =         0.09840 time cost =        24.44
+
+cells: vmax =     1.82E+01
+cells: vxmax vxmin =     1.82E+00   -1.71E+00
+cells: vymax vymin =     1.73E+00   -1.77E+00
+cells: vzmax vzmin =     1.82E+01    2.19E+00
+Wall iteration:
+niter =    55 residual =     6.96E-04
+Residual velocity: vmax =     1.73E-04 vzmax =     2.68E-05
+lt =       124  T =         0.09920 time cost =        24.29
+
+cells: vmax =     1.82E+01
+cells: vxmax vxmin =     1.83E+00   -1.71E+00
+cells: vymax vymin =     1.74E+00   -1.78E+00
+cells: vzmax vzmin =     1.82E+01    2.22E+00
+Wall iteration:
+niter =    55 residual =     7.01E-04
+Residual velocity: vmax =     1.76E-04 vzmax =     2.71E-05
+lt =       125  T =         0.10000 time cost =        24.24
+
+cells: vmax =     1.82E+01
+cells: vxmax vxmin =     1.83E+00   -1.71E+00
+cells: vymax vymin =     1.74E+00   -1.79E+00
+cells: vzmax vzmin =     1.82E+01    2.25E+00
+Wall iteration:
+niter =    55 residual =     7.10E-04
+Residual velocity: vmax =     1.80E-04 vzmax =     2.74E-05
+lt =       126  T =         0.10080 time cost =        24.18
+
+cells: vmax =     1.82E+01
+cells: vxmax vxmin =     1.84E+00   -1.72E+00
+cells: vymax vymin =     1.75E+00   -1.80E+00
+cells: vzmax vzmin =     1.82E+01    2.28E+00
+Wall iteration:
+niter =    56 residual =     6.73E-04
+Residual velocity: vmax =     1.71E-04 vzmax =     1.90E-05
+lt =       127  T =         0.10160 time cost =        24.13
+
+cells: vmax =     1.81E+01
+cells: vxmax vxmin =     1.84E+00   -1.72E+00
+cells: vymax vymin =     1.76E+00   -1.81E+00
+cells: vzmax vzmin =     1.81E+01    2.31E+00
+Wall iteration:
+niter =    56 residual =     6.65E-04
+Residual velocity: vmax =     1.74E-04 vzmax =     1.90E-05
+lt =       128  T =         0.10240 time cost =        24.10
+
+cells: vmax =     1.81E+01
+cells: vxmax vxmin =     1.85E+00   -1.72E+00
+cells: vymax vymin =     1.76E+00   -1.82E+00
+cells: vzmax vzmin =     1.81E+01    2.34E+00
+Wall iteration:
+niter =    56 residual =     6.74E-04
+Residual velocity: vmax =     1.79E-04 vzmax =     1.92E-05
+lt =       129  T =         0.10320 time cost =        24.08
+
+cells: vmax =     1.81E+01
+cells: vxmax vxmin =     1.86E+00   -1.73E+00
+cells: vymax vymin =     1.77E+00   -1.83E+00
+cells: vzmax vzmin =     1.81E+01    2.37E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.365003591678136     
+area expansion of cell   1:    3.08827%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.216864251209923     
+area expansion of cell   2:    2.20884%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.604912438798582     
+area expansion of cell   3:    4.51251%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.679993354095554     
+area expansion of cell   4:    4.95823%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.635066158268888     
+area expansion of cell   5:    4.69151%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.443132962103942     
+area expansion of cell   6:    3.55209%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.301474513094963     
+area expansion of cell   7:    2.71113%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.447060320623599     
+area expansion of cell   8:    3.57541%
+ cell%starting_area    16.844790346298517     
+ cell%area:    17.903741590129790     
+area expansion of cell   9:    6.28652%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.444941342507693     
+area expansion of cell  10:    3.56283%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.224418612642996     
+area expansion of cell  11:    2.25368%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.866567294136733     
+area expansion of cell  12:    6.06583%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.433405128390255     
+area expansion of cell  13:    3.49434%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.261819707848524     
+area expansion of cell  14:    2.47572%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.887010114988072     
+area expansion of cell  15:    6.18719%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.200653912369152     
+area expansion of cell  16:    2.11260%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.565743739355746     
+area expansion of cell  17:    4.27998%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.317738179836393     
+area expansion of cell  18:    2.80768%
+ cell%starting_area    24.630086404143942     
+ cell%area:    24.968295085539026     
+area expansion of cell  19:    1.37315%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.474590891925345     
+area expansion of cell  20:    3.73884%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.356278820203137     
+area expansion of cell  21:    3.03648%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.718558703958884     
+area expansion of cell  22:    5.18717%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.229580875244519     
+area expansion of cell  23:    2.28433%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.399250678126563     
+area expansion of cell  24:    3.29158%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.567778124625168     
+area expansion of cell  25:    4.29206%
+Wall iteration:
+niter =    57 residual =     6.64E-04
+Residual velocity: vmax =     1.75E-04 vzmax =     2.07E-05
+lt =       130  T =         0.10400 time cost =        24.06
+
+cells: vmax =     1.81E+01
+cells: vxmax vxmin =     1.86E+00   -1.73E+00
+cells: vymax vymin =     1.77E+00   -1.84E+00
+cells: vzmax vzmin =     1.81E+01    2.40E+00
+Wall iteration:
+niter =    60 residual =     7.09E-04
+Residual velocity: vmax =     1.92E-04 vzmax =     1.63E-05
+lt =       131  T =         0.10480 time cost =        24.07
+
+cells: vmax =     1.81E+01
+cells: vxmax vxmin =     1.87E+00   -1.73E+00
+cells: vymax vymin =     1.78E+00   -1.84E+00
+cells: vzmax vzmin =     1.81E+01    2.43E+00
+Wall iteration:
+niter =    57 residual =     6.59E-04
+Residual velocity: vmax =     1.70E-04 vzmax =     2.14E-05
+lt =       132  T =         0.10560 time cost =        24.01
+
+cells: vmax =     1.80E+01
+cells: vxmax vxmin =     1.87E+00   -1.73E+00
+cells: vymax vymin =     1.78E+00   -1.85E+00
+cells: vzmax vzmin =     1.80E+01    2.46E+00
+Wall iteration:
+niter =    60 residual =     7.97E-04
+Residual velocity: vmax =     2.37E-04 vzmax =     2.14E-05
+lt =       133  T =         0.10640 time cost =        24.01
+
+cells: vmax =     1.80E+01
+cells: vxmax vxmin =     1.88E+00   -1.74E+00
+cells: vymax vymin =     1.79E+00   -1.86E+00
+cells: vzmax vzmin =     1.80E+01    2.49E+00
+Wall iteration:
+niter =    60 residual =     7.41E-04
+Residual velocity: vmax =     1.90E-04 vzmax =     1.72E-05
+lt =       134  T =         0.10720 time cost =        24.08
+
+cells: vmax =     1.80E+01
+cells: vxmax vxmin =     1.88E+00   -1.74E+00
+cells: vymax vymin =     1.79E+00   -1.87E+00
+cells: vzmax vzmin =     1.80E+01    2.53E+00
+Wall iteration:
+niter =    60 residual =     8.22E-04
+Residual velocity: vmax =     2.45E-04 vzmax =     2.25E-05
+lt =       135  T =         0.10800 time cost =        23.96
+
+cells: vmax =     1.80E+01
+cells: vxmax vxmin =     1.89E+00   -1.74E+00
+cells: vymax vymin =     1.80E+00   -1.88E+00
+cells: vzmax vzmin =     1.80E+01    2.56E+00
+Wall iteration:
+niter =    60 residual =     8.88E-04
+Residual velocity: vmax =     2.63E-04 vzmax =     2.21E-05
+lt =       136  T =         0.10880 time cost =        23.95
+
+cells: vmax =     1.80E+01
+cells: vxmax vxmin =     1.89E+00   -1.74E+00
+cells: vymax vymin =     1.80E+00   -1.89E+00
+cells: vzmax vzmin =     1.80E+01    2.59E+00
+Wall iteration:
+niter =    60 residual =     9.45E-04
+Residual velocity: vmax =     2.82E-04 vzmax =     2.44E-05
+lt =       137  T =         0.10960 time cost =        24.10
+
+cells: vmax =     1.79E+01
+cells: vxmax vxmin =     1.89E+00   -1.74E+00
+cells: vymax vymin =     1.81E+00   -1.89E+00
+cells: vzmax vzmin =     1.79E+01    2.63E+00
+Wall iteration:
+niter =    60 residual =     9.92E-04
+Residual velocity: vmax =     2.96E-04 vzmax =     2.57E-05
+lt =       138  T =         0.11040 time cost =        24.09
+
+cells: vmax =     1.79E+01
+cells: vxmax vxmin =     1.90E+00   -1.74E+00
+cells: vymax vymin =     1.81E+00   -1.90E+00
+cells: vzmax vzmin =     1.79E+01    2.66E+00
+Wall iteration:
+niter =    60 residual =     1.03E-03
+Residual velocity: vmax =     3.04E-04 vzmax =     2.60E-05
+lt =       139  T =         0.11120 time cost =        24.09
+
+cells: vmax =     1.79E+01
+cells: vxmax vxmin =     1.90E+00   -1.74E+00
+cells: vymax vymin =     1.82E+00   -1.91E+00
+cells: vzmax vzmin =     1.79E+01    2.70E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.394754762531932     
+area expansion of cell   1:    3.26489%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.243174517388145     
+area expansion of cell   2:    2.36503%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.643241305100073     
+area expansion of cell   3:    4.74005%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.724014160197129     
+area expansion of cell   4:    5.21956%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.680884721956811     
+area expansion of cell   5:    4.96352%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.490218992577770     
+area expansion of cell   6:    3.83162%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.323016664007532     
+area expansion of cell   7:    2.83902%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.472653552046026     
+area expansion of cell   8:    3.72734%
+ cell%starting_area    16.844790346298517     
+ cell%area:    17.962983472981261     
+area expansion of cell   9:    6.63821%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.476576341817371     
+area expansion of cell  10:    3.75063%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.241305110239697     
+area expansion of cell  11:    2.35393%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.931318070056186     
+area expansion of cell  12:    6.45023%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.462543056472672     
+area expansion of cell  13:    3.66732%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.280599371001756     
+area expansion of cell  14:    2.58720%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.939274338818841     
+area expansion of cell  15:    6.49746%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.217320191795359     
+area expansion of cell  16:    2.21154%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.592634663502785     
+area expansion of cell  17:    4.43962%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.342466403196305     
+area expansion of cell  18:    2.95448%
+ cell%starting_area    24.630086404143942     
+ cell%area:    24.995060402716572     
+area expansion of cell  19:    1.48182%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.515001059348627     
+area expansion of cell  20:    3.97874%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.384424280581289     
+area expansion of cell  21:    3.20357%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.764881320284456     
+area expansion of cell  22:    5.46217%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.255339190934741     
+area expansion of cell  23:    2.43725%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.430753002792013     
+area expansion of cell  24:    3.47860%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.602644063040231     
+area expansion of cell  25:    4.49904%
+Wall iteration:
+niter =    60 residual =     1.05E-03
+Residual velocity: vmax =     3.06E-04 vzmax =     2.61E-05
+lt =       140  T =         0.11200 time cost =        24.00
+
+cells: vmax =     1.79E+01
+cells: vxmax vxmin =     1.90E+00   -1.74E+00
+cells: vymax vymin =     1.82E+00   -1.92E+00
+cells: vzmax vzmin =     1.79E+01    2.73E+00
+Wall iteration:
+niter =    60 residual =     1.05E-03
+Residual velocity: vmax =     3.02E-04 vzmax =     2.61E-05
+lt =       141  T =         0.11280 time cost =        23.99
+
+cells: vmax =     1.79E+01
+cells: vxmax vxmin =     1.91E+00   -1.74E+00
+cells: vymax vymin =     1.82E+00   -1.92E+00
+cells: vzmax vzmin =     1.79E+01    2.77E+00
+Wall iteration:
+niter =    60 residual =     1.04E-03
+Residual velocity: vmax =     2.92E-04 vzmax =     2.52E-05
+lt =       142  T =         0.11360 time cost =        23.97
+
+cells: vmax =     1.78E+01
+cells: vxmax vxmin =     1.91E+00   -1.74E+00
+cells: vymax vymin =     1.83E+00   -1.93E+00
+cells: vzmax vzmin =     1.78E+01    2.80E+00
+Wall iteration:
+niter =    60 residual =     1.01E-03
+Residual velocity: vmax =     2.75E-04 vzmax =     2.34E-05
+lt =       143  T =         0.11440 time cost =        23.98
+
+cells: vmax =     1.78E+01
+cells: vxmax vxmin =     1.92E+00   -1.74E+00
+cells: vymax vymin =     1.83E+00   -1.94E+00
+cells: vzmax vzmin =     1.78E+01    2.84E+00
+Wall iteration:
+niter =    60 residual =     9.51E-04
+Residual velocity: vmax =     2.50E-04 vzmax =     2.17E-05
+lt =       144  T =         0.11520 time cost =        23.98
+
+cells: vmax =     1.78E+01
+cells: vxmax vxmin =     1.92E+00   -1.74E+00
+cells: vymax vymin =     1.84E+00   -1.95E+00
+cells: vzmax vzmin =     1.78E+01    2.88E+00
+Wall iteration:
+niter =    60 residual =     8.77E-04
+Residual velocity: vmax =     2.20E-04 vzmax =     1.98E-05
+lt =       145  T =         0.11600 time cost =        23.97
+
+cells: vmax =     1.78E+01
+cells: vxmax vxmin =     1.92E+00   -1.74E+00
+cells: vymax vymin =     1.84E+00   -1.95E+00
+cells: vzmax vzmin =     1.78E+01    2.91E+00
+Wall iteration:
+niter =    60 residual =     7.82E-04
+Residual velocity: vmax =     1.85E-04 vzmax =     1.90E-05
+lt =       146  T =         0.11680 time cost =        23.96
+
+cells: vmax =     1.78E+01
+cells: vxmax vxmin =     1.92E+00   -1.74E+00
+cells: vymax vymin =     1.84E+00   -1.96E+00
+cells: vzmax vzmin =     1.78E+01    2.95E+00
+Wall iteration:
+niter =    60 residual =     6.79E-04
+Residual velocity: vmax =     1.49E-04 vzmax =     2.18E-05
+lt =       147  T =         0.11760 time cost =        23.95
+
+cells: vmax =     1.77E+01
+cells: vxmax vxmin =     1.93E+00   -1.74E+00
+cells: vymax vymin =     1.85E+00   -1.97E+00
+cells: vzmax vzmin =     1.77E+01    2.99E+00
+Wall iteration:
+niter =    60 residual =     5.83E-04
+Residual velocity: vmax =     1.31E-04 vzmax =     2.42E-05
+lt =       148  T =         0.11840 time cost =        23.92
+
+cells: vmax =     1.77E+01
+cells: vxmax vxmin =     1.93E+00   -1.74E+00
+cells: vymax vymin =     1.85E+00   -1.97E+00
+cells: vzmax vzmin =     1.77E+01    3.03E+00
+Wall iteration:
+niter =    60 residual =     5.22E-04
+Residual velocity: vmax =     1.22E-04 vzmax =     2.59E-05
+lt =       149  T =         0.11920 time cost =        23.93
+
+cells: vmax =     1.77E+01
+cells: vxmax vxmin =     1.93E+00   -1.74E+00
+cells: vymax vymin =     1.85E+00   -1.98E+00
+cells: vzmax vzmin =     1.77E+01    3.07E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.419404801395864     
+area expansion of cell   1:    3.41123%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.266824886489552     
+area expansion of cell   2:    2.50543%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.673446393703308     
+area expansion of cell   3:    4.91936%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.760513968282368     
+area expansion of cell   4:    5.43624%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.720399357129981     
+area expansion of cell   5:    5.19810%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.532499590604669     
+area expansion of cell   6:    4.08262%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.340172797721106     
+area expansion of cell   7:    2.94086%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.492239907532245     
+area expansion of cell   8:    3.84362%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.012466182416574     
+area expansion of cell   9:    6.93197%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.502698492532691     
+area expansion of cell  10:    3.90571%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.254785746814477     
+area expansion of cell  11:    2.43396%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.989071440554540     
+area expansion of cell  12:    6.79309%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.486182143941097     
+area expansion of cell  13:    3.80766%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.295525991198385     
+area expansion of cell  14:    2.67582%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.980801584938671     
+area expansion of cell  15:    6.74399%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.230641539906077     
+area expansion of cell  16:    2.29063%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.612080067143559     
+area expansion of cell  17:    4.55506%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.362794452142513     
+area expansion of cell  18:    3.07516%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.019993202138092     
+area expansion of cell  19:    1.58305%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.550638174726842     
+area expansion of cell  20:    4.19030%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.407551980392522     
+area expansion of cell  21:    3.34086%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.803333682579012     
+area expansion of cell  22:    5.69044%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.277808242807204     
+area expansion of cell  23:    2.57063%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.457798698144835     
+area expansion of cell  24:    3.63916%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.630671212091741     
+area expansion of cell  25:    4.66542%
+Wall iteration:
+niter =    60 residual =     5.22E-04
+Residual velocity: vmax =     1.15E-04 vzmax =     2.66E-05
+lt =       150  T =         0.12000 time cost =        23.92
+
+cells: vmax =     1.77E+01
+cells: vxmax vxmin =     1.93E+00   -1.74E+00
+cells: vymax vymin =     1.86E+00   -1.99E+00
+cells: vzmax vzmin =     1.77E+01    3.11E+00
+Wall iteration:
+niter =    60 residual =     5.75E-04
+Residual velocity: vmax =     1.09E-04 vzmax =     2.73E-05
+lt =       151  T =         0.12080 time cost =        23.88
+
+cells: vmax =     1.77E+01
+cells: vxmax vxmin =     1.94E+00   -1.74E+00
+cells: vymax vymin =     1.86E+00   -1.99E+00
+cells: vzmax vzmin =     1.77E+01    3.14E+00
+Wall iteration:
+niter =    60 residual =     6.58E-04
+Residual velocity: vmax =     1.21E-04 vzmax =     2.82E-05
+lt =       152  T =         0.12160 time cost =        23.82
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.94E+00   -1.74E+00
+cells: vymax vymin =     1.86E+00   -2.00E+00
+cells: vzmax vzmin =     1.76E+01    3.18E+00
+Wall iteration:
+niter =    60 residual =     7.61E-04
+Residual velocity: vmax =     1.39E-04 vzmax =     2.86E-05
+lt =       153  T =         0.12240 time cost =        23.78
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.94E+00   -1.74E+00
+cells: vymax vymin =     1.87E+00   -2.01E+00
+cells: vzmax vzmin =     1.76E+01    3.22E+00
+Wall iteration:
+niter =    60 residual =     9.26E-04
+Residual velocity: vmax =     1.68E-04 vzmax =     3.02E-05
+lt =       154  T =         0.12320 time cost =        23.77
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.94E+00   -1.74E+00
+cells: vymax vymin =     1.87E+00   -2.01E+00
+cells: vzmax vzmin =     1.76E+01    3.26E+00
+Wall iteration:
+niter =    60 residual =     1.01E-03
+Residual velocity: vmax =     1.81E-04 vzmax =     3.46E-05
+lt =       155  T =         0.12400 time cost =        23.69
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.95E+00   -1.74E+00
+cells: vymax vymin =     1.87E+00   -2.02E+00
+cells: vzmax vzmin =     1.76E+01    3.30E+00
+Wall iteration:
+niter =    60 residual =     1.09E-03
+Residual velocity: vmax =     1.94E-04 vzmax =     3.88E-05
+lt =       156  T =         0.12480 time cost =        23.62
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.95E+00   -1.73E+00
+cells: vymax vymin =     1.87E+00   -2.02E+00
+cells: vzmax vzmin =     1.76E+01    3.34E+00
+Wall iteration:
+niter =    60 residual =     1.16E-03
+Residual velocity: vmax =     2.05E-04 vzmax =     4.25E-05
+lt =       157  T =         0.12560 time cost =        23.58
+
+cells: vmax =     1.76E+01
+cells: vxmax vxmin =     1.95E+00   -1.73E+00
+cells: vymax vymin =     1.87E+00   -2.03E+00
+cells: vzmax vzmin =     1.76E+01    3.38E+00
+Wall iteration:
+niter =    60 residual =     1.18E-03
+Residual velocity: vmax =     2.07E-04 vzmax =     4.42E-05
+lt =       158  T =         0.12640 time cost =        23.55
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.95E+00   -1.73E+00
+cells: vymax vymin =     1.88E+00   -2.04E+00
+cells: vzmax vzmin =     1.75E+01    3.42E+00
+Wall iteration:
+niter =    60 residual =     1.20E-03
+Residual velocity: vmax =     2.10E-04 vzmax =     4.57E-05
+lt =       159  T =         0.12720 time cost =        23.51
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.95E+00   -1.73E+00
+cells: vymax vymin =     1.88E+00   -2.04E+00
+cells: vzmax vzmin =     1.75E+01    3.46E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.439340762404100     
+area expansion of cell   1:    3.52958%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.287901559347244     
+area expansion of cell   2:    2.63055%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.696241081271424     
+area expansion of cell   3:    5.05468%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.790844086820996     
+area expansion of cell   4:    5.61630%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.753834348303503     
+area expansion of cell   5:    5.39659%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.569979797312204     
+area expansion of cell   6:    4.30513%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.353421105268605     
+area expansion of cell   7:    3.01951%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.506557356106669     
+area expansion of cell   8:    3.92862%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.053686335911706     
+area expansion of cell   9:    7.17668%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.523854309628458     
+area expansion of cell  10:    4.03130%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.265311291932512     
+area expansion of cell  11:    2.49645%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.040210751093397     
+area expansion of cell  12:    7.09668%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.504961775594236     
+area expansion of cell  13:    3.91914%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.307116630828119     
+area expansion of cell  14:    2.74462%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.012889985147314     
+area expansion of cell  15:    6.93449%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.241002270159569     
+area expansion of cell  16:    2.35213%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.625092329038157     
+area expansion of cell  17:    4.63230%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.379140502369658     
+area expansion of cell  18:    3.17220%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.043183485951264     
+area expansion of cell  19:    1.67721%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.581783145017187     
+area expansion of cell  20:    4.37520%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.426035033923352     
+area expansion of cell  21:    3.45059%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.834636342399431     
+area expansion of cell  22:    5.87627%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.297091139274848     
+area expansion of cell  23:    2.68511%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.480848319291891     
+area expansion of cell  24:    3.77599%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.652601614322801     
+area expansion of cell  25:    4.79561%
+Wall iteration:
+niter =    60 residual =     1.24E-03
+Residual velocity: vmax =     2.20E-04 vzmax =     4.84E-05
+lt =       160  T =         0.12800 time cost =        23.45
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.96E+00   -1.73E+00
+cells: vymax vymin =     1.88E+00   -2.05E+00
+cells: vzmax vzmin =     1.75E+01    3.50E+00
+Wall iteration:
+niter =    60 residual =     1.27E-03
+Residual velocity: vmax =     2.26E-04 vzmax =     5.00E-05
+lt =       161  T =         0.12880 time cost =        23.43
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.96E+00   -1.73E+00
+cells: vymax vymin =     1.88E+00   -2.05E+00
+cells: vzmax vzmin =     1.75E+01    3.54E+00
+Wall iteration:
+niter =    60 residual =     1.28E-03
+Residual velocity: vmax =     2.28E-04 vzmax =     5.10E-05
+lt =       162  T =         0.12960 time cost =        23.48
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.96E+00   -1.72E+00
+cells: vymax vymin =     1.88E+00   -2.06E+00
+cells: vzmax vzmin =     1.75E+01    3.58E+00
+Wall iteration:
+niter =    60 residual =     1.28E-03
+Residual velocity: vmax =     2.29E-04 vzmax =     5.14E-05
+lt =       163  T =         0.13040 time cost =        23.35
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.96E+00   -1.72E+00
+cells: vymax vymin =     1.89E+00   -2.06E+00
+cells: vzmax vzmin =     1.75E+01    3.62E+00
+Wall iteration:
+niter =    60 residual =     1.27E-03
+Residual velocity: vmax =     2.29E-04 vzmax =     5.13E-05
+lt =       164  T =         0.13120 time cost =        23.30
+
+cells: vmax =     1.75E+01
+cells: vxmax vxmin =     1.96E+00   -1.72E+00
+cells: vymax vymin =     1.89E+00   -2.07E+00
+cells: vzmax vzmin =     1.75E+01    3.66E+00
+Wall iteration:
+niter =    60 residual =     1.26E-03
+Residual velocity: vmax =     2.26E-04 vzmax =     5.06E-05
+lt =       165  T =         0.13200 time cost =        23.26
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.72E+00
+cells: vymax vymin =     1.89E+00   -2.07E+00
+cells: vzmax vzmin =     1.74E+01    3.70E+00
+Wall iteration:
+niter =    60 residual =     1.23E-03
+Residual velocity: vmax =     2.22E-04 vzmax =     4.95E-05
+lt =       166  T =         0.13280 time cost =        23.22
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.71E+00
+cells: vymax vymin =     1.89E+00   -2.08E+00
+cells: vzmax vzmin =     1.74E+01    3.74E+00
+Wall iteration:
+niter =    60 residual =     1.20E-03
+Residual velocity: vmax =     2.16E-04 vzmax =     4.78E-05
+lt =       167  T =         0.13360 time cost =        23.16
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.72E+00
+cells: vymax vymin =     1.89E+00   -2.08E+00
+cells: vzmax vzmin =     1.74E+01    3.79E+00
+Wall iteration:
+niter =    60 residual =     1.16E-03
+Residual velocity: vmax =     2.09E-04 vzmax =     4.57E-05
+lt =       168  T =         0.13440 time cost =        23.14
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.73E+00
+cells: vymax vymin =     1.89E+00   -2.09E+00
+cells: vzmax vzmin =     1.74E+01    3.83E+00
+Wall iteration:
+niter =    60 residual =     1.10E-03
+Residual velocity: vmax =     1.98E-04 vzmax =     4.30E-05
+lt =       169  T =         0.13520 time cost =        23.09
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.74E+00
+cells: vymax vymin =     1.89E+00   -2.09E+00
+cells: vzmax vzmin =     1.74E+01    3.86E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.455096488839587     
+area expansion of cell   1:    3.62312%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.306491777964013     
+area expansion of cell   2:    2.74092%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.712492781700945     
+area expansion of cell   3:    5.15116%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.816267220954270     
+area expansion of cell   4:    5.76722%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.781362539151150     
+area expansion of cell   5:    5.56001%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.602913376426891     
+area expansion of cell   6:    4.50064%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.363278075496144     
+area expansion of cell   7:    3.07803%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.516407883255592     
+area expansion of cell   8:    3.98709%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.088240169324898     
+area expansion of cell   9:    7.38181%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.540648662261738     
+area expansion of cell  10:    4.13100%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.273341360881624     
+area expansion of cell  11:    2.54412%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.084900237629636     
+area expansion of cell  12:    7.36198%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.519573030343537     
+area expansion of cell  13:    4.00588%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.315901693910835     
+area expansion of cell  14:    2.79678%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.036995907664103     
+area expansion of cell  15:    7.07759%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.248815487856557     
+area expansion of cell  16:    2.39852%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.632771831420467     
+area expansion of cell  17:    4.67789%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.391985637107833     
+area expansion of cell  18:    3.24845%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.064749036758229     
+area expansion of cell  19:    1.76476%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.608769695244689     
+area expansion of cell  20:    4.53540%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.440367070041230     
+area expansion of cell  21:    3.53567%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.859609589276278     
+area expansion of cell  22:    6.02453%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.313388609097348     
+area expansion of cell  23:    2.78186%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.500371948790612     
+area expansion of cell  24:    3.89190%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.669219300019218     
+area expansion of cell  25:    4.89427%
+Wall iteration:
+niter =    60 residual =     1.03E-03
+Residual velocity: vmax =     1.84E-04 vzmax =     3.97E-05
+lt =       170  T =         0.13600 time cost =        23.05
+
+cells: vmax =     1.74E+01
+cells: vxmax vxmin =     1.97E+00   -1.75E+00
+cells: vymax vymin =     1.89E+00   -2.10E+00
+cells: vzmax vzmin =     1.74E+01    3.90E+00
+Wall iteration:
+niter =    60 residual =     9.30E-04
+Residual velocity: vmax =     1.67E-04 vzmax =     3.60E-05
+lt =       171  T =         0.13680 time cost =        23.01
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     1.97E+00   -1.77E+00
+cells: vymax vymin =     1.90E+00   -2.10E+00
+cells: vzmax vzmin =     1.73E+01    3.94E+00
+Wall iteration:
+niter =    60 residual =     8.12E-04
+Residual velocity: vmax =     1.63E-04 vzmax =     3.21E-05
+lt =       172  T =         0.13760 time cost =        22.99
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     1.98E+00   -1.78E+00
+cells: vymax vymin =     1.90E+00   -2.11E+00
+cells: vzmax vzmin =     1.73E+01    3.98E+00
+Wall iteration:
+niter =    60 residual =     7.15E-04
+Residual velocity: vmax =     1.70E-04 vzmax =     3.35E-05
+lt =       173  T =         0.13840 time cost =        22.97
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     1.98E+00   -1.79E+00
+cells: vymax vymin =     1.90E+00   -2.11E+00
+cells: vzmax vzmin =     1.73E+01    4.02E+00
+Wall iteration:
+niter =    60 residual =     7.12E-04
+Residual velocity: vmax =     1.82E-04 vzmax =     3.28E-05
+lt =       174  T =         0.13920 time cost =        22.93
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     1.98E+00   -1.80E+00
+cells: vymax vymin =     1.90E+00   -2.11E+00
+cells: vzmax vzmin =     1.73E+01    4.06E+00
+Wall iteration:
+niter =    60 residual =     7.47E-04
+Residual velocity: vmax =     1.96E-04 vzmax =     3.18E-05
+lt =       175  T =         0.14000 time cost =        22.91
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     2.00E+00   -1.81E+00
+cells: vymax vymin =     1.90E+00   -2.12E+00
+cells: vzmax vzmin =     1.73E+01    4.10E+00
+Wall iteration:
+niter =    60 residual =     7.86E-04
+Residual velocity: vmax =     2.11E-04 vzmax =     3.13E-05
+lt =       176  T =         0.14080 time cost =        22.89
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     2.01E+00   -1.82E+00
+cells: vymax vymin =     1.90E+00   -2.12E+00
+cells: vzmax vzmin =     1.73E+01    4.14E+00
+Wall iteration:
+niter =    60 residual =     8.44E-04
+Residual velocity: vmax =     2.31E-04 vzmax =     3.09E-05
+lt =       177  T =         0.14160 time cost =        22.89
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     2.03E+00   -1.84E+00
+cells: vymax vymin =     1.90E+00   -2.13E+00
+cells: vzmax vzmin =     1.73E+01    4.18E+00
+Wall iteration:
+niter =    60 residual =     9.22E-04
+Residual velocity: vmax =     2.55E-04 vzmax =     3.24E-05
+lt =       178  T =         0.14240 time cost =        22.86
+
+cells: vmax =     1.73E+01
+cells: vxmax vxmin =     2.04E+00   -1.85E+00
+cells: vymax vymin =     1.90E+00   -2.13E+00
+cells: vzmax vzmin =     1.73E+01    4.22E+00
+Wall iteration:
+niter =    60 residual =     9.92E-04
+Residual velocity: vmax =     2.76E-04 vzmax =     3.48E-05
+lt =       179  T =         0.14320 time cost =        22.85
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.05E+00   -1.86E+00
+cells: vymax vymin =     1.91E+00   -2.13E+00
+cells: vzmax vzmin =     1.72E+01    4.26E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.467208002922380     
+area expansion of cell   1:    3.69502%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.322685517852413     
+area expansion of cell   2:    2.83705%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.723165846170723     
+area expansion of cell   3:    5.21452%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.837544185207754     
+area expansion of cell   4:    5.89354%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.803210685419330     
+area expansion of cell   5:    5.68971%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.631703036322527     
+area expansion of cell   6:    4.67155%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.370259940353456     
+area expansion of cell   7:    3.11948%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.522586589642273     
+area expansion of cell   8:    4.02377%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.117455624917064     
+area expansion of cell   9:    7.55525%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.553682967390383     
+area expansion of cell  10:    4.20838%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.279305903559020     
+area expansion of cell  11:    2.57952%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.123172613815733     
+area expansion of cell  12:    7.58918%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.530699027535118     
+area expansion of cell  13:    4.07193%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.322374079757612     
+area expansion of cell  14:    2.83520%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.054543698348258     
+area expansion of cell  15:    7.18177%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.254501406349242     
+area expansion of cell  16:    2.43227%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.636240963736498     
+area expansion of cell  17:    4.69849%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.401836254583642     
+area expansion of cell  18:    3.30693%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.084809042814445     
+area expansion of cell  19:    1.84621%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.631948252983729     
+area expansion of cell  20:    4.67301%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.451117038855507     
+area expansion of cell  21:    3.59949%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.879152374124406     
+area expansion of cell  22:    6.14055%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.326951536712251     
+area expansion of cell  23:    2.86238%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.516774228702683     
+area expansion of cell  24:    3.98927%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.681293554241314     
+area expansion of cell  25:    4.96595%
+Wall iteration:
+niter =    60 residual =     1.03E-03
+Residual velocity: vmax =     2.89E-04 vzmax =     3.69E-05
+lt =       180  T =         0.14400 time cost =        22.83
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.06E+00   -1.87E+00
+cells: vymax vymin =     1.91E+00   -2.14E+00
+cells: vzmax vzmin =     1.72E+01    4.30E+00
+Wall iteration:
+niter =    60 residual =     1.05E-03
+Residual velocity: vmax =     2.95E-04 vzmax =     3.85E-05
+lt =       181  T =         0.14480 time cost =        22.78
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.07E+00   -1.88E+00
+cells: vymax vymin =     1.92E+00   -2.14E+00
+cells: vzmax vzmin =     1.72E+01    4.34E+00
+Wall iteration:
+niter =    60 residual =     1.09E-03
+Residual velocity: vmax =     3.03E-04 vzmax =     4.05E-05
+lt =       182  T =         0.14560 time cost =        22.74
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.08E+00   -1.90E+00
+cells: vymax vymin =     1.92E+00   -2.14E+00
+cells: vzmax vzmin =     1.72E+01    4.38E+00
+Wall iteration:
+niter =    60 residual =     1.16E-03
+Residual velocity: vmax =     3.19E-04 vzmax =     4.38E-05
+lt =       183  T =         0.14640 time cost =        22.66
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.09E+00   -1.91E+00
+cells: vymax vymin =     1.93E+00   -2.15E+00
+cells: vzmax vzmin =     1.72E+01    4.42E+00
+Wall iteration:
+niter =    60 residual =     1.28E-03
+Residual velocity: vmax =     3.46E-04 vzmax =     4.91E-05
+lt =       184  T =         0.14720 time cost =        22.61
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.09E+00   -1.92E+00
+cells: vymax vymin =     1.93E+00   -2.15E+00
+cells: vzmax vzmin =     1.72E+01    4.46E+00
+Wall iteration:
+niter =    60 residual =     1.41E-03
+Residual velocity: vmax =     3.76E-04 vzmax =     5.54E-05
+lt =       185  T =         0.14800 time cost =        22.52
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.10E+00   -1.93E+00
+cells: vymax vymin =     1.94E+00   -2.16E+00
+cells: vzmax vzmin =     1.72E+01    4.50E+00
+Wall iteration:
+niter =    60 residual =     1.52E-03
+Residual velocity: vmax =     4.03E-04 vzmax =     6.13E-05
+lt =       186  T =         0.14880 time cost =        22.45
+
+cells: vmax =     1.72E+01
+cells: vxmax vxmin =     2.10E+00   -1.95E+00
+cells: vymax vymin =     1.94E+00   -2.16E+00
+cells: vzmax vzmin =     1.72E+01    4.54E+00
+Wall iteration:
+niter =    60 residual =     1.62E-03
+Residual velocity: vmax =     4.28E-04 vzmax =     6.70E-05
+lt =       187  T =         0.14960 time cost =        22.37
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.10E+00   -1.96E+00
+cells: vymax vymin =     1.94E+00   -2.16E+00
+cells: vzmax vzmin =     1.71E+01    4.58E+00
+Wall iteration:
+niter =    60 residual =     1.70E-03
+Residual velocity: vmax =     4.45E-04 vzmax =     7.05E-05
+lt =       188  T =         0.15040 time cost =        22.30
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.10E+00   -1.97E+00
+cells: vymax vymin =     1.95E+00   -2.17E+00
+cells: vzmax vzmin =     1.71E+01    4.63E+00
+Wall iteration:
+niter =    60 residual =     1.75E-03
+Residual velocity: vmax =     4.57E-04 vzmax =     7.20E-05
+lt =       189  T =         0.15120 time cost =        22.21
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.11E+00   -1.98E+00
+cells: vymax vymin =     1.95E+00   -2.17E+00
+cells: vzmax vzmin =     1.71E+01    4.67E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.476093006779585     
+area expansion of cell   1:    3.74776%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.336597617581081     
+area expansion of cell   2:    2.91964%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.729247418267335     
+area expansion of cell   3:    5.25063%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.854684358800622     
+area expansion of cell   4:    5.99529%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.819782270283454     
+area expansion of cell   5:    5.78809%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.656751720645591     
+area expansion of cell   6:    4.82025%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.374855838541990     
+area expansion of cell   7:    3.14676%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.525820405473592     
+area expansion of cell   8:    4.04297%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.141998948360410     
+area expansion of cell   9:    7.70095%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.563536162066502     
+area expansion of cell  10:    4.26687%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.283589437617454     
+area expansion of cell  11:    2.60495%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.155033188879642     
+area expansion of cell  12:    7.77833%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.538979362001495     
+area expansion of cell  13:    4.12109%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.326976578546418     
+area expansion of cell  14:    2.86252%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.066808651354748     
+area expansion of cell  15:    7.25458%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.258449792494588     
+area expansion of cell  16:    2.45571%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.636538040502234     
+area expansion of cell  17:    4.70025%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.409179320279865     
+area expansion of cell  18:    3.35053%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.103468990551011     
+area expansion of cell  19:    1.92197%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.651670744280324     
+area expansion of cell  20:    4.79009%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.458863033240334     
+area expansion of cell  21:    3.64548%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.894164207336644     
+area expansion of cell  22:    6.22966%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.338013322945617     
+area expansion of cell  23:    2.92804%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.530357946013901     
+area expansion of cell  24:    4.06991%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.689556076964198     
+area expansion of cell  25:    5.01500%
+Wall iteration:
+niter =    60 residual =     1.79E-03
+Residual velocity: vmax =     4.64E-04 vzmax =     7.16E-05
+lt =       190  T =         0.15200 time cost =        22.11
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.10E+00   -1.99E+00
+cells: vymax vymin =     1.96E+00   -2.17E+00
+cells: vzmax vzmin =     1.71E+01    4.71E+00
+Wall iteration:
+niter =    60 residual =     1.82E-03
+Residual velocity: vmax =     4.66E-04 vzmax =     7.00E-05
+lt =       191  T =         0.15280 time cost =        22.05
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.10E+00   -2.00E+00
+cells: vymax vymin =     1.96E+00   -2.18E+00
+cells: vzmax vzmin =     1.71E+01    4.75E+00
+Wall iteration:
+niter =    60 residual =     1.84E-03
+Residual velocity: vmax =     4.66E-04 vzmax =     6.67E-05
+lt =       192  T =         0.15360 time cost =        21.99
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.10E+00   -2.02E+00
+cells: vymax vymin =     1.97E+00   -2.18E+00
+cells: vzmax vzmin =     1.71E+01    4.79E+00
+Wall iteration:
+niter =    60 residual =     1.85E-03
+Residual velocity: vmax =     4.64E-04 vzmax =     6.89E-05
+lt =       193  T =         0.15440 time cost =        21.90
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.09E+00   -2.03E+00
+cells: vymax vymin =     1.98E+00   -2.18E+00
+cells: vzmax vzmin =     1.71E+01    4.83E+00
+Wall iteration:
+niter =    60 residual =     1.85E-03
+Residual velocity: vmax =     4.59E-04 vzmax =     6.83E-05
+lt =       194  T =         0.15520 time cost =        21.83
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.09E+00   -2.04E+00
+cells: vymax vymin =     1.99E+00   -2.19E+00
+cells: vzmax vzmin =     1.71E+01    4.87E+00
+Wall iteration:
+niter =    60 residual =     1.81E-03
+Residual velocity: vmax =     4.34E-04 vzmax =     8.03E-05
+lt =       195  T =         0.15600 time cost =        21.78
+
+cells: vmax =     1.71E+01
+cells: vxmax vxmin =     2.08E+00   -2.05E+00
+cells: vymax vymin =     2.00E+00   -2.19E+00
+cells: vzmax vzmin =     1.71E+01    4.91E+00
+Wall iteration:
+niter =    60 residual =     1.85E-03
+Residual velocity: vmax =     4.42E-04 vzmax =     7.92E-05
+lt =       196  T =         0.15680 time cost =        21.72
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.07E+00   -2.06E+00
+cells: vymax vymin =     2.01E+00   -2.19E+00
+cells: vzmax vzmin =     1.70E+01    4.94E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     4.37E-04 vzmax =     7.92E-05
+lt =       197  T =         0.15760 time cost =        21.69
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.06E+00   -2.07E+00
+cells: vymax vymin =     2.02E+00   -2.19E+00
+cells: vzmax vzmin =     1.70E+01    4.98E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     4.28E-04 vzmax =     7.92E-05
+lt =       198  T =         0.15840 time cost =        21.63
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.05E+00   -2.08E+00
+cells: vymax vymin =     2.03E+00   -2.20E+00
+cells: vzmax vzmin =     1.70E+01    5.02E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     4.19E-04 vzmax =     7.89E-05
+lt =       199  T =         0.15920 time cost =        21.58
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.04E+00   -2.09E+00
+cells: vymax vymin =     2.04E+00   -2.20E+00
+cells: vzmax vzmin =     1.70E+01    5.06E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.482022640576449     
+area expansion of cell   1:    3.78296%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.348403355187767     
+area expansion of cell   2:    2.98973%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.731658156473436     
+area expansion of cell   3:    5.26494%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.867080252954683     
+area expansion of cell   4:    6.06888%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.831752977349531     
+area expansion of cell   5:    5.85916%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.678298354134167     
+area expansion of cell   6:    4.94816%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.377497785071672     
+area expansion of cell   7:    3.16245%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.526718464002833     
+area expansion of cell   8:    4.04830%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.161638418709892     
+area expansion of cell   9:    7.81754%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.570730771451728     
+area expansion of cell  10:    4.30958%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.286512217492994     
+area expansion of cell  11:    2.62231%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.180508925034214     
+area expansion of cell  12:    7.92956%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.544973078054905     
+area expansion of cell  13:    4.15667%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.330074625451630     
+area expansion of cell  14:    2.88092%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.074967451721914     
+area expansion of cell  15:    7.30301%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.260994782928613     
+area expansion of cell  16:    2.47082%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.634518910562704     
+area expansion of cell  17:    4.68827%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.414437670214930     
+area expansion of cell  18:    3.38174%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.120818583319995     
+area expansion of cell  19:    1.99241%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.668286074650425     
+area expansion of cell  20:    4.88873%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.464122654450605     
+area expansion of cell  21:    3.67670%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.905431322137105     
+area expansion of cell  22:    6.29655%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.346721050790475     
+area expansion of cell  23:    2.97974%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.541333890226618     
+area expansion of cell  24:    4.13507%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.694659175792026     
+area expansion of cell  25:    5.04529%
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     4.09E-04 vzmax =     7.85E-05
+ WriteRestart:    16.844790346298556     
+ WriteRestart:    16.844790346298552     
+ WriteRestart:    16.844790346298502     
+ WriteRestart:    16.844790346298527     
+ WriteRestart:    16.844790346298598     
+ WriteRestart:    16.844790346298538     
+ WriteRestart:    16.844790346298545     
+ WriteRestart:    16.844790346298584     
+ WriteRestart:    16.844790346298517     
+ WriteRestart:    16.844790346298637     
+ WriteRestart:    16.844790346298605     
+ WriteRestart:    16.844790346298527     
+ WriteRestart:    16.844790346298602     
+ WriteRestart:    16.844790346298605     
+ WriteRestart:    16.844790346298588     
+ WriteRestart:    16.844790346298616     
+ WriteRestart:    16.844790346298591     
+ WriteRestart:    16.844790346298620     
+ WriteRestart:    24.630086404143942     
+ WriteRestart:    16.844790346298588     
+ WriteRestart:    16.844790346298627     
+ WriteRestart:    16.844790346298581     
+ WriteRestart:    16.844790346298666     
+ WriteRestart:    16.844790346298659     
+ WriteRestart:    16.844790346298616     
+ WriteRestart:    16.844790346298556     
+ WriteRestart:    16.844790346298552     
+ WriteRestart:    16.844790346298502     
+ WriteRestart:    16.844790346298527     
+ WriteRestart:    16.844790346298598     
+ WriteRestart:    16.844790346298538     
+ WriteRestart:    16.844790346298545     
+ WriteRestart:    16.844790346298584     
+ WriteRestart:    16.844790346298517     
+ WriteRestart:    16.844790346298637     
+ WriteRestart:    16.844790346298605     
+ WriteRestart:    16.844790346298527     
+ WriteRestart:    16.844790346298602     
+ WriteRestart:    16.844790346298605     
+ WriteRestart:    16.844790346298588     
+ WriteRestart:    16.844790346298616     
+ WriteRestart:    16.844790346298591     
+ WriteRestart:    16.844790346298620     
+ WriteRestart:    24.630086404143942     
+ WriteRestart:    16.844790346298588     
+ WriteRestart:    16.844790346298627     
+ WriteRestart:    16.844790346298581     
+ WriteRestart:    16.844790346298666     
+ WriteRestart:    16.844790346298659     
+ WriteRestart:    16.844790346298616     
+lt =       200  T =         0.16000 time cost =        21.54
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.04E+00   -2.10E+00
+cells: vymax vymin =     2.05E+00   -2.20E+00
+cells: vzmax vzmin =     1.70E+01    5.09E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.98E-04 vzmax =     7.79E-05
+lt =       201  T =         0.16080 time cost =        21.45
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.05E+00   -2.11E+00
+cells: vymax vymin =     2.06E+00   -2.20E+00
+cells: vzmax vzmin =     1.70E+01    5.13E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.87E-04 vzmax =     7.72E-05
+lt =       202  T =         0.16160 time cost =        21.40
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.05E+00   -2.11E+00
+cells: vymax vymin =     2.07E+00   -2.20E+00
+cells: vzmax vzmin =     1.70E+01    5.15E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.77E-04 vzmax =     7.62E-05
+lt =       203  T =         0.16240 time cost =        21.34
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.06E+00   -2.12E+00
+cells: vymax vymin =     2.08E+00   -2.21E+00
+cells: vzmax vzmin =     1.70E+01    5.17E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.69E-04 vzmax =     7.51E-05
+lt =       204  T =         0.16320 time cost =        21.29
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.06E+00   -2.13E+00
+cells: vymax vymin =     2.09E+00   -2.21E+00
+cells: vzmax vzmin =     1.70E+01    5.20E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.73E-04 vzmax =     7.37E-05
+lt =       205  T =         0.16400 time cost =        21.25
+
+cells: vmax =     1.70E+01
+cells: vxmax vxmin =     2.07E+00   -2.14E+00
+cells: vymax vymin =     2.10E+00   -2.21E+00
+cells: vzmax vzmin =     1.70E+01    5.22E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.76E-04 vzmax =     7.22E-05
+lt =       206  T =         0.16480 time cost =        21.18
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.07E+00   -2.14E+00
+cells: vymax vymin =     2.11E+00   -2.21E+00
+cells: vzmax vzmin =     1.69E+01    5.24E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.77E-04 vzmax =     7.05E-05
+lt =       207  T =         0.16560 time cost =        21.18
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.08E+00   -2.15E+00
+cells: vymax vymin =     2.12E+00   -2.21E+00
+cells: vzmax vzmin =     1.69E+01    5.26E+00
+Wall iteration:
+niter =    60 residual =     1.85E-03
+Residual velocity: vmax =     3.75E-04 vzmax =     6.88E-05
+lt =       208  T =         0.16640 time cost =        21.24
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.08E+00   -2.15E+00
+cells: vymax vymin =     2.13E+00   -2.21E+00
+cells: vzmax vzmin =     1.69E+01    5.27E+00
+Wall iteration:
+niter =    60 residual =     1.84E-03
+Residual velocity: vmax =     3.72E-04 vzmax =     6.86E-05
+lt =       209  T =         0.16720 time cost =        21.16
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.09E+00   -2.16E+00
+cells: vymax vymin =     2.14E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.29E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.485194174458698     
+area expansion of cell   1:    3.80179%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.358358532816592     
+area expansion of cell   2:    3.04883%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.731151192076247     
+area expansion of cell   3:    5.26193%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.874026017920961     
+area expansion of cell   4:    6.11011%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.840062328653044     
+area expansion of cell   5:    5.90849%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.696355242958560     
+area expansion of cell   6:    5.05536%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.378542073585237     
+area expansion of cell   7:    3.16865%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.525753156010090     
+area expansion of cell   8:    4.04257%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.175514671660373     
+area expansion of cell   9:    7.89992%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.575723533072939     
+area expansion of cell  10:    4.33922%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.288327305838653     
+area expansion of cell  11:    2.63308%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.199640946020857     
+area expansion of cell  12:    8.04314%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.549133809718604     
+area expansion of cell  13:    4.18137%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.331963668457199     
+area expansion of cell  14:    2.89213%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.080250512903994     
+area expansion of cell  15:    7.33438%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.262391339534307     
+area expansion of cell  16:    2.47911%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.630793478956026     
+area expansion of cell  17:    4.66615%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.417942687872166     
+area expansion of cell  18:    3.40255%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.136939299889800     
+area expansion of cell  19:    2.05786%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.682123750707419     
+area expansion of cell  20:    4.97087%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.467303529176544     
+area expansion of cell  21:    3.69558%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.913568529181426     
+area expansion of cell  22:    6.34486%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.353149341398186     
+area expansion of cell  23:    3.01790%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.549864851412629     
+area expansion of cell  24:    4.18571%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.697121374136483     
+area expansion of cell  25:    5.05991%
+Wall iteration:
+niter =    60 residual =     1.84E-03
+Residual velocity: vmax =     3.66E-04 vzmax =     6.98E-05
+lt =       210  T =         0.16800 time cost =        21.11
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.09E+00   -2.17E+00
+cells: vymax vymin =     2.14E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.31E+00
+Wall iteration:
+niter =    60 residual =     1.82E-03
+Residual velocity: vmax =     3.58E-04 vzmax =     7.04E-05
+lt =       211  T =         0.16880 time cost =        21.09
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.10E+00   -2.18E+00
+cells: vymax vymin =     2.15E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.33E+00
+Wall iteration:
+niter =    60 residual =     1.75E-03
+Residual velocity: vmax =     3.33E-04 vzmax =     5.84E-05
+lt =       212  T =         0.16960 time cost =        21.10
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.10E+00   -2.18E+00
+cells: vymax vymin =     2.16E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.36E+00
+Wall iteration:
+niter =    60 residual =     1.78E-03
+Residual velocity: vmax =     3.34E-04 vzmax =     6.77E-05
+lt =       213  T =         0.17040 time cost =        21.07
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.10E+00   -2.19E+00
+cells: vymax vymin =     2.16E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.38E+00
+Wall iteration:
+niter =    60 residual =     1.77E-03
+Residual velocity: vmax =     3.24E-04 vzmax =     6.86E-05
+lt =       214  T =         0.17120 time cost =        21.04
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.11E+00   -2.19E+00
+cells: vymax vymin =     2.17E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.40E+00
+Wall iteration:
+niter =    60 residual =     1.75E-03
+Residual velocity: vmax =     3.17E-04 vzmax =     6.71E-05
+lt =       215  T =         0.17200 time cost =        21.05
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.11E+00   -2.20E+00
+cells: vymax vymin =     2.18E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.43E+00
+Wall iteration:
+niter =    60 residual =     1.66E-03
+Residual velocity: vmax =     3.07E-04 vzmax =     5.95E-05
+lt =       216  T =         0.17280 time cost =        21.04
+
+cells: vmax =     1.69E+01
+cells: vxmax vxmin =     2.12E+00   -2.20E+00
+cells: vymax vymin =     2.18E+00   -2.22E+00
+cells: vzmax vzmin =     1.69E+01    5.45E+00
+Wall iteration:
+niter =    60 residual =     1.66E-03
+Residual velocity: vmax =     3.11E-04 vzmax =     6.07E-05
+lt =       217  T =         0.17360 time cost =        20.99
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.12E+00   -2.20E+00
+cells: vymax vymin =     2.18E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.48E+00
+Wall iteration:
+niter =    60 residual =     1.61E-03
+Residual velocity: vmax =     3.06E-04 vzmax =     5.62E-05
+lt =       218  T =         0.17440 time cost =        20.97
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.12E+00   -2.21E+00
+cells: vymax vymin =     2.19E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.51E+00
+Wall iteration:
+niter =    60 residual =     1.55E-03
+Residual velocity: vmax =     2.98E-04 vzmax =     5.10E-05
+lt =       219  T =         0.17520 time cost =        21.01
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.13E+00   -2.21E+00
+cells: vymax vymin =     2.19E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.54E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.485860620327468     
+area expansion of cell   1:    3.80575%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.366784267207294     
+area expansion of cell   2:    3.09884%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.728310337382915     
+area expansion of cell   3:    5.24506%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.875318693112380     
+area expansion of cell   4:    6.11779%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.845793233947941     
+area expansion of cell   5:    5.94251%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.710803354872926     
+area expansion of cell   6:    5.14113%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.378270695738308     
+area expansion of cell   7:    3.16703%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.523298935298808     
+area expansion of cell   8:    4.02800%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.182888781283228     
+area expansion of cell   9:    7.94369%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.578904857960577     
+area expansion of cell  10:    4.35811%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.289228119773487     
+area expansion of cell  11:    2.63843%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.212573002817827     
+area expansion of cell  12:    8.11991%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.551813579741850     
+area expansion of cell  13:    4.19728%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.332873951402775     
+area expansion of cell  14:    2.89753%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.084088109335521     
+area expansion of cell  15:    7.35716%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.262818316648367     
+area expansion of cell  16:    2.48165%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.625730293850214     
+area expansion of cell  17:    4.63609%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.419936289484419     
+area expansion of cell  18:    3.41438%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.151916327987138     
+area expansion of cell  19:    2.11867%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.693473379072916     
+area expansion of cell  20:    5.03825%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.468699364726987     
+area expansion of cell  21:    3.70387%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.919064753344276     
+area expansion of cell  22:    6.37749%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.357347716666787     
+area expansion of cell  23:    3.04282%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.556150672156679     
+area expansion of cell  24:    4.22303%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.697325710107734     
+area expansion of cell  25:    5.06112%
+Wall iteration:
+niter =    60 residual =     1.47E-03
+Residual velocity: vmax =     2.86E-04 vzmax =     4.46E-05
+lt =       220  T =         0.17600 time cost =        21.05
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.13E+00   -2.21E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.57E+00
+Wall iteration:
+niter =    60 residual =     1.43E-03
+Residual velocity: vmax =     2.80E-04 vzmax =     4.40E-05
+lt =       221  T =         0.17680 time cost =        21.08
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.13E+00   -2.21E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.60E+00
+Wall iteration:
+niter =    60 residual =     1.25E-03
+Residual velocity: vmax =     2.50E-04 vzmax =     3.56E-05
+lt =       222  T =         0.17760 time cost =        21.09
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.13E+00   -2.21E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.63E+00
+Wall iteration:
+niter =    60 residual =     1.11E-03
+Residual velocity: vmax =     2.26E-04 vzmax =     3.23E-05
+lt =       223  T =         0.17840 time cost =        21.14
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.14E+00   -2.21E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.66E+00
+Wall iteration:
+niter =    60 residual =     9.50E-04
+Residual velocity: vmax =     1.95E-04 vzmax =     2.82E-05
+lt =       224  T =         0.17920 time cost =        21.19
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.14E+00   -2.20E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.69E+00
+Wall iteration:
+niter =    60 residual =     7.85E-04
+Residual velocity: vmax =     1.62E-04 vzmax =     2.65E-05
+lt =       225  T =         0.18000 time cost =        21.23
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.14E+00   -2.20E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.72E+00
+Wall iteration:
+niter =    60 residual =     6.47E-04
+Residual velocity: vmax =     1.36E-04 vzmax =     2.77E-05
+lt =       226  T =         0.18080 time cost =        21.25
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.14E+00   -2.20E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.75E+00
+Wall iteration:
+niter =    60 residual =     6.15E-04
+Residual velocity: vmax =     1.25E-04 vzmax =     2.85E-05
+lt =       227  T =         0.18160 time cost =        21.30
+
+cells: vmax =     1.68E+01
+cells: vxmax vxmin =     2.15E+00   -2.20E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.68E+01    5.79E+00
+Wall iteration:
+niter =    60 residual =     7.83E-04
+Residual velocity: vmax =     1.48E-04 vzmax =     2.60E-05
+lt =       228  T =         0.18240 time cost =        21.33
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.19E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.81E+00
+Wall iteration:
+niter =    60 residual =     1.14E-03
+Residual velocity: vmax =     2.11E-04 vzmax =     2.73E-05
+lt =       229  T =         0.18320 time cost =        21.35
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.19E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.81E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.484390539961165     
+area expansion of cell   1:    3.79702%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.374014838904959     
+area expansion of cell   2:    3.14177%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.723554599486341     
+area expansion of cell   3:    5.21683%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.871498633691392     
+area expansion of cell   4:    6.09511%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.849957864686946     
+area expansion of cell   5:    5.96723%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.721631484846107     
+area expansion of cell   6:    5.20541%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.376914961175146     
+area expansion of cell   7:    3.15899%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.519675381950922     
+area expansion of cell   8:    4.00649%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.183865868320861     
+area expansion of cell   9:    7.94949%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.580611782663759     
+area expansion of cell  10:    4.36824%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.289378748801585     
+area expansion of cell  11:    2.63932%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.219867342238519     
+area expansion of cell  12:    8.16322%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.553285048896797     
+area expansion of cell  13:    4.20602%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.333003876917267     
+area expansion of cell  14:    2.89831%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.088007961118862     
+area expansion of cell  15:    7.38043%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.262407882155436     
+area expansion of cell  16:    2.47921%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.619556662510611     
+area expansion of cell  17:    4.59944%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.420603915226536     
+area expansion of cell  18:    3.41835%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.165843311920586     
+area expansion of cell  19:    2.17521%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.702605063424691     
+area expansion of cell  20:    5.09246%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.468519155831867     
+area expansion of cell  21:    3.70280%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.922381728230043     
+area expansion of cell  22:    6.39718%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.359415332726805     
+area expansion of cell  23:    3.05510%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.560489210046821     
+area expansion of cell  24:    4.24878%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.695582263762734     
+area expansion of cell  25:    5.05077%
+Wall iteration:
+niter =    60 residual =     1.39E-03
+Residual velocity: vmax =     2.57E-04 vzmax =     3.67E-05
+lt =       230  T =         0.18400 time cost =        21.40
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.18E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.81E+00
+Wall iteration:
+niter =    60 residual =     1.53E-03
+Residual velocity: vmax =     2.80E-04 vzmax =     4.16E-05
+lt =       231  T =         0.18480 time cost =        21.47
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.17E+00
+cells: vymax vymin =     2.20E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.81E+00
+Wall iteration:
+niter =    60 residual =     1.62E-03
+Residual velocity: vmax =     2.96E-04 vzmax =     4.55E-05
+lt =       232  T =         0.18560 time cost =        21.47
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.17E+00
+cells: vymax vymin =     2.19E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.81E+00
+Wall iteration:
+niter =    60 residual =     1.69E-03
+Residual velocity: vmax =     3.08E-04 vzmax =     4.67E-05
+lt =       233  T =         0.18640 time cost =        21.51
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.15E+00   -2.17E+00
+cells: vymax vymin =     2.19E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.80E+00
+Wall iteration:
+niter =    60 residual =     1.74E-03
+Residual velocity: vmax =     3.17E-04 vzmax =     4.83E-05
+lt =       234  T =         0.18720 time cost =        21.55
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.17E+00
+cells: vymax vymin =     2.19E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.79E+00
+Wall iteration:
+niter =    60 residual =     1.79E-03
+Residual velocity: vmax =     3.24E-04 vzmax =     4.95E-05
+lt =       235  T =         0.18800 time cost =        21.58
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.16E+00
+cells: vymax vymin =     2.18E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.79E+00
+Wall iteration:
+niter =    60 residual =     1.82E-03
+Residual velocity: vmax =     3.30E-04 vzmax =     5.02E-05
+lt =       236  T =         0.18880 time cost =        21.63
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.16E+00
+cells: vymax vymin =     2.18E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.78E+00
+Wall iteration:
+niter =    60 residual =     1.85E-03
+Residual velocity: vmax =     3.34E-04 vzmax =     5.11E-05
+lt =       237  T =         0.18960 time cost =        21.72
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.15E+00
+cells: vymax vymin =     2.17E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.77E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.39E-04 vzmax =     5.17E-05
+lt =       238  T =         0.19040 time cost =        21.81
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.14E+00
+cells: vymax vymin =     2.17E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.76E+00
+Wall iteration:
+niter =    60 residual =     1.88E-03
+Residual velocity: vmax =     3.42E-04 vzmax =     5.31E-05
+lt =       239  T =         0.19120 time cost =        21.82
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.14E+00
+cells: vymax vymin =     2.16E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.75E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.481256953935201     
+area expansion of cell   1:    3.77842%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.380319072291314     
+area expansion of cell   2:    3.17919%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.717199020312911     
+area expansion of cell   3:    5.17910%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.863733874634324     
+area expansion of cell   4:    6.04901%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.853234468384805     
+area expansion of cell   5:    5.98668%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.729164992273564     
+area expansion of cell   6:    5.25014%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.374676994240339     
+area expansion of cell   7:    3.14570%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.515183351933825     
+area expansion of cell   8:    3.97982%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.179763100134775     
+area expansion of cell   9:    7.92514%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.581146612890294     
+area expansion of cell  10:    4.37142%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.288936724319331     
+area expansion of cell  11:    2.63670%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.223010521532075     
+area expansion of cell  12:    8.18188%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.553780031777560     
+area expansion of cell  13:    4.20896%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.332536002399461     
+area expansion of cell  14:    2.89553%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.092889515468165     
+area expansion of cell  15:    7.40941%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.261273725343884     
+area expansion of cell  16:    2.47248%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.612500246236454     
+area expansion of cell  17:    4.55755%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.420103120692669     
+area expansion of cell  18:    3.41538%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.178823915252746     
+area expansion of cell  19:    2.22792%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.709793565221943     
+area expansion of cell  20:    5.13514%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.466926290074120     
+area expansion of cell  21:    3.69334%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.923982604590286     
+area expansion of cell  22:    6.40668%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.359525748424758     
+area expansion of cell  23:    3.05575%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.563303572874485     
+area expansion of cell  24:    4.26549%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.692184907092802     
+area expansion of cell  25:    5.03060%
+Wall iteration:
+niter =    60 residual =     1.89E-03
+Residual velocity: vmax =     3.45E-04 vzmax =     5.43E-05
+lt =       240  T =         0.19200 time cost =        21.88
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.14E+00
+cells: vymax vymin =     2.16E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.74E+00
+Wall iteration:
+niter =    60 residual =     1.90E-03
+Residual velocity: vmax =     3.47E-04 vzmax =     5.52E-05
+lt =       241  T =         0.19280 time cost =        21.95
+
+cells: vmax =     1.67E+01
+cells: vxmax vxmin =     2.16E+00   -2.14E+00
+cells: vymax vymin =     2.15E+00   -2.22E+00
+cells: vzmax vzmin =     1.67E+01    5.73E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.48E-04 vzmax =     5.57E-05
+lt =       242  T =         0.19360 time cost =        22.04
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.14E+00
+cells: vymax vymin =     2.14E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.71E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.49E-04 vzmax =     5.60E-05
+lt =       243  T =         0.19440 time cost =        22.02
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.14E+00
+cells: vymax vymin =     2.14E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.70E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.50E-04 vzmax =     5.60E-05
+lt =       244  T =         0.19520 time cost =        22.08
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.14E+00
+cells: vymax vymin =     2.13E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.69E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.50E-04 vzmax =     5.58E-05
+lt =       245  T =         0.19600 time cost =        22.14
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.14E+00
+cells: vymax vymin =     2.13E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.68E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.51E-04 vzmax =     5.54E-05
+lt =       246  T =         0.19680 time cost =        22.23
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.14E+00
+cells: vymax vymin =     2.12E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.68E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.51E-04 vzmax =     5.49E-05
+lt =       247  T =         0.19760 time cost =        22.34
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.13E+00
+cells: vymax vymin =     2.11E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.67E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.51E-04 vzmax =     5.45E-05
+lt =       248  T =         0.19840 time cost =        22.41
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.13E+00
+cells: vymax vymin =     2.11E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.66E+00
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.52E-04 vzmax =     5.42E-05
+lt =       249  T =         0.19920 time cost =        22.48
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.15E+00   -2.13E+00
+cells: vymax vymin =     2.10E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.66E+00
+ cell%starting_area    16.844790346298556     
+ cell%area:    17.476973041159312     
+area expansion of cell   1:    3.75299%
+ cell%starting_area    16.844790346298552     
+ cell%area:    17.385845959754501     
+area expansion of cell   2:    3.21201%
+ cell%starting_area    16.844790346298502     
+ cell%area:    17.709488727688068     
+area expansion of cell   3:    5.13333%
+ cell%starting_area    16.844790346298527     
+ cell%area:    17.853521069421245     
+area expansion of cell   4:    5.98838%
+ cell%starting_area    16.844790346298598     
+ cell%area:    17.855755840705594     
+area expansion of cell   5:    6.00165%
+ cell%starting_area    16.844790346298538     
+ cell%area:    17.734107160480086     
+area expansion of cell   6:    5.27948%
+ cell%starting_area    16.844790346298545     
+ cell%area:    17.371741784304039     
+area expansion of cell   7:    3.12828%
+ cell%starting_area    16.844790346298584     
+ cell%area:    17.510096725160576     
+area expansion of cell   8:    3.94963%
+ cell%starting_area    16.844790346298517     
+ cell%area:    18.172740785672495     
+area expansion of cell   9:    7.88345%
+ cell%starting_area    16.844790346298637     
+ cell%area:    17.580754316918316     
+area expansion of cell  10:    4.36909%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.288050888464753     
+area expansion of cell  11:    2.63144%
+ cell%starting_area    16.844790346298527     
+ cell%area:    18.224535465571304     
+area expansion of cell  12:    8.19093%
+ cell%starting_area    16.844790346298602     
+ cell%area:    17.553494439264426     
+area expansion of cell  13:    4.20726%
+ cell%starting_area    16.844790346298605     
+ cell%area:    17.331634404821383     
+area expansion of cell  14:    2.89018%
+ cell%starting_area    16.844790346298588     
+ cell%area:    18.097804412783354     
+area expansion of cell  15:    7.43859%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.259529730413050     
+area expansion of cell  16:    2.46212%
+ cell%starting_area    16.844790346298591     
+ cell%area:    17.604853910174064     
+area expansion of cell  17:    4.51216%
+ cell%starting_area    16.844790346298620     
+ cell%area:    17.418588375747944     
+area expansion of cell  18:    3.40638%
+ cell%starting_area    24.630086404143942     
+ cell%area:    25.190965528899941     
+area expansion of cell  19:    2.27721%
+ cell%starting_area    16.844790346298588     
+ cell%area:    17.715327781072091     
+area expansion of cell  20:    5.16799%
+ cell%starting_area    16.844790346298627     
+ cell%area:    17.464070777747903     
+area expansion of cell  21:    3.67639%
+ cell%starting_area    16.844790346298581     
+ cell%area:    17.924272397983241     
+area expansion of cell  22:    6.40840%
+ cell%starting_area    16.844790346298666     
+ cell%area:    17.357935915786531     
+area expansion of cell  23:    3.04632%
+ cell%starting_area    16.844790346298659     
+ cell%area:    17.565071368176952     
+area expansion of cell  24:    4.27599%
+ cell%starting_area    16.844790346298616     
+ cell%area:    17.687409078104192     
+area expansion of cell  25:    5.00225%
+Wall iteration:
+niter =    60 residual =     1.91E-03
+Residual velocity: vmax =     3.54E-04 vzmax =     5.41E-05
+lt =       250  T =         0.20000 time cost =        22.53
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.14E+00   -2.13E+00
+cells: vymax vymin =     2.09E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     1.92E-03
+Residual velocity: vmax =     3.56E-04 vzmax =     5.43E-05
+lt =       251  T =         0.20080 time cost =        22.58
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.14E+00   -2.12E+00
+cells: vymax vymin =     2.08E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     1.94E-03
+Residual velocity: vmax =     3.59E-04 vzmax =     5.48E-05
+lt =       252  T =         0.20160 time cost =        22.67
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.14E+00   -2.12E+00
+cells: vymax vymin =     2.08E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     1.96E-03
+Residual velocity: vmax =     3.63E-04 vzmax =     5.56E-05
+lt =       253  T =         0.20240 time cost =        22.72
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.14E+00   -2.11E+00
+cells: vymax vymin =     2.07E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     1.98E-03
+Residual velocity: vmax =     3.67E-04 vzmax =     5.69E-05
+lt =       254  T =         0.20320 time cost =        22.82
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.13E+00   -2.11E+00
+cells: vymax vymin =     2.07E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     2.06E-03
+Residual velocity: vmax =     3.78E-04 vzmax =     6.12E-05
+lt =       255  T =         0.20400 time cost =        22.89
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.13E+00   -2.10E+00
+cells: vymax vymin =     2.06E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.65E+00
+Wall iteration:
+niter =    60 residual =     1.86E-03
+Residual velocity: vmax =     3.54E-04 vzmax =     4.74E-05
+lt =       256  T =         0.20480 time cost =        22.94
+
+cells: vmax =     1.66E+01
+cells: vxmax vxmin =     2.13E+00   -2.09E+00
+cells: vymax vymin =     2.06E+00   -2.22E+00
+cells: vzmax vzmin =     1.66E+01    5.66E+00
+Wall iteration:
+niter =    60 residual =     2.03E-03
+Residual velocity: vmax =     3.66E-04 vzmax =     6.20E-05
+lt =       257  T =         0.20560 time cost =        23.00
+
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 4492029.0 ON atl1-1-02-007-28-1 CANCELLED AT 2024-01-05T01:01:50 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 4492029 ON atl1-1-02-007-28-1 CANCELLED AT 2024-01-05T01:01:50 DUE TO TIME LIMIT ***
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[2]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[2]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[2]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[2]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[2]PETSC ERROR: to get more information on the crash.
+[2]PETSC ERROR: --------------------- Error Message ------------------------------------
+[2]PETSC ERROR: Signal received!
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[2]PETSC ERROR: See docs/changes/index.html for recent updates.
+[2]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[2]PETSC ERROR: See docs/index.html for manual pages.
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case/./tube on a linux-gnu named atl1-1-02-007-29-1.pace.gatech.edu by smanasreh6 Fri Jan  5 00:01:43 2024
+[2]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[2]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[2]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[1]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[1]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[1]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[1]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[1]PETSC ERROR: to get more information on the crash.
+[1]PETSC ERROR: --------------------- Error Message ------------------------------------
+[1]PETSC ERROR: Signal received!
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[1]PETSC ERROR: See docs/changes/index.html for recent updates.
+[1]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[1]PETSC ERROR: See docs/index.html for manual pages.
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case/./tube on a linux-gnu named atl1-1-02-007-28-2.pace.gatech.edu by smanasreh6 Fri Jan  5 00:01:43 2024
+[1]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[1]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[1]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[0]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[0]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[0]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[0]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[0]PETSC ERROR: to get more information on the crash.
+[0]PETSC ERROR: --------------------- Error Message ------------------------------------
+[0]PETSC ERROR: Signal received!
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[0]PETSC ERROR: See docs/changes/index.html for recent updates.
+[0]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[0]PETSC ERROR: See docs/index.html for manual pages.
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case/./tube on a linux-gnu named atl1-1-02-007-28-1.pace.gatech.edu by smanasreh6 Fri Jan  5 00:01:43 2024
+[0]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[0]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[0]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[3]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[3]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[3]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[3]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[3]PETSC ERROR: to get more information on the crash.
+[3]PETSC ERROR: --------------------- Error Message ------------------------------------
+[3]PETSC ERROR: Signal received!
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[3]PETSC ERROR: See docs/changes/index.html for recent updates.
+[3]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[3]PETSC ERROR: See docs/index.html for manual pages.
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/case/./tube on a linux-gnu named atl1-1-02-007-29-2.pace.gatech.edu by smanasreh6 Fri Jan  5 00:01:43 2024
+[3]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[3]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[3]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+---------------------------------------
+Begin Slurm Epilog: Jan-05-2024 01:01:52
+Job ID:        4492029
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run2.sh
+Resources:     cpu=96,mem=192G,node=4
+Rsrc Used:     cput=4-00:16:00,vmem=10908K,walltime=01:00:10,mem=8580K,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-007-28-[1-2],atl1-1-02-007-29-[1-2]
+---------------------------------------
