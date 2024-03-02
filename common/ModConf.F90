@@ -10,7 +10,7 @@ module ModConf
   ! Domain size
   real(WP) :: Lb(3), iLb(3)
 
-  ! PhysEwald, FourierEwald -- whether the node do physical and/or Fourier part 
+  ! PhysEwald, FourierEwald -- whether the node do physical and/or Fourier part
   !             of the Ewald sum
   logical :: PhysEwald, FourierEwald
   ! MPI_COMM_Ewald -- MPI communicator for computing Ewald sum
@@ -25,7 +25,7 @@ module ModConf
   real(WP) :: nodeZminBuf, nodeZmaxBuf
 
   ! Ewald sum parameters
-  ! alpha -- 
+  ! alpha --
   ! eps -- error tolerance
   ! rc -- cut-off distance
   ! Nb -- number of mesh points for PME
@@ -41,7 +41,7 @@ module ModConf
 
   ! viscRat -- viscosity ratio
   real(WP), allocatable, dimension(:)  :: viscRat
-  real(WP), allocatable, dimension(:)  :: Acoef,Bcoef
+  real(WP), allocatable, dimension(:)  :: Acoef, Bcoef
   logical  :: Deflate
 
   real(WP), allocatable, dimension(:)  :: refRad  ! reference radius
@@ -49,10 +49,10 @@ module ModConf
   ! ForceCoef -- coefficient for intracell force
   ! epsDis -- intercell repulsion factor (not for intracell, yet!)
   ! viscRatThresh -- less than this to apply intercell repulsion
-  ! rigidsep -- true for whole cell motion if viscRat > viscRatThres 
+  ! rigidsep -- true for whole cell motion if viscRat > viscRatThres
   real(WP) :: ForceCoef
   real(WP) :: epsDist
-  real(WP) :: viscRatThresh   
+  real(WP) :: viscRatThresh
   logical  :: rigidsep
 
   ! pGradTar -- target pressure gradient
@@ -67,18 +67,18 @@ module ModConf
   ! time -- current time
   ! Ts -- time step length
   integer :: Nt0, Nt
-  real(WP) :: time0, time, Ts       
+  real(WP) :: time0, time, Ts
 
   ! Input/output
   ! File name format: dir + prefix + number + suffix
-  character(*),parameter :: fn_FMT = '(A,A,I9.9,A)'    
+  character(*), parameter :: fn_FMT = '(A,A,I9.9,A)'
 
-  integer,parameter :: cell_unit = 21
-  integer,parameter :: wall_unit = 22
-  integer,parameter :: pgrad_unit = 23
-  integer,parameter :: flow_unit = 24
-  integer,parameter :: restart_unit = 25
-  integer,parameter :: ftot_unit = 26
+  integer, parameter :: cell_unit = 21
+  integer, parameter :: wall_unit = 22
+  integer, parameter :: pgrad_unit = 23
+  integer, parameter :: flow_unit = 24
+  integer, parameter :: restart_unit = 25
+  integer, parameter :: ftot_unit = 26
 
   integer :: cell_out
   integer :: wall_out
@@ -92,21 +92,21 @@ module ModConf
   public
 
   public :: InitMPI, &
-    FinalizeMPI, &
-    ReadConfig, &
-    SetEwaldPrms, &
-    DomainDecomp, &
-    Is_Source, &
-    Cell_Has_Source, &
-    Tri_Has_Source, &
-    CollectArray
+            FinalizeMPI, &
+            ReadConfig, &
+            SetEwaldPrms, &
+            DomainDecomp, &
+            Is_Source, &
+            Cell_Has_Source, &
+            Tri_Has_Source, &
+            CollectArray
 
 contains
 
 !**********************************************************************
 ! Initialize MPI and PETSC
   subroutine InitMPI(split_comm)
-    logical,optional :: split_comm
+    logical, optional :: split_comm
 
 #include "../petsc_include.h"
     integer :: numNodes, nodeNum
@@ -131,21 +131,21 @@ contains
 
     if (rootWorld) then
       print *, 'Node ', nodeNum, ' of ', numNodes, ' running on ', trim(machinename)
-      do i = 1, numNodes - 1 
+      do i = 1, numNodes - 1
         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
-    call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
-    print *, 'Node ', i, ' of ', numNodes, ' running on ', trim(machinename)
+        call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+        print *, 'Node ', i, ' of ', numNodes, ' running on ', trim(machinename)
       end do ! i
     else
       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, stat, ierr)
     end if
     call MPI_Barrier(MPI_COMM_WORLD, ierr)
-    
+
     ! Split communicator
-    if (.not.present(split_comm)) then 
+    if (.not. present(split_comm)) then
       do_split_comm = .false.
-    else if (.not.split_comm) then
+    else if (.not. split_comm) then
       do_split_comm = .false.
     else if (numNodes > 16) then
       do_split_comm = .true.
@@ -154,13 +154,13 @@ contains
     if (do_split_comm) then
       ! Generate two communicators for physical and Fourier Ewald sum
       if (nodeNum < numNodes - 16) then
-    PhysEwald = .true.
-    FourierEwald = .false.
-    color = 1
+        PhysEwald = .true.
+        FourierEwald = .false.
+        color = 1
       else
-    PhysEwald = .false.
-    FourierEwald = .true.
-    color = 2
+        PhysEwald = .false.
+        FourierEwald = .true.
+        color = 2
       end if
 
       call MPI_Comm_Split(MPI_COMM_WORLD, color, 0, MPI_COMM_Ewald, ierr)
@@ -227,51 +227,51 @@ contains
   subroutine ReadConfig(fn)
     character(*) :: fn
 
-    integer, parameter :: MAXCELLTYPES=128
+    integer, parameter :: MAXCELLTYPES = 128
     real(WP), dimension(MAXCELLTYPES)  :: viscRatIN
     real(WP), dimension(MAXCELLTYPES)  :: refRadIN
 
-    integer,parameter :: funit = 1
+    integer, parameter :: funit = 1
     integer :: ierr
 
     ! Root node reads configuration file
     if (rootWorld) then
-      open(funit, file=trim(fn), action='read')
+      open (funit, file=trim(fn), action='read')
 
-      read(funit, *) alpha_Ewd;     print *, 'alpha_Ewd = ', alpha_Ewd
-      read(funit, *) eps_Ewd;       print *, 'eps_Ewd = ', eps_Ewd
-      read(funit, *) PBspln_Ewd;    print *, 'PBspln_Ewd = ', PBspln_Ewd
+      read (funit, *) alpha_Ewd; print *, 'alpha_Ewd = ', alpha_Ewd
+      read (funit, *) eps_Ewd; print *, 'eps_Ewd = ', eps_Ewd
+      read (funit, *) PBspln_Ewd; print *, 'PBspln_Ewd = ', PBspln_Ewd
 
-      read(funit, *) nCellTypes;        print *, 'nCellTypes = ',nCelltypes
-      read(funit, *) viscRatIN(1:nCellTypes)
+      read (funit, *) nCellTypes; print *, 'nCellTypes = ', nCelltypes
+      read (funit, *) viscRatIN(1:nCellTypes)
       print *, 'viscRat = ', viscRatIN(1:nCellTypes)
-      read(funit, *) refRadIN(1:nCellTypes)
+      read (funit, *) refRadIN(1:nCellTypes)
       print *, 'refRad = ', refRadIN(1:nCellTypes)
 
-      read(funit, *) Deflate;           print *, 'Deflate = ', Deflate
+      read (funit, *) Deflate; print *, 'Deflate = ', Deflate
       !print *, 'before error'
-      read(funit, *) pGradTar(1);       print *, 'pGradTar = ', pGradTar(1)
-      read(funit, *) pGradTar(2);       print *, 'pGradTar = ', pGradTar(2)
-      read(funit, *) pGradTar(3);       print *, 'pGradTar = ', pGradTar(3)
+      read (funit, *) pGradTar(1); print *, 'pGradTar = ', pGradTar(1)
+      read (funit, *) pGradTar(2); print *, 'pGradTar = ', pGradTar(2)
+      read (funit, *) pGradTar(3); print *, 'pGradTar = ', pGradTar(3)
       !print *, 'after error'
-      read(funit, *) Nt;        print *, 'Nt = ', Nt
-      read(funit, *) Ts;        print *, 'Ts = ', Ts
+      read (funit, *) Nt; print *, 'Nt = ', Nt
+      read (funit, *) Ts; print *, 'Ts = ', Ts
 
-      read(funit, *) cell_out;      print *, 'cell_out = ', cell_out
-      read(funit, *) wall_out;      print *, 'wall_out = ', wall_out
-      read(funit, *) pgrad_out;     print *, 'pgrad_out = ', pgrad_out
-      read(funit, *) flow_out;      print *, 'flow_out = ', flow_out
-      read(funit, *) ftot_out;      print *, 'flow_out = ', ftot_out
-      read(funit, *) restart_out;   print *, 'restart_out = ', restart_out
+      read (funit, *) cell_out; print *, 'cell_out = ', cell_out
+      read (funit, *) wall_out; print *, 'wall_out = ', wall_out
+      read (funit, *) pgrad_out; print *, 'pgrad_out = ', pgrad_out
+      read (funit, *) flow_out; print *, 'flow_out = ', flow_out
+      read (funit, *) ftot_out; print *, 'flow_out = ', ftot_out
+      read (funit, *) restart_out; print *, 'restart_out = ', restart_out
 
-      read(funit, *) restart_file;  print *, 'restart file = ', trim(restart_file)
+      read (funit, *) restart_file; print *, 'restart file = ', trim(restart_file)
 
-      read(funit, *) epsDist;           print *, 'epsDist = ',epsDist
-      read(funit, *) ForceCoef;         print *, 'ForceCoef = ',ForceCoef
-      read(funit, *) viscRatThresh;     print *, 'viscRatThresh = ',viscRatThresh
-      read(funit, *) rigidsep;          print *, 'rigidsep = ', rigidsep
-      read(funit, *) fmags;             print *, 'fmags = ', fmags
-      close(funit)
+      read (funit, *) epsDist; print *, 'epsDist = ', epsDist
+      read (funit, *) ForceCoef; print *, 'ForceCoef = ', ForceCoef
+      read (funit, *) viscRatThresh; print *, 'viscRatThresh = ', viscRatThresh
+      read (funit, *) rigidsep; print *, 'rigidsep = ', rigidsep
+      read (funit, *) fmags; print *, 'fmags = ', fmags
+      close (funit)
 
       print *
     end if
@@ -282,15 +282,15 @@ contains
     call MPI_Bcast(PBspln_Ewd, 1, MPI_INTEGER, 0, MPI_COMM_WORLD, ierr)
 
     call MPI_Bcast(nCellTypes, 1, MPI_INTEGER, 0, MPI_COMM_WORLD, ierr)
-    allocate(viscRat(nCellTypes))
-    viscRat = viscRatIN(1:nCellTypes) 
-    allocate(refRad(nCellTypes))
-    refRad = refRadIN(1:nCellTypes) 
+    allocate (viscRat(nCellTypes))
+    viscRat = viscRatIN(1:nCellTypes)
+    allocate (refRad(nCellTypes))
+    refRad = refRadIN(1:nCellTypes)
 
     call MPI_Bcast(viscRat, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
     call MPI_Bcast(refRad, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
     call initCOEFs
-    
+
     call MPI_Bcast(Deflate, 1, MPI_LOGICAL, 0, MPI_COMM_WORLD, ierr)
 
     call MPI_Bcast(pgradTar, 3, MPI_WP, 0, MPI_Comm_World, ierr)
@@ -312,15 +312,14 @@ contains
     call MPI_Bcast(viscRatThresh, 1, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(rigidsep, 1, MPI_LOGICAL, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(fmags, 4, MPI_WP, 0, MPI_Comm_World, ierr)
- 
-  end subroutine ReadConfig
 
+  end subroutine ReadConfig
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 !  This is initializing coefficients in the velcoity solver
 !
-!  The boundary integral equations can be put in the form 
+!  The boundary integral equations can be put in the form
 !
 !   A q - B K q/4 Pi = R
 !
@@ -329,19 +328,18 @@ contains
 
     integer  :: l
 
-    allocate(Acoef(nCellTypes),Bcoef(nCellTypes))
+    allocate (Acoef(nCellTypes), Bcoef(nCellTypes))
 
-    do l = 1,nCellTypes
-       if (viscRat(l).gt.0) then  ! Finite viscosity cell
-          Acoef(l) = 1. + viscRat(l) 
-          Bcoef(l) = 1. - viscRat(l)
-       else  ! Rigid cell
-          Acoef(l) =  1.   ! +1.
-          Bcoef(l) =  -1.    ! -1.
-       end if
-       print *,l,Acoef(l),Bcoef(l),viscRat(l)
+    do l = 1, nCellTypes
+      if (viscRat(l) .gt. 0) then  ! Finite viscosity cell
+        Acoef(l) = 1.+viscRat(l)
+        Bcoef(l) = 1.-viscRat(l)
+      else  ! Rigid cell
+        Acoef(l) = 1.   ! +1.
+        Bcoef(l) = -1.    ! -1.
+      end if
+      print *, l, Acoef(l), Bcoef(l), viscRat(l)
     end do
-    
 
   end subroutine initCOEFs
 
@@ -351,36 +349,36 @@ contains
 
     integer :: numNodes, ierr
     integer :: iter
-    integer,parameter :: iterMax = 10
+    integer, parameter :: iterMax = 10
     real(WP) :: s
 
-    ! Cut-off distance for 
+    ! Cut-off distance for
     if (PhysEwald) then
       if (rootEwald) then
-    ! Physical sum parameters
-    ! Note: cut-off radius is such that
-    !  (s^3  + 1.5*s^2 + 0.75/s)*exp(-s^2) < 0.75*sqrt(PI)*eps
-    !  at the cut-off radius,
-    !  where s = r*sqrt(PI/alpha) and eps is the error tolerance.
-    !
-    !  Here, the error tolerance is defined to be
-    !  the double-layer Ewald physical sum divided by the Green's
-    !  function of the infinite space at the cut-off radius.
+        ! Physical sum parameters
+        ! Note: cut-off radius is such that
+        !  (s^3  + 1.5*s^2 + 0.75/s)*exp(-s^2) < 0.75*sqrt(PI)*eps
+        !  at the cut-off radius,
+        !  where s = r*sqrt(PI/alpha) and eps is the error tolerance.
+        !
+        !  Here, the error tolerance is defined to be
+        !  the double-layer Ewald physical sum divided by the Green's
+        !  function of the infinite space at the cut-off radius.
 
-    ! Use iteration to determine the cut-off radius
-    s = 1.
-    do iter = 1, iterMax
-      s = 0.75*sqrt(PI)*eps_Ewd/(s**3 + 1.5*s + 0.75/s)
-      s = sqrt(-log(s))
-    end do ! iter
-    rc_Ewd = sqrt(alpha_Ewd/PI)*s
+        ! Use iteration to determine the cut-off radius
+        s = 1.
+        do iter = 1, iterMax
+          s = 0.75*sqrt(PI)*eps_Ewd/(s**3 + 1.5*s + 0.75/s)
+          s = sqrt(-log(s))
+        end do ! iter
+        rc_Ewd = sqrt(alpha_Ewd/PI)*s
 
-    ! Need at least three cells in each direction
-    rc_Ewd  = min(minval(Lb/3.001), rc_Ewd )
+        ! Need at least three cells in each direction
+        rc_Ewd = min(minval(Lb/3.001), rc_Ewd)
 
-    write(*, '(A)') 'Derived Ewald sum parameters:'
-    write(*, '(A,F15.5)') 'rc = ', rc_Ewd
-    write(*, '(A,3I5)') 'Nc = ', floor(Lb/rc_Ewd)
+        write (*, '(A)') 'Derived Ewald sum parameters:'
+        write (*, '(A,F15.5)') 'rc = ', rc_Ewd
+        write (*, '(A,3I5)') 'Nc = ', floor(Lb/rc_Ewd)
       end if
 
       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
@@ -389,17 +387,17 @@ contains
 
     if (FourierEwald) then
       if (rootEwald) then
-    call MPI_Comm_Size(MPI_Comm_Ewald, numNodes, ierr)
+        call MPI_Comm_Size(MPI_Comm_Ewald, numNodes, ierr)
 
-    ! Fourier sum parameters
-    Nb_Ewd = 2*ceiling(sqrt(-log(eps_Ewd)/(pi*alpha_Ewd))*Lb)
-    Nb_Ewd(3) = max(Nb_Ewd(3), numNodes*PBspln_Ewd)
-    Nb_Ewd(3) = ceiling(real(Nb_Ewd(3))/numNodes) * numNodes
-    NbC_Ewd = (/ Nb_Ewd(1)/2+1, Nb_Ewd(2), Nb_Ewd(3) /)
-        
-    write(*, '(A,3I5)') 'Nb = ', Nb_Ewd
-    write(*, '(A,3I5)') 'NbC = ', NbC_Ewd
-    write(*, *)
+        ! Fourier sum parameters
+        Nb_Ewd = 2*ceiling(sqrt(-log(eps_Ewd)/(pi*alpha_Ewd))*Lb)
+        Nb_Ewd(3) = max(Nb_Ewd(3), numNodes*PBspln_Ewd)
+        Nb_Ewd(3) = ceiling(real(Nb_Ewd(3))/numNodes)*numNodes
+        NbC_Ewd = (/Nb_Ewd(1)/2 + 1, Nb_Ewd(2), Nb_Ewd(3)/)
+
+        write (*, '(A,3I5)') 'Nb = ', Nb_Ewd
+        write (*, '(A,3I5)') 'NbC = ', NbC_Ewd
+        write (*, *)
       end if
 
       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
@@ -427,7 +425,7 @@ contains
       hbuf = max(hbuf, rc_Ewd)
     end if
     if (FourierEwald) then
-      hbuf = max(hbuf, PBspln_Ewd*Lb(3)/Nb_Ewd(3) )
+      hbuf = max(hbuf, PBspln_Ewd*Lb(3)/Nb_Ewd(3))
     end if
 
     nodeZmin = nodeNum*hz
@@ -446,7 +444,7 @@ contains
 
     integer :: numNodes
     real(WP) :: z
-    real(WP),parameter :: EPS = 1.D-5
+    real(WP), parameter :: EPS = 1.D-5
     integer :: ierr
 
     if (SINGLE_NODE) then
@@ -471,17 +469,17 @@ contains
     logical :: hasSource
 
     real(WP) :: zmin, zmax
-    real(WP),parameter :: EPS = 1.D-5
+    real(WP), parameter :: EPS = 1.D-5
 
     if (SINGLE_NODE) then
       hasSource = .true.
       return
     end if
 
-    zmin = minval(cell%x(:,:,3)) - nodeZminBuf
+    zmin = minval(cell%x(:, :, 3)) - nodeZminBuf
     zmin = zmin - floor(zmin*iLb(3))*Lb(3)
 
-    zmax = maxval(cell%x(:,:,3)) - nodeZminBuf
+    zmax = maxval(cell%x(:, :, 3)) - nodeZminBuf
     zmax = zmax - floor(zmax*iLb(3))*Lb(3)
 
     if (zmin < nodeZmaxBuf - nodeZminBuf + EPS) then
@@ -499,7 +497,7 @@ contains
 ! Arguments:
 !  x(i,:) -- the coordinates of the i-th vertex
   function Tri_Has_Source(x) result(hasSource)
-    real(WP) :: x(3,3)
+    real(WP) :: x(3, 3)
     logical :: hasSource
 
     logical :: T1, T2, T3
@@ -509,9 +507,9 @@ contains
       return
     end if
 
-    T1 = Is_Source(x(1,:) )
-    T2 = Is_Source(x(2,:) )
-    T3 = Is_Source(x(3,:) )
+    T1 = Is_Source(x(1, :))
+    T2 = Is_Source(x(2, :))
+    T3 = Is_Source(x(3, :))
     hasSource = T1 .and. T2 .and. T3
 
   end function Tri_Has_Source
@@ -533,68 +531,68 @@ contains
   subroutine CollectArray(np, nvar, ia, a, aGlb, COMM, OP)
     integer :: np, nvar
     integer :: ia(:)
-    real(WP) :: a(:,:)
-    real(WP) :: aGlb(:,:)
+    real(WP) :: a(:, :)
+    real(WP) :: aGlb(:, :)
     integer :: COMM
-    integer,optional :: OP
+    integer, optional :: OP
 
     integer :: numNodes, nodeNum
     integer :: npTot, sendcount
-    integer,allocatable :: nps(:), recvcounts(:), displs(:), iaRecv(:)
-    real(WP),allocatable :: aSend(:), aRecv(:)
+    integer, allocatable :: nps(:), recvcounts(:), displs(:), iaRecv(:)
+    real(WP), allocatable :: aSend(:), aRecv(:)
     integer :: i, p, ierr
 
     call MPI_Comm_Size(comm, numNodes, ierr)
     call MPI_Comm_Rank(comm, nodeNum, ierr)
 
     ! Allocate working arrays
-    allocate(nps(0:numNodes-1), recvcounts(0:numNodes-1), displs(0:numNodes-1))
+    allocate (nps(0:numNodes - 1), recvcounts(0:numNodes - 1), displs(0:numNodes - 1))
 
     call MPI_AllGather(np, 1, MPI_Integer, nps, 1, MPI_Integer, comm, ierr)
     npTot = sum(nps)
-    allocate(iaRecv(npTot) )
-    allocate(aSend(np*nvar), aRecv(npTot*nvar))
+    allocate (iaRecv(npTot))
+    allocate (aSend(np*nvar), aRecv(npTot*nvar))
 
     ! Send and receive ia(:)
     sendCount = np
 
     recvcounts = nps
     displs(0) = 0
-    do i = 1, numNodes-1
-      displs(i) = displs(i-1) + recvCounts(i-1)
+    do i = 1, numNodes - 1
+      displs(i) = displs(i - 1) + recvCounts(i - 1)
     end do ! i
 
     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
-            iaRecv, recvcounts, displs, MPI_INTEGER, COMM, ierr)
+                        iaRecv, recvcounts, displs, MPI_INTEGER, COMM, ierr)
 
     ! Send and receive a(:,:)
     sendCount = np*nvar
     do i = 1, np
-      aSend((i-1)*nvar+1:i*nvar) = a(i,:)
+      aSend((i - 1)*nvar + 1:i*nvar) = a(i, :)
     end do ! i
 
     recvcounts = nps*nvar
     displs(0) = 0
-    do i = 1, numNodes-1
-      displs(i) = displs(i-1) + recvcounts(i-1)
+    do i = 1, numNodes - 1
+      displs(i) = displs(i - 1) + recvcounts(i - 1)
     end do ! i
     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
-            aRecv, recvcounts, displs, MPI_WP, COMM, ierr)
+                        aRecv, recvcounts, displs, MPI_WP, COMM, ierr)
 
     ! Re-assemble data
     do i = 1, npTot
       p = iaRecv(i)
       if (.not. present(OP)) then
-        aGlb(p,:) = aRecv((i-1)*nvar+1:i*nvar)
+        aGlb(p, :) = aRecv((i - 1)*nvar + 1:i*nvar)
       else
-        aGlb(p,:) = aGlb(p,:) + aRecv((i-1)*nvar+1:i*nvar)
+        aGlb(p, :) = aGlb(p, :) + aRecv((i - 1)*nvar + 1:i*nvar)
       end if
     end do ! i
 
     ! Deallocate working arrays
-    deallocate(nps, recvcounts, displs)
-    deallocate(iaRecv)
-    deallocate(aSend, aRecv)
+    deallocate (nps, recvcounts, displs)
+    deallocate (iaRecv)
+    deallocate (aSend, aRecv)
 
   end subroutine CollectArray
 

@@ -11,11 +11,11 @@ module ModSpline
   private
 
   public :: Spline_Create, &
-    Spline_Destroy, &
-    Spline_Build, &
-    Spline_Build_on_Sphere, &
-    Spline_Interp, &
-    Spline_FindProjection
+            Spline_Destroy, &
+            Spline_Build, &
+            Spline_Build_on_Sphere, &
+            Spline_Interp, &
+            Spline_FindProjection
 
 contains
 
@@ -29,11 +29,11 @@ contains
     spln%n = n
     spln%nvar = nvar
 
-    allocate(spln%u(0:m-1, 0:n-1, nvar), &
-    spln%u1(0:m-1, 0:n-1, nvar), &
-    spln%u2(0:m-1, 0:n-1, nvar), &
-    spln%u12(0:m-1, 0:n-1, nvar), &
-    spln%kx(nvar), spln%ky(nvar) )
+    allocate (spln%u(0:m - 1, 0:n - 1, nvar), &
+              spln%u1(0:m - 1, 0:n - 1, nvar), &
+              spln%u2(0:m - 1, 0:n - 1, nvar), &
+              spln%u12(0:m - 1, 0:n - 1, nvar), &
+              spln%kx(nvar), spln%ky(nvar))
 
     spln%hx = TWO_PI/m
     spln%hy = TWO_PI/n
@@ -55,8 +55,8 @@ contains
     spln%n = 0
     spln%nvar = 0
 
-    deallocate(spln%u, spln%u1, spln%u2, spln%u12)
-    deallocate(spln%kx, spln%ky)
+    deallocate (spln%u, spln%u1, spln%u2, spln%u12)
+    deallocate (spln%kx, spln%ky)
 
   end subroutine Spline_Destroy
 
@@ -70,10 +70,10 @@ contains
 !  The shape of f must the same as that of spln%u
   subroutine Spline_Build(spln, f, dfx, dfy)
     type(t_spline) :: spln
-    real(WP),dimension(spln%m,spln%n,spln%nvar) :: f
-    real(WP),dimension(spln%nvar),optional :: dfx, dfy
+    real(WP), dimension(spln%m, spln%n, spln%nvar) :: f
+    real(WP), dimension(spln%nvar), optional :: dfx, dfy
 
-    real(WP),allocatable :: f1(:,:,:)
+    real(WP), allocatable :: f1(:, :, :)
     integer :: m, n, nvar, i, j
 
     m = spln%m
@@ -83,11 +83,11 @@ contains
     spln%u = f
 
     if (present(dfx)) then
-      spln%kx = i_2PI * dfx
+      spln%kx = i_2PI*dfx
 
       do i = 1, m
       do j = 1, n
-        spln%u(i,j,:) = f(i,j,:) - dfx*real(i-1)/m
+        spln%u(i, j, :) = f(i, j, :) - dfx*real(i - 1)/m
       end do ! j
       end do ! i
     else
@@ -95,11 +95,11 @@ contains
     end if
 
     if (present(dfy)) then
-      spln%ky = i_2PI * dfy
+      spln%ky = i_2PI*dfy
 
       do i = 1, m
       do j = 1, n
-        spln%u(i,j,:) = f(i,j,:) - dfy*real(j-1)/n
+        spln%u(i, j, :) = f(i, j, :) - dfy*real(j - 1)/n
       end do ! j
       end do ! i
     else
@@ -120,17 +120,17 @@ contains
 !  The first dimension of f must be half of that of spln%u
   subroutine Spline_Build_on_Sphere(spln, f)
     type(t_spline) :: spln
-    real(WP),dimension(0:spln%m/2, 0:spln%n-1, spln%nvar) :: f
+    real(WP), dimension(0:spln%m/2, 0:spln%n - 1, spln%nvar) :: f
 
     integer :: nlat, nlon, i, j
 
     nlat = spln%m/2
     nlon = spln%n
 
-    do j = 0, nlon-1
-    do i = 0, nlat-1
-      spln%u(i,j,:) = f(i,j,:)
-      spln%u(nlat+i,j,:) = f(nlat-i,mod(j+nlon/2,nlon),:)
+    do j = 0, nlon - 1
+    do i = 0, nlat - 1
+      spln%u(i, j, :) = f(i, j, :)
+      spln%u(nlat + i, j, :) = f(nlat - i, mod(j + nlon/2, nlon), :)
     end do ! i
     end do ! j
 
@@ -152,7 +152,7 @@ contains
     real(WP) :: x, y, f(spln%nvar)
 
     integer :: i1, j1, i2, j2, l
-    real(WP) :: s, t, cx(4), cy(4), u(4,4)
+    real(WP) :: s, t, cx(4), cy(4), u(4, 4)
 
     ! Interpolate in phi direction
     i1 = floor(x*spln%ihx)
@@ -164,23 +164,23 @@ contains
     i1 = modulo(i1, spln%m)
     j1 = modulo(j1, spln%n)
 
-    i2 = modulo(i1+1, spln%m)
-    j2 = modulo(j1+1, spln%n)
+    i2 = modulo(i1 + 1, spln%m)
+    j2 = modulo(j1 + 1, spln%n)
 
-    cx = (/ 1 + s*s*(-3. + 2.*s), s*s*(3. - 2.*s), &
-        spln%hx*s*(1. + s*(-2. + s)), spln%hx*s*s*(-1. + s) /)
-    cy = (/ 1 + t*t*(-3. + 2.*t), t*t*(3. - 2.*t), &
-        spln%hy*t*(1. + t*(-2. + t)), spln%hy*t*t*(-1. + t) /)
+    cx = (/1 + s*s*(-3.+2.*s), s*s*(3.-2.*s), &
+           spln%hx*s*(1.+s*(-2.+s)), spln%hx*s*s*(-1.+s)/)
+    cy = (/1 + t*t*(-3.+2.*t), t*t*(3.-2.*t), &
+           spln%hy*t*(1.+t*(-2.+t)), spln%hy*t*t*(-1.+t)/)
 
     do l = 1, size(f)
-      u(1,:) = (/ spln%u(i1,j1,l), spln%u(i1,j2,l), &
-            spln%u2(i1,j1,l), spln%u2(i1,j2,l) /)
-      u(2,:) = (/ spln%u(i2,j1,l), spln%u(i2,j2,l), &
-            spln%u2(i2,j1,l), spln%u2(i2,j2,l) /)
-      u(3,:) = (/ spln%u1(i1,j1,l), spln%u1(i1,j2,l), &
-            spln%u12(i1,j1,l), spln%u12(i1,j2,l) /)
-      u(4,:) = (/ spln%u1(i2,j1,l), spln%u1(i2,j2,l), &
-            spln%u12(i2,j1,l), spln%u12(i2,j2,l) /)
+      u(1, :) = (/spln%u(i1, j1, l), spln%u(i1, j2, l), &
+                  spln%u2(i1, j1, l), spln%u2(i1, j2, l)/)
+      u(2, :) = (/spln%u(i2, j1, l), spln%u(i2, j2, l), &
+                  spln%u2(i2, j1, l), spln%u2(i2, j2, l)/)
+      u(3, :) = (/spln%u1(i1, j1, l), spln%u1(i1, j2, l), &
+                  spln%u12(i1, j1, l), spln%u12(i1, j2, l)/)
+      u(4, :) = (/spln%u1(i2, j1, l), spln%u1(i2, j2, l), &
+                  spln%u12(i2, j1, l), spln%u12(i2, j2, l)/)
 
       f(l) = dot_product(cx, matmul(u, cy))
     end do ! l
@@ -205,12 +205,12 @@ contains
     real(WP) :: xtar(3), th0, phi0, x0(3)
 
     integer :: iter
-    integer,parameter :: iterMax = 3
-    integer,parameter :: nth = 2   ! number of points on the patch arond (th0, phi0)
-    integer,parameter :: nphi = 8
+    integer, parameter :: iterMax = 3
+    integer, parameter :: nth = 2   ! number of points on the patch arond (th0, phi0)
+    integer, parameter :: nphi = 8
     real(WP) :: h
-    real(WP) :: thPat_L(nth), phiPat_L(nphi), thPat(nth,nphi), phiPat(nth,nphi)
-    real(WP) :: xyGq_L(0:nth*nphi,2), dist2Gq(0:nth*nphi)
+    real(WP) :: thPat_L(nth), phiPat_L(nphi), thPat(nth, nphi), phiPat(nth, nphi)
+    real(WP) :: xyGq_L(0:nth*nphi, 2), dist2Gq(0:nth*nphi)
     real(WP) :: c0, c1, c2, c11, c12, c22, xyMin_L(2), dist2MinEst
     real(WP) :: xmin(3), thMin_L, phiMin_L, thMin, phiMin, dist2min
     real(WP) :: xx(3)
@@ -223,26 +223,26 @@ contains
     h = max(spln%hx, spln%hy)
 
     do iter = 1, iterMax
-      thPat_L = (/ (ith*h/nth, ith=1,nth) /)
-      phiPat_L = (/ ((iphi-1)*two_pi/nphi, iphi=1,nphi) /)
+      thPat_L = (/(ith*h/nth, ith=1, nth)/)
+      phiPat_L = (/((iphi - 1)*two_pi/nphi, iphi=1, nphi)/)
       call PolarPatch_Build(th0, phi0, thPat_L, phiPat_L, thPat, phiPat)
 
       ! Compute the local 2D Cartesian coordinate of patch points
-      xyGq_L(0,:) = 0.
+      xyGq_L(0, :) = 0.
       call Spline_Interp(spln, th0, phi0, xx)
       xx = xx - xtar
       dist2Gq(0) = sum(xx**2)
 
       do iphi = 1, nphi
       do ith = 1, nth
-    i = ith + nth*(iphi - 1)
+        i = ith + nth*(iphi - 1)
 
-    xyGq_L(i,1) = thPat_L(ith)*cos(phiPat_L(iphi))
-    xyGq_L(i,2) = thPat_L(ith)*sin(phiPat_L(iphi))
+        xyGq_L(i, 1) = thPat_L(ith)*cos(phiPat_L(iphi))
+        xyGq_L(i, 2) = thPat_L(ith)*sin(phiPat_L(iphi))
 
-    call Spline_Interp(spln, thPat(ith,iphi), phiPat(ith,iphi), xx)
-    xx = xx - xtar
-    dist2Gq(i) = sum(xx**2)
+        call Spline_Interp(spln, thPat(ith, iphi), phiPat(ith, iphi), xx)
+        xx = xx - xtar
+        dist2Gq(i) = sum(xx**2)
       end do ! ith
       end do ! iphi
 
@@ -263,7 +263,7 @@ contains
       th0 = thMin
       phi0 = phiMin
       x0 = xMin
-      h = 0.5*h    
+      h = 0.5*h
     end do ! iter
 
   end subroutine Spline_FindProjection

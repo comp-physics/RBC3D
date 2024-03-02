@@ -9,8 +9,8 @@ module ModHashTable
   private
 
   public :: HashTable_Build, &
-    HashTable_Index, &
-    HashTable_ComputeNumBlocks
+            HashTable_Index, &
+            HashTable_ComputeNumBlocks
 
 contains
 
@@ -24,8 +24,8 @@ contains
     integer :: Nc(3)
     real(WP) :: iLbNc(3)
     integer :: nPoint
-    real(WP) :: x(:,:)
-    integer :: hoc(0:Nc(1)+1, 0:Nc(2)+1, 0:Nc(3)+1)
+    real(WP) :: x(:, :)
+    integer :: hoc(0:Nc(1) + 1, 0:Nc(2) + 1, 0:Nc(3) + 1)
     integer :: next(:)
 
     integer :: i, i1, i2, i3
@@ -35,24 +35,24 @@ contains
     next = -1
 
     do i = 1, nPoint
-      call HashTable_Index(Nc, iLbNc, x(i,:), i1, i2, i3)
+      call HashTable_Index(Nc, iLbNc, x(i, :), i1, i2, i3)
 
-      if ( i3 >= 0 .and. i3 <= Nc(3)+1 ) then
-        next(i) = hoc(i1,i2,i3)
-    hoc(i1,i2,i3) = i
+      if (i3 >= 0 .and. i3 <= Nc(3) + 1) then
+        next(i) = hoc(i1, i2, i3)
+        hoc(i1, i2, i3) = i
       end if
     end do ! i
 
     ! Ghost cells
-    hoc(0,      :,:) = hoc(Nc(1),:,:)
-    hoc(Nc(1)+1,:,:) = hoc(1,    :,:)
+    hoc(0, :, :) = hoc(Nc(1), :, :)
+    hoc(Nc(1) + 1, :, :) = hoc(1, :, :)
 
-    hoc(:,0,      :) = hoc(:,Nc(2),:)
-    hoc(:,Nc(2)+1,:) = hoc(:,1,    :)
+    hoc(:, 0, :) = hoc(:, Nc(2), :)
+    hoc(:, Nc(2) + 1, :) = hoc(:, 1, :)
 
     if (SINGLE_NODE) then
-      hoc(:,:,0)       = hoc(:,:,Nc(3))
-      hoc(:,:,Nc(3)+1) = hoc(:,:,1)
+      hoc(:, :, 0) = hoc(:, :, Nc(3))
+      hoc(:, :, Nc(3) + 1) = hoc(:, :, 1)
     end if
 
   end subroutine HashTable_Build
@@ -118,7 +118,7 @@ contains
       Nc(3) = max(Nc(3), 2)
     else
       Nc(3) = max(Nc(3), 1)
-    endif
+    end if
 
     iLbNc(1:2) = iLb(1:2)*Nc(1:2)
     iLbNc(3) = Nc(3)/(nodeZmax - nodeZmin)

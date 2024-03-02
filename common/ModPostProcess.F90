@@ -14,9 +14,9 @@ module ModPostProcess
   private
 
   public :: CalcVelocityField, &
-    WallShearForce, &
-    CellFlowRate, &
-    ComputeParticleStress
+            WallShearForce, &
+            CellFlowRate, &
+            ComputeParticleStress
 
 contains
 
@@ -27,7 +27,7 @@ contains
 !  v(:,:) -- velocities
   subroutine CalcVelocityField(tlist, v)
     type(t_TargetList) :: tlist
-    real(WP) :: v(:,:)
+    real(WP) :: v(:, :)
 
     real(WP) :: c1, c2
     integer :: ii
@@ -54,7 +54,7 @@ contains
 
     ! Add the background velocity
     do ii = 1, 3
-      v(:,ii) = v(:,ii) + vBkg(ii)
+      v(:, ii) = v(:, ii) + vBkg(ii)
     end do ! ii
 
   end subroutine CalcVelocityField
@@ -64,9 +64,9 @@ contains
   function WallShearForce() result(sf)
     real(WP) :: sf(3)
 
-    type(t_wall),pointer :: wall
+    type(t_wall), pointer :: wall
     integer :: iwall, iele, ivert, l
-    real(WP) :: x_ele(3,3), f_ele(3,3)
+    real(WP) :: x_ele(3, 3), f_ele(3, 3)
 
     sf = 0.
 
@@ -75,11 +75,11 @@ contains
 
       do iele = 1, wall%nele
         do l = 1, 3
-      ivert = wall%e2v(iele,l)
-      f_ele(l,:) = wall%f(ivert,:)
-    end do ! l
+          ivert = wall%e2v(iele, l)
+          f_ele(l, :) = wall%f(ivert, :)
+        end do ! l
 
-    sf = sf + thrd*sum(f_ele,1)*wall%area(iele)
+        sf = sf + thrd*sum(f_ele, 1)*wall%area(iele)
       end do ! iele
     end do ! iwall
 
@@ -90,7 +90,7 @@ contains
   function CellFlowRate() result(flowrate)
     real(WP) :: flowrate
 
-    type(t_rbc),pointer :: rbc
+    type(t_rbc), pointer :: rbc
     integer :: irbc, ilat, ilon
     real(WP) :: zc, ds, vn
 
@@ -99,27 +99,27 @@ contains
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
 
-      zc = 0.5*( minval(rbc%x(:,:,3)) + maxval(rbc%x(:,:,3)) )
+      zc = 0.5*(minval(rbc%x(:, :, 3)) + maxval(rbc%x(:, :, 3)))
 
       do ilon = 1, rbc%nlon
       do ilat = 1, rbc%nlat
-        ds = rbc%detJ(ilat,ilon)*rbc%w(ilat)
-    vn = dot_product(rbc%g(ilat,ilon,:), rbc%a3(ilat,ilon,:))
-    flowrate = flowrate + (rbc%x(ilat,ilon,3) - zc)*vn*ds
+        ds = rbc%detJ(ilat, ilon)*rbc%w(ilat)
+        vn = dot_product(rbc%g(ilat, ilon, :), rbc%a3(ilat, ilon, :))
+        flowrate = flowrate + (rbc%x(ilat, ilon, 3) - zc)*vn*ds
       end do ! ilat
       end do ! ilon
     end do ! irbc
 
     flowrate = iLb(3)*flowrate
 
-  end function CellFlowRate 
+  end function CellFlowRate
 
 !**********************************************************************
 ! Compute the excessive stress due to the exisitence of particles
   subroutine ComputeParticleStress(tau)
-    real(WP) :: tau(3,3)
+    real(WP) :: tau(3, 3)
 
-    type(t_rbc),pointer :: rbc
+    type(t_rbc), pointer :: rbc
     integer :: irbc, ilat, ilon, ii, jj
     real(WP) :: dS, x(3), xc(3), f(3)
 
@@ -129,15 +129,15 @@ contains
       rbc => rbcs(irbc)
 
       do ii = 1, 3
-        xc(ii) = 0.5*(maxval(rbc%x(:,:,ii)) + minval(rbc%x(:,:,ii)))
+        xc(ii) = 0.5*(maxval(rbc%x(:, :, ii)) + minval(rbc%x(:, :, ii)))
       end do ! ii
 
       do ilon = 1, rbc%nlon
       do ilat = 1, rbc%nlat
-        x = rbc%x(ilat,ilon,:) - xc
-    f = rbc%f(ilat,ilon,:)
-    dS = rbc%w(ilat)*rbc%detJ(ilat,ilon)
-    forall(ii=1:3, jj=1:3) tau(ii,jj) = tau(ii,jj) - dS*f(ii)*x(jj)
+        x = rbc%x(ilat, ilon, :) - xc
+        f = rbc%f(ilat, ilon, :)
+        dS = rbc%w(ilat)*rbc%detJ(ilat, ilon)
+        forall (ii=1:3, jj=1:3) tau(ii, jj) = tau(ii, jj) - dS*f(ii)*x(jj)
       end do ! ilat
       end do ! ilon
     end do ! irbc
