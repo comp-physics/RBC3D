@@ -285,7 +285,7 @@ contains
       clockBgn = MPI_WTime() ! Start timeing
 
       ! Evolve cells
-!      print *,"NO VEL"
+      ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
       ! Log area expansion of cells every 100 ts
@@ -304,7 +304,7 @@ contains
       end do
 
       ! Enforce no-slip condition on the wall
-!      print *,"NO NO SLIP"
+      ! print *,"NO NO SLIP"
       call NoSlipWall
 
       ! Evolve RBC
@@ -315,7 +315,7 @@ contains
 !       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
       end do ! irbc
 
-!      call FilterRbcs
+      ! call FilterRbcs
       call ReboxRbcs
 
 !      print *,"MULTIVOL"
@@ -689,14 +689,14 @@ contains
     clockBgn = MPI_WTime() ! Start timeing
 
     ! Evolve cells
-!      print *,"NO VEL"
+    ! print *,"NO VEL"
 
-     !!testing for convergence here...
+    !!testing for convergence here...
     do i = 1, 3
       call Compute_Rbc_Vel
 
       ! Enforce no-slip condition on the wall
-!      print *,"NO NO SLIP"
+      ! print *,"NO NO SLIP"
       call NoSlipWall
 
       call WriteAll(lt, time)

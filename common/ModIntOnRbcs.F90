@@ -181,7 +181,7 @@ contains
           ds = rbc%w(ilat)*rbc%detj(ilat, ilon)
           vn = dot_product(rbc%g(ilat, ilon, :), rbc%a3(ilat, ilon, :))
           xvint = xvint + Bcoef(rbc%celltype)*rbc%x(ilat, ilon, :)*vn*ds  !COEF
-!             xvint = xvint + (1.-viscRat(rbc%celltype))*rbc%x(ilat,ilon,:)*vn*ds  !COEF
+          ! xvint = xvint + (1.-viscRat(rbc%celltype))*rbc%x(ilat,ilon,:)*vn*ds  !COEF
         end do ! ilat
       end do ! ilon
     end do ! irbc

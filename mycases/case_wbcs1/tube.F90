@@ -92,7 +92,8 @@ contains
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
-      call ImportReadRBC('Input/SickleCell.dat', rbcRef)
+      call RBC_Create(rbcRef, nlat0)
+      call RBC_MakeLeukocyteWithNucleus(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
     end if
@@ -114,15 +115,12 @@ contains
       case (2)
         ! print *,"CASE 2 --- celltype"
         rbc%ES = 887
-        ! 10^2 = 887
-        ! 10^1 = 88.652
         rbc%ED = 200.
-        ! rbc%EB = 6.D-2
-        rbc%EB = 2.44D-2 ! check = .024
+        rbc%EB = 2.44D-2
       case (3)
-        rbc%ES = 12.4*20/7.1
-        rbc%ED = 200*49.4/15.4
-        rbc%EB = 6.69D-2*19.5/5.7
+        rbc%ES = 887
+        rbc%ED = 200.
+        rbc%EB = 2.44D-2
       case default
         stop "bad cellcase"
       end select
@@ -133,10 +131,8 @@ contains
     end do ! iwall
 
     ! Background velocity
-!    if (Nt0 == 0) then
     vbkg(1:2) = 0.
-    vbkg(3) = 10.
-!    end if
+    vbkg(3) = 8.
     print *, vbkg
 
   end subroutine InitSystem

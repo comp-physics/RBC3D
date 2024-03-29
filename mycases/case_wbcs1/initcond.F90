@@ -39,7 +39,7 @@ program InitCond
 
   tubeDiam = 22.0/2.82 ! 7.8, rad = 4
 
-  nrbc = 25
+  nrbc = 1
   nlat0 = 12
   dealias = 3
   phi = 70/real(100)
@@ -47,14 +47,12 @@ program InitCond
   lengtube = 32.0/2.82 ! nrbc/real(phi) !XXLL
 
   lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
-  print *, "1"
   nwall = 1
   allocate (walls(nwall))
   wall1 => walls(1)
 
   call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
   actlen = 13.33
-  print *, "2"
   wall1%f = 0.
   do i = 1, wall1%nvert
     th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
@@ -62,36 +60,6 @@ program InitCond
     wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
     wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
   end do
-  print *, "3"
-  ! nwall = 2
-  ! allocate (walls(nwall))
-  ! wall1 => walls(1)
-
-  ! halflen = ((lengtube)/2.0) - 1
-
-  ! call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
-  ! actlen = 13.33
-
-  ! wall1%f = 0.
-  ! do i = 1, wall1%nvert
-  !   th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-  !   wall1%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-  !   wall1%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-  !   wall1%x(i, 3) = halflen/actlen*wall1%x(i, 3)
-  ! end do
-
-  ! wall2 => walls(2)
-
-  ! call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall2)
-  ! actlen = 13.33
-
-  ! wall2%f = 0.
-  ! do i = 1, wall2%nvert
-  !   th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
-  !   wall2%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-  !   wall2%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-  !   wall2%x(i, 3) = halflen/actlen*wall2%x(i, 3) + halflen + 2.0
-  ! end do
 
   xmin = minval(wall1%x(:, 1))
   xmax = maxval(wall1%x(:, 1))
@@ -101,7 +69,6 @@ program InitCond
 
   zmin = minval(wall1%x(:, 3))
   zmax = maxval(wall1%x(:, 3))
-  print *, "4"
   ! size of the periodic box
   ! Lb(1) = xmax - xmin + 0.5
   ! is this box centered?
@@ -126,57 +93,16 @@ program InitCond
     szCell(ii) = maxval(rbcRef%x(:, :, ii)) - minval(rbcRef%x(:, :, ii))
   end do
 
-  if (rootWorld) then
-    call random_number(rand)
-    call random_number(wbcs)
-  end if
-  call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-  call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-
-  wbcs = 1 + FLOOR(27*wbcs)
-
-  print *, '27 x 3 rand num array'
-  do j = 1, nrbc
-    print *, rand(j, :)
-  end do
-
-  print *, 'wbcs index array'
-  do j = 1, 2
-    print *, wbcs(j)
-  end do
-
-  layerx = (/-1.63, 1.63, 0.0/)
-  layery = (/-.943, -.943, 1.89/)
-
   ! place cells
-  do iz = 1, (nrbc + 2)
-    if (iz > 23) then
-      newiz = iz - 2
-    else if (iz > 17) then
-      newiz = iz - 1
-    else
-      newiz = iz
-    end if
-    index = (modulo(iz, 3) + 1)
-    layer = (iz - 1)/3
-    xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
-    xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
-    xc(3) = (layer + .5) + (lengspacing*layer) + ((rand(iz, 3) - 0.5)/3)
-    if (iz == 20) then
-      print *, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-      rbc => rbcs(newiz)
-      rbc%celltype = 2
-      call Rbc_Create(rbc, nlat0, dealias)
-      call Rbc_MakeLeukocyte(rbc, radEqv, xc)
-    else if ((iz == 17) .or. (iz == 23)) then
-      cycle
-    else
-      print *, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-      rbc => rbcs(newiz)
-      rbc%celltype = 1
-      call Rbc_Create(rbc, nlat0, dealias)
-      call Rbc_MakeBiConcave(rbc, radEqv, xc)
-    end if
+  do iz = 1, nrbc
+    print *, "iz:", iz
+    xc(1) = 0
+    xc(2) = 0
+    xc(3) = 1
+    rbc => rbcs(iz)
+    rbc%celltype = 3
+    call Rbc_Create(rbc, nlat0, dealias)
+    call Rbc_MakeLeukocyteWithNucleus(rbc, radEqv, xc)
   end do
 
   ! Put things in the middle of the periodic box

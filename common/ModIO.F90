@@ -98,14 +98,14 @@ contains
 
         ! Comment these 9 lines if you're only generating cells of 1 type
         ! Write out only type-1 cells (healthy RBCs)
-        write (fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
-        ! Write out only type-2 cells (WBCs)
-        write (fn, FMT=fn_FMT) 'D/', '2x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
-        ! Write out only type-3 cells (sickle cells)
-        write (fn, FMT=fn_FMT) 'D/', '3x', lt, '.dat'
-        call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
+        ! write (fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
+        ! ! Write out only type-2 cells (WBCs)
+        ! write (fn, FMT=fn_FMT) 'D/', '2x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
+        ! ! Write out only type-3 cells (sickle cells)
+        ! write (fn, FMT=fn_FMT) 'D/', '3x', lt, '.dat'
+        ! call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
       end if
 
       if (wall_out > 0 .and. mod(lt, wall_out) == 0) then

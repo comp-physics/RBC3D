@@ -75,7 +75,7 @@ contains
     call ReadRestart(restart_file)
 
     ! Reference cells
-    allocate (rbcRefs(3))
+    allocate (rbcRefs(2))
 
     if (nrbc > 0) then
       radEqv = 1.
@@ -88,11 +88,7 @@ contains
 
       rbcRef => rbcRefs(2)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeLeukocyte(rbcRef, radEqv)
-      call RBC_ComputeGeometry(rbcRef)
-
-      rbcRef => rbcRefs(3)
-      call ImportReadRBC('Input/SickleCell.dat', rbcRef)
+      call RBC_MakeSphere(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
     end if
@@ -112,17 +108,10 @@ contains
         rbc%ED = 200.
         rbc%EB = 6.69D-2
       case (2)
-        ! print *,"CASE 2 --- celltype"
-        rbc%ES = 887
-        ! 10^2 = 887
-        ! 10^1 = 88.652
-        rbc%ED = 200.
-        ! rbc%EB = 6.D-2
-        rbc%EB = 2.44D-2 ! check = .024
-      case (3)
-        rbc%ES = 12.4*20/7.1
-        rbc%ED = 200*49.4/15.4
-        rbc%EB = 6.69D-2*19.5/5.7
+        print *, "CASE 2 --- celltype"
+        rbc%ES = 10.
+        rbc%ED = 50.
+        rbc%EB = 6.D-2
       case default
         stop "bad cellcase"
       end select
@@ -135,7 +124,7 @@ contains
     ! Background velocity
 !    if (Nt0 == 0) then
     vbkg(1:2) = 0.
-    vbkg(3) = 10.
+    vbkg(3) = 8.
 !    end if
     print *, vbkg
 

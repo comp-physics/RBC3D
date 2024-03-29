@@ -247,9 +247,9 @@ contains
       u(6) = yi*yi
 
       do ii = 1, 6
-      do jj = ii, 6
-        lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
-      end do ! jj
+        do jj = ii, 6
+          lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
+        end do ! jj
       end do ! ii
 
       rhs = rhs + u(:)*f(i)
@@ -261,7 +261,7 @@ contains
       lhs(ii, jj) = lhs(jj, ii)
     end do ! jj
     end do ! ii
-
+    ! lapack call
     call LA_POSV(lhs, rhs, INFO=ierr)
 
     a0 = rhs(1)
