@@ -52,9 +52,9 @@ contains
 
     !======================================================================
     ! Set up background velocity and RBC surface density
-    !    vBkg(1) = 0.
-    !    vBkg(2) = 0.
-    !    vBkg(3) = 2.5
+       vBkg(1) = 0.
+       vBkg(2) = 0.
+       vBkg(3) = 8
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_COMM_WORLD, ierr); 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
@@ -102,7 +102,7 @@ contains
     ! Enforce no-slip condition on the wall
     call NoSlipWall
 
-    call leukVel(rbcs(1), vl)
+    ! call leukVel(rbcs(1), vl)
 
     xs = RESHAPE(x, SHAPE(xs))
 
@@ -139,11 +139,6 @@ contains
     open (1, file='v.g')
     write (1, *) Ny, Nz
     write (1, *) x(:, :, 2:3)
-    close (1)
-
-    open (1, file='v.csv')
-    write (1, *) Ny, Nz, 3
-    write (1, *) v
     close (1)
 
   END SUBROUTINE writeVel
@@ -244,6 +239,7 @@ contains
 
   !**********************************************************************
   subroutine InitSystem
+    write (*, *), "InitSystem"
 
     integer :: irbc, iwall
     type(t_Rbc), pointer :: rbc, rbcRef
@@ -303,8 +299,8 @@ contains
 
     ! Background velocity
     !    if (Nt0 == 0) then
-!      vbkg(1:2) = 0.
-!      vbkg(3) = 10.
+    ! vbkg(1:2) = 0.
+    ! vbkg(3) = 8.
     !    end if
     print *, vbkg
 

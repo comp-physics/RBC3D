@@ -12,9 +12,9 @@ program randomized_cell_gen
   integer, parameter :: ranseed = 161269
 
   !initial condition setup parameters
-  real(WP), parameter :: hematocrit = 0.30
-  real(WP), parameter :: tuber = 5
-  real(WP), parameter :: tubelen = 15
+  real(WP), parameter :: hematocrit = 0.2
+  real(WP), parameter :: tuber = 7
+  real(WP), parameter :: tubelen = 25
 
   integer :: nrbcMax ! how many cells
 
@@ -29,11 +29,11 @@ program randomized_cell_gen
   call InitMPI
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
-  !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
+  !hematocrit = 4 * nrbc / 3 * (tube_radius^2 * tube_length)
   ! need 85 rbcs
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
 
-  print *, nrbcMax
+  print *, "nrbcMax: ", nrbcMax
 
   !set periodic boundary box based on tube shape
   Lb(1) = tuber*2 + 0.5
@@ -41,7 +41,7 @@ program randomized_cell_gen
   Lb(3) = tubelen
 
   !set other initialization params
-  vBkg(1:2) = 0.; vBkg(3) = 8.
+  vBkg(1:2) = 0.; vBkg(3) = 10.
   Nt = 0; time = 0.
 
   !Create wall
@@ -65,7 +65,7 @@ program randomized_cell_gen
   do i = 1, nrbcMax
 
     clockBgn = MPI_Wtime()
-    if ((i .eq. 1) .or. (i .eq. 2)) then
+    if (i .le. 6) then
       call place_cell(2)
     else
       call place_cell(1)

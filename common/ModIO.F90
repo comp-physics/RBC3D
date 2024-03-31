@@ -93,8 +93,9 @@ contains
       if (cell_out > 0 .and. mod(lt, cell_out) == 0) then
         write (fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
         call WriteManyRBCs(fn, nrbc, rbcs)
-        write (fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
-        call WriteExactPts(fn, nrbc, rbcs)
+        ! writing out xe files is unnecessary
+        ! write (fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
+        ! call WriteExactPts(fn, nrbc, rbcs)
 
         ! Comment these 9 lines if you're only generating cells of 1 type
         ! Write out only type-1 cells (healthy RBCs)

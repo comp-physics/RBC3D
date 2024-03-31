@@ -52,9 +52,9 @@ contains
 
     !======================================================================
     ! Set up background velocity and RBC surface density
-    !    vBkg(1) = 0.
-    !    vBkg(2) = 0.
-    !    vBkg(3) = 2.5
+    vBkg(1) = 0.
+    vBkg(2) = 0.
+    vBkg(3) = 8.
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_COMM_WORLD, ierr); 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
@@ -102,7 +102,7 @@ contains
     ! Enforce no-slip condition on the wall
     call NoSlipWall
 
-    call leukVel(rbcs(20), vl)
+    ! call leukVel(rbcs(20), vl)
 
     xs = RESHAPE(x, SHAPE(xs))
 
@@ -250,7 +250,7 @@ contains
     call ReadRestart(restart_file)
 
     ! Reference cells
-    allocate (rbcRefs(2))
+    allocate (rbcRefs(3))
 
     if (nrbc > 0) then
       radEqv = 1.
@@ -263,9 +263,12 @@ contains
 
       rbcRef => rbcRefs(2)
       call RBC_Create(rbcRef, nlat0)
-      call RBC_MakeSphere(rbcRef, radEqv)
+      call RBC_MakeLeukocyte(rbcRef, radEqv)
       call RBC_ComputeGeometry(rbcRef)
 
+      rbcRef => rbcRefs(3)
+      call ImportReadRBC('Input/SickleCell.dat', rbcRef)
+      call RBC_ComputeGeometry(rbcRef)
     end if
 
     ! Wall periodic boundary condition
@@ -283,10 +286,14 @@ contains
         rbc%ED = 200.
         rbc%EB = 6.69D-2
       case (2)
-        print *, "CASE 2 --- celltype"
-        rbc%ES = 10.
-        rbc%ED = 50.
-        rbc%EB = 6.D-2
+        ! print *,"CASE 2 --- celltype"
+        rbc%ES = 887
+        rbc%ED = 200.
+        rbc%EB = 2.44D-2
+      case (3)
+        rbc%ES = 12.4*20/7.1
+        rbc%ED = 200*49.4/15.4
+        rbc%EB = 6.69D-2*19.5/5.7
       case default
         stop "bad cellcase"
       end select
@@ -298,8 +305,8 @@ contains
 
     ! Background velocity
     !    if (Nt0 == 0) then
-!      vbkg(1:2) = 0.
-!      vbkg(3) = 10.
+    vbkg(1:2) = 0.
+    vbkg(3) = 8.
     !    end if
     print *, vbkg
 

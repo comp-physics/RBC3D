@@ -47,51 +47,51 @@ program InitCond
   lengtube = 32.0/2.82 ! nrbc/real(phi) !XXLL
 
   lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
-  print *, "1"
-  nwall = 1
-  allocate (walls(nwall))
-  wall1 => walls(1)
-
-  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
-  actlen = 13.33
-  print *, "2"
-  wall1%f = 0.
-  do i = 1, wall1%nvert
-    th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-    wall1%x(i, 1) = (tubeDiam/2.0)*COS(th)    !!!!!!!!!
-    wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
-    wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
-  end do
-  print *, "3"
-  ! nwall = 2
+  ! print *, "1"
+  ! nwall = 1
   ! allocate (walls(nwall))
   ! wall1 => walls(1)
 
-  ! halflen = ((lengtube)/2.0) - 1
-
   ! call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
   ! actlen = 13.33
-
+  ! print *, "2"
   ! wall1%f = 0.
   ! do i = 1, wall1%nvert
   !   th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-  !   wall1%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-  !   wall1%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-  !   wall1%x(i, 3) = halflen/actlen*wall1%x(i, 3)
+  !   wall1%x(i, 1) = (tubeDiam/2.0)*COS(th)    !!!!!!!!!
+  !   wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
+  !   wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
   ! end do
+  ! print *, "3"
+  nwall = 2
+  allocate (walls(nwall))
+  wall1 => walls(1)
 
-  ! wall2 => walls(2)
+  halflen = ((lengtube)/2.0) - 1
 
-  ! call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall2)
-  ! actlen = 13.33
+  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
+  actlen = 13.33
 
-  ! wall2%f = 0.
-  ! do i = 1, wall2%nvert
-  !   th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
-  !   wall2%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-  !   wall2%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-  !   wall2%x(i, 3) = halflen/actlen*wall2%x(i, 3) + halflen + 2.0
-  ! end do
+  wall1%f = 0.
+  do i = 1, wall1%nvert
+    th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
+    wall1%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+    wall1%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+    wall1%x(i, 3) = halflen/actlen*wall1%x(i, 3)
+  end do
+
+  wall2 => walls(2)
+
+  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall2)
+  actlen = 13.33
+
+  wall2%f = 0.
+  do i = 1, wall2%nvert
+    th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
+    wall2%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
+    wall2%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
+    wall2%x(i, 3) = halflen/actlen*wall2%x(i, 3) + halflen + 2.0
+  end do
 
   xmin = minval(wall1%x(:, 1))
   xmax = maxval(wall1%x(:, 1))
@@ -100,7 +100,7 @@ program InitCond
   ymax = maxval(wall1%x(:, 2))
 
   zmin = minval(wall1%x(:, 3))
-  zmax = maxval(wall1%x(:, 3))
+  zmax = maxval(wall2%x(:, 3))
   print *, "4"
   ! size of the periodic box
   ! Lb(1) = xmax - xmin + 0.5
@@ -186,7 +186,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 12.
+  vBkg(1:2) = 0.; vBkg(3) = 8.
 
   ! Write intial conditions
   if (nrbc > 0) then

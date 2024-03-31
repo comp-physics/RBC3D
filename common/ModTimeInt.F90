@@ -320,25 +320,25 @@ contains
 
 !      print *,"MULTIVOL"
 
-!      call AddR0Motion
+      ! call AddR0Motion
 
 !      call LeukWallRepulsion
 
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
 
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
 
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
 
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
 !!$
 !!$      call VolConstrainRbcs
 !!$      call InterCellRepulsion
@@ -362,6 +362,7 @@ contains
     end do ! lt
 
   end subroutine TimeInt_Euler
+
 
   subroutine TimeInt_AxiSymm
 

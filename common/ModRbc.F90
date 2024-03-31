@@ -148,18 +148,6 @@ contains
 
   end subroutine RBC_MakeLeukocyte
 
-  subroutine RBC_MakeLeukocyteWithNucleus(cell, r, xc)
-    type(t_RBC) :: cell
-    real(WP) :: r
-    real(WP), optional :: xc(3)
-
-    real(WP) :: rleuk
-
-    rleuk = 1.4*r   ! Leukocyte expansion factor
-    call RBC_MakeSphereWithinSphere(cell, rleuk, xc)
-
-  end subroutine RBC_MakeLeukocyteWithNucleus
-
 !**********************************************************************
 ! Make a spherical shaped cell
 ! Arguments:
@@ -192,39 +180,6 @@ contains
     end if
 
   end subroutine RBC_MakeSphere
-
-  subroutine RBC_MakeSphereWithinSphere(cell, r, xc)
-    type(t_RBC) :: cell
-    real(WP) :: r, r2
-    real(WP), optional :: xc(3)
-
-    integer :: ilat, ilon, ii
-    real(WP) :: th, phi
-
-    r2 = r / 4.0
-
-    do ilon = 1, cell%nlon
-      do ilat = 1, cell%nlat
-        th = cell%th(ilat)
-        phi = cell%phi(ilon)
-
-        cell%x(ilat, ilon, 1) = r*sin(th)*cos(phi) + r2*sin(th)*cos(phi)
-        cell%x(ilat, ilon, 2) = r*sin(th)*sin(phi) + r2*sin(th)*sin(phi)
-        cell%x(ilat, ilon, 3) = r*cos(th) + r2*cos(th)
-
-        ! cell%x(ilat, ilon, 1) = r2*sin(th)*cos(phi)
-        ! cell%x(ilat, ilon, 2) = r2*sin(th)*sin(phi)
-        ! cell%x(ilat, ilon, 3) = r2*cos(th)
-      end do ! ilat
-    end do ! ilon
-
-    if (present(xc)) then
-      do ii = 1, 3
-        cell%x(:, :, ii) = cell%x(:, :, ii) + xc(ii)
-      end do ! ii
-    end if
-
-  end subroutine RBC_MakeSphereWithinSphere
 
   ! Subroutine creatse an uncurved shape with the size of a sickle cell. This prolate spheroid shape is then
   ! run through a flow to create a curve in the shape. The resulting curved shape after the flow was then
