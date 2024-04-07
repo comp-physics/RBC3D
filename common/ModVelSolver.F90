@@ -620,7 +620,7 @@ contains
   end subroutine Proj
 
 !**********************************************************************
-! Global spherical harmonci transform
+! Global spherical harmonic transform
 !
 ! Arguments:
 !  v -- RBC surface velocities
