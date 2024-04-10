@@ -36,30 +36,25 @@ program InitCond
   nwall = 1
   wall => walls(1)
 
-  if (10 .ge. 12) then
-    call ReadMyWallMesh('Input/cylinder_D_8.01_L_13.39.dat', wall)
-    actlen = 13.3921
-  else
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
-    actlen = 13.33
-  end if
+  call ReadWallMesh('Input/constrict_D3_L10.e', wall)
+  lengtube = 10
 
-  nrbc = 8
+  nrbc = 2
   nlat0 = 12
   dealias = 3
   phi = 70/real(100)
-  lengtube = nrbc/real(phi) !XXLL
+  ! lengtube = nrbc/real(phi) !XXLL
 
   lengspacing = lengtube/Real(nrbc)
 
   wall%f = 0.
 
-  do i = 1, wall%nvert
-    th = ATAN2(wall%x(i, 1), wall%x(i, 2))
-    wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
-    wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
-    wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
-  end do
+  ! do i = 1, wall%nvert
+  !   th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+  !   wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+  !   wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+  !   wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
+  ! end do
   xmin = minval(wall%x(:, 1))
   xmax = maxval(wall%x(:, 1))
 
@@ -74,7 +69,7 @@ program InitCond
   Lb(2) = Lb(1)
   Lb(3) = zmax - zmin
   lengtube = Lb(3)
-  lengspacing = lengtube/real(nrbc)
+  lengspacing = (lengtube/real(nrbc)) / 2.0
 
   ! Reference cell
   xc = 0.
@@ -94,9 +89,15 @@ program InitCond
     print *, 'Xc', iz, xc
 
     rbc => rbcs(iz)
-    rbc%celltype = 1
-    call Rbc_Create(rbc, nlat0, dealias)
-    call Rbc_MakeBiConcave(rbc, radEqv, xc)
+    if (iz .eq. 2) then
+      rbc%celltype = 1
+      call Rbc_Create(rbc, nlat0, dealias)
+      call Rbc_MakeBiConcave(rbc, radEqv, xc)
+    else
+      rbc%celltype = 2
+      call Rbc_Create(rbc, nlat0, dealias)
+      call Rbc_MakeLeukocyte(rbc, radEqv, xc)
+    end if
   end do
 
   ! Put things in the middle of the periodic box

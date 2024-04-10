@@ -91,16 +91,16 @@ contains
           if (c1 /= 0) then
             call EwaldCoeff_SL(rr, EA, EB)
             v(i, :) = v(i, :) + &
-                      (1.-mask)*c1/tlist%Acoef(i) &  !COEF
-                      !           (1. - mask)*c1/(1.+tlist%lam(i)) &  !COEF
+                      ! (1.-mask)*c1/tlist%Acoef(i) &  !COEF
+                      (1. - mask)*c1/(1.+tlist%lam(i)) &  !COEF
                       *(EA*xx*dot_product(xx, slist%f(j, :)) + EB*slist%f(j, :))
           end if
 
           if (c2 /= 0) then
             call EwaldCoeff_DL(rr, EA)
             v(i, :) = v(i, :) + &
-                      (1.-mask)*c2*slist%Bcoef(j)/tlist%Acoef(i) &  !COEF
-                      !       (1. - mask)*c2*(1.-slist%lam(j))/(1.+tlist%lam(i)) &  !COEF
+                      ! (1.-mask)*c2*slist%Bcoef(j)/tlist%Acoef(i) &  !COEF
+                      (1. - mask)*c2*(1.-slist%lam(j))/(1.+tlist%lam(i)) &  !COEF
                       *(EA*xx*dot_product(xx, slist%g(j, :)) &
                         *dot_product(xx, slist%a3(j, :)))
           end if
@@ -113,11 +113,11 @@ contains
 
       ! Singular integration
       if (irbc_i >= 1 .and. irbc_i <= nrbc) then
-        c2Mod = c2*Bcoef(rbc_i%celltype)  !COEF
-!         c2Mod = c2*(1.-viscRat(rbc_i%celltype))  !COEF
+        ! c2Mod = c2*Bcoef(rbc_i%celltype)  !COEF
+        c2Mod = c2*(1.-viscRat(rbc_i%celltype))  !COEF
         call RBC_SingInt(c1, c2Mod, rbc_i, tlist%indx(i, 1), tlist%indx(i, 2), dv)
-        v(i, :) = v(i, :) + dv/tlist%Acoef(i)  !COEF
-!   v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))  !COEF
+        ! v(i, :) = v(i, :) + dv/tlist%Acoef(i)  !COEF
+        v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))  !COEF
       end if
 
       ! Near-singular integration
@@ -140,11 +140,11 @@ contains
         call Spline_FindProjection(rbc_j%spln_x, xi, th0, phi0, x0)
 
         ! Add correction
-        c2Mod = c2*Bcoef(rbc_j%celltype) !COEF
-!        c2Mod = c2*(1.-viscRat(rbc_j%celltype)) !COEF
+        ! c2Mod = c2*Bcoef(rbc_j%celltype) !COEF
+        c2Mod = c2*(1.-viscRat(rbc_j%celltype)) !COEF
         call RBC_NearSingInt(c1, c2Mod, rbc_j, xi, x0, th0, phi0, dv)
-        v(i, :) = v(i, :) + dv/tlist%Acoef(i)   !COEF
-!        v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))   !COEF
+        ! v(i, :) = v(i, :) + dv/tlist%Acoef(i)   !COEF
+        v(i,:) = v(i,:) + dv/(1.+tlist%lam(i))   !COEF
       end do ! l
 
       call NbrRbcList_Destroy(rbcList)
@@ -180,8 +180,8 @@ contains
         do ilat = 1, rbc%nlat
           ds = rbc%w(ilat)*rbc%detj(ilat, ilon)
           vn = dot_product(rbc%g(ilat, ilon, :), rbc%a3(ilat, ilon, :))
-          xvint = xvint + Bcoef(rbc%celltype)*rbc%x(ilat, ilon, :)*vn*ds  !COEF
-          ! xvint = xvint + (1.-viscRat(rbc%celltype))*rbc%x(ilat,ilon,:)*vn*ds  !COEF
+          ! xvint = xvint + Bcoef(rbc%celltype)*rbc%x(ilat, ilon, :)*vn*ds  !COEF
+          xvint = xvint + (1.-viscRat(rbc%celltype))*rbc%x(ilat,ilon,:)*vn*ds  !COEF
         end do ! ilat
       end do ! ilon
     end do ! irbc
@@ -193,8 +193,8 @@ contains
 
     do i = 1, size(v, 1)
       if (tlist%active(i)) then
-        v(i, :) = v(i, :) + c2*xvint/tlist%Acoef(i) !COEF
-!          v(i,:) = v(i,:) + c2*xvint/(1.+tlist%lam(i)) !COEF
+        ! v(i, :) = v(i, :) + c2*xvint/tlist%Acoef(i) !COEF
+        v(i,:) = v(i,:) + c2*xvint/(1.+tlist%lam(i)) !COEF
       end if
     end do ! i
 

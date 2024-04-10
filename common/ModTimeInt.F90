@@ -324,21 +324,21 @@ contains
 
 !      call LeukWallRepulsion
 
-      ! call VolConstrainRbcs
-      ! call InterCellRepulsion
-      ! call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      ! call VolConstrainRbcs
-      ! call InterCellRepulsion
-      ! call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      ! call VolConstrainRbcs
-      ! call InterCellRepulsion
-      ! call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 
-      ! call VolConstrainRbcs
-      ! call InterCellRepulsion
-      ! call FilterRbcs
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
 !!$
 !!$      call VolConstrainRbcs
 !!$      call InterCellRepulsion

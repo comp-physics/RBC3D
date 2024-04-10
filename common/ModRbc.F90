@@ -15,10 +15,8 @@ module ModRbc
   public :: RBC_Create, &
             RBC_Destroy, &
             RBC_MakeSphere, &
-            RBC_MakeSphereWithinSphere, &
             RBC_MakeEllipsoid, &
             RBC_MakeLeukocyte, &
-            RBC_MakeLeukocyteWithNucleus, &
             RBC_MakePlatelet, &
             RBC_MakeBiConcave, &
             RBC_ComputeGeometry, &
@@ -163,14 +161,14 @@ contains
     real(WP) :: th, phi
 
     do ilon = 1, cell%nlon
-    do ilat = 1, cell%nlat
-      th = cell%th(ilat)
-      phi = cell%phi(ilon)
+      do ilat = 1, cell%nlat
+        th = cell%th(ilat)
+        phi = cell%phi(ilon)
 
-      cell%x(ilat, ilon, 1) = r*sin(th)*cos(phi)
-      cell%x(ilat, ilon, 2) = r*sin(th)*sin(phi)
-      cell%x(ilat, ilon, 3) = r*cos(th)
-    end do ! ilat
+        cell%x(ilat, ilon, 1) = r*sin(th)*cos(phi)
+        cell%x(ilat, ilon, 2) = r*sin(th)*sin(phi)
+        cell%x(ilat, ilon, 3) = r*cos(th)
+      end do ! ilat
     end do ! ilon
 
     if (present(xc)) then

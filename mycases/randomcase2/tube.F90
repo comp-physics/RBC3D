@@ -3,7 +3,7 @@ program cells_in_tube
 
   use ModDataTypes
   use ModDataStruct
-  use ModRBC
+  use ModRbc
   use ModWall
   use ModConf
   use ModData
@@ -28,7 +28,7 @@ program cells_in_tube
 
 contains
 
-!**********************************************************************
+  !**********************************************************************
   subroutine InitAll
 
     ! System intialization
@@ -48,7 +48,7 @@ contains
 
   end subroutine InitAll
 
-!**********************************************************************
+  !**********************************************************************
   subroutine FinalizeAll
 
     call IO_Finalize
@@ -62,7 +62,7 @@ contains
 
   end subroutine FinalizeAll
 
-!**********************************************************************
+  !**********************************************************************
   subroutine InitSystem
 
     integer :: irbc, iwall
@@ -111,11 +111,27 @@ contains
         rbc%ES = 12.4
         rbc%ED = 200.
         rbc%EB = 6.69D-2
+        ! Mechanical properties of leukocytes
+        ! Calculated according to section 6 of reference paper
+        ! with Es* scaled by 10^2
+        ! Reference:
+        !   Zhao, H., Isfahani, A. H., Olson, L. N., & Freund, J. B. (2010).
+        !   A spectral boundary integral method for flowing blood cells.
+        !   Journal of Computational Physics, 229(10), 3726-3744.
       case (2)
-        ! print *,"CASE 2 --- celltype"
-        rbc%ES = 887
+        rbc%ES = 124. ! or 1241
         rbc%ED = 200.
-        rbc%EB = 2.44D-2
+        rbc%EB = 6.69D-2
+
+        ! Mechanical properties for sickle cell roughly determined to be
+        ! Es = (20 / 7.1) * Es for a healthy RBC (case(1) cell)
+        ! Ed = (49.4 / 15.4) * Ed for healthy RBC (case(1) cell)
+        ! Eb = (19.5 / 5.7) * Eb for a healthy RBC (case(1) cell)
+        ! Reference:
+        !   HeeSu Byun, Timothy R. Hillman, John M. Higgins, Monica Diez-Silva, Zhangli Peng, Ming Dao, Ramachandra R. Dasari, Subra Suresh, YongKeun Park
+        !   Optical measurement of biomechanical properties of individual erythrocytes
+        !   Acta Biomaterialia, Volume 8, Issue 11, 2012, Pages 4130-4138,
+        !   https://doi.org/10.1016/j.actbio.2012.07.011
       case (3)
         rbc%ES = 12.4*20/7.1
         rbc%ED = 200*49.4/15.4
@@ -130,15 +146,13 @@ contains
     end do ! iwall
 
     ! Background velocity
-!    if (Nt0 == 0) then
     vbkg(1:2) = 0.
-    vbkg(3) = 8.
-!    end if
+    vbkg(3) = 10.
     print *, vbkg
 
   end subroutine InitSystem
 
-!**********************************************************************
+  !**********************************************************************
   subroutine FinalizeSystem
 
     integer :: irbc, iwall
@@ -160,6 +174,6 @@ contains
 
   end subroutine FinalizeSystem
 
-!**********************************************************************
+  !**********************************************************************
 
 end program

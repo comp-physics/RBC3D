@@ -9,7 +9,7 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
-  use MPI
+  ! use MPI
 
   implicit none
 
@@ -48,50 +48,21 @@ program InitCond
 
   lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
   ! print *, "1"
-  ! nwall = 1
-  ! allocate (walls(nwall))
-  ! wall1 => walls(1)
-
-  ! call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
-  ! actlen = 13.33
-  ! print *, "2"
-  ! wall1%f = 0.
-  ! do i = 1, wall1%nvert
-  !   th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-  !   wall1%x(i, 1) = (tubeDiam/2.0)*COS(th)    !!!!!!!!!
-  !   wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
-  !   wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
-  ! end do
-  ! print *, "3"
-  nwall = 2
+  nwall = 1
   allocate (walls(nwall))
   wall1 => walls(1)
 
-  halflen = ((lengtube)/2.0) - 1
-
   call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
   actlen = 13.33
-
+  ! print *, "2"
   wall1%f = 0.
   do i = 1, wall1%nvert
     th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-    wall1%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-    wall1%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-    wall1%x(i, 3) = halflen/actlen*wall1%x(i, 3)
+    wall1%x(i, 1) = (tubeDiam/2.0)*COS(th)    !!!!!!!!!
+    wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
+    wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
   end do
-
-  wall2 => walls(2)
-
-  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall2)
-  actlen = 13.33
-
-  wall2%f = 0.
-  do i = 1, wall2%nvert
-    th = ATAN2(wall2%x(i, 1), wall2%x(i, 2))
-    wall2%x(i, 1) = tubeDiam/2.0*COS(th)    !!!!!!!!!
-    wall2%x(i, 2) = tubeDiam/2.0*SIN(th)    !!!!!!!!!
-    wall2%x(i, 3) = halflen/actlen*wall2%x(i, 3) + halflen + 2.0
-  end do
+  ! print *, "3"
 
   xmin = minval(wall1%x(:, 1))
   xmax = maxval(wall1%x(:, 1))
@@ -100,7 +71,7 @@ program InitCond
   ymax = maxval(wall1%x(:, 2))
 
   zmin = minval(wall1%x(:, 3))
-  zmax = maxval(wall2%x(:, 3))
+  zmax = maxval(wall1%x(:, 3))
   print *, "4"
   ! size of the periodic box
   ! Lb(1) = xmax - xmin + 0.5
@@ -192,10 +163,6 @@ program InitCond
   if (nrbc > 0) then
     write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
     call WriteManyRBCs(fn, nrbc, rbcs)
-    ! write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
-    ! call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
-    ! write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
-    ! call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
     write (*, '(A,A)') 'Cell file: ', trim(fn)
 
     fn = 'D/restart.LATEST.dat'

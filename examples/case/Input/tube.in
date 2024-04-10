@@ -3,7 +3,7 @@
 8                       ! PBspln_Ewld
 
 1                       ! nCellTypes
-1                       ! viscRat
+5.                      ! viscRat
 1.                      ! refRad
 .false.                 ! Deflate
 
