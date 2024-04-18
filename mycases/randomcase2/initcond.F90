@@ -11,7 +11,7 @@ program InitCond
     integer, parameter :: ranseed = 112
 
     ! initial condition setup parameters
-    real(WP), parameter :: hematocrit = 0.20
+    real(WP), parameter :: hematocrit = 0.18
     real(WP) :: tuber = 4
     real(WP), parameter :: tubelen = (100.0 / 2.82)
 
@@ -163,7 +163,7 @@ contains
 
       nlat0 = 12
       dealias = 3
-      xc(1:2) = tuber - .25
+      xc(1:2) = tuber
       xc(3) = 5
 
       ! do i = 1, num

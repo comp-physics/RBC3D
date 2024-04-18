@@ -277,6 +277,7 @@ contains
     type(t_wall), pointer :: wall
     real(WP) :: clockBgn, clockEnd, areaExp
     integer :: ierr
+    real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
 
     ! Time integration
     time = time0
@@ -310,6 +311,11 @@ contains
       ! Evolve RBC
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
+        if (rbc%celltype .eq. 2) then
+          wbcCenterX = rbc%xc(1)
+          wbcCenterY = rbc%xc(2)
+          wbcCenterZ = rbc%xc(3)
+        end if
 !       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
         rbc%x = rbc%x + Ts*rbc%v
 !       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
@@ -355,8 +361,13 @@ contains
       ! Output results
       call WriteAll(lt, time)
       if (rootWorld) then
-        write (*, '(A,I9,A,F15.5,A,F12.2)') &
+        ! A, F10.5, A, F10.5, A, F10.5
+        write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
           'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        if (modulo(lt, 50) == 0) then
+          write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
+            'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
+        end if
         write (*, *)
       end if
     end do ! lt
