@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "formatting example cases and common directory"
+echo "formatting example cases and common directory in"
 
 echo "$PWD"
 pip3 install --upgrade fprettify

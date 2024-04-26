@@ -195,7 +195,7 @@ contains
     real, parameter :: PI = 3.14159265359
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: xmin(3), xmax(3), xc(3)
+    real(WP) :: xmin(3), xmax(3), xc(3), xmax2, ymax2
 
     ! cells
     ! translate cells
@@ -226,6 +226,12 @@ contains
         wall%x(:, ii) = wall%x(:, ii) + 0.5*Lb(ii) - xc(ii)
       end do
     end do
+
+    xmax2 = maxval(wall%x(:, 1))
+    print *, "xmax2: ", xmax2
+
+    ymax2 = maxval(wall%x(:, 2))
+    print *, "ymax2: ", ymax2
 
   end subroutine Recenter_Cells_and_Walls
 

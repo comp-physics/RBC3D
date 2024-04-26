@@ -4,17 +4,17 @@
 
 3                       ! nCellTypes
 1 1 1                   ! viscRat
-1. 1.4 1.                ! refRad
+1. 1. 1.                ! refRad
 .false.                 ! Deflate
 
 0.0     !
 0.0     !
 0.0     !
 
-10000                    ! Nt
+200000                   ! Nt
 0.0008                   ! Ts
 
-100                      ! cell_out
+50                       ! cell_out
 -10000                   ! wall_out
 -10                      ! pGrad_out
 -10                      ! flow_out

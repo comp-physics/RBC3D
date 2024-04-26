@@ -13,7 +13,7 @@ program InitCond
     ! initial condition setup parameters
     real(WP), parameter :: hematocrit = 0.18
     real(WP) :: tuber = 4
-    real(WP), parameter :: tubelen = (100.0 / 2.82)
+    real(WP), parameter :: tubelen = 20
 
     integer :: nrbcMax ! how many cells
 
@@ -68,7 +68,7 @@ program InitCond
         if (rootWorld) write(*, *) "Adding Cell #", nrbc + 1
         clockBgn = MPI_Wtime()
         if (i .eq. 1) then
-          call place_cell_hard(2)
+          call place_cell(2)
         else
           call place_cell(1)
         end if
@@ -119,13 +119,13 @@ contains
         end do
     end subroutine recenterWalls
 
-    subroutine choose_point(wall, pt)
+    subroutine choose_point(wall, pt, type)
         real(WP) :: pt(3)
         type(t_wall) :: wall
 
         real(WP) :: rad, len, maxN, minN
         real(WP) :: thresh
-        integer :: i
+        integer :: i, type
 
         len = RandomNumber(ranseed)*tubelen
         thresh = 0.2
@@ -143,49 +143,55 @@ contains
         rad = (maxN - minN) / 2
 
         pt(2) = RandomNumber(ranseed)*2*PI
-        pt(3) = sqrt(RandomNumber(ranseed))*(rad)
+        if (type .eq. 2) then
+          print *, "placed celltype 2 closer to center"
+          ! pt(3) = sqrt(RandomNumber(ranseed))*(rad / 3.0)
+          pt(3) = .1
+        else
+          pt(3) = sqrt(RandomNumber(ranseed))*(rad)
+        end if
         pt(1) = pt(3)*cos(pt(2)) + rad + minN
         pt(2) = pt(3)*sin(pt(2)) + rad + minN
 
         pt(3) = len
     end subroutine choose_point
 
-    subroutine place_cell_hard(celltype)
-      type(t_Rbc) :: newcell
-      type(t_Rbc), pointer :: cell
-      real(WP) :: xc(3)
+    ! subroutine place_cell_hard(celltype)
+    !   type(t_Rbc) :: newcell
+    !   type(t_Rbc), pointer :: cell
+    !   real(WP) :: xc(3)
 
-      integer :: celli, ii, ierr
-      integer :: nlat0, dealias
-      logical :: place_success_loc, place_success_glb
+    !   integer :: celli, ii, ierr
+    !   integer :: nlat0, dealias
+    !   logical :: place_success_loc, place_success_glb
 
-      integer :: celltype
+    !   integer :: celltype
 
-      nlat0 = 12
-      dealias = 3
-      xc(1:2) = tuber
-      xc(3) = 5
+    !   nlat0 = 12
+    !   dealias = 3
+    !   xc(1:2) = tuber
+    !   xc(3) = 5
 
-      ! do i = 1, num
-      ! end do
+    !   ! do i = 1, num
+    !   ! end do
 
-      !create template newcell
-      select case (celltype)
-      case (1)
-          call RBC_Create(newcell, nlat0, dealias)
-          call RBC_MakeBiconcave(newcell, 1., xc)
-      case (2)
-          call RBC_Create(newcell, nlat0, dealias)
-          call RBC_MakeLeukocyte(newcell, 1., xc)
-      case (3)
-          call ImportReadRBC('Input/SickleCell.dat', newcell)
-      case default
-          stop "bad cellcase"
-      end select
-      newcell%celltype = celltype
+    !   !create template newcell
+    !   select case (celltype)
+    !   case (1)
+    !       call RBC_Create(newcell, nlat0, dealias)
+    !       call RBC_MakeBiconcave(newcell, 1., xc)
+    !   case (2)
+    !       call RBC_Create(newcell, nlat0, dealias)
+    !       call RBC_MakeLeukocyte(newcell, 1., xc)
+    !   case (3)
+    !       call ImportReadRBC('Input/SickleCell.dat', newcell)
+    !   case default
+    !       stop "bad cellcase"
+    !   end select
+    !   newcell%celltype = celltype
 
-      rbcs(nrbc + 1) = newcell
-    end subroutine place_cell_hard
+    !   rbcs(nrbc + 1) = newcell
+    ! end subroutine place_cell_hard
 
     ! find an open spot in the simulation to place a cell
     subroutine place_cell(celltype)
@@ -232,7 +238,7 @@ contains
           call rotate_cell(newcell)
 
           !randomly select a tmp_xc
-          call choose_point(walls(1), tmp_xc)
+          call choose_point(walls(1), tmp_xc, celltype)
 
           !shift newcell by the xc
           do ii = 1, 3

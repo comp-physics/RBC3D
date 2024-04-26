@@ -275,7 +275,7 @@ contains
     integer :: irbc, iwall
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd, areaExp
+    real(WP) :: clockBgn, clockEnd, areaExp, minDist
     integer :: ierr
     real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
 
@@ -303,6 +303,12 @@ contains
           end if
         end if
       end do
+
+      if (rootWorld .and. modulo(lt, 50) == 0) then
+        minDist = DistFromWall(2)
+        write (*, '(A, F10.5)') &
+              'distFromWall = ', minDist
+      end if
 
       ! Enforce no-slip condition on the wall
       ! print *,"NO NO SLIP"
@@ -373,7 +379,6 @@ contains
     end do ! lt
 
   end subroutine TimeInt_Euler
-
 
   subroutine TimeInt_AxiSymm
 

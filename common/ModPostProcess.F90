@@ -16,7 +16,8 @@ module ModPostProcess
   public :: CalcVelocityField, &
             WallShearForce, &
             CellFlowRate, &
-            ComputeParticleStress
+            ComputeParticleStress, &
+            DistFromWall
 
 contains
 
@@ -143,6 +144,52 @@ contains
     end do ! irbc
 
   end subroutine ComputeParticleStress
+  
+  ! i don't like this function declaration
+  function DistFromWall(type) result(minDist)
+    integer :: type
+    real(WP) :: minDist, cellPoint(3), wallPoint(3), currDist, clockBgn, clockEnd
+    type(t_rbc), pointer :: rbc
+    type(t_wall), pointer :: wall
+    integer :: irbc, ilat, ilon, iwall, ivert
+
+    minDist = huge(minDist)
+
+    if (rootWorld) then
+      clockBgn = MPI_Wtime()
+    end if
+
+    do irbc = 1, nrbc
+      rbc => rbcs(irbc)
+      if (rbc%celltype .eq. type) then
+        do iwall = 1, nwall
+          wall => walls(iwall)
+
+          do ivert = 1, wall%nvert
+            do ilat = 1, rbc%nlat
+              do ilon = 1, rbc%nlon
+                currDist = VecNorm((rbc%x(ilat, ilon, :)) - (wall%x(ivert, :)))
+                if (currDist .le. minDist) then
+                  minDist = currDist
+                  cellPoint = rbc%x(ilat, ilon, :)
+                  wallPoint = wall%x(ivert, :)
+                end if
+              end do !ilon
+            end do !ilat
+          end do !ivert
+
+        end do !iwall
+      end if
+    end do
+    
+    if (rootWorld) then
+      clockEnd = MPI_Wtime()
+      print *, "minDist: ", minDist
+      print *, "cellPoint: ", cellPoint(:)
+      print *, "wallPoint: ", wallPoint(:)
+      print *, "total time: ", clockEnd - clockBgn
+    end if
+  end function DistFromWall
 
 !**********************************************************************
 
