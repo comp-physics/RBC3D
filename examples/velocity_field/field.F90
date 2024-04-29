@@ -38,23 +38,15 @@ contains
     type(t_RBC), pointer :: rbc
     type(t_TargetList) :: tlist
     real(WP), allocatable :: xs(:, :), vs(:, :)
-    real(WP), allocatable :: x(:, :, :), v(:, :, :)
-    real(WP) :: xmin(3), xmax(3), szcell(3)
-    integer ::  N1, N2, N3, npoint, i1, i2, i3, idx
+    integer :: npoint
     character(CHRLEN) :: fn
     integer, parameter :: funit = 90
     integer :: ierr
 
-    real(WP) :: Xo
-    integer  :: Ny, Nz
+    integer  :: Nx, Ny, Nz
     real(WP), parameter :: dx0 = 0.3
     real(WP), dimension(3) :: vl
 
-    !======================================================================
-    ! Set up background velocity and RBC surface density
-    !    vBkg(1) = 0.
-    !    vBkg(2) = 0.
-    !    vBkg(3) = 2.5
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_COMM_WORLD, ierr); 
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
@@ -87,14 +79,13 @@ contains
       end if
     end if
 
-    Xo = Lb(1)/2.
-    Ny = NINT(Lb(2)/dx0); print *, "Ny = ", Ny
-    Nz = NINT(Lb(3)/dx0); print *, "Nz = ", Nz
-    allocate (x(Ny, Nz, 3))
+    Nx = NINT(Lb(1)/dx0)
+    Ny = NINT(Lb(2)/dx0)
+    Nz = NINT(Lb(3)/dx0)
+    
+    npoint = Nx * Ny * Nz
+    allocate (xs(npoint,3), vs(npoint, 3))
 
-    call MakeMesh(Xo, Ny, Nz, x)
-    npoint = Ny*Nz
-    allocate (xs(npoint, 3), vs(npoint, 3))
 
     ! Evolve cells
     call Compute_Rbc_Vel
@@ -102,9 +93,7 @@ contains
     ! Enforce no-slip condition on the wall
     call NoSlipWall
 
-    call leukVel(rbcs(1), vl)
-
-    xs = RESHAPE(x, SHAPE(xs))
+    call MakeMesh(Nx, Ny, Nz, xs)
 
     print *, "A"
     call TargetList_CreateFromRaw(tlist, xs)
@@ -112,74 +101,54 @@ contains
     print *, "B"
     call CalcVelocityField(tlist, vs)
 
-    allocate (v(Ny, Nz, 3))
-
-    v = RESHAPE(vs, SHAPE(v))
-    v(:, :, 3) = v(:, :, 3) - vBkg(3)
-    !    v(:,:,:,3) = v(:,:,:,3) - vl(3)  ! substract leuk velocity
-
-    call writeVel(Ny, Nz, v, x)
+    call WriteVelCsv(npoint, vs, xs)
 
     call TargetList_Destroy(tlist)
     deallocate (xs, vs)
 
   END SUBROUTINE GetVelocity
 
-  SUBROUTINE writeVel(Ny, Nz, v, x)
-    integer                          :: Ny, Nz
-    real(WP), dimension(Ny, Nz, 3)     :: v, x
+  subroutine WriteVelCsv(npoint, vels, pts)
+    integer :: npoint 
+    real(WP), dimension(npoint, 3) :: vels , pts
 
-    integer   :: i, j, k, m
+    integer :: i
 
-    open (1, file='v.f')
-    write (1, *) Ny, Nz, 3
-    write (1, *) v
-    close (1)
+    fn = "./D/field.csv"
+    open (1, file=fn)
+    write(1, *) "X,Y,Z,Vx,Vy,Vz"
+    do i=1,npoint 
+      write(1, *) pts(i,1),",",pts(i,2),",",pts(i,3),",",vels(i,1),",",vels(i,2),",",vels(i,3) 
+    end do !i
+    close(1)
+  end subroutine writeVelCsv
 
-    open (1, file='v.g')
-    write (1, *) Ny, Nz
-    write (1, *) x(:, :, 2:3)
-    close (1)
+  subroutine MakeMesh(Nx, Ny, Nz, pts)
+    integer :: Nx , Ny , Nz
+    real(WP), dimension(:,:) :: pts ! has dimensions (Nx * Ny * Nz , 3)
 
-  END SUBROUTINE writeVel
+    real(WP) :: x, y, z, dx, dy, dz
+    integer :: x_it, y_it, z_it, p_it
 
-  SUBROUTINE MakeMesh(Xo, Ny, Nz, x)
-    real(WP)                         :: Xo
-    integer                          :: Ny, Nz
-    real(WP), dimension(:, :, :)      :: x
+    dx = Lb(1)/REAL(Nx);
+    dy = Lb(2)/REAL(Ny);
+    dz = Lb(3)/REAL(Nz);
 
-    real(WP)  :: y, z, dy, dz
-    integer   :: i, j, k
+    p_it = 1
+    do x_it = 1, Nx
+    x = 0.5*dx + REAL(x_it - 1)*dx
+    do y_it = 1, Ny
+    y = 0.5*dy + REAL(y_it - 1)*dy
+    do z_it = 1, Nz
+    z = 0.5*dz + REAL(z_it - 1)*dz
 
-    dy = Lb(2)/REAL(Ny); print *, "dy = ", dy
-    dz = Lb(3)/REAL(Nz); print *, "dz = ", dz
+      pts(p_it, :) = (/ x, y, z /)
+      p_it = p_it + 1
 
-    do k = 1, Nz
-      z = 0.5*dz + REAL(k - 1)*dz
-      do j = 1, Ny
-        y = 0.5*dy + REAL(j - 1)*dy
-        x(j, k, 1) = Lb(1)/2
-        x(j, k, 2) = y
-        x(j, k, 3) = z
-        !  do k = 1,Nz
-        !     z = 0.5*dz+REAL(k-1)*dz
-        !     do j = 1,Ny
-        !        y = 0.5*dy+REAL(j-1)*dy
-        !       !  x(j,k,1) = Lb(1)/2.
-        !       !  x(j,k,2) = y
-        !        x(j,k,1) = x
-        !        x(j,k,3) = z
-
-        !  print *, "COORDINATE", x(j, k, 1), x(j, k, 2), x(j, k, 3)
-      end do
-    end do
-
-    open (1, file='v.g')
-    write (1, *) Ny, Nz
-    write (1, *) x(:, :, 2:3)
-    close (1)
-
-  END SUBROUTINE MakeMesh
+    end do !z_it 
+    end do !y_it
+    end do !x_it
+  end subroutine MakeMesh
 
   SUBROUTINE leukVel(rbc, vl)
     type(t_RBC)            :: rbc

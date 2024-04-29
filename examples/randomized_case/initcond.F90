@@ -26,11 +26,19 @@ program randomized_cell_gen
   real(WP) :: th, actlen
   real(WP) :: clockBgn, clockEnd
 
+  integer :: numNodes, nodeNum
+
+
   call InitMPI
+  call MPI_Comm_Rank(MPI_COMM_WORLD, nodeNum, ierr)
+  call MPI_Comm_Size(MPI_COMM_WORLD, numNodes, ierr)
+  nodeNum = nodeNum + 1
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
   !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
+
+  if (rootWorld) write(*,*) "Num RBCs in simulation is ", nrbcMax
 
   !set periodic boundary box based on tube shape
   Lb(1) = tuber*2 + 0.5
@@ -138,9 +146,9 @@ contains
     type(t_Rbc), pointer :: cell
     real(WP) :: tmp_xc(3)
 
-    integer :: celli, ii
+    integer :: celli, ii, ierr
     integer :: nlat0
-    logical :: place_success
+    logical :: place_success_loc, place_success_glb
 
     integer :: celltype
 
@@ -161,10 +169,16 @@ contains
     end select
     newcell%celltype = celltype
 
-    place_success = .false.
+    place_success_glb = .false.
+    tmp_xc = 0.
 
     !choose a location & orientation for newcell to fit into the simulation
-    do while (.not. place_success)
+    do while (.not. place_success_glb)
+
+      !reset cell position
+      do ii = 1,3
+        newcell%x(:,:,ii) = newcell%x(:,:,ii) - tmp_xc(ii)
+      end do
 
       !randomly rotate cell
       call rotate_cell(newcell)
@@ -181,32 +195,29 @@ contains
         newcell%x(:, :, ii) = newcell%x(:, :, ii) + tmp_xc(ii)
       end do
 
-      !check if newcell collides with wall, assume cylinder wall for now
+      !check if newcell collides with wall, assume cylinder wall here
       if (any(abs(newcell%x(:, :, 3)) .ge. tubelen/2 .or. &
               newcell%x(:, :, 1)**2 + newcell%x(:, :, 2)**2 .ge. tuber**2)) then
 
-        !placement collides with wall, so try again
-        do ii = 1, 3
-          newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
-        end do
+        !placement collides with wall, try again
         cycle
       end if
 
-      !set boolean success to true (reset to false if we find a collision)
-      place_success = .true.
-      do celli = 1, nrbc
+      !if your wall isn't a cylinder, you can do this instead
+      ! place_success_loc = .not. check_wall_collision(newcell)
+      ! place_success_glb = .true.
+      ! call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
+      ! if (.not. place_success_glb) cycle
+      
+      place_success_loc = .true.
+      celli = 1
+      do while ( place_success_loc .and. celli .le. nrbc )
         cell => rbcs(celli)
-
-        !we find a collision
-        if (check_cell_collision(cell, newcell)) then
-          !placement collides with existing cell, so try again
-          do ii = 1, 3
-            newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
-          end do
-          place_success = .false.
-          exit
-        end if
-      end do !celli
+        place_success_loc = .not. check_cell_collision(cell, newcell)
+        celli = celli + 1
+      end do 
+      place_success_glb = .true.
+      call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
 
     end do !while not place_success
 
@@ -248,9 +259,10 @@ contains
 !helper for place_cell, checks if cell1 intersects/collides with wall
   logical function check_wall_collision(cell)
     type(t_Rbc) :: cell
+    real(WP), parameter :: threshold = 0.2 !'magic' adjustable number cell-to-wall distance tolerance 
 
     integer :: i, j, i2, j2
-    real(WP) :: c1p(3), c2p(3), sp(3)
+    real(WP) :: cp(3), sp(3)
 
     check_wall_collision = .false.
 
@@ -258,28 +270,21 @@ contains
     do i = 1, cell%nlat
     do j = 1, cell%nlon
 
-      !define 2 diagonal points c1p & c2p for collision detection
-      c1p = cell%x(i, j, :)
-      c2p = cell%x(modulo(i, cell%nlat) + 1, modulo(j, cell%nlon) + 1, :)
+      !each point in cell
+      cp = cell%x(i, j, :)
 
       !each wall
       do i2 = 1, nwall
         !each point in the wall
-        do j2 = 1, walls(i2)%nvert
+        do j2 = nodeNum, walls(i2)%nvert, numNodes
 
           sp = walls(i2)%x(j2, :)
 
-          !check if the cell2 point lies inside the cube delineated by c1p & c2p
-          if ( &
-            ((c1p(1) .le. sp(1) .and. sp(1) .le. c2p(1)) .or. (c2p(1) .le. sp(1) .and. sp(1) .le. c1p(1))) .and. &  !x direction overlap
-            ((c1p(2) .le. sp(2) .and. sp(2) .le. c2p(2)) .or. (c2p(2) .le. sp(2) .and. sp(2) .le. c1p(2))) .and. &  !y direction overlap
-            ((c1p(3) .le. sp(3) .and. sp(3) .le. c2p(3)) .or. (c2p(3) .le. sp(3) .and. sp(3) .le. c1p(3))) &        !z direction overlap
-            ) then
-            ! since we found a collision, return true
+          !just do a distance check
+          if (VecNorm(sp - cp) .le. threshold) then
             check_wall_collision = .true.
             return
           end if
-
         end do !j2
       end do !i2
 
@@ -295,12 +300,18 @@ contains
     type(t_Rbc) :: cell1, cell2
 
     integer :: i, j, i2, j2, ii
+    integer :: p_it
 
     real(WP) :: p1(3), p2(3)
     real(WP) :: b1(3, 2), b2(3, 2)
 
+    
+
     check_cell_collision = .false.
 
+    !first check the centers; if distance > 4 then we are sure that they don't collide
+    if (VecNorm(cell1%xc - cell2%xc) .ge. 4) return
+  
     !each point in cell1
     do i = 1, cell1%nlat
     do j = 1, cell1%nlon
@@ -315,8 +326,11 @@ contains
       end do
 
       !each point in cell2
-      do i2 = 1, cell2%nlat
-      do j2 = 1, cell2%nlon
+      do p_it = nodeNum, cell2%nlat * cell2%nlon, numNodes
+      ! do i2 = 1, cell2%nlat
+      ! do j2 = 1, cell2%nlon
+        i2 = (p_it / cell2%nlon) + 1
+        j2 = modulo(p_it, cell2%nlon) + 1
 
         !create second AABB from patch of cell2
         p1 = cell2%x(i2, j2, :)
@@ -326,7 +340,7 @@ contains
           b2(ii, 2) = max(p1(ii), p2(ii))
         end do
 
-        !check for AABB collision, we find AABB intersection iff X, Y, and Z intervals all overlap
+        !AABB collision check, we find AABB intersection iff X, Y, and Z intervals all overlap
         if ( &
           b1(1, 1) .le. b2(1, 2) &
           .and. b1(1, 2) .ge. b2(1, 1) &
@@ -335,14 +349,16 @@ contains
           .and. b1(3, 1) .le. b2(3, 2) &
           .and. b1(3, 2) .ge. b2(3, 1) &
           ) then
-          check_cell_collision = .true.
-          return
+            check_cell_collision = .true.
+            return
         end if
 
-      end do !j2
-      end do !i2
+      ! end do !j2
+      ! end do !i2
+      end do !p_it
     end do !j
     end do !i
+
   end function check_cell_collision
 
 end program randomized_cell_gen
