@@ -82,10 +82,9 @@ contains
     Nx = NINT(Lb(1)/dx0)
     Ny = NINT(Lb(2)/dx0)
     Nz = NINT(Lb(3)/dx0)
-    
-    npoint = Nx * Ny * Nz
-    allocate (xs(npoint,3), vs(npoint, 3))
 
+    npoint = Nx*Ny*Nz
+    allocate (xs(npoint, 3), vs(npoint, 3))
 
     ! Evolve cells
     call Compute_Rbc_Vel
@@ -109,44 +108,43 @@ contains
   END SUBROUTINE GetVelocity
 
   subroutine WriteVelCsv(npoint, vels, pts)
-    integer :: npoint 
-    real(WP), dimension(npoint, 3) :: vels , pts
+    integer :: npoint
+    real(WP), dimension(npoint, 3) :: vels, pts
 
     integer :: i
 
     fn = "./D/field.csv"
     open (1, file=fn)
-    write(1, *) "X,Y,Z,Vx,Vy,Vz"
-    do i=1,npoint 
-      write(1, *) pts(i,1),",",pts(i,2),",",pts(i,3),",",vels(i,1),",",vels(i,2),",",vels(i,3) 
+    write (1, *) "X,Y,Z,Vx,Vy,Vz"
+    do i = 1, npoint
+      write (1, *) pts(i, 1), ",", pts(i, 2), ",", pts(i, 3), ",", vels(i, 1), ",", vels(i, 2), ",", vels(i, 3)
     end do !i
-    close(1)
+    close (1)
   end subroutine writeVelCsv
 
   subroutine MakeMesh(Nx, Ny, Nz, pts)
-    integer :: Nx , Ny , Nz
-    real(WP), dimension(:,:) :: pts ! has dimensions (Nx * Ny * Nz , 3)
+    integer :: Nx, Ny, Nz
+    real(WP), dimension(:, :) :: pts ! has dimensions (Nx * Ny * Nz , 3)
 
     real(WP) :: x, y, z, dx, dy, dz
     integer :: x_it, y_it, z_it, p_it
 
-    dx = Lb(1)/REAL(Nx);
-    dy = Lb(2)/REAL(Ny);
-    dz = Lb(3)/REAL(Nz);
-
+    dx = Lb(1)/REAL(Nx); 
+    dy = Lb(2)/REAL(Ny); 
+    dz = Lb(3)/REAL(Nz); 
     p_it = 1
     do x_it = 1, Nx
-    x = 0.5*dx + REAL(x_it - 1)*dx
-    do y_it = 1, Ny
-    y = 0.5*dy + REAL(y_it - 1)*dy
-    do z_it = 1, Nz
-    z = 0.5*dz + REAL(z_it - 1)*dz
+      x = 0.5*dx + REAL(x_it - 1)*dx
+      do y_it = 1, Ny
+        y = 0.5*dy + REAL(y_it - 1)*dy
+        do z_it = 1, Nz
+          z = 0.5*dz + REAL(z_it - 1)*dz
 
-      pts(p_it, :) = (/ x, y, z /)
-      p_it = p_it + 1
+          pts(p_it, :) = (/x, y, z/)
+          p_it = p_it + 1
 
-    end do !z_it 
-    end do !y_it
+        end do !z_it
+      end do !y_it
     end do !x_it
   end subroutine MakeMesh
 

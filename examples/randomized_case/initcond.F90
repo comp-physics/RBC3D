@@ -28,7 +28,6 @@ program randomized_cell_gen
 
   integer :: numNodes, nodeNum
 
-
   call InitMPI
   call MPI_Comm_Rank(MPI_COMM_WORLD, nodeNum, ierr)
   call MPI_Comm_Size(MPI_COMM_WORLD, numNodes, ierr)
@@ -38,7 +37,7 @@ program randomized_cell_gen
   !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
 
-  if (rootWorld) write(*,*) "Num RBCs in simulation is ", nrbcMax
+  if (rootWorld) write (*, *) "Num RBCs in simulation is ", nrbcMax
 
   !set periodic boundary box based on tube shape
   Lb(1) = tuber*2 + 0.5
@@ -176,8 +175,8 @@ contains
     do while (.not. place_success_glb)
 
       !reset cell position
-      do ii = 1,3
-        newcell%x(:,:,ii) = newcell%x(:,:,ii) - tmp_xc(ii)
+      do ii = 1, 3
+        newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
       end do
 
       !randomly rotate cell
@@ -208,14 +207,14 @@ contains
       ! place_success_glb = .true.
       ! call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
       ! if (.not. place_success_glb) cycle
-      
+
       place_success_loc = .true.
       celli = 1
-      do while ( place_success_loc .and. celli .le. nrbc )
+      do while (place_success_loc .and. celli .le. nrbc)
         cell => rbcs(celli)
         place_success_loc = .not. check_cell_collision(cell, newcell)
         celli = celli + 1
-      end do 
+      end do
       place_success_glb = .true.
       call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
 
@@ -259,7 +258,7 @@ contains
 !helper for place_cell, checks if cell1 intersects/collides with wall
   logical function check_wall_collision(cell)
     type(t_Rbc) :: cell
-    real(WP), parameter :: threshold = 0.2 !'magic' adjustable number cell-to-wall distance tolerance 
+    real(WP), parameter :: threshold = 0.2 !'magic' adjustable number cell-to-wall distance tolerance
 
     integer :: i, j, i2, j2
     real(WP) :: cp(3), sp(3)
@@ -305,13 +304,11 @@ contains
     real(WP) :: p1(3), p2(3)
     real(WP) :: b1(3, 2), b2(3, 2)
 
-    
-
     check_cell_collision = .false.
 
     !first check the centers; if distance > 4 then we are sure that they don't collide
     if (VecNorm(cell1%xc - cell2%xc) .ge. 4) return
-  
+
     !each point in cell1
     do i = 1, cell1%nlat
     do j = 1, cell1%nlon
@@ -326,10 +323,10 @@ contains
       end do
 
       !each point in cell2
-      do p_it = nodeNum, cell2%nlat * cell2%nlon, numNodes
-      ! do i2 = 1, cell2%nlat
-      ! do j2 = 1, cell2%nlon
-        i2 = (p_it / cell2%nlon) + 1
+      do p_it = nodeNum, cell2%nlat*cell2%nlon, numNodes
+        ! do i2 = 1, cell2%nlat
+        ! do j2 = 1, cell2%nlon
+        i2 = (p_it/cell2%nlon) + 1
         j2 = modulo(p_it, cell2%nlon) + 1
 
         !create second AABB from patch of cell2
@@ -349,12 +346,12 @@ contains
           .and. b1(3, 1) .le. b2(3, 2) &
           .and. b1(3, 2) .ge. b2(3, 1) &
           ) then
-            check_cell_collision = .true.
-            return
+          check_cell_collision = .true.
+          return
         end if
 
-      ! end do !j2
-      ! end do !i2
+        ! end do !j2
+        ! end do !i2
       end do !p_it
     end do !j
     end do !i
