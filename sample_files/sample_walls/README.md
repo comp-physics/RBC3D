@@ -18,6 +18,17 @@ This wall is "U"-shaped, curving downward and back upward. The wall has a z-leng
 The mesh a very simplified blood vessel 'valve', as a cylinder with 2 'flaps' protruding into the center. The cylinder is 13.33 units long, and has a diameter of 6 units.
 
 
+## Carotid Artery and Web Meshes
+We include a series of meshes for simulating the geometry of the carotid artery. These meshes can be combined by including multiple walls in simulations. A Carotid Web example case is provided  in `examples\carotid_web\`.
+
+### `carotid.e`
+This is a simplified model of the Carotid bulb area, with narrow entry and exit points, and a larger center bulge.
+
+### `web.e` and `vertical_web.e`
+These two meshes are models which approximate the "web" in the carotid artery, a condition in which fibrous tissue builds up inside the bulb.
+They can be loaded as a second wall along with the `carotid.e` geometry to simulate a carotid artery with a web.
+
+
 ## Creating a Wall Mesh
 
 To create your own wall-mesh for RBC3D, simply use the Coreform Cubit software to create a tri-mesh, and export the mesh. This will create an Exodus-II formatted file, which can be imported into your simulation using:
