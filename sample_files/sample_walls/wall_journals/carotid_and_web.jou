@@ -1,0 +1,43 @@
+create vertex 3 3 0
+create vertex 3 6 0
+create vertex 6 3 0
+create surface circle center vertex 1 2 3
+
+create vertex 5 5 10
+create vertex 5 10 10
+create vertex 10 5 10
+create surface circle center vertex 4 5 6
+
+create vertex 4.5 4.5 15
+create vertex 4.5 9 15
+create vertex 9 4.5 15
+create surface circle center vertex 7 8 9
+
+create vertex 3 3 25
+create vertex 3 6 25
+create vertex 6 3 25
+create surface circle center vertex 10 11 12
+
+create vertex 3 3 30
+create vertex 3 6 30
+create vertex 6 3 30
+create surface circle center vertex 13 14 15
+
+create volume loft surface 1 2 3 4 5
+
+create curve arc center 10 10 10 | radius 5 normal 1 0 0 start angle 270 stop angle 360
+create vertex 10 10 7
+create vertex 10 10 5
+create vertex 10 5 10
+create curve 20 21
+create curve 20 22
+create surface curve 9 10 11
+
+sweep surface 9 vector -1 0 0 distance 10
+
+surface 7 10 11 12 scheme trimesh
+curve 7 9 10 11 interval size 0.25
+trimesher surface gradation 1
+mesh surface 7 10 11 12
+block 1 surface 7 10 11 12
+export mesh "carotid_web.e" dimension 3 block 1 overwrite
