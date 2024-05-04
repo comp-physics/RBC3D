@@ -9,12 +9,12 @@ program randomized_cell_gen
   use ModIO
   use ModBasicMath
 
-  integer, parameter :: ranseed = 161269
+  integer, parameter :: ranseed = 112
 
   !initial condition setup parameters
-  real(WP), parameter :: hematocrit = 0.20
-  real(WP), parameter :: tuber = 7
-  real(WP), parameter :: tubelen = 20
+  real(WP), parameter :: hematocrit = 0.2
+  real(WP) :: tuber = 4
+  real(WP), parameter :: tubelen = 30
 
   integer :: nrbcMax ! how many cells
 
@@ -25,111 +25,163 @@ program randomized_cell_gen
   integer :: i
   real(WP) :: th, actlen
   real(WP) :: clockBgn, clockEnd
+  real(WP) :: offset(3)
+  integer :: nodeNum, numNodes
 
   call InitMPI
+  call MPI_Comm_Rank(MPI_COMM_WORLD, nodeNum, ierr)
+  call MPI_Comm_Size(MPI_COMM_WORLD, numNodes, ierr)
+  nodeNum = nodeNum + 1
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
   !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
+  ! nrbcMax = 500
 
-  !set periodic boundary box based on tube shape
-  Lb(1) = tuber*2 + 0.5
-  Lb(2) = tuber*2 + 0.5
-  Lb(3) = tubelen
+  write (*, *) "Num RBCs in simulation is ", nrbcMax
 
   !set other initialization params
   vBkg(1:2) = 0.; vBkg(3) = 8.
   Nt = 0; time = 0.
 
   !Create wall
-  nwall = 1
+  nwall = 2
   allocate (walls(nwall))
   wall => walls(1)
-  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall)
-  actlen = 13.33
-
+  call ReadWallMesh('Input/carotid.e', wall)
   wall%f = 0.
-  do i = 1, wall%nvert
-    th = ATAN2(wall%x(i, 1), wall%x(i, 2))
-    wall%x(i, 1) = tuber*COS(th)    !!!!!!!!!
-    wall%x(i, 2) = tuber*SIN(th)    !!!!!!!!!
-    wall%x(i, 3) = tubelen/actlen*wall%x(i, 3)
-  end do
+  wall => walls(2)
+  call ReadWallMesh('Input/web.e', wall)
+  wall%f = 0.
+
+  wall => walls(1)
+
+  if (rootWorld) write (*, *) walls(1)%nvert, walls(2)%nvert
+  actlen = tubelen
+
+  !recenter walls to be strictly positive
+  call recenterWalls
+
+  !set periodic boundary box based on tube shape
+  Lb(1) = maxval(wall%x(:, 1)) + 0.5
+  Lb(2) = maxval(wall%x(:, 2)) + 0.5
+  Lb(3) = tubelen
+
+  !Write Walls Out to Wall TecPlot File
+  write (fn, FMT=fn_FMT) 'D/', 'wall', 0, '.dat'
+  call WriteManyWalls(fn, nwall, walls)
 
   !for each cell to add
   allocate (rbcs(nrbcMax))
   nrbc = 0
-  do i = 1, nrbcMax
 
+  do i = 1, nrbcMax
+    if (rootWorld) write (*, *) "Adding Cell #", nrbc + 1
     clockBgn = MPI_Wtime()
     call place_cell(1)
     clockEnd = MPI_Wtime()
 
     nrbc = nrbc + 1
     if (rootWorld) write (*, *) "Cell #", nrbc, " Placed; Time Cost = ", clockEnd - clockBgn
+
+    !Write Cells Out to Cell TecPlot File
+    if (modulo(i, 10) .eq. 0) then
+      write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
+      call WriteManyRBCs(fn, nrbc, rbcs)
+      !Write restart blob
+      write (fn, FMT=fn_FMT) 'D/', 'restart', 0, '.dat'
+      call WriteRestart(fn, Nt0, time)
+      fn = 'D/restart.LATEST.dat'
+      call WriteRestart(fn, Nt0, time)
+    end if
   end do
 
-  !recenter everything to be all positive
-  call recenter
-
-  !Write Cells Out to Cell TecPlot File
   write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
   call WriteManyRBCs(fn, nrbc, rbcs)
-
-  !Uncomment these lines to write cells to separate files by their celltype
-  !write(fn, FMT=fn_FMT) 'D/', '1x', 0, '.dat'
-  !call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
-  !write(fn, FMT=fn_FMT) 'D/', '2x', 0, '.dat'
-  !call WriteManyRBCsByType(fn, nrbc, rbcs, 2)
-  !write(fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
-  !call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
-
-  !Write Walls Out to Wall TecPlot File
-  write (fn, FMT=fn_FMT) 'D/', 'wall', 0, '.dat'
-  call WriteManyWalls(fn, nwall, walls)
   !Write restart blob
   write (fn, FMT=fn_FMT) 'D/', 'restart', 0, '.dat'
   call WriteRestart(fn, Nt0, time)
   fn = 'D/restart.LATEST.dat'
   call WriteRestart(fn, Nt0, time)
 
-  deallocate (rbcs)
-  deallocate (walls)
+  if (nrbcMax .ne. 0) deallocate (rbcs)
+  if (nwall .ne. 0) deallocate (walls)
   call FinalizeMPI
   stop
 
 contains
 
 !offset everything to be positive
-  subroutine recenter
+  subroutine recenterWalls
     integer :: i, ii
-    type(t_rbc), pointer :: cell
     type(t_wall), pointer :: wall
     real(WP) :: offset(3)
 
-    offset(1) = tuber
-    offset(2) = tuber
-    offset(3) = tubelen/2
+    wall => walls(1)
+
+    offset(1) = -1*minval(wall%x(:, 1))
+    offset(2) = -1*minval(wall%x(:, 2))
+    offset(3) = -1*minval(wall%x(:, 3))
 
     !shift wall
-    do i = 1, nwall
-      wall => walls(i)
-
-      do ii = 1, 3
-        wall%x(:, ii) = wall%x(:, ii) + offset(ii)
-      end do
+    do ii = 1, 3
+      wall => walls(1)
+      wall%x(:, ii) = wall%x(:, ii) + offset(ii)
+      wall => walls(2)
+      wall%x(:, ii) = wall%x(:, ii) + offset(ii)
     end do
 
-    !shift cells
-    do i = 1, nrbc
-      cell => rbcs(i)
+  end subroutine recenterWalls
 
-      do ii = 1, 3
-        cell%x(:, :, ii) = cell%x(:, :, ii) + offset(ii)
-      end do
+  recursive subroutine choose_point(pt)
+    real(WP) :: pt(3)
+
+    type(t_wall), pointer :: wall
+    real(WP) :: rad, len, maxN, minN
+    real(WP) :: threshold
+    integer :: i
+
+    wall => walls(1)
+    len = RandomNumber(ranseed)*actlen
+    threshold = 0.2
+    maxN = -1E9
+    minN = 1E9
+
+    !figure out the radius based on the location in the tube
+    do i = 1, wall%nvert
+      if (abs(wall%x(i, 3) - len) .le. threshold) then
+        maxN = maxval((/maxN, wall%x(i, 1), wall%x(i, 2)/))
+        minN = minval((/minN, wall%x(i, 1), wall%x(i, 2)/))
+      end if
     end do
 
-  end subroutine recenter
+    rad = (maxN - minN)/2
+
+    pt(2) = RandomNumber(ranseed)*2*PI
+    pt(3) = sqrt(RandomNumber(ranseed))*(rad)
+    pt(1) = pt(3)*cos(pt(2)) + rad + minN
+    pt(2) = pt(3)*sin(pt(2)) + rad + minN
+    pt(3) = len
+
+    !edge case for the web
+    wall => walls(2)
+    maxN = -1E9
+    minN = 1E9
+    threshold = 0.5
+    do i = 1, wall%nvert
+      if (abs(wall%x(i, 3) - len) .le. threshold) then
+        minN = min(minN, wall%x(i, 2))
+        maxN = max(maxN, wall%x(i, 2))
+      end if
+    end do
+
+    if (minN .le. pt(2) .and. pt(2) .le. maxN) then !.and. maxN .ge. pt(2)) then
+      ! if (rootWorld) write (*,*) "point is inside web"
+      pt = 0
+      call choose_point(pt)
+    end if
+
+  end subroutine choose_point
 
 !find an open spot in the simulation to place a cell
   subroutine place_cell(celltype)
@@ -138,9 +190,9 @@ contains
     type(t_Rbc), pointer :: cell
     real(WP) :: tmp_xc(3)
 
-    integer :: celli, ii
+    integer :: celli, ii, ierr
     integer :: nlat0
-    logical :: place_success
+    logical :: place_success_loc, place_success_glb
 
     integer :: celltype
 
@@ -161,52 +213,55 @@ contains
     end select
     newcell%celltype = celltype
 
-    place_success = .false.
+    place_success_glb = .false.
+    tmp_xc = 0.
 
     !choose a location & orientation for newcell to fit into the simulation
-    do while (.not. place_success)
+    do while (.not. place_success_glb)
+
+      !reset cell position
+      do ii = 1, 3
+        newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
+      end do
 
       !randomly rotate cell
       call rotate_cell(newcell)
 
       !randomly select a tmp_xc
-      tmp_xc(2) = RandomNumber(ranseed)*2*PI
-      tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber)
-      tmp_xc(1) = tmp_xc(3)*cos(tmp_xc(2))
-      tmp_xc(2) = tmp_xc(3)*sin(tmp_xc(2))
-      tmp_xc(3) = RandomNumber(ranseed)*tubelen - tubelen/2
+      call choose_point(tmp_xc)
 
       !shift newcell by the xc
       do ii = 1, 3
         newcell%x(:, :, ii) = newcell%x(:, :, ii) + tmp_xc(ii)
       end do
 
-      !check if newcell collides with wall, assume cylinder wall for now
-      if (any(abs(newcell%x(:, :, 3)) .ge. tubelen/2 .or. &
-              newcell%x(:, :, 1)**2 + newcell%x(:, :, 2)**2 .ge. tuber**2)) then
-
-        !placement collides with wall, so try again
-        do ii = 1, 3
-          newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
-        end do
-        cycle
+      place_success_glb = .true.
+      newcell%x(:, :, 1) = newcell%x(:, :, 1) - tuber
+      newcell%x(:, :, 2) = newcell%x(:, :, 2) - tuber
+      if (any(newcell%x(:, :, 3) .ge. tubelen .or. newcell%x(:, :, 3) .lt. 0)) then
+        place_success_loc = .false.
+        place_success_glb = .false.
       end if
+      newcell%x(:, :, 1) = newcell%x(:, :, 1) + tuber
+      newcell%x(:, :, 2) = newcell%x(:, :, 2) + tuber
+      if (.not. place_success_glb) cycle
 
-      !set boolean success to true (reset to false if we find a collision)
-      place_success = .true.
-      do celli = 1, nrbc
+      !check if cell collides with wall
+      place_success_loc = .not. check_wall_collision(newcell)
+      place_success_glb = .true.
+      call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
+      if (.not. place_success_glb) cycle
+
+      !if no wall collision, check if cell collides with other cells
+      celli = 1
+      do while (place_success_loc .and. celli .le. nrbc)
         cell => rbcs(celli)
+        place_success_loc = .not. check_cell_collision(cell, newcell)
+        celli = celli + 1
+      end do
 
-        !we find a collision
-        if (check_cell_collision(cell, newcell)) then
-          !placement collides with existing cell, so try again
-          do ii = 1, 3
-            newcell%x(:, :, ii) = newcell%x(:, :, ii) - tmp_xc(ii)
-          end do
-          place_success = .false.
-          exit
-        end if
-      end do !celli
+      place_success_glb = .true.
+      call MPI_AllReduce(place_success_loc, place_success_glb, 1, MPI_Logical, MPI_LAND, MPI_COMM_WORLD, ierr)
 
     end do !while not place_success
 
@@ -252,6 +307,9 @@ contains
     integer :: i, j, i2, j2
     real(WP) :: c1p(3), c2p(3), sp(3)
 
+    real(WP) :: threshold
+    threshold = 0.3
+
     check_wall_collision = .false.
 
     !each point in cell1
@@ -265,21 +323,14 @@ contains
       !each wall
       do i2 = 1, nwall
         !each point in the wall
-        do j2 = 1, walls(i2)%nvert
+        do j2 = nodeNum, walls(i2)%nvert, numNodes
 
           sp = walls(i2)%x(j2, :)
 
-          !check if the cell2 point lies inside the cube delineated by c1p & c2p
-          if ( &
-            ((c1p(1) .le. sp(1) .and. sp(1) .le. c2p(1)) .or. (c2p(1) .le. sp(1) .and. sp(1) .le. c1p(1))) .and. &  !x direction overlap
-            ((c1p(2) .le. sp(2) .and. sp(2) .le. c2p(2)) .or. (c2p(2) .le. sp(2) .and. sp(2) .le. c1p(2))) .and. &  !y direction overlap
-            ((c1p(3) .le. sp(3) .and. sp(3) .le. c2p(3)) .or. (c2p(3) .le. sp(3) .and. sp(3) .le. c1p(3))) &        !z direction overlap
-            ) then
-            ! since we found a collision, return true
+          if (VecNorm(c1p - sp) .lt. threshold) then
             check_wall_collision = .true.
             return
           end if
-
         end do !j2
       end do !i2
 
@@ -295,11 +346,15 @@ contains
     type(t_Rbc) :: cell1, cell2
 
     integer :: i, j, i2, j2, ii
+    integer :: p_it
 
     real(WP) :: p1(3), p2(3)
     real(WP) :: b1(3, 2), b2(3, 2)
 
     check_cell_collision = .false.
+
+    !first check the centers; if distance > 4 then we are sure that they don't collide
+    if (VecNorm(cell1%xc - cell2%xc) .ge. 4) return
 
     !each point in cell1
     do i = 1, cell1%nlat
@@ -315,8 +370,11 @@ contains
       end do
 
       !each point in cell2
-      do i2 = 1, cell2%nlat
-      do j2 = 1, cell2%nlon
+      do p_it = nodeNum, cell2%nlat*cell2%nlon, numNodes
+        ! do i2 = 1, cell2%nlat
+        ! do j2 = 1, cell2%nlon
+        i2 = (p_it/cell2%nlon) + 1
+        j2 = modulo(p_it, cell2%nlon) + 1
 
         !create second AABB from patch of cell2
         p1 = cell2%x(i2, j2, :)
@@ -339,8 +397,9 @@ contains
           return
         end if
 
-      end do !j2
-      end do !i2
+        ! end do !j2
+        ! end do !i2
+      end do !p_it
     end do !j
     end do !i
   end function check_cell_collision
