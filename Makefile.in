@@ -1,9 +1,5 @@
 # Directories (change this to where you put RBC3D!)
-<<<<<<< HEAD
 WORK_DIR = /storage/home/hcoda1/4/smanasreh6/RBC3D
-=======
-WORK_DIR = /storage/home/hcoda1/4/smanasreh6/p-sbryngelson3-0/test-rbc/RBC3D
->>>>>>> main
 
 # Package directories (shouldn't need to change these)
 PETSC_DIR = $(WORK_DIR)/packages/mypetsc
