@@ -11,11 +11,11 @@
 #SBATCH --account=gts-sbryngelson3
 #SBATCH -N4 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=2G
-#SBATCH -t8:00:00
+#SBATCH -t1:00:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/plsnocrash.log"
+#SBATCH -o "./run_logs/helpme2.log"
 
 cd $SLURM_SUBMIT_DIR
 

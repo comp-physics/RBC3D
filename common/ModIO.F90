@@ -98,7 +98,7 @@ contains
         ! call WriteExactPts(fn, nrbc, rbcs)
 
         ! Comment these 9 lines if you're only generating cells of 1 type
-        ! Write out only type-1 cells (healthy RBCs)
+        ! ! Write out only type-1 cells (healthy RBCs)
         ! write (fn, FMT=fn_FMT) 'D/', '1x', lt, '.dat'
         ! call WriteManyRBCsByType(fn, nrbc, rbcs, 1)
         ! ! Write out only type-2 cells (WBCs)

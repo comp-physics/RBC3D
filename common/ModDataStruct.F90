@@ -109,7 +109,7 @@ module ModDataStruct
     integer :: nlat, nlon
     real(WP), dimension(:), pointer :: th, phi, w
     real(WP), dimension(:), pointer :: wshags, wshsgs, wshses, wvhsgs
-    real(WP), dimension(:, :, :), pointer :: x, x2
+    real(WP), dimension(:, :, :), pointer :: x
     real(WP), dimension(:, :, :), pointer :: a1, a2, a1_rcp, a2_rcp, a3
     real(WP), dimension(:, :), pointer :: detj
     real(WP), dimension(:, :, :, :), pointer :: a, a_rcp, b

@@ -11,30 +11,30 @@
 #SBATCH --account=gts-sbryngelson3
 #SBATCH -N4 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=4GB
-#SBATCH -t2:00:00
+#SBATCH -t0:05:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./D/plsnocrash9.log"
+#SBATCH -o "./run_logs/try.log"
 #SBATCH --open-mode=append
 
 cd $SLURM_SUBMIT_DIR
 
-ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
+# ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 
-timeout 1h srun ./tube 
-EX_CODE=$?
+# timeout 1h srun ./tube 
+# EX_CODE=$?
 
-echo "SLURM_JOB_EXIT_CODE" 
-echo $SLURM_JOB_EXIT_CODE
+# echo "SLURM_JOB_EXIT_CODE" 
+# echo $SLURM_JOB_EXIT_CODE
 
 # move files to scratch, except for log file and restart.LATEST
 cd D
-cp * /storage/home/hcoda1/6/smanareh6/scratch/large_carotid/
+cp * /storage/home/hcoda1/4/smanasreh6/scratch/save
 rm r* x* w*
-cp /storage/home/hcoda1/6/smanareh6/scratch/large_carotid/restart.LATEST.dat ./restart.LATEST.dat
+cp /storage/home/hcoda1/4/smanasreh6/scratch/save/restart.LATEST.dat ./restart.LATEST.dat
 cd ../
 
-if [[ ${EX_CODE} == 124 ]]; then 
-  scontrol requeue $SLURM_JOB_ID
-fi
+# if [[ ${EX_CODE} == 124 ]]; then 
+#   scontrol requeue $SLURM_JOB_ID
+# fi

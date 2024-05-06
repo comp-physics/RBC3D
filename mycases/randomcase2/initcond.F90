@@ -11,7 +11,7 @@ program InitCond
     integer, parameter :: ranseed = 112
 
     ! initial condition setup parameters
-    real(WP), parameter :: hematocrit = 0.18
+    real(WP), parameter :: hematocrit = 0.10
     real(WP) :: tuber = 4
     real(WP), parameter :: tubelen = 20
 
@@ -67,11 +67,7 @@ program InitCond
     do i = 1, nrbcMax
         if (rootWorld) write(*, *) "Adding Cell #", nrbc + 1
         clockBgn = MPI_Wtime()
-        if (i .eq. 1) then
-          call place_cell(2)
-        else
-          call place_cell(1)
-        end if
+        call place_cell(1)
         clockEnd = MPI_Wtime()
 
         nrbc = nrbc + 1
