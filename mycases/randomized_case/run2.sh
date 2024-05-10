@@ -7,15 +7,15 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/nocrashpls.log"
+#SBATCH -o "./run_logs/nocrashpls4.log"
 
 cd $SLURM_SUBMIT_DIR
 
 ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
 
-cd D
-rm -rf *
-cd ../
+# cd D
+# rm -rf *
+# cd ../
 
 cd ../../common
 make clean
@@ -26,5 +26,5 @@ cd ../mycases/randomized_case
 make clean
 make .depend
 make
-srun ./initcond
+# srun ./initcond
 srun ./tube

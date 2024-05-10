@@ -307,7 +307,7 @@ contains
       if (rootWorld .and. modulo(lt, 50) == 0) then
         minDist = DistFromWall(2)
         write (*, '(A, F10.5)') &
-              'distFromWall = ', minDist
+          'distFromWall = ', minDist
       end if
 
       ! Enforce no-slip condition on the wall

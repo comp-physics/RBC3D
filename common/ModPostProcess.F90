@@ -144,7 +144,7 @@ contains
     end do ! irbc
 
   end subroutine ComputeParticleStress
-  
+
   ! i don't like this function declaration
   function DistFromWall(type) result(minDist)
     integer :: type
@@ -181,7 +181,7 @@ contains
         end do !iwall
       end if
     end do
-    
+
     if (rootWorld) then
       clockEnd = MPI_Wtime()
       print *, "minDist: ", minDist
