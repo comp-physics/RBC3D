@@ -22,7 +22,8 @@ module ModTimeInt
 
   private
 
-  public :: TimeInt_Euler, &
+  public :: TimeInt, &
+            TimeInt_Euler, &
             TimeInt_AxiSymm, &
             TimeIntModVC, &
             OneTimeInt, &
@@ -61,10 +62,21 @@ contains
     if (nrbc > 0) then
       call RbcPolarPatch_Create(rbcPatch, rbcs(1))
 
-      !    call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
+      if (rootWorld) then 
+        print *, "rbcRefs(3)%vol 1", rbcRefs(3)%vol
+      end if
+
+      ! call RBC_ComputeGeometry(rbcRef)
       rbcRefs(1)%patch => rbcPatch
       rbcRefs(2)%patch => rbcPatch
-      !     rbcRefs(3)%patch => rbcPatch
+      rbcRefs(3)%patch => rbcPatch
+
+      if (rootWorld) then
+        print *, "rbcRefs(1)%vol 2", rbcRefs(1)%vol
+        print *, "rbcRefs(3)%vol 2", rbcRefs(3)%vol
+        print *, "rbcRefs(3)%celltype", rbcRefs(3)%celltype
+        print *, "rbcRefs(1)%celltype", rbcRefs(1)%celltype
+      end if
 
       if (PhysEwald) then
       do irbc = 1, nrbc
@@ -101,6 +113,247 @@ contains
     if (FourierEwald) call PME_Finalize
 
   end subroutine TimeInt_Finalize
+
+!**********************************************************************
+! Time integrate using
+! Note:
+!  Time steps from Nt0+1 to Nt
+  subroutine TimeInt
+
+    integer :: lt
+    integer :: irbc, iwall
+    type(t_rbc), pointer :: rbc
+    type(t_wall), pointer :: wall
+    real(WP) :: clockBgn, clockEnd, areaExp, minDist
+    integer :: ierr
+    real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
+
+    ! Time integration
+    time = time0
+
+    do lt = Nt0 + 1, Nt
+      clockBgn = MPI_WTime() ! Start timeing
+
+      ! Evolve cells
+      ! print *,"NO VEL"
+      call Compute_Rbc_Vel
+
+      ! Log area expansion of cells every 100 ts
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        if (rootWorld) then
+          if (lt == 1) then
+            rbc%starting_area = rbc%area
+          end if
+          if (modulo(lt, 10) == 0) then
+            areaExp = RBC_AreaExpansion(rbc)
+            write (*, '(A, I3, A, F10.5, A)') &
+              "area expansion of cell ", irbc, ": ", areaExp, "%"
+          end if
+        end if
+      end do
+
+      ! if (rootWorld .and. modulo(lt, 50) == 0) then
+      !   minDist = DistFromWall(2)
+      !   write (*, '(A, F10.5)') &
+      !     'distFromWall = ', minDist
+      ! end if
+
+      ! Enforce no-slip condition on the wall
+      ! print *,"NO NO SLIP"
+      call NoSlipWall
+
+      ! Evolve RBC
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        ! if (rbc%celltype .eq. 2) then
+        !   wbcCenterX = rbc%xc(1)
+        !   wbcCenterY = rbc%xc(2)
+        !   wbcCenterZ = rbc%xc(3)
+        ! end if
+!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
+        rbc%x = rbc%x + Ts*rbc%v
+!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
+      end do ! irbc
+
+      ! call FilterRbcs
+      call ReboxRbcs
+
+!      print *,"MULTIVOL"
+
+      ! call AddR0Motion
+
+!      call LeukWallRepulsion
+
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
+
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
+
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
+
+      ! call VolConstrainRbcs
+      ! call InterCellRepulsion
+      ! call FilterRbcs
+!!$
+!!$      call VolConstrainRbcs
+!!$      call InterCellRepulsion
+!!$      call FilterRbcs
+
+      ! Adjust background velocity
+      !     call AdjustBkgVel
+
+      ! Update time
+      time = time + Ts
+
+      clockEnd = MPI_WTime()
+
+      ! Output results
+      call WriteAll(lt, time)
+      if (rootWorld) then
+        ! A, F10.5, A, F10.5, A, F10.5
+        write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
+          'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        ! if (modulo(lt, 50) == 0) then
+        !   write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
+        !     'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
+        ! end if
+        write (*, *)
+      end if
+    end do ! lt
+
+  end subroutine TimeInt
+
+!**********************************************************************
+! Time integrate using
+! Note:
+!  Time steps from Nt0+1 to Nt
+  subroutine TimeInt_Euler
+
+    integer :: lt
+    integer :: irbc, iwall
+    type(t_rbc), pointer :: rbc
+    type(t_wall), pointer :: wall
+    real(WP) :: clockBgn, clockEnd, areaExp, minDist
+    integer :: ierr
+    real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
+
+    ! Time integration
+    time = time0
+
+    do lt = Nt0 + 1, Nt
+      clockBgn = MPI_WTime() ! Start timing
+
+      ! Evolve cells
+      ! print *,"NO VEL"
+      call Compute_Rbc_Vel
+
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        if (rootWorld) then
+          if (lt == 1) then
+            rbc%starting_area = rbc%area
+          end if
+          write(*, '(A, I3, A, A, F10.5)') &
+            "cell #", irbc, ": ", "starting_area: ", rbc%starting_area
+        end if
+      end do
+
+      ! Log area expansion of cells every 100 ts
+      ! do irbc = 1, nrbc
+      !   rbc => rbcs(irbc)
+      !   if (rootWorld) then
+      !     if (lt == 1) then
+      !       rbc%starting_area = rbc%area
+      !     end if
+      !     if (modulo(lt, 100) == 0) then
+      !       areaExp = RBC_AreaExpansion(rbc)
+      !       write (*, '(A, I3, A, F10.5, A)') &
+      !         "area expansion of cell ", irbc, ": ", areaExp, "%"
+      !     end if
+      !   end if
+      ! end do
+
+      if (rootWorld .and. modulo(lt, 50) == 0) then
+        minDist = DistFromWall(2)
+        write (*, '(A, F10.5)') &
+          'distFromWall = ', minDist
+      end if
+
+      ! Enforce no-slip condition on the wall
+      ! print *,"NO NO SLIP"
+      call NoSlipWall
+
+      ! Evolve RBC
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        if (rbc%celltype .eq. 2) then
+          wbcCenterX = rbc%xc(1)
+          wbcCenterY = rbc%xc(2)
+          wbcCenterZ = rbc%xc(3)
+        end if
+!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
+        rbc%x = rbc%x + Ts*rbc%v
+!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
+      end do ! irbc
+
+      ! call FilterRbcs
+      call ReboxRbcs
+
+!      print *,"MULTIVOL"
+
+      ! call AddR0Motion
+
+!      call LeukWallRepulsion
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+!!$
+!!$      call VolConstrainRbcs
+!!$      call InterCellRepulsion
+!!$      call FilterRbcs
+
+      ! Adjust background velocity
+      !     call AdjustBkgVel
+
+      ! Update time
+      time = time + Ts
+
+      clockEnd = MPI_WTime()
+
+      ! Output results
+      call WriteAll(lt, time)
+      if (rootWorld) then
+        ! A, F10.5, A, F10.5, A, F10.5
+        write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
+          'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        if (modulo(lt, 50) == 0) then
+          write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
+            'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
+        end if
+        write (*, *)
+      end if
+    end do ! lt
+
+  end subroutine TimeInt_Euler
 
 !***********************************************************************
 ! Time Integrate using generic Runge-Kutta 2nd Order method
@@ -264,121 +517,6 @@ contains
     end do
     deallocate (v_1)
   end subroutine TimeInt_AB2
-
-!**********************************************************************
-! Time integrate using
-! Note:
-!  Time steps from Nt0+1 to Nt
-  subroutine TimeInt_Euler
-
-    integer :: lt
-    integer :: irbc, iwall
-    type(t_rbc), pointer :: rbc
-    type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd, areaExp, minDist
-    integer :: ierr
-    real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
-
-    ! Time integration
-    time = time0
-
-    do lt = Nt0 + 1, Nt
-      clockBgn = MPI_WTime() ! Start timeing
-
-      ! Evolve cells
-      ! print *,"NO VEL"
-      call Compute_Rbc_Vel
-
-      ! Log area expansion of cells every 100 ts
-      do irbc = 1, nrbc
-        rbc => rbcs(irbc)
-        if (rootWorld) then
-          if (lt == 1) then
-            rbc%starting_area = rbc%area
-          end if
-          if (modulo(lt, 100) == 0) then
-            areaExp = RBC_AreaExpansion(rbc)
-            write (*, '(A, I3, A, F10.5, A)') &
-              "area expansion of cell ", irbc, ": ", areaExp, "%"
-          end if
-        end if
-      end do
-
-      if (rootWorld .and. modulo(lt, 50) == 0) then
-        minDist = DistFromWall(2)
-        write (*, '(A, F10.5)') &
-          'distFromWall = ', minDist
-      end if
-
-      ! Enforce no-slip condition on the wall
-      ! print *,"NO NO SLIP"
-      call NoSlipWall
-
-      ! Evolve RBC
-      do irbc = 1, nrbc
-        rbc => rbcs(irbc)
-        if (rbc%celltype .eq. 2) then
-          wbcCenterX = rbc%xc(1)
-          wbcCenterY = rbc%xc(2)
-          wbcCenterZ = rbc%xc(3)
-        end if
-!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
-        rbc%x = rbc%x + Ts*rbc%v
-!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
-      end do ! irbc
-
-      ! call FilterRbcs
-      call ReboxRbcs
-
-!      print *,"MULTIVOL"
-
-      ! call AddR0Motion
-
-!      call LeukWallRepulsion
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-!!$
-!!$      call VolConstrainRbcs
-!!$      call InterCellRepulsion
-!!$      call FilterRbcs
-
-      ! Adjust background velocity
-      !     call AdjustBkgVel
-
-      ! Update time
-      time = time + Ts
-
-      clockEnd = MPI_WTime()
-
-      ! Output results
-      call WriteAll(lt, time)
-      if (rootWorld) then
-        ! A, F10.5, A, F10.5, A, F10.5
-        write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
-          'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
-        if (modulo(lt, 50) == 0) then
-          write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
-            'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
-        end if
-        write (*, *)
-      end if
-    end do ! lt
-
-  end subroutine TimeInt_Euler
 
   subroutine TimeInt_AxiSymm
 
@@ -974,7 +1112,7 @@ contains
   end subroutine FilterRbcs
 
 !**********************************************************************
-! contrain volume of leukocytes
+! constrain volume of leukocytes
   subroutine VolConstrainRbcs
 
     integer :: irbc, ii, ilat, ilon
@@ -988,7 +1126,20 @@ contains
 
       call RBC_ComputeGeometry(rbc)
       fac = (rbcRefs(rbc%celltype)%vol - rbc%vol)/rbc%area
+      if (rootWorld) then
+        if (rbc%celltype .eq. 3) then
+          print *, "rbcRefs(rbc%celltype)%vol: ", rbcRefs(rbc%celltype)%vol
+          print *, "rbc%vol: ", rbc%vol
+          print *, "rbc%area: ", rbc%area
+          print *, "fac before: ", fac
+        end if
+      end if
       fac = SIGN(MIN(ABS(fac), epsDist/20.), fac)
+      if (rootWorld) then
+        if (rbc%celltype .eq. 3) then
+          print *, "fac after: ", fac
+        end if
+      end if
       if (rootWorld .and. ABS(fac) .gt. epsDist/40.) then
         print *, "VOL: ", rbcRefs(rbc%celltype)%vol, rbc%vol, fac
       end if

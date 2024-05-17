@@ -32,6 +32,8 @@ contains
   function VecNorm(a) result(c)
     real(WP) :: a(:), c
 
+    ! print *, "a", a
+
     c = sqrt(sum(a*a))
 
   end function VecNorm

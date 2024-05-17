@@ -319,7 +319,10 @@ contains
     real(WP) :: rplat
 
     rplat = 4.*3./(2.*2.82)/2.*r   ! Platelet expansion factor
-    call RBC_MakeEllipsoid(cell, rplat, xc, 0.7) !0.39685)
+    if (rootWorld) then
+      print *, "rplat", rplat
+    end if
+    call RBC_MakeEllipsoid(cell, rplat, xc, 0.39685) !0.7)
 
   end subroutine RBC_MakePlatelet
 
