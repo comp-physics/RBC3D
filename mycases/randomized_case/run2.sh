@@ -7,7 +7,7 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/nocrashpls4.log"
+#SBATCH -o "./run_logs/nocrashpls12.log"
 
 cd $SLURM_SUBMIT_DIR
 

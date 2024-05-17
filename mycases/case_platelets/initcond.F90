@@ -9,6 +9,7 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
+  use ModPostProcess
   ! use MPI
 
   implicit none
@@ -17,9 +18,9 @@ program InitCond
   integer, parameter :: nwallMax = 4
   type(t_rbc), pointer :: rbc
   type(t_rbc)         :: rbcRef
-  type(t_wall), pointer :: wall1, wall2
+  type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3)
-  integer :: nlat0, ii
+  integer :: nlat0, nlat1, ii
   real(WP) :: theta, th, rc, xc(3), ztemp
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, p, l, dealias
@@ -27,9 +28,8 @@ program InitCond
   character(CHRLEN) :: fn
   ! real = double, fp
   real :: lengtube, lengspacing, phi, actlen
-  real(WP) :: rand(27, 3)
-  integer :: j, ierr, half2, index, layer, newiz
-  real :: wbcs(2), tubeDiam, layerx(3), layery(3), halflen
+  real(WP) :: rand(27, 3), minDist, platRad, platDiam
+  real :: tubeRad
 
   ! Initialize
   call InitMPI
@@ -37,121 +37,88 @@ program InitCond
   allocate (rbcs(nrbcMax))
   ! allocate(walls(nwallMax))
 
-  tubeDiam = 22.0/2.82 ! 7.8, rad = 4
+  tubeRad = 2.0
 
-  nrbc = 25
+  nrbc = 1
   nlat0 = 12
   dealias = 3
   phi = 70/real(100)
   ! 11.34
-  lengtube = 32.0/2.82 ! nrbc/real(phi) !XXLL
+  lengtube = 5 ! nrbc/real(phi) !XXLL
 
   lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
   ! print *, "1"
   nwall = 1
   allocate (walls(nwall))
-  wall1 => walls(1)
+  wall => walls(1)
 
-  call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall1)
+  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
   actlen = 13.33
-  ! print *, "2"
-  wall1%f = 0.
-  do i = 1, wall1%nvert
-    th = ATAN2(wall1%x(i, 1), wall1%x(i, 2))
-    wall1%x(i, 1) = (tubeDiam/2.0)*COS(th)    !!!!!!!!!
-    wall1%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
-    wall1%x(i, 3) = lengtube/actlen*wall1%x(i, 3)
+  wall%f = 0.
+  do i = 1, wall%nvert
+    th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+    wall%x(i, 1) = (tubeRad)*COS(th)    !!!!!!!!!
+    wall%x(i, 2) = (tubeRad)*SIN(th)    !!!!!!!!!
+    wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)
   end do
-  ! print *, "3"
 
-  xmin = minval(wall1%x(:, 1))
-  xmax = maxval(wall1%x(:, 1))
+  xmin = minval(wall%x(:, 1))
+  xmax = maxval(wall%x(:, 1))
 
-  ymin = minval(wall1%x(:, 2))
-  ymax = maxval(wall1%x(:, 2))
+  ymin = minval(wall%x(:, 2))
+  ymax = maxval(wall%x(:, 2))
 
-  zmin = minval(wall1%x(:, 3))
-  zmax = maxval(wall1%x(:, 3))
-  print *, "4"
+  zmin = minval(wall%x(:, 3))
+  zmax = maxval(wall%x(:, 3))
+
   ! size of the periodic box
-  ! Lb(1) = xmax - xmin + 0.5
-  ! is this box centered?
   Lb(1) = xmax - xmin + 0.5
   Lb(2) = Lb(1)
   Lb(3) = zmax - zmin
   lengtube = Lb(3)
+
+  print *, "Lb", Lb(:)
+  !  Lb   8.3013429849047267        8.3013429849047267        11.347517730496456
   ! lengspacing = lengtube/real(nrbc)
   print *, 'lengtube 2', lengtube
   print *, 'lengspacing 2', lengspacing
 
   ! Reference cell i
   xc = 0.
-  ! radius of cell gets trans to ~1.4
-  ! if you want rad of 8, pass in 5.7 for 8/1.4 (5.7*1.4=8)
+
   radEqv = 1.0
+  platRad = .3
+
+  print *, "platRad", platRad
 
   call Rbc_Create(rbcRef, nlat0, dealias)
-  call Rbc_MakeBiconcave(rbcRef, radEqv, xc)
+  call Rbc_MakePlatelet(rbcRef, platRad, xc)
 
   do ii = 1, 3
+    ! dimensions of cell !
     szCell(ii) = maxval(rbcRef%x(:, :, ii)) - minval(rbcRef%x(:, :, ii))
   end do
-
   if (rootWorld) then
-    call random_number(rand)
-    call random_number(wbcs)
+    print *, "szCell", szCell
   end if
-  call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-  call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-
-  wbcs = 1 + FLOOR(27*wbcs)
-
-  print *, '27 x 3 rand num array'
-  do j = 1, nrbc
-    print *, rand(j, :)
-  end do
-
-  print *, 'wbcs index array'
-  do j = 1, 2
-    print *, wbcs(j)
-  end do
-
-  layerx = (/-1.63, 1.63, 0.0/)
-  layery = (/-.943, -.943, 1.89/)
 
   ! place cells
-  do iz = 1, (nrbc + 2)
-    if (iz > 23) then
-      newiz = iz - 2
-    else if (iz > 17) then
-      newiz = iz - 1
-    else
-      newiz = iz
-    end if
-    index = (modulo(iz, 3) + 1)
-    layer = (iz - 1)/3
-    xc(1) = layerx(index) + ((rand(iz, 1) - 0.2) - 0.4)
-    xc(2) = layery(index) + ((rand(iz, 2) - 0.2) - 0.4)
-    xc(3) = (layer + .5) + (lengspacing*layer) + ((rand(iz, 3) - 0.5)/3)
-    if (iz == 20) then
-      print *, 'wbc iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-      rbc => rbcs(newiz)
-      rbc%celltype = 3
-      call Rbc_Create(rbc, nlat0, dealias)
-      call Rbc_MakePlatelet(rbc, .5, xc)
-    else if ((iz == 17) .or. (iz == 23)) then
-      cycle
-    else
-      print *, 'iz:', iz, 'newiz: ', newiz, 'index: ', index, "layer: ", layer, 'xc:', xc
-      rbc => rbcs(newiz)
-      rbc%celltype = 1
-      call Rbc_Create(rbc, nlat0, dealias)
-      call Rbc_MakeBiConcave(rbc, radEqv, xc)
-    end if
+  do iz = 1, nrbc
+    xc(1:2) = 0.
+    xc(3) = 1.
+    print *, 'rbc iz:', iz, 'xc:', xc
+    rbc => rbcs(iz)
+    rbc%celltype = 3
+    call Rbc_Create(rbc, nlat0, dealias)
+    call Rbc_MakePlatelet(rbc, platRad, xc)
+    ! call Rbc_Create(rbc, nlat0, dealias)
+    ! call RBC_MakeBiConcave(rbc, radEqv, xc)
   end do
 
   ! Put things in the middle of the periodic box
   call Recenter_Cells_and_Walls
+
+  ! platDiam = GetDiameter(3)
 
   ! Output
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
@@ -163,6 +130,10 @@ program InitCond
   if (nrbc > 0) then
     write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
     call WriteManyRBCs(fn, nrbc, rbcs)
+
+    write(fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
+    call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
+
     write (*, '(A,A)') 'Cell file: ', trim(fn)
 
     fn = 'D/restart.LATEST.dat'
@@ -211,6 +182,7 @@ contains
     xmin = 1.D10
     xmax = -1.D10
     do iwall = 1, nwall
+      print *, "iwall", iwall
       wall => walls(iwall)
       do ii = 1, 3
         xmin(ii) = min(xmin(ii), minval(wall%x(:, ii)))

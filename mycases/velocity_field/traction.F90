@@ -60,6 +60,8 @@ contains
     end do !iwall
     close (1)
 
+
+
   end subroutine GetTraction
 
   !**********************************************************************
@@ -104,7 +106,7 @@ contains
     type(t_Wall), pointer :: wall
     integer :: nlat0
     real(WP) :: radEqv
-    integer :: ierr
+    ! integer :: ierr
 
     call ReadRestart(restart_file)
 

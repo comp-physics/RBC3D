@@ -69,8 +69,15 @@ contains
     type(t_Rbc), pointer :: rbc, rbcRef
     type(t_Wall), pointer :: wall
     integer :: nlat0
-    real(WP) :: radEqv
+    real(WP) :: radEqv, radEqv2, radEqv3, platExp
+    real(WP) :: shearRate, plasmaVisc, shearMod, bendingMod
     integer :: ierr
+
+    shearMod = 4.2D-6
+    bendingMod = 1.8D-19
+    shearRate = 100
+    plasmaVisc = 1.2D-3
+    radEqv2 = 1.4
 
     call ReadRestart(restart_file)
 
@@ -79,7 +86,11 @@ contains
 
     if (nrbc > 0) then
       radEqv = 1.
+      radEqv2 = 1.4
+      radEqv3 = .3
+      platExp = 4.*3./(2.*2.82)/2.*radEqv3
       nlat0 = rbcs(1)%nlat0
+      print *, "nlat0 tube", nlat0
 
       rbcRef => rbcRefs(1)
       call RBC_Create(rbcRef, nlat0)
@@ -92,8 +103,8 @@ contains
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
-      call RBC_Create(rbcRef, nlat0)
-      call RBC_MakePlatelet(rbcRef, radEqv)
+      call RBC_Create(rbcRef, nlat0/2)
+      call RBC_MakePlatelet(rbcRef, radEqv3)
       call RBC_ComputeGeometry(rbcRef)
 
     end if
@@ -108,19 +119,32 @@ contains
     do irbc = 1, nrbc
       rbc => rbcs(irbc)
       select case (rbc%celltype)
-      case (1)
-        rbc%ES = 12.4
+      case (1) ! RBCs
+        rbc%ES = shearMod / ((radEqv * 2.82 * 1D-6) * shearRate * plasmaVisc)
+        ! rbc%ES = 12.4
         rbc%ED = 200.
-        rbc%EB = 6.69D-2
-      case (2)
-        ! print *,"CASE 2 --- celltype"
-        rbc%ES = 1241.0 / 2.0 ! or 124.
+        rbc%EB = bendingMod / ((radEqv * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)
+        ! rbc%EB = 6.69D-2
+        if (rootWorld) then
+          print *, "case 1: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
+        end if
+      case (2) ! WBCs
+        rbc%ES = (shearMod * 100) / ((radEqv2 * 2.82 * 1D-6) * shearRate * plasmaVisc)
         rbc%ED = 200.
-        rbc%EB = 6.69D-2
-      case (3)
-        rbc%ES = 12.4*20/7.1
-        rbc%ED = 200*49.4/15.4
-        rbc%EB = 6.69D-2*19.5/5.7
+        rbc%EB = bendingMod / ((radEqv2 * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)
+        if (rootWorld) then
+          print *, "case 2: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
+        end if
+      case (3) ! Platelets
+        print *, "ASSIGNING MODULUS VALUES"
+        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 2
+        ! rbc%ES   38.89 without scaling
+        rbc%ED = 200. / 5
+        rbc%EB = (bendingMod / ((platExp * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)) / 10
+        ! rbc%EB   2.0576 without scaling
+        if (rootWorld) then
+          print *, "case 3: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
+        end if
       case default
         stop "bad cellcase"
       end select

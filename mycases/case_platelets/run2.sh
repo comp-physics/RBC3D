@@ -9,26 +9,31 @@
 #run this in the case directory of RBC3D
 
 #SBATCH --account=gts-sbryngelson3
-#SBATCH -N4 --ntasks-per-node=24
+#SBATCH -N2 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=2G
-#SBATCH -t8:00:00
+#SBATCH -t1:00:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/epsdist3.log"
+#SBATCH -o "./run_logs/plat.log"
 
 cd $SLURM_SUBMIT_DIR
 
 ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
+
+cd D
+rm -f *
+cd ..
 
 cd ../../common
 make clean
 make .depend
 make
 
-cd ../mycases/case_wbcs
+cd ../mycases/case_platelets
 make clean
 make .depend
 make
 
+srun -n 1 ./initcond
 srun ./tube
