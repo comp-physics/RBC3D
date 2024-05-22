@@ -3,6 +3,8 @@ module ModBasicMath
 
   use ModDataTypes
   use f95_lapack, only: LA_POSV
+  use MPI
+  use ModConf
 !  use mkl95_lapack, only : LA_POSV=>POSV
 
   implicit none
@@ -233,6 +235,10 @@ contains
     integer :: i, ii, jj
     integer :: ierr
 
+    real(WP) :: clockBgn, clockEnd
+
+    clockBgn = MPI_WTime()
+
     ! Compute the upper half of lhs and rhs
     lhs = 0.
     rhs = 0.
@@ -272,6 +278,12 @@ contains
     a11 = rhs(4)
     a12 = rhs(5)
     a22 = rhs(6)
+
+    clockEnd = MPI_WTime()
+    if (rootWorld) then
+      write(*, '(A, I3, A, F12.2)') &
+        "time cost = ", clockEnd - clockBgn
+    end if
 
   end subroutine QuadFit_2D
 
