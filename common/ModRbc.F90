@@ -55,6 +55,7 @@ contains
     cell%nlat0 = nlat0
     cell%nlon0 = 2*cell%nlat0
     if (present(dealias_fac)) then
+      ! what?
       if (dealias_fac .eq. 100) then
 
         cell%nlat = nlat0 + 2

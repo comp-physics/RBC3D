@@ -259,9 +259,9 @@ contains
 
     ! Compute the lower half of the symmetric lhs
     do ii = 2, 6
-    do jj = 1, ii - 1
-      lhs(ii, jj) = lhs(jj, ii)
-    end do ! jj
+      do jj = 1, ii - 1
+        lhs(ii, jj) = lhs(jj, ii)
+      end do ! jj
     end do ! ii
     ! lapack call
     call LA_POSV(lhs, rhs, INFO=ierr)

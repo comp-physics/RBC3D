@@ -68,7 +68,7 @@ contains
     integer :: irbc, iwall
     type(t_Rbc), pointer :: rbc, rbcRef
     type(t_Wall), pointer :: wall
-    integer :: nlat0
+    integer :: nlat0, dealias
     real(WP) :: radEqv, radEqv2, radEqv3, platExp
     real(WP) :: shearRate, plasmaVisc, shearMod, bendingMod
     integer :: ierr
@@ -78,6 +78,7 @@ contains
     shearRate = 100
     plasmaVisc = 1.2D-3
     radEqv2 = 1.4
+    dealias = 5
 
     call ReadRestart(restart_file)
 
@@ -103,7 +104,7 @@ contains
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
-      call RBC_Create(rbcRef, nlat0/2)
+      call RBC_Create(rbcRef, nlat0/3, dealias)
       call RBC_MakePlatelet(rbcRef, radEqv3)
       call RBC_ComputeGeometry(rbcRef)
 
@@ -136,11 +137,10 @@ contains
           print *, "case 2: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
         end if
       case (3) ! Platelets
-        print *, "ASSIGNING MODULUS VALUES"
-        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 2
+        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 5.
         ! rbc%ES   38.89 without scaling
-        rbc%ED = 200. / 5
-        rbc%EB = (bendingMod / ((platExp * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)) / 10
+        rbc%ED = 200. / 10.
+        rbc%EB = (bendingMod / ((platExp * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)) / 10.
         ! rbc%EB   2.0576 without scaling
         if (rootWorld) then
           print *, "case 3: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES

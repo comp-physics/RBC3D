@@ -138,12 +138,13 @@ contains
       ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
-      ! Log area expansion of cells every 100 ts
+      ! Log area expansion of cells every 10 ts
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
         if (rootWorld) then
           if (lt == 1) then
             rbc%starting_area = rbc%area
+            print *, "cell #", irbc, ": ", "starting_area: ", rbc%starting_area
           end if
           if (modulo(lt, 10) == 0) then
             areaExp = RBC_AreaExpansion(rbc)
@@ -253,31 +254,21 @@ contains
       ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
+      ! Log area expansion of cells every 100 ts
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
         if (rootWorld) then
           if (lt == 1) then
             rbc%starting_area = rbc%area
+            print *, "cell #", irbc, ": ", "starting_area: ", rbc%starting_area
           end if
-          write(*, '(A, I3, A, A, F10.5)') &
-            "cell #", irbc, ": ", "starting_area: ", rbc%starting_area
+          if (modulo(lt, 100) == 0) then
+            areaExp = RBC_AreaExpansion(rbc)
+            write (*, '(A, I3, A, F10.5, A)') &
+              "area expansion of cell ", irbc, ": ", areaExp, "%"
+          end if
         end if
       end do
-
-      ! Log area expansion of cells every 100 ts
-      ! do irbc = 1, nrbc
-      !   rbc => rbcs(irbc)
-      !   if (rootWorld) then
-      !     if (lt == 1) then
-      !       rbc%starting_area = rbc%area
-      !     end if
-      !     if (modulo(lt, 100) == 0) then
-      !       areaExp = RBC_AreaExpansion(rbc)
-      !       write (*, '(A, I3, A, F10.5, A)') &
-      !         "area expansion of cell ", irbc, ": ", areaExp, "%"
-      !     end if
-      !   end if
-      ! end do
 
       if (rootWorld .and. modulo(lt, 50) == 0) then
         minDist = DistFromWall(2)
@@ -292,11 +283,11 @@ contains
       ! Evolve RBC
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
-        if (rbc%celltype .eq. 2) then
-          wbcCenterX = rbc%xc(1)
-          wbcCenterY = rbc%xc(2)
-          wbcCenterZ = rbc%xc(3)
-        end if
+        ! if (rbc%celltype .eq. 2) then
+        !   wbcCenterX = rbc%xc(1)
+        !   wbcCenterY = rbc%xc(2)
+        !   wbcCenterZ = rbc%xc(3)
+        ! end if
 !       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
         rbc%x = rbc%x + Ts*rbc%v
 !       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
@@ -345,10 +336,10 @@ contains
         ! A, F10.5, A, F10.5, A, F10.5
         write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
           'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
-        if (modulo(lt, 50) == 0) then
-          write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
-            'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
-        end if
+        ! if (modulo(lt, 50) == 0) then
+        !   write (*, '(A, F10.5, A, F10.5, A, F10.5)') &
+        !     'wbcCenterX = ', wbcCenterX, ' wbcCenterY = ', wbcCenterY, ' wbcCenterZ = ', wbcCenterZ
+        ! end if
         write (*, *)
       end if
     end do ! lt

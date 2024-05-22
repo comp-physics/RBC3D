@@ -12,7 +12,7 @@ program randomized_cell_gen
   integer, parameter :: ranseed = 112
 
   !initial condition setup parameters
-  real(WP), parameter :: hematocrit = 0.2
+  real(WP), parameter :: hematocrit = 0.16
   real(WP) :: tuber = 4
   real(WP), parameter :: tubelen = 30
 
@@ -35,10 +35,13 @@ program randomized_cell_gen
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
   !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
+  print *, "hematocrit", hematocrit
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
   ! nrbcMax = 500
-
-  write (*, *) "Num RBCs in simulation is ", nrbcMax
+  
+  if (rootWorld) then
+    write (*, *) "Num RBCs in simulation is ", nrbcMax
+  end if
 
   !set other initialization params
   vBkg(1:2) = 0.; vBkg(3) = 8.

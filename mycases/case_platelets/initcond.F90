@@ -39,8 +39,9 @@ program InitCond
 
   tubeRad = 2.0
 
-  nrbc = 1
+  nrbc = 2
   nlat0 = 12
+  nlat1 = 4
   dealias = 3
   phi = 70/real(100)
   ! 11.34
@@ -103,17 +104,22 @@ program InitCond
   end if
 
   ! place cells
-  do iz = 1, nrbc
-    xc(1:2) = 0.
-    xc(3) = 1.
-    print *, 'rbc iz:', iz, 'xc:', xc
-    rbc => rbcs(iz)
-    rbc%celltype = 3
-    call Rbc_Create(rbc, nlat0, dealias)
-    call Rbc_MakePlatelet(rbc, platRad, xc)
-    ! call Rbc_Create(rbc, nlat0, dealias)
-    ! call RBC_MakeBiConcave(rbc, radEqv, xc)
-  end do
+  xc(1:2) = 0.
+  xc(3) = 1.
+  ! print *, 'rbc iz:', iz, 'xc:', xc
+  rbc => rbcs(1)
+  rbc%celltype = 1
+  call Rbc_Create(rbc, nlat0, dealias)
+  call RBC_MakeBiConcave(rbc, radEqv, xc)
+
+  xc(1:2) = 0.
+  xc(3) = 4.
+  ! print *, 'rbc iz:', iz, 'xc:', xc
+  rbc => rbcs(2)
+  rbc%celltype = 3
+  call Rbc_Create(rbc, nlat1, dealias + 2)
+  call Rbc_MakePlatelet(rbc, platRad, xc)
+  
 
   ! Put things in the middle of the periodic box
   call Recenter_Cells_and_Walls
@@ -124,7 +130,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 8.
+  vBkg(1:2) = 0.; vBkg(3) = 8
 
   ! Write intial conditions
   if (nrbc > 0) then
