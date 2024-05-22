@@ -234,16 +234,16 @@ contains
       dist2Gq(0) = sum(xx**2)
 
       do iphi = 1, nphi
-      do ith = 1, nth
-        i = ith + nth*(iphi - 1)
+        do ith = 1, nth
+          i = ith + nth*(iphi - 1)
 
-        xyGq_L(i, 1) = thPat_L(ith)*cos(phiPat_L(iphi))
-        xyGq_L(i, 2) = thPat_L(ith)*sin(phiPat_L(iphi))
+          xyGq_L(i, 1) = thPat_L(ith)*cos(phiPat_L(iphi))
+          xyGq_L(i, 2) = thPat_L(ith)*sin(phiPat_L(iphi))
 
-        call Spline_Interp(spln, thPat(ith, iphi), phiPat(ith, iphi), xx)
-        xx = xx - xtar
-        dist2Gq(i) = sum(xx**2)
-      end do ! ith
+          call Spline_Interp(spln, thPat(ith, iphi), phiPat(ith, iphi), xx)
+          xx = xx - xtar
+          dist2Gq(i) = sum(xx**2)
+        end do ! ith
       end do ! iphi
 
       ! print *, "BEFORE QUADFIT2D"

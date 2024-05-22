@@ -62,7 +62,7 @@ contains
     if (nrbc > 0) then
       call RbcPolarPatch_Create(rbcPatch, rbcs(1))
 
-      if (rootWorld) then 
+      if (rootWorld) then
         print *, "rbcRefs(3)%vol 1", rbcRefs(3)%vol
       end if
 

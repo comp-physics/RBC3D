@@ -38,7 +38,7 @@ program randomized_cell_gen
   print *, "hematocrit", hematocrit
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
   ! nrbcMax = 500
-  
+
   if (rootWorld) then
     write (*, *) "Num RBCs in simulation is ", nrbcMax
   end if
