@@ -253,7 +253,9 @@ contains
 
       ! print *, "BEFORE QUADFIT2D"
       ! Find a quadartic interpolation of distance to xtar
+      ! call QuadFit_2D(xyGq_L, dist2Gq, c0, c1, c2, c11, c12, c22)
       call QuadFit_2D(xyGq_L, dist2Gq, c0, c1, c2, c11, c12, c22, tempTime)
+
       ! if (first) then
       !   if (rootWorld) then
       !     print *, "totalTime FIRST: ", totalTime

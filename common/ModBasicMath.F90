@@ -236,7 +236,12 @@ contains
     real(WP) :: lhs(6, 6), rhs(6), u(6)
     real(WP) :: xi, yi
     integer :: i, ii, jj
-    integer :: ierr
+    integer :: ierr ! PetscErrorCode
+
+    Mat :: A
+    Vec :: b, xVec
+    KSP :: ksp
+    PetscScalar, dimension(6) :: solution
     
     logical, save :: first = .true., second = .true.
     integer :: xRows, xCols, fSize, j
@@ -265,6 +270,15 @@ contains
       print *, "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
       first = .false.
     end if
+    
+    print *, "1"
+    ! can use MatCreate, MatSetSizes, MatSetType instead
+    call MatCreateSeqDense(PETSC_COMM_SELF, 6, 6, PETSC_NULL_SCALAR, A, ierr)
+    call MatSetUp(A, ierr)
+
+    call VecCreateSeq(PETSC_COMM_SELF, 6, b, ierr)
+    call VecDuplicate(b, xVec, ierr)
+    print *, "2"
 
     ! Compute the upper half of lhs and rhs
     lhs = 0.
@@ -296,15 +310,56 @@ contains
         lhs(ii, jj) = lhs(jj, ii)
       end do ! jj
     end do ! ii
-    ! lapack call
-    call LA_POSV(lhs, rhs, INFO=ierr)
+    
+    do ii = 1, 6
+      do jj = 1, 6
+        call MatSetValue(A, ii-1, jj-1, lhs(ii, jj), INSERT_VALUES, ierr)
+      end do ! jj    
+    end do ! ii
+    print *, "3"
 
-    a0 = rhs(1)
-    a1 = rhs(2)
-    a2 = rhs(3)
-    a11 = rhs(4)
-    a12 = rhs(5)
-    a22 = rhs(6)
+    ! set vector values
+    do ii = 1, 6
+      call VecSetValue(b, ii - 1, jj - 1, INSERT_VALUES, ierr)
+    end do
+    print *, "4"
+
+    ! assemble matrix and vector
+    call MatAssemblyBegin(A, MAT_FINAL_ASSEMBLY, ierr)
+    call MatAssemblyEnd(A, MAT_FINAL_ASSEMBLY, ierr)
+    call VecAssemblyBegin(b, ierr)
+    call VecAssemblyEnd(b, ierr)
+    print *, "5"
+
+    ! create solver context
+    call KSPCreate(PETSC_COMM_WORLD, ksp, ierr)
+    print *, "6"
+    call KSPSetOperators(ksp, A, A, SAME_NONZERO_PATTERN, ierr)
+    print *, "7"
+    call KSPSetFromOptions(ksp, ierr) ! not needed?
+    print *, "8"
+    call KSPSetUp(ksp, ierr)
+    print *, "9"
+    
+    call KSPSolve(ksp, b, xVec, ierr)
+
+    call VecGetValues(xVec, 6, (/0, 1, 2, 3, 4, 5/), solution, ierr)
+
+    print *, "xVec", xVec
+
+    print *, "solution: ", solution
+
+    a0 = solution(1)
+    a1 = solution(2)
+    a2 = solution(3)
+    a11 = solution(4)
+    a12 = solution(5)
+    a22 = solution(6)
+
+    call KSPDestroy(ksp, ierr)
+    call MatDestroy(A, ierr)
+    call VecDestroy(b, ierr)
+    call VecDestroy(xVec, ierr)
 
     if (rootWorld .and. (modulo(counter, 1000) .eq. 0)) then
       print *, "xRows", xRows, "xCols", xCols, "fSize", fSize
@@ -395,7 +450,7 @@ contains
 !**********************************************************************
 ! Find the minimum of a quadratic function
 ! Arguments:
-!  a0 to a22 -- coefficients of the qudratic function
+!  a0 to a22 -- coefficients of the quadratic function
 !  xmin -- coordinate of the minimum point
 !  fmin -- minimum function value
 !
@@ -564,5 +619,47 @@ contains
   end function RandomNumber
 
 !**********************************************************************
+
+  !**********************************************************************
+  subroutine My_VecGetValues(x, a)
+    Vec x
+    real(WP) :: a(:)
+
+    integer, allocatable :: ix(:)
+    integer :: n, i, ierr
+
+    ! Allocate working arrays
+    call VecGetSize(x, n, ierr)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
+
+    call VecGetValues(x, n, ix, a, ierr)
+
+    ! Deallocate working arrays
+    deallocate (ix)
+
+  end subroutine My_VecGetValues
+
+!**********************************************************************
+  subroutine My_VecSetValues(x, a)
+    Vec :: x
+    real(WP) :: a(:)
+
+    integer, allocatable :: ix(:)
+    integer :: n, i, ierr
+
+    ! Allocate working arrays
+    call VecGetSize(x, n, ierr)
+    allocate (ix(n))
+    ix = (/(i, i=0, n - 1)/)
+
+    call VecSetValues(x, n, ix, a, INSERT_VALUES, ierr)
+    call VecAssemblyBegin(x, ierr)
+    call VecAssemblyEnd(x, ierr)
+
+    ! Deallocate working arrays
+    deallocate (ix)
+
+  end subroutine My_VecSetValues
 
 end module ModBasicMath

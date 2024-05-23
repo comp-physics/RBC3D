@@ -1,7 +1,7 @@
 include ../../Makefile.in
 
 LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(LAPACK95_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(MKL_LIB) $(STATIC)
-EXECUTABLES = test
+EXECUTABLES = test test17
 
 all : $(EXECUTABLES)
 

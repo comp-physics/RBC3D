@@ -1,28 +1,65 @@
 program test
     
+    use ModData
     use ModDataTypes
+    use ModDataStruct
     use ModBasicMath
 
+    ! use ModDataTypes
+    ! use ModDataStruct
+    ! use ModRbc
+    ! use ModWall
+    ! use ModConf
+    ! use ModData
+    ! use ModIO
+    ! use ModBasicMath
+    ! use ModPostProcess
 
-    real(WP) :: mat2d(1: 17, 2), vec1d(1: 17)
-    real(WP) :: b0, b1, b2, b11, b12, b22
-    integer :: mat2drows, mat2dcols, j
+    implicit none
 
-    mat2d = reshape((/ 0., .0218166, .043633, 4., 5., 6., 7., 8., 9., 10., 11., 12., &
-        13., 14., 15., 16., 17., 18., 19., 20., 21., 22., 23., 24., 25., 26., &
-        27., 28., 29., 30., 31., 32., 33., 34. /), shape(mat2d))
-    
-    mat2drows = size(mat2d, 1)
-    mat2dcols = size(mat2d, 2)
-    print *, "mat2drows:", mat2drows, "mat2dcols:", mat2dcols
+    integer :: n_points = 5, i
+    real(WP) :: A(5, 2)
+    real(WP) :: b(5)
+    real(WP) :: x0 = 0., x1 = 0., x2 = 0., x11 = 0., x12 = 0., x22 = 0., timeit
+    real(WP) :: x, y
 
-    do j = 1, mat2drows
-        ! mat2d(j, :) = (/j, j*2/)
-        print *, mat2d(j, :)
+    call InitMPI
+    ! allocate arrays
+    ! allocate(x(n_points, 2))
+    ! allocate(f(n_points))
+
+    print *, "n_points", n_points
+
+    ! at each point x, y, b(x, y) = 1 + 2x + 3y + 4x^2 + 5xy + 6y^2
+    do i = 1, n_points
+        A(i, 1) = real(i, WP) ! x
+        A(i, 2) = real(i, WP) ! y
+        x = A(i, 1)
+        y = A(i, 2)
+        b(i) = .1 + .2*x + .3*y &
+            + .4*(x**2) + .5*x*y + .6*(y**2)
     end do
 
-    
+    print *, "Matrix A: "
+    do i = 1, n_points
+        print *, A(i, :)
+    end do
 
+    print *, "b: ", b
 
+    call QuadFit_2D(A, b, x0, x1, x2, x11, x12, x22, timeit)
 
+    print *, 'Computed coefficients:'
+    print *, 'x0  = ', x0
+    print *, 'x1  = ', x1
+    print *, 'x2  = ', x2
+    print *, 'x11 = ', x11
+    print *, 'x12 = ', x12
+    print *, 'x22 = ', x22
+
+    print *, "time taken = ", timeit
+
+    ! deallocate(x, f)
+
+    call FinalizeMPI
 end program test
