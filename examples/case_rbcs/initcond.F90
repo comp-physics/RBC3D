@@ -20,7 +20,7 @@ program InitCond
   type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
-  real(WP) :: theta, th, rc, xc(3), ztemp
+  real(WP) :: theta, th, rc, xc(3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, p, l, dealias
   integer, parameter :: ranseed = 161269
@@ -28,8 +28,8 @@ program InitCond
   ! real = double, fp
   real :: lengtube, lengspacing, phi, actlen
   real(WP) :: rand(27, 3)
-  integer :: j, ierr, half2, index, layer
-  real :: wbcs(2), tubeDiam, layerx(3), layery(3), halflen
+  integer :: j, ierr, index, layer
+  real :: tubeDiam, layerx(3), layery(3)
 
   ! Initialize
   call InitMPI
@@ -47,14 +47,14 @@ program InitCond
   lengtube = 32.0/2.82 ! nrbc/real(phi) !XXLL
 
   lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
-  ! print *, "1"
+
   nwall = 1
   allocate (walls(nwall))
   wall => walls(1)
 
   call ReadWallMesh('Input/new_cyl_D6_L13_33_hires.e', wall)
   actlen = 13.33
-  ! print *, "2"
+
   wall%f = 0.
   do i = 1, wall%nvert
     th = ATAN2(wall%x(i, 1), wall%x(i, 2))
@@ -62,7 +62,6 @@ program InitCond
     wall%x(i, 2) = (tubeDiam/2.0)*SIN(th)    !!!!!!!!!
     wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)
   end do
-  ! print *, "3"
 
   xmin = minval(wall%x(:, 1))
   xmax = maxval(wall%x(:, 1))
@@ -72,10 +71,8 @@ program InitCond
 
   zmin = minval(wall%x(:, 3))
   zmax = maxval(wall%x(:, 3))
-  ! print *, "4"
+
   ! size of the periodic box
-  ! Lb(1) = xmax - xmin + 0.5
-  ! is this box centered?
   Lb(1) = xmax - xmin + 0.5
   Lb(2) = Lb(1)
   Lb(3) = zmax - zmin
@@ -97,22 +94,14 @@ program InitCond
 
   if (rootWorld) then
     call random_number(rand)
-    ! call random_number(wbcs)
   end if
   call MPI_Bcast(rand, 27*3, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-  ! call MPI_Bcast(wbcs, 2, MPI_WP, 0, MPI_COMM_WORLD, ierr)
-
-  ! wbcs = 1 + FLOOR(27*wbcs)
 
   print *, '27 x 3 rand num array'
   do j = 1, nrbc
     print *, rand(j, :)
   end do
 
-  ! print *, 'wbcs index array'
-  ! do j = 1, 2
-  !   print *, wbcs(j)
-  ! end do
 
   layerx = (/-1.63, 1.63, 0.0/)
   layery = (/-.943, -.943, 1.89/)

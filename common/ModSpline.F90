@@ -5,6 +5,7 @@ module ModSpline
   use ModBasicMath
   use ModFFT
   use ModPolarPatch
+  use ModConf
 
   implicit none
 
@@ -216,6 +217,10 @@ contains
     real(WP) :: xx(3)
     integer :: ith, iphi, i
 
+    real(WP), save :: totalTime = 0
+    logical, save :: first = .true.
+    real(WP) :: tempTime
+
     ! Initialize x0
     call Spline_Interp(spln, th0, phi0, x0)
 
@@ -248,7 +253,23 @@ contains
 
       ! print *, "BEFORE QUADFIT2D"
       ! Find a quadartic interpolation of distance to xtar
-      call QuadFit_2D(xyGq_L, dist2Gq, c0, c1, c2, c11, c12, c22)
+      call QuadFit_2D(xyGq_L, dist2Gq, c0, c1, c2, c11, c12, c22, tempTime)
+      ! if (first) then
+      !   if (rootWorld) then
+      !     print *, "totalTime FIRST: ", totalTime
+      !   end if
+      !   first = .false.
+      ! end if
+      ! totalTime = totalTime + tempTime
+      ! if (rootWorld) then
+      !   print *, "rootworld dist2Gq", dist2Gq(:)
+      !   print *, c0, c1, c2, c11, c12, c22
+      !   print *, "totalTime: ", totalTime
+      ! else
+      !   print *, "dist2Gq", dist2Gq(:)
+      !   print *, c0, c1, c2, c11, c12, c22
+      ! end if
+      
       ! print *, "AFTER QUADFIT2D"
       call Min_Quad_2D(c0, c1, c2, c11, c12, c22, xyMin_L, dist2MinEst)
 

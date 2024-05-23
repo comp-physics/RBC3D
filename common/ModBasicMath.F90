@@ -9,6 +9,8 @@ module ModBasicMath
 
   implicit none
 
+#include "../petsc_include.h"
+
   private
 
   public :: VecNorm, &
@@ -20,6 +22,7 @@ module ModBasicMath
             Matrix_PseudoInvert, &
             QuadFit_1D, &
             QuadFit_2D, &
+            QuadFit_2DK, &
             Min_Quad_2D, &
             MaskFunc_Exact, &
             MaskFunc, &
@@ -227,17 +230,41 @@ contains
 !  x(i,:), f(i) -- coordinates and functional value of the i-th point
 ! Note:
 !   f(x) = a0 + a1*x + a2*y + a11*(x**2) + a12*(x*y) + a22*(y**2)
-  subroutine QuadFit_2D(x, f, a0, a1, a2, a11, a12, a22)
+  subroutine QuadFit_2D(x, f, a0, a1, a2, a11, a12, a22, timeit)
     real(WP) :: x(:, :), f(:), a0, a1, a2, a11, a12, a22
 
     real(WP) :: lhs(6, 6), rhs(6), u(6)
     real(WP) :: xi, yi
     integer :: i, ii, jj
     integer :: ierr
-
-    real(WP) :: clockBgn, clockEnd
+    
+    logical, save :: first = .true., second = .true.
+    integer :: xRows, xCols, fSize, j
+    integer, save :: counter = 0
+    real(WP) :: clockBgn, clockEnd, timeit
+    
+    if (rootWorld) then
+      counter = counter + 1
+      ! print *, "counter: ", counter
+    end if
 
     clockBgn = MPI_WTime()
+    xRows = size(x, 1)
+    xCols = size(x, 2)
+    fSize = size(f, 1)
+
+    if (rootWorld .and. (modulo(counter, 1000) .eq. 0)) then
+      print *, "counter", counter
+      print *, "xRows", xRows, "xCols", xCols, "fSize", fSize
+      print *, "x: "
+      do j = 1, xRows
+        print *, x(j, :)
+      end do
+
+      print *, "f: ", f(:)
+      print *, "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
+      first = .false.
+    end if
 
     ! Compute the upper half of lhs and rhs
     lhs = 0.
@@ -279,13 +306,91 @@ contains
     a12 = rhs(5)
     a22 = rhs(6)
 
+    if (rootWorld .and. (modulo(counter, 1000) .eq. 0)) then
+      print *, "xRows", xRows, "xCols", xCols, "fSize", fSize
+      print *, "x: "
+      do j = 1, xRows
+        print *, x(j, :)
+      end do
+
+      print *, "f: ", f(:)
+      print *, "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
+      second = .false.
+    end if
+
     clockEnd = MPI_WTime()
     if (rootWorld) then
-      write(*, '(A, I3, A, F12.2)') &
-        "time cost = ", clockEnd - clockBgn
+      timeit = clockEnd - clockBgn
     end if
 
   end subroutine QuadFit_2D
+
+!**********************************************************************
+! 2D Quadratic fit
+! Arguments:
+!  x(i,:), f(i) -- coordinates and functional value of the i-th point
+! Note:
+!   f(x) = a0 + a1*x + a2*y + a11*(x**2) + a12*(x*y) + a22*(y**2)
+  subroutine QuadFit_2DK(x, f, a0, a1, a2, a11, a12, a22, timeit)
+    real(WP) :: x(:, :), f(:), a0, a1, a2, a11, a12, a22
+
+    real(WP) :: lhs(6, 6), rhs(6), u(6)
+    real(WP) :: xi, yi
+    integer :: i, ii, jj
+    integer :: ierr
+    
+    logical, save :: first = .true., second = .true.
+    integer :: xRows, xCols, fSize, j
+    integer, save :: counter = 0
+    real(WP) :: clockBgn, clockEnd, timeit
+  
+
+    clockBgn = MPI_WTime()
+    xRows = size(x, 1)
+    xCols = size(x, 2)
+    fSize = size(f, 1)
+
+    ! Compute the upper half of lhs and rhs
+    lhs = 0.
+    rhs = 0.
+
+    do i = 1, size(x, 1)
+      xi = x(i, 1)
+      yi = x(i, 2)
+
+      u(1) = 1.
+      u(2) = xi
+      u(3) = yi
+      u(4) = xi*xi
+      u(5) = xi*yi
+      u(6) = yi*yi
+
+      do ii = 1, 6
+        do jj = ii, 6
+          lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
+        end do ! jj
+      end do ! ii
+
+      rhs = rhs + u(:)*f(i)
+    end do ! i
+
+    ! Compute the lower half of the symmetric lhs
+    do ii = 2, 6
+      do jj = 1, ii - 1
+        lhs(ii, jj) = lhs(jj, ii)
+      end do ! jj
+    end do ! ii
+    ! lapack call
+    call LA_POSV(lhs, rhs, INFO=ierr)
+
+    a0 = rhs(1)
+    a1 = rhs(2)
+    a2 = rhs(3)
+    a11 = rhs(4)
+    a12 = rhs(5)
+    a22 = rhs(6)
+
+  end subroutine QuadFit_2DK
 
 !**********************************************************************
 ! Find the minimum of a quadratic function
