@@ -8,7 +8,7 @@ MKL_DIR = $(WORK_DIR)/packages/mkl
 # MKL_DIR = /usr/local/pace-apps/modules/manual/modules/lmod/linux-rhel7-x86_64/gcc/10.3.0/mkl
 LAPACK95_DIR = $(WORK_DIR)/packages/LAPACK95
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
-# LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
+LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
 
 # Makedependf90 binary
 MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
@@ -36,7 +36,7 @@ FFTW_LIB = -L$(FFTW_DIR)/lib -lfftw3
 NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
 PETSC_LIB = -L$(PETSC_DIR)/lib $(PETSC_KSP_LIB_BASIC)
 MKL_LIB = -L$(MKL_DIR)/lib/em64t -Wl,-rpath,$(MKL_DIR)/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread
-# LAPACK_LIB = -L$(LAPACK_DIR)/liblapack.a
+LAPACK_LIB = -L$(LAPACK_DIR) -llapack
 
 # Compiler and linker
 FC = mpif90
