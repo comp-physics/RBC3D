@@ -6,7 +6,6 @@ PETSC_DIR = $(WORK_DIR)/packages/mypetsc
 include $(PETSC_DIR)/conf/variables
 MKL_DIR = $(WORK_DIR)/packages/mkl
 # MKL_DIR = /usr/local/pace-apps/modules/manual/modules/lmod/linux-rhel7-x86_64/gcc/10.3.0/mkl
-LAPACK95_DIR = $(WORK_DIR)/packages/LAPACK95
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
 
@@ -20,18 +19,15 @@ NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/n
 vpath $(WORK_DIR)/common
 
 # Includes
-MKL_INCLUDE = $(MKL_DIR)/interfaces/lapack95/obj
-LAPACK95_INCLUDE = $(LAPACK95_DIR)/lapack95_modules
 PETSC_INCLUDE = $(PETSC_DIR)/include
 NETCDF_INCLUDE = $(NETCDF_DIR)/include
 
-COMMON_INCLUDE = -I$(WORK_DIR)/common -I$(MKL_INCLUDE) -I$(LAPACK95_INCLUDE)
+COMMON_INCLUDE = -I$(WORK_DIR)/common
 INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(NETCDF_INCLUDE)
 
 # Libraries
 COMMON_LIB = $(WORK_DIR)/common/libcommon.a
 SPHPK_LIB = -L$(SPHEREPACK_DIR)/lib -lspherepack
-LAPACK95_LIB = -L$(LAPACK95_DIR) -llapack95
 FFTW_LIB = -L$(FFTW_DIR)/lib -lfftw3
 NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
 PETSC_LIB = -L$(PETSC_DIR)/lib $(PETSC_KSP_LIB_BASIC)

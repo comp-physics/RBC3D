@@ -20,5 +20,4 @@ program test
         print *, arrayB(i, :)
     end do
 
-
 end program test

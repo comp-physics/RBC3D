@@ -14,5 +14,5 @@ mypackages
 packages
 ogpackages
 */*/run_logs
-! packages/petsc-3.0.0-p3
 fieldold
+traction

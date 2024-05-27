@@ -27,4 +27,8 @@ where, for each row, (X, Y, Z) denotes the location, and (Vx, Vy, Vz) is the vel
 You can easily visualize this velocity field in ParaView with the following steps after Importing and Parsing `field.csv`:
 1. Apply the "Table to Points" Filter, selecting X=X, Y=Y, and Z=Z as your coordinates.
 2. Apply the "Merge Vector Components" Filter, selecting X=Vx, Y=Vy, and Z=Vz for your vectors. Rename this to "velocity."
-3. Apply the "Glyph" filter, selecting the orientation to be "velocity." Scale and color as necessary. 
+3. Apply the "Glyph" filter, selecting the orientation to be "velocity." Scale and color as necessary.
+
+# Wall Traction Vectors
+
+A CSV file containing the force density vectors at each point on the wall can be generated with `traction.F90` by running `make` and then `srun -n 1 ./traction`. This will create `./D/wallvectors.csv`, and this CSV file can be visualized in Paraview in using the same procedure as the velocity field vectors.

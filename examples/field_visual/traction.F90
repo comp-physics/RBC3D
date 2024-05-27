@@ -1,4 +1,4 @@
-! cells in cylindrical tubes
+! write out wall traction vectors
 program traction_vectors
 
   use ModDataTypes
@@ -20,8 +20,6 @@ program traction_vectors
   implicit none
   character(CHRLEN) :: fn
 
-  ! #include "../../petsc_include.h"
-
   call InitAll
 
   call GetTraction
@@ -37,30 +35,19 @@ contains
     integer :: iwall, ivert
     type(t_wall), pointer :: wall
 
-    ! do iwall = 1, nwall
-    !   wall => walls(iwall)
-    !   do ivert = 1, wall%nvert
-    !     print *, wall%x(ivert, 1)
-    !   end do
-    ! end do
-
-    ! do ivert = 1, wall%nvert
-    !   write (wall_unit, '(3F20.10)') wall%x(ivert, :)
-    ! end do ! ivert
-
     fn = "./D/wallvectors.csv"
     open (1, file=fn)
     write (1, *) "X,Y,Z,Fx,Fy,Fz"
+
     do iwall = 1, nwall
       wall => walls(iwall)
       do ivert = 1, wall%nvert
         write (1, *) wall%x(ivert, 1), ",", wall%x(ivert, 2), ",", wall%x(ivert, 3), ",", &
           wall%f(ivert, 1), ",", wall%f(ivert, 2), ",", wall%f(ivert, 3)
-      end do !i
-    end do !iwall
+      end do ! i
+    end do ! iwall
+    
     close (1)
-
-
 
   end subroutine GetTraction
 

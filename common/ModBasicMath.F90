@@ -193,7 +193,7 @@ contains
 
     real(WP) :: lhs(3, 3), rhs(3)
     real(WP) :: xi, xi2, xi3, xi4
-    integer :: i
+    integer :: i, ierr
 
     lhs = 0.
     rhs = 0.
@@ -219,7 +219,7 @@ contains
     lhs(3, 1) = lhs(1, 3)
     lhs(3, 2) = lhs(2, 3)
 
-    call LA_POSV(lhs, rhs)
+    call DPOSV('U', 3, 1, lhs, 3, rhs, 3, ierr)
 
     a0 = rhs(1)
     a1 = rhs(2)
