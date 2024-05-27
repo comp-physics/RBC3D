@@ -23,6 +23,12 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 ## Build libraries
 
+### MKL
+
+* For mkl, you can `module load mkl` on the Phoenix cluster.
+* This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
+* You can check this via `module show mkl`
+
 ### BLAS
 
 * Move back into packages: `cd RBC3D/packages`

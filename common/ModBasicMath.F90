@@ -2,7 +2,6 @@
 module ModBasicMath
 
   use ModDataTypes
-  use f95_lapack, only: LA_POSV
   use MPI
   use ModConf
 !  use mkl95_lapack, only : LA_POSV=>POSV
@@ -252,10 +251,10 @@ contains
     xCols = size(x, 2)
     fSize = size(f, 1)
 
-    if (rootWorld) then
-      counter = counter + 1
-      print *, "counter:", counter
-    end if
+    ! if (rootWorld) then
+    !   counter = counter + 1
+    !   print *, "counter:", counter
+    ! end if
 
     if (rootWorld .and. first) then
       print *, "counter", counter
@@ -269,9 +268,9 @@ contains
       first = .false.
     end if
 
-    if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-      print *, "QuadFit_2D before: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    end if
+    ! if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
+    !   print *, "QuadFit_2D before: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
+    ! end if
 
     ! Compute the upper half of lhs and rhs
     lhs = 0.
@@ -315,9 +314,9 @@ contains
     a12 = rhs(5)
     a22 = rhs(6)
 
-    if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-      print *, "QuadFit_2D after: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    end if
+    ! if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
+    !   print *, "QuadFit_2D after: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
+    ! end if
 
   end subroutine QuadFit_2D
 
