@@ -7,7 +7,7 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/logit.log"
+#SBATCH -o "./run_logs/converge.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -24,7 +24,7 @@ make clean
 make .depend
 make
 
-cd ../mycases/case_wbcs
+cd ../mycases/case_platelets
 make clean
 make .depend
 make

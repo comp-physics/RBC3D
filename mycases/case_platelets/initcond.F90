@@ -37,7 +37,7 @@ program InitCond
   allocate (rbcs(nrbcMax))
   ! allocate(walls(nwallMax))
 
-  tubeRad = 2.0
+  tubeRad = 4.0
 
   nrbc = 2
   nlat0 = 12
@@ -117,7 +117,7 @@ program InitCond
   ! print *, 'rbc iz:', iz, 'xc:', xc
   rbc => rbcs(2)
   rbc%celltype = 3
-  call Rbc_Create(rbc, nlat1, dealias + 2)
+  call Rbc_Create(rbc, nlat1, dealias)
   call Rbc_MakePlatelet(rbc, platRad, xc)
   
 

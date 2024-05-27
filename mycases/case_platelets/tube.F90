@@ -78,7 +78,7 @@ contains
     shearRate = 100
     plasmaVisc = 1.2D-3
     radEqv2 = 1.4
-    dealias = 5
+    dealias = 3
 
     call ReadRestart(restart_file)
 
@@ -104,7 +104,7 @@ contains
       call RBC_ComputeGeometry(rbcRef)
 
       rbcRef => rbcRefs(3)
-      call RBC_Create(rbcRef, nlat0/3, dealias)
+      call RBC_Create(rbcRef, nlat0/3)
       call RBC_MakePlatelet(rbcRef, radEqv3)
       call RBC_ComputeGeometry(rbcRef)
 
@@ -136,10 +136,10 @@ contains
         if (rootWorld) then
           print *, "case 2: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
         end if
-      case (3) ! Platelets
-        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 5.
-        ! rbc%ES   38.89 without scaling
-        rbc%ED = 200. / 10.
+      case (3) ! Platelets ! 5 10 10
+        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 2.
+        ! ! rbc%ES   38.89 without scaling
+        rbc%ED = 200. / 5.
         rbc%EB = (bendingMod / ((platExp * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)) / 10.
         ! rbc%EB   2.0576 without scaling
         if (rootWorld) then

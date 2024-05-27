@@ -15,7 +15,7 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/plat.log"
+#SBATCH -o "./run_logs/converge.log"
 
 cd $SLURM_SUBMIT_DIR
 
