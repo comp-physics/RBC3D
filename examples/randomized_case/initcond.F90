@@ -34,7 +34,7 @@ program randomized_cell_gen
   nodeNum = nodeNum + 1
 
   !calculate number of cells for the defined hematocrit, assuming all blood cells are healthy RBCs for volume
-  !hematocrit = 4 * nrbc / (tube_radius^2 * tube_length)
+  !hematocrit = 4 * nrbc / (3 * tube_radius^2 * tube_length)
   nrbcMax = ((3*(tubelen*tuber**2*hematocrit))/4)
 
   if (rootWorld) write (*, *) "Num RBCs in simulation is ", nrbcMax

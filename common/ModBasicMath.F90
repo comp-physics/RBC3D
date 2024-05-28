@@ -191,7 +191,6 @@ contains
     lhs = 0.
     rhs = 0.
     do i = 1, size(x)
-      print *, "i = ", i
       xi = x(i)
       xi2 = xi*xi
       xi3 = xi*xi2
@@ -206,13 +205,7 @@ contains
 
       lhs(3, 3) = lhs(3, 3) + xi4
 
-      print *, "lhs"
-      do j = 1, 3
-        print *, lhs(j, :)
-      end do
-
       rhs = rhs + (/1._WP, xi, xi2/)*f(i)
-      print *, "rhs = ", rhs
     end do ! i
 
     lhs(2, 1) = lhs(1, 2)
