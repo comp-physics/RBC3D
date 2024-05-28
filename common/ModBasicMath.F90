@@ -241,7 +241,6 @@ contains
     integer :: i, ii, jj
     integer :: ierr
 
-
     ! Compute the upper half of lhs and rhs
     lhs = 0.
     rhs = 0.
@@ -454,49 +453,5 @@ contains
     RandomNumber = am*ior(iand(IM, ieor(ix, iy)), 1_K4B)
 
   end function RandomNumber
-
-!**********************************************************************
-
-  !**********************************************************************
-!   subroutine My_VecGetValues(x, a)
-!     Vec x
-!     real(WP) :: a(:)
-
-!     integer, allocatable :: ix(:)
-!     integer :: n, i, ierr
-
-!     ! Allocate working arrays
-!     call VecGetSize(x, n, ierr)
-!     allocate (ix(n))
-!     ix = (/(i, i=0, n - 1)/)
-
-!     call VecGetValues(x, n, ix, a, ierr)
-
-!     ! Deallocate working arrays
-!     deallocate (ix)
-
-!   end subroutine My_VecGetValues
-
-! !**********************************************************************
-!   subroutine My_VecSetValues(x, a)
-!     Vec :: x
-!     real(WP) :: a(:)
-
-!     integer, allocatable :: ix(:)
-!     integer :: n, i, ierr
-
-!     ! Allocate working arrays
-!     call VecGetSize(x, n, ierr)
-!     allocate (ix(n))
-!     ix = (/(i, i=0, n - 1)/)
-
-!     call VecSetValues(x, n, ix, a, INSERT_VALUES, ierr)
-!     call VecAssemblyBegin(x, ierr)
-!     call VecAssemblyEnd(x, ierr)
-
-!     ! Deallocate working arrays
-!     deallocate (ix)
-
-!   end subroutine My_VecSetValues
 
 end module ModBasicMath

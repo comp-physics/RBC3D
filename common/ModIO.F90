@@ -93,7 +93,7 @@ contains
       if (cell_out > 0 .and. mod(lt, cell_out) == 0) then
         write (fn, FMT=fn_FMT) 'D/', 'x', lt, '.dat'
         call WriteManyRBCs(fn, nrbc, rbcs)
-        ! writing out xe files is unnecessary
+        ! writing out xe files is unnecessary unless using tecplot
         ! write (fn, FMT=fn_FMT) 'D/', 'xe', lt, '.dat'
         ! call WriteExactPts(fn, nrbc, rbcs)
 

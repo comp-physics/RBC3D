@@ -5,7 +5,6 @@ module ModSpline
   use ModBasicMath
   use ModFFT
   use ModPolarPatch
-  use ModConf
 
   implicit none
 
@@ -249,7 +248,7 @@ contains
 
       ! Find a quadartic interpolation of distance to xtar
       call QuadFit_2D(xyGq_L, dist2Gq, c0, c1, c2, c11, c12, c22)
-      
+
       call Min_Quad_2D(c0, c1, c2, c11, c12, c22, xyMin_L, dist2MinEst)
 
       thMin_L = sqrt(sum(xyMin_L**2))

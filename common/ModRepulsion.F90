@@ -168,9 +168,6 @@ contains
         ! Set distance threshhold
         epsDist = 2*sqrt(rbc%area)/rbc%nlat
         epsDistRef = rbc%patch%radius
-        ! if (rbc%celltype .eq. 3) then
-        !   print *, "epsDist", epsDist, "epsDistRef", epsDistRef
-        ! end if
 
         !  Find the shortest distance of xi to the same surface
         !

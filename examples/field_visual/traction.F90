@@ -46,7 +46,7 @@ contains
           wall%f(ivert, 1), ",", wall%f(ivert, 2), ",", wall%f(ivert, 3)
       end do ! i
     end do ! iwall
-    
+
     close (1)
 
   end subroutine GetTraction

@@ -55,7 +55,6 @@ contains
     cell%nlat0 = nlat0
     cell%nlon0 = 2*cell%nlat0
     if (present(dealias_fac)) then
-      ! what?
       if (dealias_fac .eq. 100) then
 
         cell%nlat = nlat0 + 2
@@ -323,7 +322,7 @@ contains
     if (rootWorld) then
       print *, "rplat", rplat
     end if
-    call RBC_MakeEllipsoid(cell, rplat, xc, 0.39685) !0.7)
+    call RBC_MakeEllipsoid(cell, rplat, xc, 0.7) !0.39685)
 
   end subroutine RBC_MakePlatelet
 

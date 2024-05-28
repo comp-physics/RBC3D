@@ -145,7 +145,6 @@ contains
 
   end subroutine ComputeParticleStress
 
-  ! i don't like this function declaration
   function DistFromWall(type) result(minDist)
     integer :: type
     real(WP) :: minDist, cellPoint(3), wallPoint(3), currDist, clockBgn, clockEnd
