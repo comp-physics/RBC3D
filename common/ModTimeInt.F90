@@ -61,10 +61,10 @@ contains
     if (nrbc > 0) then
       call RbcPolarPatch_Create(rbcPatch, rbcs(1))
 
-      !    call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
+      ! call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
       rbcRefs(1)%patch => rbcPatch
       rbcRefs(2)%patch => rbcPatch
-      rbcRefs(3)%patch => rbcPatch
+      ! rbcRefs(3)%patch => rbcPatch
 
       if (PhysEwald) then
       do irbc = 1, nrbc
@@ -132,19 +132,19 @@ contains
       ! Evolve RBC
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
-!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
+        ! call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
         rbc%x = rbc%x + Ts*rbc%v
-!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
+        ! rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
       end do ! irbc
 
       ! call FilterRbcs
       call ReboxRbcs
 
-!      print *,"MULTIVOL"
+      ! print *,"MULTIVOL"
 
       ! call AddR0Motion
 
-!      call LeukWallRepulsion
+      ! call LeukWallRepulsion
 
       call VolConstrainRbcs
       call InterCellRepulsion
@@ -161,13 +161,9 @@ contains
       call VolConstrainRbcs
       call InterCellRepulsion
       call FilterRbcs
-!!$
-!!$      call VolConstrainRbcs
-!!$      call InterCellRepulsion
-!!$      call FilterRbcs
 
       ! Adjust background velocity
-      !     call AdjustBkgVel
+      ! call AdjustBkgVel
 
       ! Update time
       time = time + Ts
