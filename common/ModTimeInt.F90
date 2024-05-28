@@ -112,9 +112,8 @@ contains
     integer :: irbc, iwall
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd, areaExp, minDist
+    real(WP) :: clockBgn, clockEnd
     integer :: ierr
-    real(WP) :: wbcCenterX, wbcCenterY, wbcCenterZ
 
     ! Time integration
     time = time0
@@ -184,7 +183,7 @@ contains
       ! Output results
       call WriteAll(lt, time)
       if (rootWorld) then
-        write (*, '(A, I9, A, F15.5, A, F12.2, A, F10.5, A, F10.5)') &
+        write (*, '(A, I9, A, F15.5, A, F12.2)') &
           'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
         write (*, *)
       end if

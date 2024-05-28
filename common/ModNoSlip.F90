@@ -233,7 +233,7 @@ contains
       u(i) = 1.
 
       if (rootWorld) print *, i, " of ", dof
-      
+
       call My_VecSetValues(vec_u, u)
       call MatMult(mat_t, vec_u, vec_b, ierr)
       call My_VecGetValues(vec_b, b)
