@@ -51,7 +51,7 @@ program InitCond
 
   do i = 1, wall%nvert
     th = ATAN2(wall%x(i, 1), wall%x(i, 2))
-    ! 10 is the tube diameter
+    ! 10 is the new tube diameter
     wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
     wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
     wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
@@ -72,7 +72,7 @@ program InitCond
   lengtube = Lb(3)
   lengspacing = lengtube/real(nrbc)
 
-  ! Reference cell (unnecessary)
+  ! reference cell (unnecessary)
   xc = 0.
   radEqv = 1.0
 

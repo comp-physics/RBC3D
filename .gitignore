@@ -12,7 +12,13 @@ libcommon.a
 field
 mypackages
 packages
-ogpackages
-*/*/run_logs
-fieldold
 traction
+*/*/run_logs
+/mycases
+/testcases
+sample_files/sample_walls/wall_meshes/squeeze2.e
+sample_files/sample_walls/wall_meshes/squeeze3.e
+sample_files/sample_walls/wall_meshes/constrict_L10.e
+sample_files/sample_walls/wall_meshes/cylwithslit.e
+sample_files/sample_walls/wall_meshes/cylwithslit2.e
+format.sh
