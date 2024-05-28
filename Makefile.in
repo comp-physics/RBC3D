@@ -4,7 +4,6 @@ WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/test-rbc/RBC3D
 # Package directories (shouldn't need to change these)
 PETSC_DIR = $(WORK_DIR)/packages/mypetsc
 include $(PETSC_DIR)/conf/variables
-# MKL_DIR = $(WORK_DIR)/packages/mkl
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
 
