@@ -152,7 +152,7 @@ contains
   subroutine Matrix_PseudoInvert(A, B)
     real(WP) :: A(:, :), B(:, :)
 
-    integer :: M, N, ierr, i
+    integer :: M, N, ierr
     real(WP), allocatable :: AtA(:, :)
 
     ! Allocate working arrays
@@ -186,7 +186,7 @@ contains
 
     real(WP) :: lhs(3, 3), rhs(3)
     real(WP) :: xi, xi2, xi3, xi4
-    integer :: i, ierr, j
+    integer :: i, ierr
 
     lhs = 0.
     rhs = 0.

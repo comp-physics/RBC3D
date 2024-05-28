@@ -125,12 +125,6 @@ contains
       ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
-      if (rootWorld .and. modulo(lt, 50) == 0) then
-        minDist = DistFromWall(2)
-        write (*, '(A, F10.5)') &
-          'distFromWall = ', minDist
-      end if
-
       ! Enforce no-slip condition on the wall
       ! print *,"NO NO SLIP"
       call NoSlipWall
