@@ -2,13 +2,8 @@
 module ModBasicMath
 
   use ModDataTypes
-  use MPI
-  use ModConf
-!  use mkl95_lapack, only : LA_POSV=>POSV
 
   implicit none
-
-! #include "../petsc_include.h"
 
   private
 
@@ -21,7 +16,6 @@ module ModBasicMath
             Matrix_PseudoInvert, &
             QuadFit_1D, &
             QuadFit_2D, &
-            QuadFit_2D2, &
             Min_Quad_2D, &
             MaskFunc_Exact, &
             MaskFunc, &
@@ -192,11 +186,12 @@ contains
 
     real(WP) :: lhs(3, 3), rhs(3)
     real(WP) :: xi, xi2, xi3, xi4
-    integer :: i, ierr
+    integer :: i, ierr, j
 
     lhs = 0.
     rhs = 0.
     do i = 1, size(x)
+      print *, "i = ", i
       xi = x(i)
       xi2 = xi*xi
       xi3 = xi*xi2
@@ -211,7 +206,13 @@ contains
 
       lhs(3, 3) = lhs(3, 3) + xi4
 
+      print *, "lhs"
+      do j = 1, 3
+        print *, lhs(j, :)
+      end do
+
       rhs = rhs + (/1._WP, xi, xi2/)*f(i)
+      print *, "rhs = ", rhs
     end do ! i
 
     lhs(2, 1) = lhs(1, 2)
@@ -232,45 +233,14 @@ contains
 !  x(i,:), f(i) -- coordinates and functional value of the i-th point
 ! Note:
 !   f(x) = a0 + a1*x + a2*y + a11*(x**2) + a12*(x*y) + a22*(y**2)
-  subroutine QuadFit_2D(x, f, a0, a1, a2, a11, a12, a22, timeit)
+  subroutine QuadFit_2D(x, f, a0, a1, a2, a11, a12, a22)
     real(WP) :: x(:, :), f(:), a0, a1, a2, a11, a12, a22
 
     real(WP) :: lhs(6, 6), rhs(6), u(6)
     real(WP) :: xi, yi
     integer :: i, ii, jj
     integer :: ierr
-    
-    logical, save :: first = .true., second = .true.
-    integer :: xRows, xCols, fSize, j
-    integer, save :: counter = 0
-    real(WP) :: clockBgn, clockEnd, timeit
-  
 
-    clockBgn = MPI_WTime()
-    xRows = size(x, 1)
-    xCols = size(x, 2)
-    fSize = size(f, 1)
-
-    ! if (rootWorld) then
-    !   counter = counter + 1
-    !   print *, "counter:", counter
-    ! end if
-
-    if (rootWorld .and. first) then
-      print *, "counter", counter
-      print *, "xRows", xRows, "xCols", xCols, "fSize", fSize
-      print *, "x: "
-      do j = 1, xRows
-        print *, x(j, :)
-      end do
-
-      print *, "f: ", f(:)
-      first = .false.
-    end if
-
-    ! if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-    !   print *, "QuadFit_2D before: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    ! end if
 
     ! Compute the upper half of lhs and rhs
     lhs = 0.
@@ -303,8 +273,6 @@ contains
       end do ! jj
     end do ! ii
 
-    ! call LA_POSV(lhs, rhs, INFO=ierr)
-    ! call DPOSV( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
     call DPOSV('U', 6, 1, lhs, 6, rhs, 6, ierr)
 
     a0 = rhs(1)
@@ -313,105 +281,8 @@ contains
     a11 = rhs(4)
     a12 = rhs(5)
     a22 = rhs(6)
-
-    ! if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-    !   print *, "QuadFit_2D after: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    ! end if
 
   end subroutine QuadFit_2D
-
-!**********************************************************************
-! 2D Quadratic fit
-! Arguments:
-!  x(i,:), f(i) -- coordinates and functional value of the i-th point
-! Note:
-!   f(x) = a0 + a1*x + a2*y + a11*(x**2) + a12*(x*y) + a22*(y**2)
-  subroutine QuadFit_2D2(x, f, a0, a1, a2, a11, a12, a22, timeit)
-    real(WP) :: x(:, :), f(:), a0, a1, a2, a11, a12, a22
-
-    real(WP) :: lhs(6, 6), rhs(6), u(6)
-    real(WP) :: xi, yi
-    integer :: i, ii, jj
-    integer :: ierr
-    
-    logical, save :: first = .true., second = .true.
-    integer :: xRows, xCols, fSize, j
-    integer, save :: counter = 0
-    real(WP) :: clockBgn, clockEnd, timeit
-  
-
-    clockBgn = MPI_WTime()
-    xRows = size(x, 1)
-    xCols = size(x, 2)
-    fSize = size(f, 1)
-
-    if (rootWorld) then
-      counter = counter + 1
-    end if
-
-    if (rootWorld .and. first) then
-      print *, "counter", counter
-      print *, "xRows", xRows, "xCols", xCols, "fSize", fSize
-      print *, "x: "
-      do j = 1, xRows
-        print *, x(j, :)
-      end do
-
-      print *, "f: ", f(:)
-      first = .false.
-    end if
-
-    if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-      print *, "QuadFit_2D2 before: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    end if
-
-    ! Compute the upper half of lhs and rhs
-    lhs = 0.
-    rhs = 0.
-
-    do i = 1, size(x, 1)
-      xi = x(i, 1)
-      yi = x(i, 2)
-
-      u(1) = 1.
-      u(2) = xi
-      u(3) = yi
-      u(4) = xi*xi
-      u(5) = xi*yi
-      u(6) = yi*yi
-
-      do ii = 1, 6
-        do jj = ii, 6
-          lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
-        end do ! jj
-      end do ! ii
-
-      rhs = rhs + u(:)*f(i)
-    end do ! i
-
-    ! Compute the lower half of the symmetric lhs
-    do ii = 2, 6
-      do jj = 1, ii - 1
-        lhs(ii, jj) = lhs(jj, ii)
-      end do ! jj
-    end do ! ii
-
-    ! call LA_POSV(lhs, rhs, INFO=ierr)
-    ! call DPOSV( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
-    call DPOSV('U', 6, 1, lhs, 6, rhs, 6, ierr)
-
-    a0 = rhs(1)
-    a1 = rhs(2)
-    a2 = rhs(3)
-    a11 = rhs(4)
-    a12 = rhs(5)
-    a22 = rhs(6)
-
-    if (rootWorld .and. modulo(counter, 10000) .eq. 0) then
-      print *, "QuadFit_2D2 after: ", "a0: ", a0, "a1: ", a1, "a2: ", a2, "a11: ", a11, "a12: ", a12, "a22: ", a22
-    end if
-
-  end subroutine QuadFit_2D2
 
 !**********************************************************************
 ! Find the minimum of a quadratic function

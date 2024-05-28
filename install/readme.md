@@ -25,13 +25,15 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 ### MKL
 
-* For mkl, you can `module load mkl` on the Phoenix cluster.
+* For mkl, you can `module load mkl` on the Phoenix cluster or whatever mkl module is available on your cluster.
 * This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
 * You can check this via `module show mkl`
+* Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl
 
 ### BLAS
 
-* Move back into packages: `cd RBC3D/packages`
+* Make a packages directory inside the RBC3D directory: `mkdir packages`
+* Move back into the packages: `cd packages`
 * Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
 * Unpack it: `tar -xvf blas-3.11.0.tgz`
 * `cd BLAS-3.11.0`
@@ -66,6 +68,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 * This depends on Valgrind, LAPACK, BLAS from above, don't attempt until those steps are finished
 * Move back to `RBC3D/packages`
+* Copy `petsc-lite-3.0.0-p3.tar.gz` from the libs directory into the packages directory: `cp ../libs/petsc-lite-3.0.0-p3.tar.gz ./`
 * Unpack `petsc-lite`: `tar -xvf petsc-lite-3.0.0-p3.tar.gz`
 * Set up your environment via the environment variables 
    * Get the absolute path of the unpacked petsc via

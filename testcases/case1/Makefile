@@ -1,6 +1,6 @@
 include ../../Makefile.in
 
-LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(LAPACK_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(MKL_LIB) $(STATIC)
+LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(LAPACK95_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(MKL_LIB) $(LAPACK_LIB) $(STATIC)
 EXECUTABLES = test test17 testl pinv qf1d
 
 all : $(EXECUTABLES)

@@ -17,9 +17,9 @@ program test
 
     implicit none
 
-    integer :: n_points = 5, i
-    real(WP) :: A(5, 2)
-    real(WP) :: b(5)
+    integer :: n_points = 4, i
+    real(WP) :: A(4, 2)
+    real(WP) :: b(4)
     real(WP) :: x0 = 0., x1 = 0., x2 = 0., x11 = 0., x12 = 0., x22 = 0., timeit
     real(WP) :: x, y
 
@@ -32,8 +32,8 @@ program test
 
     ! at each point x, y, b(x, y) = 1 + 2x + 3y + 4x^2 + 5xy + 6y^2
     do i = 1, n_points
-        A(i, 1) = real(i, WP) ! x
-        A(i, 2) = real(i, WP) ! y
+        A(i, 1) = real(i, WP) / 4. ! x
+        A(i, 2) = real(i, WP) / 4. ! y
         x = A(i, 1)
         y = A(i, 2)
         b(i) = .1 + .2*x + .3*y &
@@ -42,7 +42,7 @@ program test
 
     print *, "Matrix A: "
     do i = 1, n_points
-        print *, A(i, :)
+        print *, "(", A(i, 1), ",", A(i, 2), ",", b(i), ")"
     end do
 
     print *, "b: ", b
