@@ -145,6 +145,10 @@ contains
 
   end subroutine ComputeParticleStress
 
+!**********************************************************************
+! Compute distance between wall and closest point on cell to wall
+! Arguments:
+!  type -- celltype
   function DistFromWall(type) result(minDist)
     integer :: type
     real(WP) :: minDist, cellPoint(3), wallPoint(3), currDist
