@@ -25,10 +25,11 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 ### MKL
 
-* For mkl, you can `module load mkl` on the Phoenix cluster or whatever mkl module is available on your cluster.
+* For mkl, you can `module load mkl` on the Phoenix cluster or `module load intel-oneapi-mkl/2023.1.0` on the ICE cluster.
 * This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
-* You can check this via `module show mkl`
-* Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl
+* You can check environment variables via `module show mkl`
+* If your cluster does not have mkl, it's available for download and install [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html?operatingsystem=linux&distributions=offline).
+* Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl, but the [mkl link line advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.9hbhed) should provide the correct link options.
 
 ### BLAS
 
