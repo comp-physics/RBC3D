@@ -2,8 +2,6 @@
 module ModBasicMath
 
   use ModDataTypes
-  use f95_lapack, only: LA_POSV
-!  use mkl95_lapack, only : LA_POSV=>POSV
 
   implicit none
 
@@ -147,24 +145,29 @@ contains
   end function TriArea
 
 !**********************************************************************
-! Compute the psedo-inverse of a matrix
+! Compute the pseudo-inverse of a matrix
 ! Arguments:
 !  A -- original matrix
 !  B -- A^{-1}
   subroutine Matrix_PseudoInvert(A, B)
     real(WP) :: A(:, :), B(:, :)
 
-    integer :: M, N
+    integer :: M, N, ierr
     real(WP), allocatable :: AtA(:, :)
 
     ! Allocate working arrays
     M = size(A, 1)
     N = size(A, 2)
+
     allocate (AtA(N, N))
 
+    ! B = At
     B = transpose(A)
-    AtA = matmul(A, A)
-    call LA_POSV(AtA, B)
+    ! AtA is a positive definite NxN matrix
+    AtA = matmul(B, A)
+
+    ! Solve (AtA)X = B and store solution in B
+    call DPOSV('U', N, M, Ata, N, B, N, ierr)
 
     ! Deallocate working arrays
     deallocate (AtA)
@@ -183,7 +186,7 @@ contains
 
     real(WP) :: lhs(3, 3), rhs(3)
     real(WP) :: xi, xi2, xi3, xi4
-    integer :: i
+    integer :: i, ierr
 
     lhs = 0.
     rhs = 0.
@@ -209,7 +212,7 @@ contains
     lhs(3, 1) = lhs(1, 3)
     lhs(3, 2) = lhs(2, 3)
 
-    call LA_POSV(lhs, rhs)
+    call DPOSV('U', 3, 1, lhs, 3, rhs, 3, ierr)
 
     a0 = rhs(1)
     a1 = rhs(2)
@@ -247,9 +250,9 @@ contains
       u(6) = yi*yi
 
       do ii = 1, 6
-      do jj = ii, 6
-        lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
-      end do ! jj
+        do jj = ii, 6
+          lhs(ii, jj) = lhs(ii, jj) + u(ii)*u(jj)
+        end do ! jj
       end do ! ii
 
       rhs = rhs + u(:)*f(i)
@@ -257,12 +260,12 @@ contains
 
     ! Compute the lower half of the symmetric lhs
     do ii = 2, 6
-    do jj = 1, ii - 1
-      lhs(ii, jj) = lhs(jj, ii)
-    end do ! jj
+      do jj = 1, ii - 1
+        lhs(ii, jj) = lhs(jj, ii)
+      end do ! jj
     end do ! ii
 
-    call LA_POSV(lhs, rhs, INFO=ierr)
+    call DPOSV('U', 6, 1, lhs, 6, rhs, 6, ierr)
 
     a0 = rhs(1)
     a1 = rhs(2)
@@ -276,7 +279,7 @@ contains
 !**********************************************************************
 ! Find the minimum of a quadratic function
 ! Arguments:
-!  a0 to a22 -- coefficients of the qudratic function
+!  a0 to a22 -- coefficients of the quadratic function
 !  xmin -- coordinate of the minimum point
 !  fmin -- minimum function value
 !

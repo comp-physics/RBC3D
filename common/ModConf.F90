@@ -47,7 +47,7 @@ module ModConf
   real(WP), allocatable, dimension(:)  :: refRad  ! reference radius
 
   ! ForceCoef -- coefficient for intracell force
-  ! epsDis -- intercell repulsion factor (not for intracell, yet!)
+  ! epsDist -- intercell repulsion factor (not for intracell, yet!)
   ! viscRatThresh -- less than this to apply intercell repulsion
   ! rigidsep -- true for whole cell motion if viscRat > viscRatThres
   real(WP) :: ForceCoef

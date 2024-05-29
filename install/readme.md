@@ -3,7 +3,7 @@
 0. Use an appropriate computer
 1. Ensure you have compilers and wrappers
 2. Build libraries
-3. Configure the `Makefile.inc` in the base directory
+3. Configure the `Makefile.in` in the base directory
 4. Build `common/` and `examples/case/`
 
 ## Use an appropriate computer
@@ -25,41 +25,17 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 ### MKL
 
-* We need an old MKL, in this case `l_mkl_p_10.0.1.014/`
-* Fetch it: 
-   * `cd packages/`
-   * `wget -O l_mkl_p_10.0.1.014.tgz https://www.dropbox.com/scl/fi/9wifonc4mst54n7h05fnq/l_mkl_p_10.0.1.014.tgz?rlkey=jr0bay0wfodzgzb14cfajqcpg&dl=0`
-   * `tar -xvf l_mkl_p_10.0.1.014.tgz`
-* Proceed with a user installation
-    * `mkdir RBC3D/packages/mkl` 
-    * `cd l_mkl_p_10.0.1.014`
-    * `./install.sh`
-    * `3. Install as current user.`
-    * `1. Install`
-    * `2. Provide the absolute path for an existing license file.`
-    * `Please type a selection or License file name or port@hostname: /storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mkl-licenses/l_GVJ78MLJ.lic`
-      * Via another terminal window, move into the `RBC3D/packages/mkl-licenses/` directory and issue `pwd`
-      * Use the location + `l_GVJ78MLJ.lic` for the file name
-    * `2. Install the software without using RPM database (root password not required).`
-    * `Enter`
-    * `Enter`
-    * `d`, `d`, `d`, `d`, type `accept` and return
-    * `Where do you want to install to?`: 
-      * Via another terminal move into the `RBC3D/packages/mkl/` directory and issue `pwd`
-      * Use this location for the prompt 
-      * Accept warnings about overwriting the existing directory
-    * `Enter to continue`
-    * `Enter to continue`
-    * Done
-* Build the MKL LAPACK95 by
-    * Move into the MKL LAPACK95 directory: `cd RBC3D/packages/mkl/interfaces/lapack95` 
-    * Modify the `makefile` to `FC = gfortran` on lines 47 and 50.
-    * Execute `make libem64t`
-    * Execute `make lib64`
+* For mkl, you can `module load mkl` on the Phoenix cluster or `module load intel-oneapi-mkl/2023.1.0` on the ICE cluster.
+* This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
+* You can check environment variables via `module show mkl`
+* If your cluster does not have mkl, it's available for download and install [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html?operatingsystem=linux&distributions=offline).
+* For a manual mkl install, we recommend installing inside a packages directory. Creating an `MKL_ROOT` variable in `Makefile.in` may be necessary too. It should be set to the path of the `/mkl` directory.
+* Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl, but the [mkl link line advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.9hbhed) should provide the correct link options.
 
 ### BLAS
 
-* Move back into packages: `cd RBC3D/packages`
+* Make a packages directory inside the RBC3D directory: `mkdir packages`
+* Move back into the packages: `cd packages`
 * Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
 * Unpack it: `tar -xvf blas-3.11.0.tgz`
 * `cd BLAS-3.11.0`
@@ -94,6 +70,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 
 * This depends on Valgrind, LAPACK, BLAS from above, don't attempt until those steps are finished
 * Move back to `RBC3D/packages`
+* Copy `petsc-lite-3.0.0-p3.tar.gz` from the libs directory into the packages directory: `cp ../libs/petsc-lite-3.0.0-p3.tar.gz ./`
 * Unpack `petsc-lite`: `tar -xvf petsc-lite-3.0.0-p3.tar.gz`
 * Set up your environment via the environment variables 
    * Get the absolute path of the unpacked petsc via
@@ -116,32 +93,14 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * PACE Phoenix has this available as a module: `module load fftw`
 * `module show fftw` tells you where the library is.
 * At time of writing, the FFTW library files live at `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib`
-    * You will need this directory for the `Makefile.inc`
-
-### LAPACK95
-
-* Navigate back to `RBC3D/packages`
-* Fetch lapack95: `wget https://netlib.org/lapack95/lapack95.tgz`
-* Expand it: `tar -xvf lapack95.tgz`
-* cd `LAPACK95`
-* Modify `make.inc`:
-    * Change line 23 of `make.inc` to point to the full path of your `lapack-3.11` build:
-        * `LAPACK_PATH = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/lapack-3.11`
-    * Also change 
-      * Line 6 to: `FC = gfortran -ffree-form` 
-      * Line 7 to: `FC1 = gfortran -ffixed-form` 
-      * Line 16 to `OPTS0 = -O3 `
-* `cd SRC`
-* Execute `make single_double_complex_dcomplex`
-* `cd ..` (back to `RBC3D/packages/LAPACK95`)
-* Execute `mv lapack95.a liblapack95.a`
+    * You will need this directory for the `Makefile.in`
 
 ### NETCDF
 
 * Need to get to netcdff (netcdf-fortran)
 * PACE Phoenix has this pre-installed
 * `module load netcdf-c netcdf-cxx netcdf-fortran`
-* Later you will need information about where `netcdf-fortran` is installed for `Makefile.inc`. 
+* Later you will need information about where `netcdf-fortran` is installed for `Makefile.in`. 
 * Get this via `module show netcdf-fortran` and looking at the `NETCDF_FORTRANROOT`
 * In my case, this is `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/`
 
@@ -167,10 +126,10 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * Install: `make install` 
 * This will build the `makedepf90` binary in your `RBC3D/packages/makedepf90` directory
 
-## Configure Makefile.inc
+## Configure Makefile.in
 
-You need to change the `Makefile.inc` to locate all of these libraries!
-This mostly just means changing the first line of `Makefile.inc`:
+You need to change the `Makefile.in` to locate all of these libraries!
+This mostly just means changing the first line of `Makefile.in`:
 ```
 WORK_DIR = /storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D
 ```
@@ -181,7 +140,7 @@ FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fft
 NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
 ```
 
-* If you have an older version of `gfortran` then you will need to remove the `-fallow-argument-mismatch` flag on line 38 of `Makefile.in`
+* If you have an older version of `gfortran` then you will need to remove the `-fallow-argument-mismatch` flag on line 39 of `Makefile.in`
 
 ## Build
 
@@ -204,13 +163,13 @@ This is an example case.
 ## Run
 
 In `case/` you should be able to
-* `mpiexec -n 2 ./initcond`
-* `mpiexec -n 2 ./tube`
+* `mpiexec -n 1 ./initcond`
+* `mpiexec ./tube`
 or substitute in your mpi runner like `srun`.
 
-Note that on Phoenix, `srun` only works if you [salloc](https://docs.pace.gatech.edu/phoenix_cluster/slurm_guide_phnx/) a new node.
+Note that on Phoenix, `srun` only works if you [salloc](https://gatech.service-now.com/home?id=kb_article_view&sysparm_article=KB0041998) a new node. Also, not specifying a node count via the `-n` flag will use all the cores on the machine which is necessary for a simulation with high cell counts or the parallel `./initcond` file in `examples/randomized_case`.
 
 ## Data and visualization
 
-After running `srun -n 2 ./tube` or the equivalent, you should see `x000*.dat`, `xe000*.dat`, `wall000*.dat`, and restart files.
+After running `srun ./tube` or the equivalent, you should see `x000*.dat`, `wall000*.dat`, and restart files.
 You can load the `.dat` files into Paraview to visualize them.

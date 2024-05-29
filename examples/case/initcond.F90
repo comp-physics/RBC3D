@@ -19,9 +19,9 @@ program InitCond
   type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
-  real(WP) :: theta, th, rc, xc(3)
+  real(WP) :: th, xc(3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
-  integer :: iz, i, p, l, dealias
+  integer :: iz, i, dealias
   integer, parameter :: ranseed = 161269
   character(CHRLEN) :: fn
   real :: lengtube, lengspacing, phi, actlen
@@ -36,13 +36,8 @@ program InitCond
   nwall = 1
   wall => walls(1)
 
-  if (10 .ge. 12) then
-    call ReadMyWallMesh('Input/cylinder_D_8.01_L_13.39.dat', wall)
-    actlen = 13.3921
-  else
-    call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
-    actlen = 13.33
-  end if
+  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
+  actlen = 13.33
 
   nrbc = 8
   nlat0 = 12
@@ -56,6 +51,7 @@ program InitCond
 
   do i = 1, wall%nvert
     th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+    ! 10 is the new tube diameter
     wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
     wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
     wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
@@ -76,18 +72,19 @@ program InitCond
   lengtube = Lb(3)
   lengspacing = lengtube/real(nrbc)
 
-  ! Reference cell
+  ! reference cell (unnecessary)
   xc = 0.
   radEqv = 1.0
 
   call Rbc_Create(rbcRef, nlat0, dealias)
   call Rbc_MakeBiconcave(rbcRef, radEqv, xc)
 
+  ! dimensions of starting rbc
   do ii = 1, 3
     szCell(ii) = maxval(rbcRef%x(:, :, ii)) - minval(rbcRef%x(:, :, ii))
   end do
 
-  ! place cells
+  ! place 8 rbcs in a line along z-axis
   do iz = 1, nrbc
     xc(1:2) = 0.
     xc(3) = lengspacing*(iz - 0.5)

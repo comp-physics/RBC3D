@@ -1,16 +1,7 @@
-# RBC Example Case
+# Case Input Parameters
 
-If you visualize the cells in the `case` directory, you will see 8 RBC's in a file because of how `initoncd.F90` sets up the simulation.
+`case/Input/tube.in` has several input parameters that can be used to set up and control a simulation. `nCellTypes` is the number of different cells a case will support. `refRad` and `viscRat` can be set for each cell type but aren't used in the simulation. `refRad` is the equivalent spherical radius of a cell and has to be set in `initcond.F90` and `tube.F90` for RBC creation functions.
 
-<p align="center">
-  <img src="../install/images/8cells.png" alt="cell train" width="500"/>
-</p>
+`Nt` is the total number of timesteps the simulation will run for. `Ts` is the time step size and may need to be adjusted depending on the simulation. `cell_out` controls how many timesteps are in between when cell coordinates get written to output `dat` files. 
 
-## Case Different Cell Types
-As of now, the different cell types we have are Leukocytes (aka WBC's) and sickle cells. We also have functions to create spheres and ellipsoids in `ModRbc.F90`.
-
-In this example, celltype 1 corresponds to RBC's, celltype 2 corresponds to Leukocytes, and cell type 3 are sickle cells. To run a simulation with these cells, the timestep in `/case_diff_celltypes/Input/tube.in` may need to be adjusted.
-
-<p align="center">
-  <img src="../install/images/sicklecells.png" alt="sickle cell train" width="500"/>
-</p>
+`D/restart.LATEST.dat` is part of the restart procedure. The timesteps in between when `restart.LATEST.dat` gets generated is specified by `restart_out`. It contains the values of simulation variable at the latest timestep and can be used by `tube.F90` to continue a simulation from that timestep. The other input parameters are used by `common` functions and subroutines to control their behavior.

@@ -61,10 +61,10 @@ contains
     if (nrbc > 0) then
       call RbcPolarPatch_Create(rbcPatch, rbcs(1))
 
-      !    call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
+      ! call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
       rbcRefs(1)%patch => rbcPatch
       rbcRefs(2)%patch => rbcPatch
-      !     rbcRefs(3)%patch => rbcPatch
+      ! rbcRefs(3)%patch => rbcPatch
 
       if (PhysEwald) then
       do irbc = 1, nrbc
@@ -101,6 +101,85 @@ contains
     if (FourierEwald) call PME_Finalize
 
   end subroutine TimeInt_Finalize
+
+!**********************************************************************
+! Time integrate using
+! Note:
+!  Time steps from Nt0+1 to Nt
+  subroutine TimeInt_Euler
+
+    integer :: lt
+    integer :: irbc, iwall
+    type(t_rbc), pointer :: rbc
+    type(t_wall), pointer :: wall
+    real(WP) :: clockBgn, clockEnd
+    integer :: ierr
+
+    ! Time integration
+    time = time0
+
+    do lt = Nt0 + 1, Nt
+      clockBgn = MPI_WTime() ! Start timing
+
+      ! Evolve cells
+      ! print *,"NO VEL"
+      call Compute_Rbc_Vel
+
+      ! Enforce no-slip condition on the wall
+      ! print *,"NO NO SLIP"
+      call NoSlipWall
+
+      ! Evolve RBC
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        ! call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
+        rbc%x = rbc%x + Ts*rbc%v
+        ! rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
+      end do ! irbc
+
+      ! call FilterRbcs
+      call ReboxRbcs
+
+      ! print *,"MULTIVOL"
+
+      ! call AddR0Motion
+
+      ! call LeukWallRepulsion
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      call VolConstrainRbcs
+      call InterCellRepulsion
+      call FilterRbcs
+
+      ! Adjust background velocity
+      ! call AdjustBkgVel
+
+      ! Update time
+      time = time + Ts
+
+      clockEnd = MPI_WTime()
+
+      ! Output results
+      call WriteAll(lt, time)
+      if (rootWorld) then
+        write (*, '(A, I9, A, F15.5, A, F12.2)') &
+          'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
+        write (*, *)
+      end if
+    end do ! lt
+
+  end subroutine TimeInt_Euler
 
 !***********************************************************************
 ! Time Integrate using generic Runge-Kutta 2nd Order method
@@ -264,89 +343,6 @@ contains
     end do
     deallocate (v_1)
   end subroutine TimeInt_AB2
-
-!**********************************************************************
-! Time integrate using
-! Note:
-!  Time steps from Nt0+1 to Nt
-  subroutine TimeInt_Euler
-
-    integer :: lt
-    integer :: irbc, iwall
-    type(t_rbc), pointer :: rbc
-    type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd, areaExp
-    integer :: ierr
-
-    ! Time integration
-    time = time0
-
-    do lt = Nt0 + 1, Nt
-      clockBgn = MPI_WTime() ! Start timeing
-
-      ! Evolve cells
-!      print *,"NO VEL"
-      call Compute_Rbc_Vel
-
-      ! Enforce no-slip condition on the wall
-!      print *,"NO NO SLIP"
-      call NoSlipWall
-
-      ! Evolve RBC
-      do irbc = 1, nrbc
-        rbc => rbcs(irbc)
-!       call RBC_ComputeGeometry(rbc);  print *,"UNNEEDED GEOMETRY"
-        rbc%x = rbc%x + Ts*rbc%v
-!       rbc%x = rbc%x + Ts*rbc%g  ! old "NOTATION" --- pre-rigid-cell
-      end do ! irbc
-
-!      call FilterRbcs
-      call ReboxRbcs
-
-!      print *,"MULTIVOL"
-
-!      call AddR0Motion
-
-!      call LeukWallRepulsion
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-
-      call VolConstrainRbcs
-      call InterCellRepulsion
-      call FilterRbcs
-!!$
-!!$      call VolConstrainRbcs
-!!$      call InterCellRepulsion
-!!$      call FilterRbcs
-
-      ! Adjust background velocity
-      !     call AdjustBkgVel
-
-      ! Update time
-      time = time + Ts
-
-      clockEnd = MPI_WTime()
-
-      ! Output results
-      call WriteAll(lt, time)
-      if (rootWorld) then
-        write (*, '(A,I9,A,F15.5,A,F12.2)') &
-          'lt = ', lt, '  T = ', time, ' time cost = ', clockEnd - clockBgn
-        write (*, *)
-      end if
-    end do ! lt
-
-  end subroutine TimeInt_Euler
 
   subroutine TimeInt_AxiSymm
 
@@ -674,14 +670,14 @@ contains
     clockBgn = MPI_WTime() ! Start timeing
 
     ! Evolve cells
-!      print *,"NO VEL"
+    ! print *,"NO VEL"
 
-     !!testing for convergence here...
+    !!testing for convergence here...
     do i = 1, 3
       call Compute_Rbc_Vel
 
       ! Enforce no-slip condition on the wall
-!      print *,"NO NO SLIP"
+      ! print *,"NO NO SLIP"
       call NoSlipWall
 
       call WriteAll(lt, time)
@@ -942,7 +938,7 @@ contains
   end subroutine FilterRbcs
 
 !**********************************************************************
-! contrain volume of leukocytes
+! constrain volume of leukocytes
   subroutine VolConstrainRbcs
 
     integer :: irbc, ii, ilat, ilon
