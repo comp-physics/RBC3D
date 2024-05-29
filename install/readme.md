@@ -171,5 +171,5 @@ Note that on Phoenix, `srun` only works if you [salloc](https://gatech.service-n
 
 ## Data and visualization
 
-After running `srun ./tube` or the equivalent, you should see `x000*.dat`, `xe000*.dat`, `wall000*.dat`, and restart files.
+After running `srun ./tube` or the equivalent, you should see `x000*.dat`, `wall000*.dat`, and restart files.
 You can load the `.dat` files into Paraview to visualize them.
