@@ -1,0 +1,208 @@
+---------------------------------------
+Begin Slurm Prolog: May-05-2024 22:00:07
+Job ID:    5908580
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+rm -f *.o *.mod *.a core*
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataTypes.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModFFT.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataStruct.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModConf.F90
+ModConf.F90:579:24:
+
+  565 |     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
+      |                        2
+......
+  579 |     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
+      |                        1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).
+ModConf.F90:403:21:
+
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+......
+  403 |       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
+      |                     1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModConf.F90:290:19:
+
+  290 |     call MPI_Bcast(viscRat, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:291:19:
+
+  291 |     call MPI_Bcast(refRad, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:296:19:
+
+  296 |     call MPI_Bcast(pgradTar, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:314:19:
+
+  314 |     call MPI_Bcast(fmags, 4, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:136:22:
+
+  135 |         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
+      |                      2
+  136 |         call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+      |                      1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+ModConf.F90:141:20:
+
+  140 |       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    2
+  141 |       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModQuadRule.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModBasicMath.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolarPatch.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSpline.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModEwaldFunc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbcSingInt.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModHashTable.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTargetList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSourceList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModData.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnWalls.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRepulsion.F90
+ModRepulsion.F90:453:27:
+
+  451 |         call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           2
+  452 |         if (distMin .ne. distMin_Glb) dx = HUGE(dx)
+  453 |         call MPI_AllReduce(dx, dx, 3, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModRepulsion.F90:337:23:
+
+  337 |     call MPI_AllReduce(cntDx, cntDx_Glb, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr)
+      |                       1
+......
+  451 |         call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           2
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnRbcs.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPFFTW.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPME.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPostProcess.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSphpk.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModWall.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolyRoots.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIO.F90
+ModIO.F90:48:30:
+
+   48 |         write (fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:53:30:
+
+   53 |         write (fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:58:30:
+
+   58 |         write (fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:1041:19:
+
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1041 |     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModIO.F90:1042:19:
+
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1042 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:962:19:
+
+  962 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:832:19:
+
+  832 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:862:21:
+
+  862 |       call MPI_Bcast(starting_area, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                     1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2  
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModVelSolver.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModNoSlip.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTimeInt.F90
+ar ru libcommon.a ModFFT.o ModConf.o ModRbcSingInt.o ModRepulsion.o ModTargetList.o ModBasicMath.o ModIntOnRbcs.o ModPolarPatch.o ModIO.o ModVelSolver.o ModDataTypes.o ModIntOnWalls.o ModRbc.o ModNoSlip.o ModDataStruct.o ModEwaldFunc.o ModSphpk.o ModPolyRoots.o ModPME.o ModPostProcess.o ModHashTable.o ModData.o ModSourceList.o ModTimeInt.o ModSpline.o ModQuadRule.o ModWall.o ModPFFTW.o
+ar: creating libcommon.a
+ranlib libcommon.a
+rm -f initcond tube *.o *.mod *.a core
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c initcond.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/randomcase2'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/randomcase2'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o initcond initcond.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c tube.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/randomcase2'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/randomcase2'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o tube tube.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+---------------------------------------
+Begin Slurm Epilog: May-05-2024 22:00:36
+Job ID:        5908580
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run.sh
+Resources:     cpu=96,mem=192G,node=4
+Rsrc Used:     cput=00:44:48,vmem=5824K,walltime=00:00:28,mem=0,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-015-34-[1-2],atl1-1-02-015-36-[1-2]
+---------------------------------------

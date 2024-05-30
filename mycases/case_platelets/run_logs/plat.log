@@ -1,0 +1,1902 @@
+---------------------------------------
+Begin Slurm Prolog: May-20-2024 09:09:21
+Job ID:    133857
+User ID:   smanasreh6
+Account:   gts-sbryngelson3
+Job name:  run2.sh
+Partition: cpu-small
+QOS:       embers
+---------------------------------------
+rm -f *.o *.mod *.a core*
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataTypes.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModFFT.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModDataStruct.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModConf.F90
+ModConf.F90:579:24:
+
+  565 |     call MPI_AllGatherV(ia, sendcount, MPI_INTEGER, &
+      |                        2
+......
+  579 |     call MPI_AllGatherV(aSend, sendcount, MPI_WP, &
+      |                        1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (REAL(8)/INTEGER(4)).
+ModConf.F90:403:21:
+
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+......
+  403 |       call MPI_Bcast(Nb_Ewd, 3, MPI_Integer, 0, MPI_Comm_Ewald, ierr)
+      |                     1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModConf.F90:290:19:
+
+  290 |     call MPI_Bcast(viscRat, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:291:19:
+
+  291 |     call MPI_Bcast(refRad, nCellTypes, MPI_WP, 0, MPI_COMM_WORLD, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:296:19:
+
+  296 |     call MPI_Bcast(pgradTar, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:314:19:
+
+  314 |     call MPI_Bcast(fmags, 4, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+  384 |       call MPI_Bcast(rc_Ewd, 1, MPI_WP, 0, MPI_Comm_Ewald, ierr)
+      |                     2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModConf.F90:136:22:
+
+  135 |         call MPI_Recv(lenname, 1, MPI_Integer, i, 1, MPI_Comm_World, stat, ierr)
+      |                      2
+  136 |         call MPI_Recv(machinename, lenname, MPI_Character, i, 1, MPI_Comm_World, stat, ierr)
+      |                      1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+ModConf.F90:141:20:
+
+  140 |       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    2
+  141 |       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, stat, ierr)
+      |                    1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (CHARACTER(127)/INTEGER(4)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModQuadRule.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModBasicMath.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolarPatch.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSpline.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModEwaldFunc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbcSingInt.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModHashTable.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTargetList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSourceList.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModData.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnWalls.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRepulsion.F90
+ModRepulsion.F90:456:27:
+
+  454 |         call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           2
+  455 |         if (distMin .ne. distMin_Glb) dx = HUGE(dx)
+  456 |         call MPI_AllReduce(dx, dx, 3, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+ModRepulsion.F90:340:23:
+
+  340 |     call MPI_AllReduce(cntDx, cntDx_Glb, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr)
+      |                       1
+......
+  454 |         call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
+      |                           2
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIntOnRbcs.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPFFTW.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPME.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPostProcess.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModSphpk.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModWall.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModPolyRoots.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModRbc.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModIO.F90
+ModIO.F90:48:30:
+
+   48 |         write (fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:53:30:
+
+   53 |         write (fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:58:30:
+
+   58 |         write (fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+      |                              1
+Warning: Legacy Extension: Comma before i/o item list at (1)
+ModIO.F90:1041:19:
+
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1041 |     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Type mismatch between actual argument at (1) and actual argument at (2) (INTEGER(4)/REAL(8)).
+ModIO.F90:1042:19:
+
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+......
+ 1042 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:962:19:
+
+  962 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:832:19:
+
+  832 |     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+ModIO.F90:862:21:
+
+  862 |       call MPI_Bcast(starting_area, 1, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                     1
+......
+ 1038 |     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
+      |                   2  
+Warning: Rank mismatch between actual argument at (1) and actual argument at (2) (rank-1 and scalar)
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModVelSolver.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModNoSlip.F90
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c ModTimeInt.F90
+ar ru libcommon.a ModFFT.o ModConf.o ModRbcSingInt.o ModRepulsion.o ModTargetList.o ModBasicMath.o ModIntOnRbcs.o ModPolarPatch.o ModIO.o ModVelSolver.o ModDataTypes.o ModIntOnWalls.o ModRbc.o ModNoSlip.o ModDataStruct.o ModEwaldFunc.o ModSphpk.o ModPolyRoots.o ModPME.o ModPostProcess.o ModHashTable.o ModData.o ModSourceList.o ModTimeInt.o ModSpline.o ModQuadRule.o ModWall.o ModPFFTW.o
+ar: creating libcommon.a
+ranlib libcommon.a
+rm -f tube initcond field fieldold *.o *.mod *.a core
+make: `.depend' is up to date.
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c tube.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o tube tube.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c initcond.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o initcond initcond.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c field.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o field field.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -I/storage/home/hcoda1/4/smanasreh6/RBC3D/common -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/interfaces/lapack95/obj -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95/lapack95_modules -I/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/include -I/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/include -c fieldold.F90
+make lib
+make[1]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+make -C /storage/home/hcoda1/4/smanasreh6/RBC3D/common
+make[2]: Entering directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/common'
+make[1]: Leaving directory `/storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets'
+mpif90 -fallow-argument-mismatch -freal-4-real-8  -O3  -Wl,--copy-dt-needed-entries -o fieldold fieldold.o /storage/home/hcoda1/4/smanasreh6/RBC3D/common/libcommon.a -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/spherepack3.2/lib -lspherepack -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib -lfftw3 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/LAPACK95 -llapack95 -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib -lpetscksp -lpetscdm -lpetscmat -lpetscvec -lpetsc  -L/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/lib -lnetcdff -L/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -Wl,-rpath,/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mkl/lib/em64t -lmkl_lapack -lmkl -lguide -lpthread 
+ Node            0  of            1  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Number of nodes for physical Ewald sum =            1
+ Number of nodes for Fourier Ewald sum =            1
+
+ Lb   4.4999613122602415        4.4999613122602415        5.0000000000000000     
+ lengtube 2   5.0000000000000000     
+ lengspacing 2 -0.37352245862884181     
+ platRad  0.29999999999999999     
+ rplat  0.31914893617021273     
+ szCell   1.0122970867530034        1.0122970867530034       0.25275894832136769     
+ rplat  0.31914893617021273     
+ Zc   1.0000000000000000     
+ Zc   4.0000000000000009     
+ iwall           1
+ xmax2:    4.2499613122602415     
+ ymax2:    4.2499765554027968     
+Periodic domain size =      4.500     4.500     5.000
+Cell file: D/3x000000000.dat
+Binary restart file: D/restart.LATEST.dat
+Wall file: D/wall000000000.dat
+Binary restart file: D/restart000000000.dat
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO
+ Node            0  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            1  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            2  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            3  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            4  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            5  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            6  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            7  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            8  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node            9  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           10  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           11  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           12  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           13  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           14  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           15  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           16  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           17  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           18  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           19  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           20  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           21  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           22  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Node           23  of           24  running on atl1-1-02-012-34-1.pace.gatech.edu
+ Number of nodes for physical Ewald sum =           24
+ Number of nodes for Fourier Ewald sum =           24
+
+ alpha_Ewd =   0.44000000000000000     
+ eps_Ewd =    1.0000000000000000E-003
+ PBspln_Ewd =            8
+ nCellTypes =            3
+ viscRat =    1.0000000000000000        1.0000000000000000        1.0000000000000000     
+ refRad =    1.0000000000000000        1.0000000000000000       0.29999999999999999     
+ Deflate =  F
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ pGradTar =    0.0000000000000000     
+ Nt =        10000
+ Ts =    2.0000000000000001E-004
+ cell_out =           10
+ wall_out =       -10000
+ pgrad_out =          -10
+ flow_out =          -10
+ flow_out =           -1
+ restart_out =          100
+ restart file = D/restart.LATEST.dat
+ epsDist =    2.0000000000000000E-002
+ ForceCoef =    10.000000000000000     
+ viscRatThresh =    10.000000000000000     
+ rigidsep =  F
+ fmags =    0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ Read restart file D/restart.LATEST.dat
+ error 0
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ 1
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ 1
+ 1
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+           1   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           2   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+           3   2.0000000000000000        0.0000000000000000        1.0000000000000000     
+ 1
+ error 1
+ error 2
+ z
+ a
+ b
+ 0
+ Lb =    4.4999613122602415        4.4999613122602415        5.0000000000000000     
+ Nt0 =            0
+ time0 =    0.0000000000000000     
+ vBkg =    0.0000000000000000        0.0000000000000000        8.0000000000000000     
+ 1
+ 2
+ nrbc =            2
+ 3
+ 2
+ 3
+ 2
+ 2
+ 3
+ 2
+ 2
+ 3
+ 2
+ 2
+ 3
+ 2
+ 3
+ irbc :            1  nlat0 =           12 type =            1 starting_area =    9.5906205009126083E-317
+ nlat =          36
+ 2
+ 2
+ 3
+ 2
+ 3
+ 2
+ 3
+ 3
+ 2
+ 3
+ 2
+ 3
+ 3
+ 2
+ 3
+ 2
+ 3
+ 2
+ 3
+ 2
+ 3
+ 3
+ 2
+ 3
+ 2
+ 3
+ 2
+ 3
+ 2
+ 3
+ 3
+ 2
+ 3
+ irbc :            2  nlat0 =            4 type =            3 starting_area =    9.5933319331769851E-317
+ nlat =          20
+ 4
+ nwall =            1
+ iwall :            1  nvert =         1328  nele =         2404
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+ 4
+
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ nlat0 tube          12
+ rplat  0.31914893617021273     
+ case 1: rbc%EB   6.6887341383358667E-002 rbc%ED   200.00000000000000      rbc%ES   12.411347517730496     
+ case 3: rbc%EB  0.20576131687242816      rbc%ED   20.000000000000000      rbc%ES   7.7777777777777803     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Derived Ewald sum parameters:
+rc =         1.19861
+Nc =     3    3    4
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+   0.0000000000000000        0.0000000000000000        8.0000000000000000     
+Nb =    22   22  192
+NbC =    12   22  192
+
+ rbcRefs(3)%vol 1  0.13616604163965607     
+ rbcRefs(1)%vol 2   4.1890475904762496     
+ rbcRefs(3)%vol 2  0.13616604163965607     
+ rbcRefs(3)%celltype         672
+ rbcRefs(1)%celltype           0
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+ ***Initializing the quadrature rule in PSIOW***
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ Just calculated dof, it is          480
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ SETTING HIGH MAX ITER/ERR
+ Set up GMRES solver
+ SETTING HIGH MAX ITER/ERR
+cells: vmax =     8.10E+00
+cells: vxmax vxmin =     6.76E-02   -6.19E-02
+cells: vymax vymin =     6.71E-02   -6.05E-02
+cells: vzmax vzmin =     8.10E+00    7.91E+00
+ cell #           1 : starting_area:    16.844790346298513     
+ cell #           2 : starting_area:    1.8274466029292173     
+Wall iteration:
+niter =    13 residual =     2.34E-01
+Residual velocity: vmax =     1.61E-01 vzmax =     1.61E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614607058216369     
+ rbc%area:    1.8273794467771867     
+ fac before:    1.0928796166335872E-005
+ fac after:    1.0928796166335872E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604220407036     
+ rbc%area:    1.8274827372185696     
+ fac before:   -3.0884794782770779E-010
+ fac after:   -3.0884794782770779E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8274827342995117     
+ fac before:   -1.2150298372594077E-015
+ fac after:   -1.2150298372594077E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8274827342995270     
+ fac before:   -1.2150298372593976E-015
+ fac after:   -1.2150298372593976E-015
+lt =         1  T =         0.00020 time cost =         1.25
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.13E+01
+cells: vxmax vxmin =     7.35E-02   -6.78E-02
+cells: vymax vymin =     7.75E-02   -6.31E-02
+cells: vzmax vzmin =     2.13E+01    1.09E+01
+Wall iteration:
+niter =    37 residual =     2.18E-04
+Residual velocity: vmax =     1.62E-01 vzmax =     1.62E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614606866081957     
+ rbc%area:    1.8274268696737943     
+ fac before:    1.0929563950242430E-005
+ fac after:    1.0929563950242430E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604220415585     
+ rbc%area:    1.8275301691974581     
+ fac before:   -3.0888670937854234E-010
+ fac after:   -3.0888670937854234E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965795     
+ rbc%area:    1.8275301662779828     
+ fac before:   -1.0327485568715257E-015
+ fac after:   -1.0327485568715257E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965873     
+ rbc%area:    1.8275301662779992     
+ fac before:   -1.4579979626421407E-015
+ fac after:   -1.4579979626421407E-015
+lt =         2  T =         0.00040 time cost =         0.69
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     8.53E-02   -7.47E-02
+cells: vymax vymin =     8.76E-02   -7.20E-02
+cells: vzmax vzmin =     2.12E+01    1.09E+01
+Wall iteration:
+niter =    19 residual =     2.10E-04
+Residual velocity: vmax =     1.63E-01 vzmax =     1.63E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614598906646838     
+ rbc%area:    1.8274768608133340     
+ fac before:    1.0972819200982834E-005
+ fac after:    1.0972819200982834E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604220863668     
+ rbc%area:    1.8275805710519522     
+ fac before:   -3.1132997452348750E-010
+ fac after:   -3.1132997452348750E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965781     
+ rbc%area:    1.8275805681093313     
+ fac before:   -9.5678477561926830E-016
+ fac after:   -9.5678477561926830E-016
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965818     
+ rbc%area:    1.8275805681093438     
+ fac before:   -1.1542165547153000E-015
+ fac after:   -1.1542165547153000E-015
+lt =         3  T =         0.00060 time cost =         0.52
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     1.18E-01   -1.18E-01
+cells: vymax vymin =     1.14E-01   -1.16E-01
+cells: vzmax vzmin =     2.12E+01    1.10E+01
+Wall iteration:
+niter =    19 residual =     2.15E-04
+Residual velocity: vmax =     1.63E-01 vzmax =     1.63E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614591041453156     
+ rbc%area:    1.8275295954332398     
+ fac before:    1.1015539871318234E-005
+ fac after:    1.1015539871318234E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604221307776     
+ rbc%area:    1.8276337114203898     
+ fac before:   -3.1375088751624438E-010
+ fac after:   -3.1375088751624438E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965834     
+ rbc%area:    1.8276337084548260     
+ fac before:   -1.2453027047776332E-015
+ fac after:   -1.2453027047776332E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965801     
+ rbc%area:    1.8276337084548364     
+ fac before:   -1.0630632845662661E-015
+ fac after:   -1.0630632845662661E-015
+lt =         4  T =         0.00080 time cost =         0.51
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     1.60E-01   -1.60E-01
+cells: vymax vymin =     1.56E-01   -1.58E-01
+cells: vzmax vzmin =     2.12E+01    1.11E+01
+Wall iteration:
+niter =    19 residual =     2.02E-04
+Residual velocity: vmax =     1.63E-01 vzmax =     1.63E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614583278382242     
+ rbc%area:    1.8275849140025360     
+ fac before:    1.1057683656070981E-005
+ fac after:    1.1057683656070981E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604221747342     
+ rbc%area:    1.8276894303706919     
+ fac before:   -3.1614635392721466E-010
+ fac after:   -3.1614635392721466E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965856     
+ rbc%area:    1.8276894273824298     
+ fac before:   -1.3667539834621557E-015
+ fac after:   -1.3667539834621557E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965823     
+ rbc%area:    1.8276894273824416     
+ fac before:   -1.1845201190005274E-015
+ fac after:   -1.1845201190005274E-015
+lt =         5  T =         0.00100 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     1.99E-01   -1.99E-01
+cells: vymax vymin =     1.95E-01   -1.97E-01
+cells: vzmax vzmin =     2.12E+01    1.11E+01
+Wall iteration:
+niter =    19 residual =     2.01E-04
+Residual velocity: vmax =     1.63E-01 vzmax =     1.63E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614575624540876     
+ rbc%area:    1.8276426670120989     
+ fac before:    1.1099212451892245E-005
+ fac after:    1.1099212451892245E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604222182033     
+ rbc%area:    1.8277475780322234     
+ fac before:   -3.1851458496759915E-010
+ fac after:   -3.1851458496759915E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965815     
+ rbc%area:    1.8277475750215109     
+ fac before:   -1.1389254181599279E-015
+ fac after:   -1.1389254181599279E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965845     
+ rbc%area:    1.8277475750215233     
+ fac before:   -1.3059678128233752E-015
+ fac after:   -1.3059678128233752E-015
+lt =         6  T =         0.00120 time cost =         0.50
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     2.37E-01   -2.36E-01
+cells: vymax vymin =     2.32E-01   -2.34E-01
+cells: vzmax vzmin =     2.12E+01    1.12E+01
+Wall iteration:
+niter =    19 residual =     1.74E-04
+Residual velocity: vmax =     1.63E-01 vzmax =     1.63E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614568086055101     
+ rbc%area:    1.8277027233177690     
+ fac before:    1.1140093432752038E-005
+ fac after:    1.1140093432752038E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604222611245     
+ rbc%area:    1.8278080229491545     
+ fac before:   -3.2085228650513642E-010
+ fac after:   -3.2085228650513642E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965837     
+ rbc%area:    1.8278080199162818     
+ fac before:   -1.2603691148060045E-015
+ fac after:   -1.2603691148060045E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965804     
+ rbc%area:    1.8278080199162947     
+ fac before:   -1.0781470741111529E-015
+ fac after:   -1.0781470741111529E-015
+lt =         7  T =         0.00140 time cost =         0.47
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     2.71E-01   -2.71E-01
+cells: vymax vymin =     2.66E-01   -2.69E-01
+cells: vzmax vzmin =     2.12E+01    1.12E+01
+Wall iteration:
+niter =    19 residual =     1.75E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614560667744779     
+ rbc%area:    1.8277649482128742     
+ fac before:    1.1180300961702831E-005
+ fac after:    1.1180300961702831E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604223034764     
+ rbc%area:    1.8278706301709002     
+ fac before:   -3.2315830739512152E-010
+ fac after:   -3.2315830739512152E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965801     
+ rbc%area:    1.8278706271161713     
+ fac before:   -1.0629254960780890E-015
+ fac after:   -1.0629254960780890E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8278706271161811     
+ fac before:   -1.2147719955178095E-015
+ fac after:   -1.2147719955178095E-015
+lt =         8  T =         0.00160 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     3.05E-01   -3.04E-01
+cells: vymax vymin =     3.00E-01   -3.02E-01
+cells: vzmax vzmin =     2.12E+01    1.13E+01
+Wall iteration:
+niter =    19 residual =     1.55E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614553374260072     
+ rbc%area:    1.8278292196582990     
+ fac before:    1.1219810272637742E-005
+ fac after:    1.1219810272637742E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604223452211     
+ rbc%area:    1.8279352774225697     
+ fac before:   -3.2543058425472433E-010
+ fac after:   -3.2543058425472433E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965834     
+ rbc%area:    1.8279352743462878     
+ fac before:   -1.2450972594177364E-015
+ fac after:   -1.2450972594177364E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965834     
+ rbc%area:    1.8279352743463018     
+ fac before:   -1.2450972594177267E-015
+ fac after:   -1.2450972594177267E-015
+lt =         9  T =         0.00180 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     3.36E-01   -3.36E-01
+cells: vymax vymin =     3.31E-01   -3.34E-01
+cells: vzmax vzmin =     2.12E+01    1.13E+01
+Wall iteration:
+niter =    19 residual =     1.48E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614546209207373     
+ rbc%area:    1.8278954202398385     
+ fac before:    1.1258602299924321E-005
+ fac after:    1.1258602299924321E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604223863293     
+ rbc%area:    1.8280018471079562     
+ fac before:   -3.2766753986182069E-010
+ fac after:   -3.2766753986182069E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965793     
+ rbc%area:    1.8280018440104548     
+ fac before:   -1.0172985176903910E-015
+ fac after:   -1.0172985176903910E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965912     
+ rbc%area:    1.8280018440104768     
+ fac before:   -1.6701915962080846E-015
+ fac after:   -1.6701915962080846E-015
+lt =        10  T =         0.00200 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.03E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     3.66E-01   -3.66E-01
+cells: vymax vymin =     3.61E-01   -3.64E-01
+cells: vzmax vzmin =     2.12E+01    1.14E+01
+Wall iteration:
+niter =    19 residual =     1.39E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614539175672055     
+ rbc%area:    1.8279634411642212     
+ fac before:    1.1296660792276098E-005
+ fac after:    1.1296660792276098E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604224267675     
+ rbc%area:    1.8280702302783307     
+ fac before:   -3.2986735353524095E-010
+ fac after:   -3.2986735353524095E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965806     
+ rbc%area:    1.8280702271599631     
+ fac before:   -1.0931754232603745E-015
+ fac after:   -1.0931754232603745E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965881     
+ rbc%area:    1.8280702271599805     
+ fac before:   -1.5031162069830008E-015
+ fac after:   -1.5031162069830008E-015
+lt =        11  T =         0.00220 time cost =         0.51
+
+Intra-cellular repulsion:
+  min dist =     2.43E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     3.95E-01   -3.95E-01
+cells: vymax vymin =     3.90E-01   -3.93E-01
+cells: vzmax vzmin =     2.12E+01    1.14E+01
+Wall iteration:
+niter =    19 residual =     1.32E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614442502291152     
+ rbc%area:    1.8280341774347475     
+ fac before:    1.1825061594242549E-005
+ fac after:    1.1825061594242549E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604230040802     
+ rbc%area:    1.8281459644526288     
+ fac before:   -3.6143282101104556E-010
+ fac after:   -3.6143282101104556E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965823     
+ rbc%area:    1.8281459610357669     
+ fac before:   -1.1842243147765263E-015
+ fac after:   -1.1842243147765263E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965834     
+ rbc%area:    1.8281459610357818     
+ fac before:   -1.2449537668163380E-015
+ fac after:   -1.2449537668163380E-015
+lt =        12  T =         0.00240 time cost =         0.52
+
+Intra-cellular repulsion:
+  min dist =     2.31E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     4.22E-01   -4.22E-01
+cells: vymax vymin =     4.17E-01   -4.20E-01
+cells: vzmax vzmin =     2.12E+01    1.14E+01
+Wall iteration:
+niter =    19 residual =     1.25E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614285693360129     
+ rbc%area:    1.8281122041920339     
+ fac before:    1.2682321140690875E-005
+ fac after:    1.2682321140690875E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604239969896     
+ rbc%area:    1.8282320987221499     
+ fac before:   -4.1572560194468302E-010
+ fac after:   -4.1572560194468302E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965831     
+ rbc%area:    1.8282320947918997     
+ fac before:   -1.2297134654130692E-015
+ fac after:   -1.2297134654130692E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965840     
+ rbc%area:    1.8282320947919080     
+ fac before:   -1.2752584085765106E-015
+ fac after:   -1.2752584085765106E-015
+lt =        13  T =         0.00260 time cost =         0.50
+
+Intra-cellular repulsion:
+  min dist =     2.10E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     4.48E-01   -4.48E-01
+cells: vymax vymin =     4.44E-01   -4.46E-01
+cells: vzmax vzmin =     2.12E+01    1.15E+01
+Wall iteration:
+niter =    18 residual =     1.37E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614199198842775     
+ rbc%area:    1.8281993889924508     
+ fac before:    1.3154829485843783E-005
+ fac after:    1.3154829485843783E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604245740621     
+ rbc%area:    1.8283237543554454     
+ fac before:   -4.4726769174688023E-010
+ fac after:   -4.4726769174688023E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965790     
+ rbc%area:    1.8283237501268561     
+ fac before:   -1.0019385190967443E-015
+ fac after:   -1.0019385190967443E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965815     
+ rbc%area:    1.8283237501268641     
+ fac before:   -1.1385664989735682E-015
+ fac after:   -1.1385664989735682E-015
+lt =        14  T =         0.00280 time cost =         0.50
+
+Intra-cellular repulsion:
+  min dist =     2.12E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     4.74E-01   -4.73E-01
+cells: vymax vymin =     4.69E-01   -4.71E-01
+cells: vzmax vzmin =     2.12E+01    1.15E+01
+Wall iteration:
+niter =    19 residual =     1.13E-04
+Residual velocity: vmax =     1.64E-01 vzmax =     1.64E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614293369428557     
+ rbc%area:    1.8282926909291333     
+ fac before:    1.2639084258853076E-005
+ fac after:    1.2639084258853076E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604239453681     
+ rbc%area:    1.8284121843308820     
+ fac before:   -4.1286136010172209E-010
+ fac after:   -4.1286136010172209E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965784     
+ rbc%area:    1.8284121804274578     
+ fac before:   -9.7152975593553665E-016
+ fac after:   -9.7152975593553665E-016
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965773     
+ rbc%area:    1.8284121804274682     
+ fac before:   -9.1080914618956049E-016
+ fac after:   -9.1080914618956049E-016
+lt =        15  T =         0.00300 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.12E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.12E+01
+cells: vxmax vxmin =     4.98E-01   -4.97E-01
+cells: vymax vymin =     4.93E-01   -4.95E-01
+cells: vzmax vzmin =     2.12E+01    1.15E+01
+Wall iteration:
+niter =    18 residual =     1.25E-04
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614282356001989     
+ rbc%area:    1.8283825242522378     
+ fac before:    1.2698699166178950E-005
+ fac after:    1.2698699166178950E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604240167751     
+ rbc%area:    1.8285025850324772     
+ fac before:   -4.1674616824787381E-010
+ fac after:   -4.1674616824787381E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965756     
+ rbc%area:    1.8285025810921933     
+ fac before:   -8.1968770443228139E-016
+ fac after:   -8.1968770443228139E-016
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965779     
+ rbc%area:    1.8285025810922078     
+ fac before:   -9.4112291990372294E-016
+ fac after:   -9.4112291990372294E-016
+lt =        16  T =         0.00320 time cost =         0.48
+
+Intra-cellular repulsion:
+  min dist =     2.09E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     5.21E-01   -5.20E-01
+cells: vymax vymin =     5.16E-01   -5.19E-01
+cells: vzmax vzmin =     2.11E+01    1.16E+01
+Wall iteration:
+niter =    19 residual =     1.02E-04
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614423351543739     
+ rbc%area:    1.8284742456079683     
+ fac before:    1.1926951812998583E-005
+ fac after:    1.1926951812998583E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604231184737     
+ rbc%area:    1.8285870131667572     
+ fac before:   -3.6760148561683515E-010
+ fac after:   -3.6760148561683515E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965818     
+ rbc%area:    1.8285870096910446     
+ fac before:   -1.1535812819452340E-015
+ fac after:   -1.1535812819452340E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8285870096910561     
+ fac before:   -1.2142960862581335E-015
+ fac after:   -1.2142960862581335E-015
+lt =        17  T =         0.00340 time cost =         0.49
+
+Intra-cellular repulsion:
+  min dist =     2.46E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     5.43E-01   -5.42E-01
+cells: vymax vymin =     5.38E-01   -5.41E-01
+cells: vzmax vzmin =     2.11E+01    1.16E+01
+Wall iteration:
+niter =    18 residual =     1.07E-04
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614523112132110     
+ rbc%area:    1.8285590701897760     
+ fac before:    1.1380829131655270E-005
+ fac after:    1.1380829131655270E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604225166726     
+ rbc%area:    1.8286666770977724     
+ fac before:   -3.3467618751409940E-010
+ fac after:   -3.3467618751409940E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965787     
+ rbc%area:    1.8286666739332900     
+ fac before:   -9.8657258905222100E-016
+ fac after:   -9.8657258905222100E-016
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965820     
+ rbc%area:    1.8286666739333022     
+ fac before:   -1.1687090670310847E-015
+ fac after:   -1.1687090670310847E-015
+lt =        18  T =         0.00360 time cost =         0.48
+
+Intra-cellular repulsion:
+  min dist =     2.46E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     5.64E-01   -5.63E-01
+cells: vymax vymin =     5.59E-01   -5.61E-01
+cells: vzmax vzmin =     2.11E+01    1.16E+01
+Wall iteration:
+niter =    18 residual =     1.08E-04
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614524169041992     
+ rbc%area:    1.8286394391258389     
+ fac before:    1.1374549181818536E-005
+ fac after:    1.1374549181818536E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604225096868     
+ rbc%area:    1.8287469893730735     
+ fac before:   -3.3427949038049167E-010
+ fac after:   -3.3427949038049167E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965823     
+ rbc%area:    1.8287469862122674     
+ fac before:   -1.1838351146120579E-015
+ fac after:   -1.1838351146120579E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965826     
+ rbc%area:    1.8287469862122763     
+ fac before:   -1.1990124878763094E-015
+ fac after:   -1.1990124878763094E-015
+lt =        19  T =         0.00380 time cost =         0.48
+
+Intra-cellular repulsion:
+  min dist =     2.44E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     5.81E-01   -5.81E-01
+cells: vymax vymin =     5.77E-01   -5.79E-01
+cells: vzmax vzmin =     2.11E+01    1.17E+01
+Wall iteration:
+niter =    19 residual =     9.81E-05
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614623472615431     
+ rbc%area:    1.8287195362023030     
+ fac before:    1.0831028547379401E-005
+ fac after:    1.0831028547379401E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604219389516     
+ rbc%area:    1.8288219496346705     
+ fac before:   -3.0305798723082030E-010
+ fac after:   -3.0305798723082030E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965818     
+ rbc%area:    1.8288219467690157     
+ fac before:   -1.1534330887238758E-015
+ fac after:   -1.1534330887238758E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965781     
+ rbc%area:    1.8288219467690296     
+ fac before:   -9.5613532354741603E-016
+ fac after:   -9.5613532354741603E-016
+lt =        20  T =         0.00400 time cost =         0.53
+
+Intra-cellular repulsion:
+  min dist =     2.44E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     5.98E-01   -5.97E-01
+cells: vymax vymin =     5.94E-01   -5.96E-01
+cells: vzmax vzmin =     2.11E+01    1.17E+01
+Wall iteration:
+niter =    18 residual =     9.45E-05
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614532898504117     
+ rbc%area:    1.8287947793794668     
+ fac before:    1.1325849596926451E-005
+ fac after:    1.1325849596926451E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604224567910     
+ rbc%area:    1.8289018741637963     
+ fac before:   -3.3135896784264234E-010
+ fac after:   -3.3135896784264234E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965826     
+ rbc%area:    1.8289018710304603     
+ fac before:   -1.1989109467088325E-015
+ fac after:   -1.1989109467088325E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965862     
+ rbc%area:    1.8289018710304752     
+ fac before:   -1.3962000898381227E-015
+ fac after:   -1.3962000898381227E-015
+lt =        21  T =         0.00420 time cost =         0.55
+
+Intra-cellular repulsion:
+  min dist =     2.44E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     6.17E-01   -6.16E-01
+cells: vymax vymin =     6.12E-01   -6.14E-01
+cells: vzmax vzmin =     2.11E+01    1.17E+01
+Wall iteration:
+niter =    18 residual =     9.76E-05
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614475294866440     
+ rbc%area:    1.8288756096092520     
+ fac before:    1.1640316530991085E-005
+ fac after:    1.1640316530991085E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604227978280     
+ rbc%area:    1.8289856808938474     
+ fac before:   -3.4999001691916445E-010
+ fac after:   -3.4999001691916445E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8289856775842428     
+ fac before:   -1.2140314035608624E-015
+ fac after:   -1.2140314035608624E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965848     
+ rbc%area:    1.8289856775842535     
+ fac before:   -1.3202591513724301E-015
+ fac after:   -1.3202591513724301E-015
+lt =        22  T =         0.00440 time cost =         0.55
+
+Intra-cellular repulsion:
+  min dist =     2.30E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     6.34E-01   -6.33E-01
+cells: vymax vymin =     6.29E-01   -6.32E-01
+cells: vzmax vzmin =     2.11E+01    1.17E+01
+Wall iteration:
+niter =    19 residual =     7.70E-05
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614469697907966     
+ rbc%area:    1.8289600435693840     
+ fac before:    1.1670381018685095E-005
+ fac after:    1.1670381018685095E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604228306711     
+ rbc%area:    1.8290704022506630     
+ fac before:   -3.5176942662886575E-010
+ fac after:   -3.5176942662886575E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965795     
+ rbc%area:    1.8290703989241399     
+ fac before:   -1.0318788948598826E-015
+ fac after:   -1.0318788948598826E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965842     
+ rbc%area:    1.8290703989241519     
+ fac before:   -1.2898486185748448E-015
+ fac after:   -1.2898486185748448E-015
+lt =        23  T =         0.00460 time cost =         0.56
+
+Intra-cellular repulsion:
+  min dist =     2.30E-01
+  repulsion forces added on   160 points
+cells: vmax =     2.11E+01
+cells: vxmax vxmin =     6.51E-01   -6.50E-01
+cells: vymax vymin =     6.46E-01   -6.48E-01
+cells: vzmax vzmin =     2.11E+01    1.18E+01
+Wall iteration:
+niter =    18 residual =     8.32E-05
+Residual velocity: vmax =     1.65E-01 vzmax =     1.65E-01
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13614464238024079     
+ rbc%area:    1.8290453485043172     
+ fac before:    1.1699687726589907E-005
+ fac after:    1.1699687726589907E-005
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604228627355     
+ rbc%area:    1.8291559874701639     
+ fac before:   -3.5350592634544881E-010
+ fac after:   -3.5350592634544881E-010
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965806     
+ rbc%area:    1.8291559841271241     
+ fac before:   -1.0925265322732560E-015
+ fac after:   -1.0925265322732560E-015
+ rbcRefs(rbc%celltype)%vol:   0.13616604163965607     
+ rbc%vol:   0.13616604163965829     
+ rbc%area:    1.8291559841271336     
+ fac before:   -1.2139183691925004E-015
+ fac after:   -1.2139183691925004E-015
+lt =        24  T =         0.00480 time cost =         0.55
+
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 133857 ON atl1-1-02-012-34-1 CANCELLED AT 2024-05-20T09:10:06 ***
+slurmstepd: error: *** STEP 133857.1 ON atl1-1-02-012-34-1 CANCELLED AT 2024-05-20T09:10:06 ***
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[2]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[2]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[2]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[2]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[2]PETSC ERROR: to get more information on the crash.
+[2]PETSC ERROR: --------------------- Error Message ------------------------------------
+[2]PETSC ERROR: Signal received!
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[2]PETSC ERROR: See docs/changes/index.html for recent updates.
+[2]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[2]PETSC ERROR: See docs/index.html for manual pages.
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[2]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[2]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[2]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[2]PETSC ERROR: ------------------------------------------------------------------------
+[2]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[4]PETSC ERROR: ------------------------------------------------------------------------
+[4]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[4]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[4]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[4]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[4]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[4]PETSC ERROR: to get more information on the crash.
+[4]PETSC ERROR: --------------------- Error Message ------------------------------------
+[4]PETSC ERROR: Signal received!
+[4]PETSC ERROR: ------------------------------------------------------------------------
+[4]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[4]PETSC ERROR: See docs/changes/index.html for recent updates.
+[4]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[4]PETSC ERROR: See docs/index.html for manual pages.
+[4]PETSC ERROR: ------------------------------------------------------------------------
+[4]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[4]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[4]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[4]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[4]PETSC ERROR: ------------------------------------------------------------------------
+[4]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[5]PETSC ERROR: ------------------------------------------------------------------------
+[5]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[5]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[5]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[5]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[5]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[5]PETSC ERROR: to get more information on the crash.
+[5]PETSC ERROR: --------------------- Error Message ------------------------------------
+[5]PETSC ERROR: Signal received!
+[5]PETSC ERROR: ------------------------------------------------------------------------
+[5]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[5]PETSC ERROR: See docs/changes/index.html for recent updates.
+[5]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[5]PETSC ERROR: See docs/index.html for manual pages.
+[5]PETSC ERROR: ------------------------------------------------------------------------
+[5]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[5]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[5]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[5]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[5]PETSC ERROR: ------------------------------------------------------------------------
+[5]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[6]PETSC ERROR: ------------------------------------------------------------------------
+[6]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[6]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[6]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[6]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[6]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[6]PETSC ERROR: to get more information on the crash.
+[6]PETSC ERROR: --------------------- Error Message ------------------------------------
+[6]PETSC ERROR: Signal received!
+[6]PETSC ERROR: ------------------------------------------------------------------------
+[6]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[6]PETSC ERROR: See docs/changes/index.html for recent updates.
+[6]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[6]PETSC ERROR: See docs/index.html for manual pages.
+[6]PETSC ERROR: ------------------------------------------------------------------------
+[6]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[6]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[6]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[6]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[6]PETSC ERROR: ------------------------------------------------------------------------
+[6]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[7]PETSC ERROR: ------------------------------------------------------------------------
+[7]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[7]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[7]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[7]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[7]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[7]PETSC ERROR: to get more information on the crash.
+[7]PETSC ERROR: --------------------- Error Message ------------------------------------
+[7]PETSC ERROR: Signal received!
+[7]PETSC ERROR: ------------------------------------------------------------------------
+[7]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[7]PETSC ERROR: See docs/changes/index.html for recent updates.
+[7]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[7]PETSC ERROR: See docs/index.html for manual pages.
+[7]PETSC ERROR: ------------------------------------------------------------------------
+[7]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[7]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[7]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[7]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[7]PETSC ERROR: ------------------------------------------------------------------------
+[7]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[8]PETSC ERROR: ------------------------------------------------------------------------
+[8]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[8]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[8]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[8]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[8]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[8]PETSC ERROR: to get more information on the crash.
+[8]PETSC ERROR: --------------------- Error Message ------------------------------------
+[8]PETSC ERROR: Signal received!
+[8]PETSC ERROR: ------------------------------------------------------------------------
+[8]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[8]PETSC ERROR: See docs/changes/index.html for recent updates.
+[8]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[8]PETSC ERROR: See docs/index.html for manual pages.
+[8]PETSC ERROR: ------------------------------------------------------------------------
+[8]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[8]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[8]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[8]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[8]PETSC ERROR: ------------------------------------------------------------------------
+[8]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[1]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[1]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[1]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[1]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[1]PETSC ERROR: to get more information on the crash.
+[1]PETSC ERROR: --------------------- Error Message ------------------------------------
+[1]PETSC ERROR: Signal received!
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[1]PETSC ERROR: See docs/changes/index.html for recent updates.
+[1]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[1]PETSC ERROR: See docs/index.html for manual pages.
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[1]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[1]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[1]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[1]PETSC ERROR: ------------------------------------------------------------------------
+[1]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[3]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[3]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[3]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[3]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[3]PETSC ERROR: to get more information on the crash.
+[3]PETSC ERROR: --------------------- Error Message ------------------------------------
+[3]PETSC ERROR: Signal received!
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[3]PETSC ERROR: See docs/changes/index.html for recent updates.
+[3]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[3]PETSC ERROR: See docs/index.html for manual pages.
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[3]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[3]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[3]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[3]PETSC ERROR: ------------------------------------------------------------------------
+[3]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[9]PETSC ERROR: ------------------------------------------------------------------------
+[9]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[9]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[9]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[9]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[9]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[9]PETSC ERROR: to get more information on the crash.
+[9]PETSC ERROR: --------------------- Error Message ------------------------------------
+[9]PETSC ERROR: Signal received!
+[9]PETSC ERROR: ------------------------------------------------------------------------
+[9]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[9]PETSC ERROR: See docs/changes/index.html for recent updates.
+[9]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[9]PETSC ERROR: See docs/index.html for manual pages.
+[9]PETSC ERROR: ------------------------------------------------------------------------
+[9]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[9]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[9]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[9]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[9]PETSC ERROR: ------------------------------------------------------------------------
+[9]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[10]PETSC ERROR: ------------------------------------------------------------------------
+[10]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[10]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[10]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[10]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[10]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[10]PETSC ERROR: to get more information on the crash.
+[10]PETSC ERROR: --------------------- Error Message ------------------------------------
+[10]PETSC ERROR: Signal received!
+[10]PETSC ERROR: ------------------------------------------------------------------------
+[10]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[10]PETSC ERROR: See docs/changes/index.html for recent updates.
+[10]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[10]PETSC ERROR: See docs/index.html for manual pages.
+[10]PETSC ERROR: ------------------------------------------------------------------------
+[10]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[10]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[10]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[10]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[10]PETSC ERROR: ------------------------------------------------------------------------
+[10]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[11]PETSC ERROR: ------------------------------------------------------------------------
+[11]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[11]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[11]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[11]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[11]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[11]PETSC ERROR: to get more information on the crash.
+[11]PETSC ERROR: --------------------- Error Message ------------------------------------
+[11]PETSC ERROR: Signal received!
+[11]PETSC ERROR: ------------------------------------------------------------------------
+[11]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[11]PETSC ERROR: See docs/changes/index.html for recent updates.
+[11]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[11]PETSC ERROR: See docs/index.html for manual pages.
+[11]PETSC ERROR: ------------------------------------------------------------------------
+[11]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[11]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[11]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[11]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[11]PETSC ERROR: ------------------------------------------------------------------------
+[11]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[12]PETSC ERROR: ------------------------------------------------------------------------
+[12]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[12]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[12]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[12]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[12]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[12]PETSC ERROR: to get more information on the crash.
+[12]PETSC ERROR: --------------------- Error Message ------------------------------------
+[12]PETSC ERROR: Signal received!
+[12]PETSC ERROR: ------------------------------------------------------------------------
+[12]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[12]PETSC ERROR: See docs/changes/index.html for recent updates.
+[12]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[12]PETSC ERROR: See docs/index.html for manual pages.
+[12]PETSC ERROR: ------------------------------------------------------------------------
+[12]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[12]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[12]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[12]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[12]PETSC ERROR: ------------------------------------------------------------------------
+[12]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[13]PETSC ERROR: ------------------------------------------------------------------------
+[13]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[13]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[13]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[13]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[13]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[13]PETSC ERROR: to get more information on the crash.
+[13]PETSC ERROR: --------------------- Error Message ------------------------------------
+[13]PETSC ERROR: Signal received!
+[13]PETSC ERROR: ------------------------------------------------------------------------
+[13]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[13]PETSC ERROR: See docs/changes/index.html for recent updates.
+[13]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[13]PETSC ERROR: See docs/index.html for manual pages.
+[13]PETSC ERROR: ------------------------------------------------------------------------
+[13]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[13]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[13]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[13]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[13]PETSC ERROR: ------------------------------------------------------------------------
+[13]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[14]PETSC ERROR: ------------------------------------------------------------------------
+[14]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[14]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[14]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[14]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[14]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[14]PETSC ERROR: to get more information on the crash.
+[14]PETSC ERROR: --------------------- Error Message ------------------------------------
+[14]PETSC ERROR: Signal received!
+[14]PETSC ERROR: ------------------------------------------------------------------------
+[14]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[14]PETSC ERROR: See docs/changes/index.html for recent updates.
+[14]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[14]PETSC ERROR: See docs/index.html for manual pages.
+[14]PETSC ERROR: ------------------------------------------------------------------------
+[14]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[14]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[14]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[14]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[14]PETSC ERROR: ------------------------------------------------------------------------
+[14]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[15]PETSC ERROR: ------------------------------------------------------------------------
+[15]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[15]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[15]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[15]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[15]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[15]PETSC ERROR: to get more information on the crash.
+[15]PETSC ERROR: --------------------- Error Message ------------------------------------
+[15]PETSC ERROR: Signal received!
+[15]PETSC ERROR: ------------------------------------------------------------------------
+[15]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[15]PETSC ERROR: See docs/changes/index.html for recent updates.
+[15]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[15]PETSC ERROR: See docs/index.html for manual pages.
+[15]PETSC ERROR: ------------------------------------------------------------------------
+[15]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[15]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[15]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[15]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[15]PETSC ERROR: ------------------------------------------------------------------------
+[15]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[16]PETSC ERROR: ------------------------------------------------------------------------
+[16]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[16]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[16]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[16]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[16]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[16]PETSC ERROR: to get more information on the crash.
+[16]PETSC ERROR: --------------------- Error Message ------------------------------------
+[16]PETSC ERROR: Signal received!
+[16]PETSC ERROR: ------------------------------------------------------------------------
+[16]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[16]PETSC ERROR: See docs/changes/index.html for recent updates.
+[16]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[16]PETSC ERROR: See docs/index.html for manual pages.
+[16]PETSC ERROR: ------------------------------------------------------------------------
+[16]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[16]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[16]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[16]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[16]PETSC ERROR: ------------------------------------------------------------------------
+[16]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[17]PETSC ERROR: ------------------------------------------------------------------------
+[17]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[17]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[17]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[17]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[17]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[17]PETSC ERROR: to get more information on the crash.
+[17]PETSC ERROR: --------------------- Error Message ------------------------------------
+[17]PETSC ERROR: Signal received!
+[17]PETSC ERROR: ------------------------------------------------------------------------
+[17]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[17]PETSC ERROR: See docs/changes/index.html for recent updates.
+[17]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[17]PETSC ERROR: See docs/index.html for manual pages.
+[17]PETSC ERROR: ------------------------------------------------------------------------
+[17]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[17]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[17]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[17]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[17]PETSC ERROR: ------------------------------------------------------------------------
+[17]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[18]PETSC ERROR: ------------------------------------------------------------------------
+[18]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[18]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[18]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[18]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[18]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[18]PETSC ERROR: to get more information on the crash.
+[18]PETSC ERROR: --------------------- Error Message ------------------------------------
+[18]PETSC ERROR: Signal received!
+[18]PETSC ERROR: ------------------------------------------------------------------------
+[18]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[18]PETSC ERROR: See docs/changes/index.html for recent updates.
+[18]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[18]PETSC ERROR: See docs/index.html for manual pages.
+[18]PETSC ERROR: ------------------------------------------------------------------------
+[18]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[18]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[18]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[18]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[18]PETSC ERROR: ------------------------------------------------------------------------
+[18]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[19]PETSC ERROR: ------------------------------------------------------------------------
+[19]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[19]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[19]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[19]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[19]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[19]PETSC ERROR: to get more information on the crash.
+[19]PETSC ERROR: --------------------- Error Message ------------------------------------
+[19]PETSC ERROR: Signal received!
+[19]PETSC ERROR: ------------------------------------------------------------------------
+[19]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[19]PETSC ERROR: See docs/changes/index.html for recent updates.
+[19]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[19]PETSC ERROR: See docs/index.html for manual pages.
+[19]PETSC ERROR: ------------------------------------------------------------------------
+[19]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[19]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[19]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[19]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[19]PETSC ERROR: ------------------------------------------------------------------------
+[19]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[20]PETSC ERROR: ------------------------------------------------------------------------
+[20]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[20]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[20]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[20]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[20]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[20]PETSC ERROR: to get more information on the crash.
+[20]PETSC ERROR: --------------------- Error Message ------------------------------------
+[20]PETSC ERROR: Signal received!
+[20]PETSC ERROR: ------------------------------------------------------------------------
+[20]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[20]PETSC ERROR: See docs/changes/index.html for recent updates.
+[20]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[20]PETSC ERROR: See docs/index.html for manual pages.
+[20]PETSC ERROR: ------------------------------------------------------------------------
+[20]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[20]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[20]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[20]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[20]PETSC ERROR: ------------------------------------------------------------------------
+[20]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[21]PETSC ERROR: ------------------------------------------------------------------------
+[21]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[21]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[21]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[21]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[21]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[21]PETSC ERROR: to get more information on the crash.
+[21]PETSC ERROR: --------------------- Error Message ------------------------------------
+[21]PETSC ERROR: Signal received!
+[21]PETSC ERROR: ------------------------------------------------------------------------
+[21]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[21]PETSC ERROR: See docs/changes/index.html for recent updates.
+[21]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[21]PETSC ERROR: See docs/index.html for manual pages.
+[21]PETSC ERROR: ------------------------------------------------------------------------
+[21]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[21]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[21]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[21]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[21]PETSC ERROR: ------------------------------------------------------------------------
+[21]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[22]PETSC ERROR: ------------------------------------------------------------------------
+[22]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[22]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[22]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[22]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[22]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[22]PETSC ERROR: to get more information on the crash.
+[22]PETSC ERROR: --------------------- Error Message ------------------------------------
+[22]PETSC ERROR: Signal received!
+[22]PETSC ERROR: ------------------------------------------------------------------------
+[22]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[22]PETSC ERROR: See docs/changes/index.html for recent updates.
+[22]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[22]PETSC ERROR: See docs/index.html for manual pages.
+[22]PETSC ERROR: ------------------------------------------------------------------------
+[22]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[22]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[22]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[22]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[22]PETSC ERROR: ------------------------------------------------------------------------
+[22]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[23]PETSC ERROR: ------------------------------------------------------------------------
+[23]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[23]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[23]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[23]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[23]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[23]PETSC ERROR: to get more information on the crash.
+[23]PETSC ERROR: --------------------- Error Message ------------------------------------
+[23]PETSC ERROR: Signal received!
+[23]PETSC ERROR: ------------------------------------------------------------------------
+[23]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[23]PETSC ERROR: See docs/changes/index.html for recent updates.
+[23]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[23]PETSC ERROR: See docs/index.html for manual pages.
+[23]PETSC ERROR: ------------------------------------------------------------------------
+[23]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[23]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[23]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[23]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[23]PETSC ERROR: ------------------------------------------------------------------------
+[23]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Caught signal number 15 Terminate: Somet process (or the batch system) has told this process to end
+[0]PETSC ERROR: Try option -start_in_debugger or -on_error_attach_debugger
+[0]PETSC ERROR: or see http://www.mcs.anl.gov/petsc/petsc-as/documentation/troubleshooting.html#Signal[0]PETSC ERROR: or try http://valgrind.org on linux or man libgmalloc on Apple to find memory corruption errors
+[0]PETSC ERROR: configure using --with-debugging=yes, recompile, link, and run 
+[0]PETSC ERROR: to get more information on the crash.
+[0]PETSC ERROR: --------------------- Error Message ------------------------------------
+[0]PETSC ERROR: Signal received!
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: Petsc Release Version 3.0.0, Patch 3, Fri Jan 30 17:55:56 CST 2009
+[0]PETSC ERROR: See docs/changes/index.html for recent updates.
+[0]PETSC ERROR: See docs/faq.html for hints about trouble shooting.
+[0]PETSC ERROR: See docs/index.html for manual pages.
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: /storage/home/hcoda1/4/smanasreh6/RBC3D/mycases/case_platelets/./tube on a linux-gnu named atl1-1-02-012-34-1.pace.gatech.edu by smanasreh6 Mon May 20 09:09:53 2024
+[0]PETSC ERROR: Libraries linked from /storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc/lib
+[0]PETSC ERROR: Configure run at Mon Oct  9 17:19:44 2023
+[0]PETSC ERROR: Configure options --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS="-O3 -march=native -mtune=native" CXXOPTFLAGS="-O3 -march=native -mtune=native" FOPTFLAGS="-O3 -march=native -mtune=native" --with-blas-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+[0]PETSC ERROR: ------------------------------------------------------------------------
+[0]PETSC ERROR: User provided function() line 0 in unknown directory unknown file
+[atl1-1-02-012-34-1.pace.gatech.edu:mpi_rank_4][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 4: No such file or directory (2)
+[atl1-1-02-012-34-1.pace.gatech.edu:mpi_rank_2][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 2: No such file or directory (2)
+[atl1-1-02-012-34-1.pace.gatech.edu:mpi_rank_6][MPIDI_CH3_Abort] application called MPI_Abort(MPI_COMM_WORLD, 59) - process 6: No such file or directory (2)
+---------------------------------------
+Begin Slurm Epilog: May-20-2024 09:10:10
+Job ID:        133857
+Array Job ID:  _4294967294
+User ID:       smanasreh6
+Account:       gts-sbryngelson3
+Job name:      run2.sh
+Resources:     cpu=24,mem=48G,node=1
+Rsrc Used:     cput=00:18:24,vmem=60304K,walltime=00:00:46,mem=7100K,energy_used=0
+Partition:     cpu-small
+QOS:           embers
+Nodes:         atl1-1-02-012-34-1
+---------------------------------------
