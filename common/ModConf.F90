@@ -437,7 +437,7 @@ contains
   end subroutine DomainDecomp
 
 !**********************************************************************
-! Wheather a source point make contribution to the local domain
+! Whether a source point make contribution to the local domain
   function Is_Source(x)
     real(WP) :: x(3)
     logical :: Is_Source

@@ -210,9 +210,9 @@ contains
       write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat + 1, '  J=', nlon + 1, '  F=POINT'
 
       do ilon = 1, nlon
-      do ilat = 0, nlat
-        write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
-      end do ! ilat
+        do ilat = 0, nlat
+          write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
+        end do ! ilat
       end do ! ilon
       do ilat = 0, nlat
         write (cell_unit, '(3F20.10)') x(ilat, 1, :)

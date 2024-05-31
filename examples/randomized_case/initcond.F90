@@ -244,7 +244,7 @@ contains
     zv(2) = v2*2*sqrt(1 - vsq)
     zv(3) = 1 - (2*vsq)
 
-    !generate rotation matrix
+    !generate rotation matrix R
     rotmat = RotateMatrix(zv) !(/ 0., 1., 0./))
 
     !rotate cell with rotmat
