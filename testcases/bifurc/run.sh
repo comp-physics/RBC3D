@@ -7,7 +7,7 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/benchmark.log"
+#SBATCH -o "./run_logs/straightline.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -17,14 +17,14 @@ rm -rf r*
 rm -rf w*
 cd ../
 
-ml gcc mvapich2 netcdf-c netcdf-cxx netcdf-fortran fftw
+ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
 cd ../../common
 make clean
 make .depend
 make
 
-cd ../mycases/case_wbcs
+cd ../testcases/bifurc
 make clean
 make .depend
 make

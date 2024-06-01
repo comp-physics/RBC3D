@@ -32,19 +32,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * For a manual mkl install, we recommend installing inside a packages directory. Creating an `MKL_ROOT` variable in `Makefile.in` may be necessary too. It should be set to the path of the `/mkl` directory.
 * Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl, but the [mkl link line advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.9hbhed) should provide the correct link options.
 
-### BLAS
-
-* Make a packages directory inside the RBC3D directory: `mkdir packages`
-* Move back into the packages: `cd packages`
-* Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
-* Unpack it: `tar -xvf blas-3.11.0.tgz`
-* `cd BLAS-3.11.0`
-* Modify `make.inc` line 18 as `FC = mpif90`
-* Execute `make`, which will create the library file `blas_LINUX.a`
-* Later, You will need the absolute path of `blas_LINUX.a` to configure `petsc-lite`
-   * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
-
-### LAPACK
+### LAPACK and BLAS
 
 * Move back into packages: `cd RBC3D/packages`
 * Download the latest lapack (at time of writing `3.11`): `wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz`
@@ -55,8 +43,9 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
    * `FC = mpif90` (line 20)
 * `mv make.inc.example make.inc`
 * Build (this takes a few minutes): `make`
-* Later, You will need the absolute path of `liblapack.a` to configure `petsc-lite`
+* Later, You will need the absolute path of `liblapack.a` and `librefblas.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a`
+   * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/librefblas.a`
 
 ### Valgrind
 
@@ -82,7 +71,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc` then cd back into `petsc-3.0.0-p3`
 * Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc), and notice the `--with-mpiexec=srun` line where you should replace `srun` with what is relevant for your system (`srun` if available, `mpirun` or `mpiexec` are two other options):
 ```
-./configure --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native' --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
+./configure --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native' --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/librefblas.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
 ```
 * Build: `make` 
 * Install: `make install`

@@ -45,7 +45,8 @@ program test
 
     print *, "b: ", b
 
-    call QuadFit_2D(A, b, x0, x1, x2, x11, x12, x22, timeit)
+    ! call QuadFit_2D(A, b, x0, x1, x2, x11, x12, x22, timeit)
+    call QuadFit_2D(A, b, x0, x1, x2, x11, x12, x22)
 
     print *, 'Computed coefficients:'
     print *, 'x0  = ', x0

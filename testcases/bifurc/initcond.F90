@@ -19,7 +19,7 @@ program InitCond
   type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3)
   integer :: nlat0, ii
-  real(WP) :: th, xc(3)
+  real(WP) :: th, xc(3), rand(8, 3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, dealias
   integer, parameter :: ranseed = 49
@@ -36,7 +36,7 @@ program InitCond
   nwall = 1
   wall => walls(1)
 
-  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
+  call ReadWallMesh('Input/fullbifurc.e', wall)
   actlen = 13.33
 
   nrbc = 8
@@ -45,17 +45,18 @@ program InitCond
   phi = 70/real(100)
   lengtube = nrbc/real(phi) !XXLL
 
-  lengspacing = lengtube/Real(nrbc)
+  ! lengspacing = lengtube/Real(nrbc)
+  lengspacing = 1.8
 
   wall%f = 0.
 
-  do i = 1, wall%nvert
-    th = ATAN2(wall%x(i, 1), wall%x(i, 2))
-    ! 10 is the new tube diameter
-    wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
-    wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
-    wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
-  end do
+  ! do i = 1, wall%nvert
+  !   th = ATAN2(wall%x(i, 1), wall%x(i, 2))
+  !   ! 10 is the new tube diameter
+  !   wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+  !   wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+  !   wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
+  ! end do
 
   xmin = minval(wall%x(:, 1))
   xmax = maxval(wall%x(:, 1))
@@ -71,7 +72,9 @@ program InitCond
   Lb(2) = Lb(1)
   Lb(3) = zmax - zmin
   lengtube = Lb(3)
-  lengspacing = lengtube/real(nrbc)
+  ! lengspacing = lengtube/real(nrbc)
+
+  print *, "lengtube: ", lengtube
 
   ! reference cell
   xc = 0.
@@ -98,8 +101,6 @@ program InitCond
     rbc%xc = xc
     print *, "PLACE rbc%xc(:)", rbc%xc(:)
 
-    th = PI / (nrbc - (iz - 1))
-    call Rotate2(rbc, th)
   end do
 
   ! Put things in the middle of the periodic box
@@ -181,83 +182,5 @@ contains
     end do
 
   end subroutine Recenter_Cells_and_Walls
-
-  subroutine Rotate(cell)
-    type(t_Rbc) :: cell
-    integer :: ilat, ilon, i, j, ii
-    real(WP) :: vec(3), rotmat(3, 3), vecog(3)
-    real(WP) :: vsq, v1, v2, zv(3)
-
-    ! vsq = 10
-    ! do while (vsq .ge. 1)
-    !   v1 = RandomNumber(ranseed)*2 - 1
-    !   v2 = RandomNumber(ranseed)*2 - 1
-    !   vsq = v1**2 + v2**2
-    ! end do
-    ! zv(1) = v1*2*sqrt(1 - vsq)
-    ! zv(2) = v2*2*sqrt(1 - vsq)
-    ! zv(3) = 1 - (2*vsq)
-
-    print *, "cell%xc(3) before: ", cell%xc(:)
-
-    vec = (/6, 9, 3/)
-    print *, "VecNorm(vec): ", VecNorm(vec)
-    vec = vec / VecNorm(vec)
-    print *, "vec: ", vec
-    rotmat = RotateMatrix(vec)
-
-    do ii = 1, 3
-      cell%x(:, :, ii) = cell%x(:, :, ii) - cell%xc(ii)
-    end do ! ii
-
-    forall (i=1:cell%nlat, j=1:cell%nlon)
-      cell%x(i, j, :) = matmul(rotmat, cell%x(i, j, :))
-    end forall
-
-    do ii = 1, 3
-      cell%x(:, :, ii) = cell%x(:, :, ii) + cell%xc(ii)
-    end do ! ii
-
-    ! do ilat = 1, cell%nlat
-    !   do ilon = 1, cell%nlon
-    !     cell%x(ilat, ilon, :) = reshape(matmul(cell%x(ilat, ilon, :), mat), (/3/))
-    !   end do
-    ! end do
-
-    print *, "cell%xc(3) after: ", cell%xc(:)
-
-  end subroutine Rotate
-
-  ! rotate by specific angle theta instead of arbitrary unit vector
-  subroutine Rotate2(cell, theta)
-    type(t_Rbc) :: cell
-    real(WP) :: theta, rotmat(3, 3), first(3), second(3), third(3), v(3), k(3)
-    real(WP) :: khat, temp(3)
-    integer :: ilat, ilon
-
-    k = (/1, 0, 0/)
-    k = k / VecNorm(k)
-
-    print *, "theta", theta
-
-    do ii = 1, 3
-      cell%x(:, :, ii) = cell%x(:, :, ii) - cell%xc(ii)
-    end do ! ii
-
-    do ilat = 1, cell%nlat
-      do ilon = 1, cell%nlon
-        v = cell%x(ilat, ilon, :)
-        first = v * COS(theta) 
-        second = CrossProd(k, v) * SIN(theta)
-        third = k*dot_product(k, v) * (1 - COS(theta))
-        cell%x(ilat, ilon, :) = first + second + third
-      end do         
-    end do
-
-    do ii = 1, 3
-      cell%x(:, :, ii) = cell%x(:, :, ii) + cell%xc(ii)
-    end do ! ii
-    
-  end subroutine Rotate2
 
 end program InitCond
