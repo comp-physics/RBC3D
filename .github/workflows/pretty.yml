@@ -2,9 +2,6 @@ name: Pretty
 
 on:
   push:
-
-  pull_request:
-
   workflow_dispatch:
 
 jobs:

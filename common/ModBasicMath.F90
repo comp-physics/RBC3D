@@ -126,7 +126,7 @@ contains
     ! print *, "b: ", b
     ! print *, "c1: ", c1
     ! print *, "c: ", c
-    
+
     forall (i=1:3, j=1:3) mat(i, j) = a(i)*a(j) + b1(i)*b(j) + c1(i)*c(j)
 
     ! print *, "mat: "
@@ -236,7 +236,7 @@ contains
   end subroutine QuadFit_1D
 
 !**********************************************************************
-! 2D Quadratic fit 
+! 2D Quadratic fit
 ! Uses least squares normal equation method
 ! Arguments:
 !  x(i,:), f(i) -- coordinates and functional value of the i-th point
