@@ -7,7 +7,7 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/montecarlo5.log"
+#SBATCH -o "./run_logs/montecarlo3.log"
 
 cd $SLURM_SUBMIT_DIR
 
@@ -24,11 +24,9 @@ make clean
 make .depend
 make
 
-cd ../testcases/bifurc_p
+cd ../testcases/bifurc_p2
 make clean
 make .depend
 make
 # srun -n 1 ./initcond
 srun ./tube
-
-sbatch run.sh

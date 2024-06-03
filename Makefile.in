@@ -6,6 +6,7 @@ PETSC_DIR = $(WORK_DIR)/packages/mypetsc
 include $(PETSC_DIR)/conf/variables
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
+BLAS_DIR = $(WORK_DIR)/packages/lapack-3.11
 # LAPACK_LIB = -L$(MKL_ROOT)/lib/ -lmkl_core -lmkl_rt -lstdc++ -lpthread -lm -ldl
 # BLAS_DIR = $(WORK_DIR)/packages/BLAS-3.11.0
 
@@ -33,8 +34,8 @@ NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
 PETSC_LIB = -L$(PETSC_DIR)/lib $(PETSC_KSP_LIB_BASIC)
 MKL_LIB = -L$(MKL_ROOT)lib/intel64/ -lmkl_gf_lp64 -lmkl_core -lmkl_sequential -lpthread -lm -ldl
 # LAPACK_LIB = -L$(MKLROOT)/lib/intel64 -lmkl_gf_lp64 -lmkl_gnu_thread -lmkl_core -lpthread -lrt
-# BLAS_LIB = -L$(BLAS_DIR) -lblas --verbose
-LAPACK_LIB = -L$(LAPACK_DIR) -llapack
+BLAS_LIB = -L$(BLAS_DIR) -lrefblas
+LAPACK_LIB = -L$(LAPACK_DIR) -llapack -lrefblas
 
 # Compiler and linker
 FC = mpif90
