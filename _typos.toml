@@ -10,4 +10,4 @@ AttributeIDSupressMenu = "AttributeIDSupressMenu"
 
 [default.extend-words]
 # Don't correct the surname "Teh"
-teh = "iy"
+iy = "iy"
