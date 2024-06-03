@@ -198,7 +198,7 @@ module ModDataStruct
 !  nPoint  -- number of points
 !  x(i,:) -- coordinate of the i-th point
 !  f(i,:) -- force singularity at the i-th point
-!  g(i,:) -- double-layer potential source singularity at the i-th piont
+!  g(i,:) -- double-layer potential source singularity at the i-th point
 !  a3(i,:) -- normal direction
 !  lam(i) -- viscRatio
 !
