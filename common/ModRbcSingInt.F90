@@ -23,7 +23,7 @@ module ModRbcSingInt
 contains
 
 !**********************************************************************
-! Comptue the correction due to singular integration
+! Compute the correction due to singular integration
 ! Arguments:
 !  dv -- correction to the simple point-point sum
   subroutine RBC_SingInt(c1, c2, rbc, ilat0, ilon0, dv)
@@ -47,7 +47,7 @@ contains
     !  The spline interpolation of surface coordinates does not exactly
     !  coincide with the orignal ones on mesh points.
     !
-    !  Since the coordinates of quadrature poins are by interpolation, we
+    !  Since the coordinates of quadrature points are by interpolation, we
     !  should also use interpolation for the target point position, even
     !  though the target point.
     !
@@ -187,7 +187,7 @@ contains
     ! Initialize
     dv = 0.
 
-    ! Substract the imporperly added contribution from the surface
+    ! subtract the imporperly added contribution from the surface
     allocate (ijsPat(rbc%nlat*rbc%nlon, 2))
     call PolarPatch_FindPoints(th0, phi0, radPat, rbc%th, rbc%phi, nptPat, ijsPat)
 

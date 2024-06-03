@@ -58,7 +58,7 @@ contains
 
     ! Initialize the solver
     if (.not. solver_inited) then
-      ! Calcuate matrix size
+      ! Calculate matrix size
       dof = 0
       do irbc = 1, nrbc
         rbc => rbcs(irbc)
@@ -382,7 +382,7 @@ contains
       ! w \cross (x-xc)
       !
       ! All are includeded in the GS orthonomalization for simplicity...
-      !  ... it would be straighforward to normalize the translation
+      !  ... it would be straightforward to normalize the translation
       do ilon = 1, nlon
         do ilat = 1, nlat
 

@@ -428,7 +428,7 @@ contains
   end subroutine BsplineFunc
 
 !**********************************************************************
-! Random number generator, copied from Numerical Recipies
+! Random number generator, copied from Numerical Recipes
   function RandomNumber(idum)
     integer, intent(IN), optional :: idum
     real(WP)        :: RandomNumber

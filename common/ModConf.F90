@@ -493,7 +493,7 @@ contains
   end function Cell_Has_Source
 
 !**********************************************************************
-! Wheather a triangle has active source points
+! Whether a triangle has active source points
 ! Arguments:
 !  x(i,:) -- the coordinates of the i-th vertex
   function Tri_Has_Source(x) result(hasSource)

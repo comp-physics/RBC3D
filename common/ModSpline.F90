@@ -206,7 +206,7 @@ contains
 
     integer :: iter
     integer, parameter :: iterMax = 3
-    integer, parameter :: nth = 2   ! number of points on the patch arond (th0, phi0)
+    integer, parameter :: nth = 2   ! number of points on the patch around (th0, phi0)
     integer, parameter :: nphi = 8
     real(WP) :: h
     real(WP) :: thPat_L(nth), phiPat_L(nphi), thPat(nth, nphi), phiPat(nth, nphi)

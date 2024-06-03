@@ -16,7 +16,7 @@ Then, modify the `./Input/tube.in` configuration file to match the restart file'
 
 ### Output File
 
-After runnning the simulation, you will receive an output file `./D/field.csv`. This file contains the following comma-separated columns:
+After running the simulation, you will receive an output file `./D/field.csv`. This file contains the following comma-separated columns:
 
 X | Y | Z | Vx | Vy | Vz
 

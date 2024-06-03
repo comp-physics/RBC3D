@@ -116,7 +116,7 @@ contains
 
     v = RESHAPE(vs, SHAPE(v))
     v(:, :, 3) = v(:, :, 3) - vBkg(3)
-    !    v(:,:,:,3) = v(:,:,:,3) - vl(3)  ! substract leuk velocity
+    !    v(:,:,:,3) = v(:,:,:,3) - vl(3)  ! subtract leuk velocity
 
     call writeVel(Ny, Nz, v, x)
 

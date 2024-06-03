@@ -56,7 +56,7 @@ contains
 
     ! Initialize the solver
     if (.not. solver_inited) then
-      ! Calcuate system size
+      ! Calculate system size
       npoint = 0
       dof = 0
       do iwall = 1, nwall

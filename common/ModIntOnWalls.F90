@@ -161,7 +161,7 @@ contains
   end subroutine SingIntOnWall
 
 !**********************************************************************
-! Prepare for the self-intergration on the wall
+! Prepare for the self-integration on the wall
 ! Arguments:
 !  wall --
 !
@@ -279,7 +279,8 @@ contains
             ivert = wall%e2v(iele, l)
             icols = (/ivert, ivert + nvert, ivert + 2*nvert/) - 1
             values = reshape(transpose(lhs(l, :, :)), (/9/))
-            call MatSetValues(wall%lhs, 3, irows, 3, icols, values, ADD_VAlUES, ierr)
+            ! PETSc InsertMode param wrong?
+            call MatSetValues(wall%lhs, 3, irows, 3, icols, values, ADD_VALUES, ierr)
           end do ! l
 
 999       j = slist%next(j)
@@ -299,7 +300,7 @@ contains
 !**********************************************************************
 ! Compute the regular surface integral over a triangle
 ! Arguments:
-!  x(i,:), f(i,:) -- trianglular vertex coordinates and force densities
+!  x(i,:), f(i,:) -- triangular vertex coordinates and force densities
 !  xtar -- target point
 !  rhs -- integration
 !  lhs -- influence matrix
@@ -354,7 +355,7 @@ contains
 !**********************************************************************
 ! Use Duffy's rule to compute the surface integral over a triangle
 ! Arguments:
-!  x(i,:), f(i,:) -- trianglular vertex coordinates and force densities
+!  x(i,:), f(i,:) -- triangular vertex coordinates and force densities
 !  xtar -- target point
 !  (s0, t0) -- reference coordinate of the nearest point to xtar
 !  rhs -- rhs

@@ -165,7 +165,7 @@ contains
         thi = rbc%th(ilat)
         phii = rbc%phi(ilon)
 
-        ! Set distance threshhold
+        ! Set distance threshold
         epsDist = 2*sqrt(rbc%area)/rbc%nlat
         epsDistRef = rbc%patch%radius
 
@@ -234,7 +234,7 @@ contains
       end do ! i
     end if
 
-    ! Output informaion
+    ! Output information
     call MPI_AllReduce(distMin, distMin_Glb, 1, MPI_WP, MPI_MIN, MPI_COMM_WORLD, ierr)
     call MPI_AllReduce(cntDf, cntDf_Glb, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD, ierr)
 
@@ -304,7 +304,7 @@ contains
         xi = tlist%x(i, :)
         surfId_i = tlist%indx(i, 0)
 
-        ! Set up distance threshhold
+        ! Set up distance threshold
         rbc => rbcs(surfId_i)
 
         call Closest_Neighbor_Cell(xi, surfId_i, epsDist, x1, dist1)
@@ -474,7 +474,7 @@ contains
 ! Argument:
 !  xi -- the point
 !  surfId_i -- ID of the surface that xi(:) lies on
-!  epsDist -- distance threshhold
+!  epsDist -- distance threshold
 !  x0 -- projection of x0 on the closest neighbor surface
 !  dist0 -- ||xi - x0||
   subroutine Closest_Neighbor_Cell(xi, surfId_i, epsDist, x0, dist0)
@@ -550,7 +550,7 @@ contains
 ! Arguments:
 !  xi -- the point
 !  surfId_i -- ID of the surface that xi lies on
-!  epsDist -- distance threshhold
+!  epsDist -- distance threshold
 !  x0 -- the projection of xi on the closest neighboring wall
 !  dist0 -- ||xi -x0||
   subroutine Closest_Neighbor_Wall(xi, surfId_i, epsDist, x0, dist0)

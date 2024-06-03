@@ -141,7 +141,7 @@ module ModDataStruct
 ! nrad, nazm -- number of patch points along radial and
 !       azimuthal directions
 ! thL, phiL -- local coordiantes of patch mesh points
-! w -- weight of integration weight (including masking fucntion)
+! w -- weight of integration weight (including masking function)
 ! thG(:,:,i,j), phiG(:,:,i,j) -- global latitudinal and longitudinal
 !       coordinates of a patch centered at (i,j)-th mesh point
   type t_RbcPolarPatch
@@ -172,7 +172,7 @@ module ModDataStruct
 !
 ! a3 -- element normal
 ! area -- element area
-! epsDist -- threshhold distance for singular integration
+! epsDist -- threshold distance for singular integration
 ! areaTot -- total surface area
 !
 ! lhs -- lhs matrix for no-slip boundary condition
@@ -207,7 +207,7 @@ module ModDataStruct
 !     for wall surface, (surfId, iele, -1)
 !
 !  Nc -- number of cells
-!  iLbNc -- Nc/Lb, for indentifying which cell a point lies in
+!  iLbNc -- Nc/Lb, for identifying which cell a point lies in
 !  hoc -- first point in the cell
 !  next -- next point
   type t_SourceList
@@ -227,7 +227,7 @@ module ModDataStruct
 !  nPoint -- number of points
 !  x -- coordinate and velocities of points
 !  indx -- same as those in t_SourceList
-!  active -- wheather the target point is active
+!  active -- Whether the target point is active
   type t_TargetList
     integer :: nPoint
     real(WP), pointer, dimension(:, :) :: x
