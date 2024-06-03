@@ -45,7 +45,7 @@ contains
     ! Add integrals on the local patch
     ! Note:
     !  The spline interpolation of surface coordinates does not exactly
-    !  coincide with the orignal ones on mesh points.
+    !  coincide with the original ones on mesh points.
     !
     !  Since the coordinates of quadrature points are by interpolation, we
     !  should also use interpolation for the target point position, even

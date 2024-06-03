@@ -635,7 +635,7 @@ contains
 !
 ! Important:
 !   For the spherical harmonic coefficiets array, the first dimension
-!   is for longitudinal direciton, while the second is for the colatitudinal
+!   is for longitudinal direction, while the second is for the colatitudinal
 !   direction.
   subroutine Glob_Sph_Trans(v, c, direction)
     real(WP) :: v(:, :), c(:)

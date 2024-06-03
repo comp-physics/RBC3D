@@ -20,7 +20,7 @@ contains
 ! Create a wall
 ! Arguments:
 !  wall --
-!  nvert, nele -- number of vertices andd elements
+!  nvert, nele -- number of vertices and elements
   subroutine Wall_Create(wall, nvert, nele)
     type(t_wall) :: wall
     integer :: nvert, nele

@@ -140,7 +140,7 @@ module ModDataStruct
 ! radius -- patch radius
 ! nrad, nazm -- number of patch points along radial and
 !       azimuthal directions
-! thL, phiL -- local coordiantes of patch mesh points
+! thL, phiL -- local coordinates of patch mesh points
 ! w -- weight of integration weight (including masking function)
 ! thG(:,:,i,j), phiG(:,:,i,j) -- global latitudinal and longitudinal
 !       coordinates of a patch centered at (i,j)-th mesh point

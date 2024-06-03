@@ -68,7 +68,7 @@ CONTAINS
       end do
     end if
 
-    pointsR(0, 1) = 1  !indicies of R on processor
+    pointsR(0, 1) = 1  !indices of R on processor
     pointsR(0, 2) = chunkR(0)
     pointsT(0, 1) = 1
     pointsT(0, 2) = chunkT(0)

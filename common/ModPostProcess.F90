@@ -22,7 +22,7 @@ module ModPostProcess
 contains
 
 !**********************************************************************
-! Compute the velocity on an abitrary point sets
+! Compute the velocity on an arbitrary point sets
 ! Arguments:
 !  tlist -- the target list
 !  v(:,:) -- velocities
