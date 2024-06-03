@@ -31,7 +31,7 @@ contains
   !**********************************************************************
   subroutine InitAll
 
-    ! System intialization
+    ! System initialization
     call InitMPI()
     call GaussQuad_Init
     call ReadConfig('Input/tube.in')
