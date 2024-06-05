@@ -7,7 +7,8 @@
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/montecarlo3.log"
+#SBATCH -o "./run_logs/torus.log"
+#SBATCH --open-mode=append
 
 cd $SLURM_SUBMIT_DIR
 
@@ -30,3 +31,5 @@ make .depend
 make
 # srun -n 1 ./initcond
 srun ./tube
+
+sbatch run.sh

@@ -23,11 +23,12 @@ program InitCond
   real(WP) :: th, xc(3)! , rand(16, 3), thetas(16)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, dealias
-  integer, parameter :: ranseed = 121842
+  integer, parameter :: ranseed = 49765
   character(CHRLEN) :: fn
   real :: lengtube, lengspacing, phi, actlen
   integer :: ierr
   real(WP), allocatable :: rand(:,:), thetas(:)
+  real(WP) :: xs(12), zs(12)
 
   ! Initialize
   call InitMPI
@@ -42,7 +43,7 @@ program InitCond
   call ReadWallMesh('Input/fullbifurc.e', wall)
   actlen = 13.33
 
-  nrbc = 16
+  nrbc = 26
   nlat0 = 12
   dealias = 3
   phi = 70/real(100)
@@ -52,7 +53,7 @@ program InitCond
   allocate (thetas(nrbc))
 
   ! lengspacing = lengtube/Real(nrbc)
-  lengspacing = 1.8
+  lengspacing = 2
 
   wall%f = 0.
 
@@ -118,20 +119,34 @@ program InitCond
 
   print *, "16x1 thetas array", thetas(:)
 
+  xs = (/6., 5.196, 3.527, -3.527, -5.196, -6., 6., 5.196, 3.527, -3.527, -5.196, -6./)
+  zs = (/22.625, 25.625, 27.821, 27.821, 25.625, 22.625, 20.375, 17.374, 15.179, 15.179, 17.375, 20.375/)
+
   ! place rbcs in a line along z-axis
   do iz = 1, nrbc
-    ! if ((iz .ge. 7) .and. (iz .le. 10)) then
-    !   print *, "iz", iz, "moved 2x dist in x direction"
-    !   xc(1) = 2*rand(iz, 1)
-    ! else 
-    !   xc(1) = rand(iz, 1)
-    ! end if
-    xc(1) = rand(iz, 1)
-    xc(2) = rand(iz, 2)
-    if (iz .le. 8) then
-      xc(3) = lengspacing*1.2*(iz - 0.5) - (rand(iz, 3) / 2)
+    if (iz .le. 14) then
+      if ((iz .eq. 6) .or. (iz .eq. 9)) then
+        print *, "iz", iz, "moved 1.5x dist in x direction"
+        xc(1) = 1.4*rand(iz, 1)
+      else
+        xc(1) = rand(iz, 1)
+      end if
+      ! xc(1) = rand(iz, 1)
+      xc(2) = rand(iz, 2)
+      if (iz .le. 7) then
+        ! xc(3) = lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
+        if (iz .eq. 7) then
+          xc(3) = lengspacing*1.2*(iz - 0.5) - (rand(iz, 3) / 3)
+        else
+          xc(3) = lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
+        end if
+      else
+        xc(3) = 9 + lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
+      end if
     else
-      xc(3) = 9 + lengspacing*1.2*(iz - 0.5) - (rand(iz, 3) / 2)
+      xc(1) = xs(iz - 14)
+      xc(2) = 0
+      xc(3) = zs(iz - 14)
     end if
     
     print *, 'Xc', iz, xc
@@ -142,7 +157,8 @@ program InitCond
     call Rbc_MakeBiConcave(rbc, radEqv, xc)
     rbc%xc = xc
 
-    call Rotate2(rbc, thetas(iz))
+    ! call Rotate2(rbc, thetas(iz))
+    call Rotate(rbc)
   end do
 
   ! Put things in the middle of the periodic box
@@ -241,7 +257,7 @@ contains
     zv(2) = v2*2*sqrt(1 - vsq)
     zv(3) = 1 - (2*vsq)
 
-    print *, "cell%xc(3) before: ", cell%xc(:)
+    ! print *, "cell%xc(3) before: ", cell%xc(:)
 
     ! vec = (/6, 9, 3/)
     ! print *, "VecNorm(vec): ", VecNorm(vec)
@@ -267,7 +283,7 @@ contains
     !   end do
     ! end do
 
-    print *, "cell%xc(3) after: ", cell%xc(:)
+    ! print *, "cell%xc(3) after: ", cell%xc(:)
 
   end subroutine Rotate
 
