@@ -146,7 +146,7 @@ contains
     integer :: Mat_m, Mat_n
 
     nrow = 3*wall%nvert
-    
+
     allocate (irows(nrow))
     allocate (f1D(nrow))
     allocate (v1D(nrow))
@@ -159,7 +159,6 @@ contains
     irows = (/(i, i=0, nrow - 1)/)
     call VecSetValues(f_vec, nrow, irows, f1D, INSERT_VALUES, ierr)
     call VecAssemblyBegin(f_vec, ierr)
-
 
     call MatMult(wall%lhs, f_vec, lhsf_vec, ierr)
     call VecGetValues(lhsf_vec, nrow, irows, v1D, ierr)

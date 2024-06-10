@@ -1,1 +1,1 @@
-include ../Makefile.sub
+include ../Makefile.mkl
