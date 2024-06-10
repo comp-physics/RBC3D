@@ -167,7 +167,7 @@ contains
           do ivert = 1, wall%nvert
             do ilat = 1, rbc%nlat
               do ilon = 1, rbc%nlon
-                currDist = VecNorm((rbc%x(ilat, ilon, :)) - (wall%x(ivert, :)))
+                currDist = NORM2((rbc%x(ilat, ilon, :)) - (wall%x(ivert, :)))
                 if (currDist .le. minDist) then
                   minDist = currDist
                   cellPoint = rbc%x(ilat, ilon, :)

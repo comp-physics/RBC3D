@@ -7,7 +7,7 @@ module ModBasicMath
 
   private
 
-  public :: VecNorm, &
+  public :: VecNormL2, &
             CrossProd, &
             InvMat2, &
             InvMat3, &
@@ -27,12 +27,12 @@ contains
 !**********************************************************************
 ! L2 norm of a vector
 ! |a|
-  function VecNorm(a) result(c)
+  function VecNormL2(a) result(c)
     real(WP) :: a(:), c
 
     c = sqrt(sum(a*a))
 
-  end function VecNorm
+  end function VecNormL2
 
 !**********************************************************************
 ! Cross product of two vectors

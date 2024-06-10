@@ -12,12 +12,13 @@ program cells_in_tube
   use ModBasicMath
   use ModQuadRule
 
+#include "petsc/finclude/petsc.h"
+  use petsc
+
   implicit none
   integer :: cutoff
   character(CHRLEN) :: fn
-
-#include "../../petsc_include.h"
-
+  
   call InitAll
 
   call TimeInt_Euler

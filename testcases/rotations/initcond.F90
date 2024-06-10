@@ -201,8 +201,8 @@ contains
     print *, "cell%xc(3) before: ", cell%xc(:)
 
     vec = (/6, 9, 3/)
-    print *, "VecNorm(vec): ", VecNorm(vec)
-    vec = vec/VecNorm(vec)
+    print *, "NORM2(vec): ", NORM2(vec)
+    vec = vec/NORM2(vec)
     print *, "vec: ", vec
     rotmat = RotateMatrix(vec)
 
@@ -236,7 +236,7 @@ contains
     integer :: ilat, ilon
 
     k = (/1, 0, 0/)
-    k = k/VecNorm(k)
+    k = k/NORM2(k)
 
     print *, "theta", theta
 

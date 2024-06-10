@@ -5,6 +5,9 @@ module ModConf
   use ModDataTypes
   use ModDataStruct
 
+#include "petsc/finclude/petsc.h"
+  use petsc
+
   implicit none
 
   ! Domain size
@@ -108,7 +111,6 @@ contains
   subroutine InitMPI(split_comm)
     logical, optional :: split_comm
 
-#include "../petsc_include.h"
     integer :: numNodes, nodeNum
     character(MPI_Max_Processor_Name) :: machinename
     integer :: lenname
@@ -207,8 +209,6 @@ contains
 !**********************************************************************
 ! Finalize MPI and PETSc
   subroutine FinalizeMPI
-
-#include "../petsc_include.h"
     integer :: ierr
 
     if (MPI_COMM_Ewald /= MPI_COMM_WORLD) then

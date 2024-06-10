@@ -10,6 +10,9 @@ module ModIntOnWalls
   use ModBasicMath
   use ModEwaldFunc
 
+#include "petsc/finclude/petsc.h"
+  use petsc
+
   implicit none
 
   private
@@ -134,30 +137,40 @@ contains
     real(WP) :: c1
     type(t_Wall) :: wall
     real(WP) :: v(:, :)
+    real(WP), allocatable :: v1D(:), f1D(:)
 
-#include "../petsc_include.h"
-    integer :: nrow, i
+    integer :: nrow, i, j
     integer, allocatable :: irows(:)
     Vec :: f_vec, lhsf_vec
     integer :: ierr
+    integer :: Mat_m, Mat_n
 
     nrow = 3*wall%nvert
+    
     allocate (irows(nrow))
+    allocate (f1D(nrow))
+    allocate (v1D(nrow))
+
+    f1D = reshape(wall%f, (/nrow/))
+
     call VecCreateSeq(PETSC_COMM_SELF, nrow, f_vec, ierr)
     call VecCreateSeq(PETSC_COMM_SELF, nrow, lhsf_vec, ierr)
 
     irows = (/(i, i=0, nrow - 1)/)
-    call VecSetValues(f_vec, nrow, irows, wall%f, INSERT_VALUES, ierr)
+    call VecSetValues(f_vec, nrow, irows, f1D, INSERT_VALUES, ierr)
     call VecAssemblyBegin(f_vec, ierr)
+
+
     call MatMult(wall%lhs, f_vec, lhsf_vec, ierr)
-    call VecGetValues(lhsf_vec, nrow, irows, v, ierr)
+    call VecGetValues(lhsf_vec, nrow, irows, v1D, ierr)
+
+    v = reshape(v1D, (/wall%nvert, 3/))
 
     v = c1*v
 
     call VecDestroy(f_vec, ierr)
     call vecDestroy(lhsf_vec, ierr)
-    deallocate (irows)
-
+    deallocate (irows, f1D, v1D)
   end subroutine SingIntOnWall
 
 ! !**********************************************************************
@@ -195,7 +208,7 @@ contains
 !     !   call MatGetSize(wall%lhs, Mat_m, Mat_n, ierr)
 !     !   print *, "Mat_m, Mat_n", Mat_m, Mat_n
 !     ! end if
-    
+
 !     allocate (irows(nrow))
 !     allocate (f1D(nrow))
 !     allocate (v1D(nrow))
@@ -234,7 +247,6 @@ contains
   subroutine PrepareSingIntOnWall(wall)
     type(t_wall) :: wall
 
-#include "../petsc_include.h"
     type(t_targetlist), pointer :: tlist
     type(t_sourcelist), pointer :: slist
     integer :: nvert, nrow
@@ -296,7 +308,8 @@ contains
       end do ! j1
     end do ! i
 
-    nnz = nnz*2    ! a very conservative estimate
+    ! nnz = nnz*2    ! a very conservative estimate
+    nnz = nnz*12    ! a very conservative estimate
     call MatCreateSeqAIJ(PETSC_COMM_SELF, nrow, nrow, 0, nnz, wall%lhs, ierr)
 
     ! Assemble the matrix

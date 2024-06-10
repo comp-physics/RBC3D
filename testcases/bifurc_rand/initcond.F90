@@ -307,7 +307,7 @@ contains
 
           sp = walls(i2)%x(j2, :)
 
-          if (VecNorm(c1p - sp) .lt. threshold) then
+          if (NORM2(c1p - sp) .lt. threshold) then
             check_wall_collision = .true.
             return
           end if
@@ -334,7 +334,7 @@ contains
     check_cell_collision = .false.
 
     !first check the centers; if distance > 4 then we are sure that they don't collide
-    if (VecNorm(cell1%xc - cell2%xc) .ge. 4) return
+    if (NORM2(cell1%xc - cell2%xc) .ge. 4) return
 
     !each point in cell1
     do i = 1, cell1%nlat

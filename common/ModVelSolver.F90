@@ -13,9 +13,10 @@ module ModVelSolver
   use ModTargetList
   use ModSphPk
 
-  implicit none
+#include "petsc/finclude/petsc.h"
+  use petsc
 
-#include "../petsc_include.h"
+  implicit none
 
   Mat :: mat_lhs
   Vec :: vec_rhs, vec_sol
@@ -77,15 +78,16 @@ contains
       call MatShellSetOperation(mat_lhs, MATOP_MULT, MyMatMult, ierr)
 
       call KSPCreate(PETSC_COMM_SELF, ksp_lhs, ierr)
-      call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, SAME_NONZERO_PATTERN, ierr)
+      ! call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, SAME_NONZERO_PATTERN, ierr)
+      call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, ierr)
       call KSPSetType(ksp_lhs, KSPGMRES, ierr)
       call KSPGetPC(ksp_lhs, pc_lhs, ierr)
       call KSPSetInitialGuessNonzero(ksp_lhs, PETSC_TRUE, ierr)  ! TRIAL
       call PCSetType(pc_lhs, PCNONE, ierr)
 
       call KSPSetTolerances(ksp_lhs, 1.D-11, &
-                            PETSC_DEFAULT_DOUBLE_PRECISION, &
-                            PETSC_DEFAULT_DOUBLE_PRECISION, &
+                            PETSC_DEFAULT_REAL, &
+                            PETSC_DEFAULT_REAL, &
                             200, ierr); print *, "SETTING HIGH MAX ITER/ERR"
 
       solver_inited = .true.

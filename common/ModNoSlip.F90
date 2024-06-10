@@ -13,9 +13,10 @@ module ModNoSlip
   use ModTargetList
   use ModSphPk
 
-  implicit none
+#include "petsc/finclude/petsc.h"
+  use petsc
 
-#include "../petsc_include.h"
+  implicit none
 
   ! npoint -- total number of wall mesh points, with redundancy
   ! dof -- degrees of freedom
@@ -73,7 +74,8 @@ contains
       call MatShellSetOperation(mat_lhs, MATOP_MULT, MyMatMult, ierr)
 
       call KSPCreate(PETSC_COMM_SELF, ksp_lhs, ierr)
-      call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, SAME_NONZERO_PATTERN, ierr)
+      ! call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, SAME_NONZERO_PATTERN, ierr)
+      call KSPSetOperators(ksp_lhs, mat_lhs, mat_lhs, ierr)
       call KSPSetType(ksp_lhs, KSPGMRES, ierr)
       call KSPGetPC(ksp_lhs, pc_lhs, ierr)
 !      call KSPSetInitialGuessNonzero(ksp_lhs, PETSC_TRUE, ierr)  ! TRIAL
@@ -81,7 +83,7 @@ contains
 
       !SHB modify from 1.D-3 to 1.D-6 and now to eps_Ewd
       call KSPSetTolerances(ksp_lhs, eps_Ewd, &
-                            PETSC_DEFAULT_DOUBLE_PRECISION, PETSC_DEFAULT_DOUBLE_PRECISION, &
+                            PETSC_DEFAULT_REAL, PETSC_DEFAULT_REAL, &
                             60, ierr)
 !!$      print *
 !!$      print *, "SMALL WALL ITERATIONS"

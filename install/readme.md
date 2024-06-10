@@ -21,6 +21,8 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
 * Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
+You will also need python3 for the PETSc install and pip modules. On Phoenix, you can module load it via `ml python/3.9.12-rkxvr6`, but you may need to add this to your `~/.bashrc` file if python3 is not working: `export PATH="$PATH:$HOME/.local/bin"`. You have to `source ~/.bashrc` after any changes.
+
 ## Build libraries
 
 ### MKL

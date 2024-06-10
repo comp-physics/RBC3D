@@ -453,7 +453,7 @@ contains
       cell%detj(ilat, ilon) = sqrt(detA)/sin(cell%th(ilat))
 
       a3 = CrossProd(a1, a2)
-      cell%a3(ilat, ilon, :) = a3/VecNorm(a3)
+      cell%a3(ilat, ilon, :) = a3/NORM2(a3)
     end do ! ilat
     end do ! ilon
 

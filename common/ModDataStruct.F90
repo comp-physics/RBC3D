@@ -2,8 +2,10 @@ module ModDataStruct
 
   use ModDataTypes
 
+#include "petsc/finclude/petsc.h"
+  use petsc
+
   implicit none
-#include "../petsc_include.h"
 
   private
 
