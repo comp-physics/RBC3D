@@ -291,7 +291,6 @@ contains
             ivert = wall%e2v(iele, l)
             icols = (/ivert, ivert + nvert, ivert + 2*nvert/) - 1
             values = reshape(transpose(lhs(l, :, :)), (/9/))
-            ! PETSc InsertMode param wrong?
             call MatSetValues(wall%lhs, 3, irows, 3, icols, values, ADD_VALUES, ierr)
           end do ! l
 

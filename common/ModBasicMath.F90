@@ -121,18 +121,7 @@ contains
     b = (/-a(2), a(1), 0._WP/)
     b1 = CrossProd(c1, a)
 
-    ! print *, "a: ", a
-    ! print *, "b1: ", b1
-    ! print *, "b: ", b
-    ! print *, "c1: ", c1
-    ! print *, "c: ", c
-
     forall (i=1:3, j=1:3) mat(i, j) = a(i)*a(j) + b1(i)*b(j) + c1(i)*c(j)
-
-    ! print *, "mat: "
-    ! do i = 1, 3
-    !     print *, mat(i, :)
-    ! end do
 
   end function RotateMatrix
 
