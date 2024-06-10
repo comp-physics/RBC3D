@@ -9,7 +9,6 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
-  ! use MPI
 
   implicit none
 
@@ -39,7 +38,7 @@ program InitCond
 
   tubeDiam = 22.0/2.82 ! 7.8, rad = 4
 
-  nrbc = 25
+  nrbc = 24
   nlat0 = 12
   dealias = 3
   phi = 70/real(100)
@@ -101,7 +100,6 @@ program InitCond
   do j = 1, nrbc
     print *, rand(j, :)
   end do
-
 
   layerx = (/-1.63, 1.63, 0.0/)
   layery = (/-.943, -.943, 1.89/)

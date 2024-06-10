@@ -121,26 +121,26 @@ contains
       rbc => rbcs(irbc)
       select case (rbc%celltype)
       case (1) ! RBCs
-        rbc%ES = shearMod / ((radEqv * 2.82 * 1D-6) * shearRate * plasmaVisc)
+        rbc%ES = shearMod/((radEqv*2.82*1D-6)*shearRate*plasmaVisc)
         ! rbc%ES = 12.4
         rbc%ED = 200.
-        rbc%EB = bendingMod / ((radEqv * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)
+        rbc%EB = bendingMod/((radEqv*2.82*1D-6)**3*shearRate*plasmaVisc)
         ! rbc%EB = 6.69D-2
         if (rootWorld) then
           print *, "case 1: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
         end if
       case (2) ! WBCs
-        rbc%ES = (shearMod * 100) / ((radEqv2 * 2.82 * 1D-6) * shearRate * plasmaVisc)
+        rbc%ES = (shearMod*100)/((radEqv2*2.82*1D-6)*shearRate*plasmaVisc)
         rbc%ED = 200.
-        rbc%EB = bendingMod / ((radEqv2 * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)
+        rbc%EB = bendingMod/((radEqv2*2.82*1D-6)**3*shearRate*plasmaVisc)
         if (rootWorld) then
           print *, "case 2: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES
         end if
       case (3) ! Platelets ! 5 10 10
-        rbc%ES =  (shearMod / ((platExp * 2.82 * 1D-6) * shearRate * plasmaVisc)) / 2.
+        rbc%ES = (shearMod/((platExp*2.82*1D-6)*shearRate*plasmaVisc))/2.
         ! ! rbc%ES   38.89 without scaling
-        rbc%ED = 200. / 5.
-        rbc%EB = (bendingMod / ((platExp * 2.82 * 1D-6)**3 * shearRate * plasmaVisc)) / 10.
+        rbc%ED = 200./5.
+        rbc%EB = (bendingMod/((platExp*2.82*1D-6)**3*shearRate*plasmaVisc))/10.
         ! rbc%EB   2.0576 without scaling
         if (rootWorld) then
           print *, "case 3: rbc%EB", rbc%EB, "rbc%ED", rbc%ED, "rbc%ES", rbc%ES

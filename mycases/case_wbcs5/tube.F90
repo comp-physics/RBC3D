@@ -113,7 +113,7 @@ contains
         rbc%EB = 6.69D-2
       case (2)
         ! print *,"CASE 2 --- celltype"
-        rbc%ES = 1241.0 / 2.0 ! or 124.
+        rbc%ES = 1241.0/2.0 ! or 124.
         rbc%ED = 200.
         rbc%EB = 6.69D-2
       case (3)

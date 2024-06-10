@@ -119,7 +119,7 @@ contains
         !   A spectral boundary integral method for flowing blood cells.
         !   Journal of Computational Physics, 229(10), 3726-3744.
       case (2)
-        rbc%ES = 1241.0 / 2.0
+        rbc%ES = 1241.0/2.0
         rbc%ED = 200.
         rbc%EB = 6.69D-2
 

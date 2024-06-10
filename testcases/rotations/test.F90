@@ -1,33 +1,33 @@
 program test
-    
-    use ModData
-    use ModDataTypes
-    use ModDataStruct
-    use ModBasicMath
 
-    implicit none
+  use ModData
+  use ModDataTypes
+  use ModDataStruct
+  use ModBasicMath
 
-    integer :: i
-    real(WP) :: c(3), c1(3), a(3), res(3), matrix(3, 3)
+  implicit none
 
-    call InitMPI
-    
-    c = (/0, 0, 1/)
-    c1 = (/1, 0, 0/)
-    a = (/0, 1, 0/)
+  integer :: i
+  real(WP) :: c(3), c1(3), a(3), res(3), matrix(3, 3)
 
-    matrix = RotateMatrix(c1)
-    
-    print *, "rotation matrix: "
-    do i = 1, 3
-        print *, matrix(i, :)
-    end do
-   
-    call FinalizeMPI
+  call InitMPI
+
+  c = (/0, 0, 1/)
+  c1 = (/1, 0, 0/)
+  a = (/0, 1, 0/)
+
+  matrix = RotateMatrix(c1)
+
+  print *, "rotation matrix: "
+  do i = 1, 3
+    print *, matrix(i, :)
+  end do
+
+  call FinalizeMPI
 end program test
 
 ! program test
-    
+
 !     use ModData
 !     use ModDataTypes
 !     use ModDataStruct
@@ -49,7 +49,6 @@ end program test
 !     c1 = (/1, 0, 0/)
 
 !     res = CrossProd(c, c1)
-   
 
 !     call FinalizeMPI
 ! end program test

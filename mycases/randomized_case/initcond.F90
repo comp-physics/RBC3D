@@ -192,7 +192,7 @@ contains
       tmp_xc(2) = RandomNumber(ranseed)*2*PI
       if (celltype .eq. 2) then
         ! print *, "placed celltype 2 closer to center"
-        tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber / 3.0)
+        tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber/3.0)
         ! tmp_xc(3) = (tuber / 2.0)
       else
         tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber)

@@ -9,7 +9,6 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
-  use MPI
 
   implicit none
 
@@ -27,7 +26,7 @@ program InitCond
   character(CHRLEN) :: fn
   real :: lengtube, lengspacing, phi, actlen
   integer :: ierr
-  real(WP), allocatable :: rand(:,:), thetas(:)
+  real(WP), allocatable :: rand(:, :), thetas(:)
   real(WP) :: xs(12), zs(12)
 
   ! Initialize
@@ -136,19 +135,19 @@ program InitCond
       if (iz .le. 7) then
         ! xc(3) = lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
         if (iz .eq. 7) then
-          xc(3) = lengspacing*1.2*(iz - 0.5) - (rand(iz, 3) / 3)
+          xc(3) = lengspacing*1.2*(iz - 0.5) - (rand(iz, 3)/3)
         else
-          xc(3) = lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
+          xc(3) = lengspacing*1.2*(iz - 0.5) + (rand(iz, 3)/3)
         end if
       else
-        xc(3) = 9 + lengspacing*1.2*(iz - 0.5) + (rand(iz, 3) / 3)
+        xc(3) = 9 + lengspacing*1.2*(iz - 0.5) + (rand(iz, 3)/3)
       end if
     else
       xc(1) = xs(iz - 14)
       xc(2) = 0
       xc(3) = zs(iz - 14)
     end if
-    
+
     print *, 'Xc', iz, xc
 
     rbc => rbcs(iz)
@@ -294,7 +293,7 @@ contains
     integer :: ilat, ilon
 
     k = (/1, 1, 0/)
-    k = k / VecNorm(k)
+    k = k/VecNorm(k)
 
     print *, "theta", theta
 
@@ -305,17 +304,17 @@ contains
     do ilat = 1, cell%nlat
       do ilon = 1, cell%nlon
         v = cell%x(ilat, ilon, :)
-        first = v * COS(theta) 
-        second = CrossProd(k, v) * SIN(theta)
-        third = k*dot_product(k, v) * (1 - COS(theta))
+        first = v*COS(theta)
+        second = CrossProd(k, v)*SIN(theta)
+        third = k*dot_product(k, v)*(1 - COS(theta))
         cell%x(ilat, ilon, :) = first + second + third
-      end do         
+      end do
     end do
 
     do ii = 1, 3
       cell%x(:, :, ii) = cell%x(:, :, ii) + cell%xc(ii)
     end do ! ii
-    
+
   end subroutine Rotate2
 
 end program InitCond

@@ -9,8 +9,6 @@ program InitCond
   use ModData
   use ModIO
   use ModBasicMath
-  use ModPostProcess
-  ! use MPI
 
   implicit none
 
@@ -20,48 +18,40 @@ program InitCond
   type(t_rbc)         :: rbcRef
   type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3)
-  integer :: nlat0, nlat1, ii
-  real(WP) :: theta, th, rc, xc(3), ztemp
+  integer :: nlat0, ii
+  real(WP) :: th, xc(3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
-  integer :: iz, i, p, l, dealias
+  integer :: iz, i, dealias
   integer, parameter :: ranseed = 161269
   character(CHRLEN) :: fn
-  ! real = double, fp
-  real :: lengtube, lengspacing, phi, actlen
-  real(WP) :: rand(27, 3), minDist, platRad, platDiam
-  real :: tubeRad
+  real :: lengtube, lengspacing, phi, actlen, tuberad
 
   ! Initialize
   call InitMPI
   ! Allocate working arrays
   allocate (rbcs(nrbcMax))
-  ! allocate(walls(nwallMax))
+  allocate (walls(nwallMax))
 
-  tubeRad = 4.0
+  ! Wall
+  nwall = 1
+  wall => walls(1)
+
+  call ReadWallMesh('Input/cyl_D6_L6.e', wall)
+  actlen = 6
 
   nrbc = 2
   nlat0 = 12
-  nlat1 = 4
   dealias = 3
   phi = 70/real(100)
-  ! 11.34
-  lengtube = 5 ! nrbc/real(phi) !XXLL
+  lengtube = nrbc/real(phi)
 
-  lengspacing = (lengtube - ((2.62/2.82)*9))/9 ! lengtube/Real(nrbc)
-  ! print *, "1"
-  nwall = 1
-  allocate (walls(nwall))
-  wall => walls(1)
+  lengspacing = actlen/Real(nrbc)
+  print *, "lengtube: ", lengtube
+  print *, "lengspacing: ", lengspacing
 
-  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
-  actlen = 13.33
+  tuberad = 3
+
   wall%f = 0.
-  do i = 1, wall%nvert
-    th = ATAN2(wall%x(i, 1), wall%x(i, 2))
-    wall%x(i, 1) = (tubeRad)*COS(th)    !!!!!!!!!
-    wall%x(i, 2) = (tubeRad)*SIN(th)    !!!!!!!!!
-    wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)
-  end do
 
   xmin = minval(wall%x(:, 1))
   xmax = maxval(wall%x(:, 1))
@@ -76,69 +66,48 @@ program InitCond
   Lb(1) = xmax - xmin + 0.5
   Lb(2) = Lb(1)
   Lb(3) = zmax - zmin
-  lengtube = Lb(3)
-
-  print *, "Lb", Lb(:)
-  !  Lb   8.3013429849047267        8.3013429849047267        11.347517730496456
+  ! lengtube = Lb(3)
   ! lengspacing = lengtube/real(nrbc)
-  print *, 'lengtube 2', lengtube
-  print *, 'lengspacing 2', lengspacing
 
-  ! Reference cell i
+  ! reference cell (unnecessary)
   xc = 0.
-
   radEqv = 1.0
-  platRad = .3
-
-  print *, "platRad", platRad
 
   call Rbc_Create(rbcRef, nlat0, dealias)
-  call Rbc_MakePlatelet(rbcRef, platRad, xc)
+  call Rbc_MakeBiconcave(rbcRef, radEqv, xc)
 
+  ! dimensions of starting rbc
   do ii = 1, 3
-    ! dimensions of cell !
     szCell(ii) = maxval(rbcRef%x(:, :, ii)) - minval(rbcRef%x(:, :, ii))
   end do
-  if (rootWorld) then
-    print *, "szCell", szCell
-  end if
 
-  ! place cells
-  xc(1:2) = 0.
-  xc(3) = 1.
-  ! print *, 'rbc iz:', iz, 'xc:', xc
-  rbc => rbcs(1)
-  rbc%celltype = 1
-  call Rbc_Create(rbc, nlat0, dealias)
-  call RBC_MakeBiConcave(rbc, radEqv, xc)
+  print *, "szCell: ", szCell
 
-  xc(1:2) = 0.
-  xc(3) = 4.
-  ! print *, 'rbc iz:', iz, 'xc:', xc
-  rbc => rbcs(2)
-  rbc%celltype = 3
-  call Rbc_Create(rbc, nlat1, dealias)
-  call Rbc_MakePlatelet(rbc, platRad, xc)
+  ! place 8 rbcs in a line along z-axis
+  do iz = 1, nrbc
+    xc(1:2) = 0.
+    xc(3) = lengspacing*(iz - 0.5)
+    print *, 'Xc', iz, xc
+
+    rbc => rbcs(iz)
+    rbc%celltype = 1
+    call Rbc_Create(rbc, nlat0, dealias)
+    call Rbc_MakeBiConcave(rbc, radEqv, xc)
+  end do
 
   ! Put things in the middle of the periodic box
   call Recenter_Cells_and_Walls
-
-  ! platDiam = GetDiameter(3)
 
   ! Output
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 8
+  vBkg(1:2) = 0.; vBkg(3) = 8.
 
   ! Write initial conditions
   if (nrbc > 0) then
     write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
     call WriteManyRBCs(fn, nrbc, rbcs)
-
-    write (fn, FMT=fn_FMT) 'D/', '3x', 0, '.dat'
-    call WriteManyRBCsByType(fn, nrbc, rbcs, 3)
-
     write (*, '(A,A)') 'Cell file: ', trim(fn)
 
     fn = 'D/restart.LATEST.dat'
@@ -165,13 +134,14 @@ program InitCond
   stop
 
 contains
+
   subroutine Recenter_Cells_and_Walls
     integer :: irbc, iwall, ii, gen, repeat, j
     real :: x, y, a
     real, parameter :: PI = 3.14159265359
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: xmin(3), xmax(3), xc(3), xmax2, ymax2
+    real(WP) :: xmin(3), xmax(3), xc(3)
 
     ! cells
     ! translate cells
@@ -187,7 +157,6 @@ contains
     xmin = 1.D10
     xmax = -1.D10
     do iwall = 1, nwall
-      print *, "iwall", iwall
       wall => walls(iwall)
       do ii = 1, 3
         xmin(ii) = min(xmin(ii), minval(wall%x(:, ii)))
@@ -203,12 +172,6 @@ contains
         wall%x(:, ii) = wall%x(:, ii) + 0.5*Lb(ii) - xc(ii)
       end do
     end do
-
-    xmax2 = maxval(wall%x(:, 1))
-    print *, "xmax2: ", xmax2
-
-    ymax2 = maxval(wall%x(:, 2))
-    print *, "ymax2: ", ymax2
 
   end subroutine Recenter_Cells_and_Walls
 

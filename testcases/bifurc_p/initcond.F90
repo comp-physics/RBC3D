@@ -263,7 +263,7 @@ contains
     integer :: ilat, ilon
 
     k = (/1, 1, 0/)
-    k = k / VecNorm(k)
+    k = k/VecNorm(k)
 
     print *, "theta", theta
 
@@ -274,17 +274,17 @@ contains
     do ilat = 1, cell%nlat
       do ilon = 1, cell%nlon
         v = cell%x(ilat, ilon, :)
-        first = v * COS(theta) 
-        second = CrossProd(k, v) * SIN(theta)
-        third = k*dot_product(k, v) * (1 - COS(theta))
+        first = v*COS(theta)
+        second = CrossProd(k, v)*SIN(theta)
+        third = k*dot_product(k, v)*(1 - COS(theta))
         cell%x(ilat, ilon, :) = first + second + third
-      end do         
+      end do
     end do
 
     do ii = 1, 3
       cell%x(:, :, ii) = cell%x(:, :, ii) + cell%xc(ii)
     end do ! ii
-    
+
   end subroutine Rotate2
 
 end program InitCond

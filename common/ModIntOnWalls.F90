@@ -61,7 +61,7 @@ contains
         call SingIntOnWall(c1, wall, vtmp)
         do i = 1, wall%nvert
           v(p + i, :) = v(p + i, :) + vtmp(i, :)/tlist%Acoef(p + i)  !COEF
-!           v(p+i,:) = v(p+i,:) + vtmp(i,:)/(1.+tlist%lam(p+i))  !COEF
+          ! v(p+i,:) = v(p+i,:) + vtmp(i,:)/(1.+tlist%lam(p+i))  !COEF
         end do
 
         deallocate (vtmp)
@@ -159,6 +159,70 @@ contains
     deallocate (irows)
 
   end subroutine SingIntOnWall
+
+! !**********************************************************************
+! ! Compute the self-interaction on the wall
+! ! Arguments:
+! !  c1 -- coefficient before the single layer potential
+! !  wall -- the wall
+! !  v -- the velocities
+!   subroutine SingIntOnWall(c1, wall, v)
+!     real(WP) :: c1
+!     type(t_Wall) :: wall
+!     real(WP) :: v(:, :)
+!     real(WP), allocatable :: v1D(:), f1D(:)
+
+! #include "../petsc_include.h"
+!     integer :: nrow, i, j
+!     integer, allocatable :: irows(:)
+!     Vec :: f_vec, lhsf_vec
+!     integer :: ierr
+!     integer, save :: count
+!     integer :: Mat_m, Mat_n
+
+!     count = count + 1
+
+!     ! if (rootWorld) print *, "count: ", count
+
+!     nrow = 3*wall%nvert
+!     ! if (rootWorld) then
+!     !   print *, "SINGINTONWALL nrow: ", nrow
+!     !   print *, "size(wall%f, 1), size(wall%f, 2)", size(wall%f, 1), size(wall%f, 2)
+!     !   do j = 1, 3
+!     !     print *, wall%f(j, :)
+!     !   end do
+!     !   print *, "size(v, 1), size(v, 2)", size(v, 1), size(v, 2)
+!     !   call MatGetSize(wall%lhs, Mat_m, Mat_n, ierr)
+!     !   print *, "Mat_m, Mat_n", Mat_m, Mat_n
+!     ! end if
+    
+!     allocate (irows(nrow))
+!     allocate (f1D(nrow))
+!     allocate (v1D(nrow))
+
+!     f1D = reshape(wall%f, (/nrow/))
+
+!     call VecCreateSeq(PETSC_COMM_SELF, nrow, f_vec, ierr)
+!     call VecCreateSeq(PETSC_COMM_SELF, nrow, lhsf_vec, ierr)
+
+!     irows = (/(i, i=0, nrow - 1)/)
+!     call VecSetValues(f_vec, nrow, irows, f1D, INSERT_VALUES, ierr)
+!     call VecAssemblyBegin(f_vec, ierr)
+
+!     ! if (rootWorld) call VecView(f_vec, PETSC_VIEWER_STDOUT_SELF, ierr)
+
+!     call MatMult(wall%lhs, f_vec, lhsf_vec, ierr)
+!     call VecGetValues(lhsf_vec, nrow, irows, v1D, ierr)
+
+!     v = reshape(v1D, (/wall%nvert, 3/))
+
+!     v = c1*v
+
+!     call VecDestroy(f_vec, ierr)
+!     call vecDestroy(lhsf_vec, ierr)
+!     deallocate (irows, f1D, v1D)
+
+!   end subroutine SingIntOnWall
 
 !**********************************************************************
 ! Prepare for the self-integration on the wall
