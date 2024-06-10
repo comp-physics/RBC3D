@@ -44,7 +44,7 @@ DEBUG =
 OPTS = -O3
 
 FFLAGS = $(NICE) $(DEBUG) $(OPTS) $(PROF) $(INCLUDE)
-LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF) -L$(MKL_ROOT)/lib/intel64 -Wl,--copy-dt-needed-entries
+LDFLAGS	= $(NICE) $(DEBUG) $(OPTS) $(PROF) -Wl,--copy-dt-needed-entries
 
 %.o : %.F90
 	$(FC) $(FFLAGS) -c $<
