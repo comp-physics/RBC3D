@@ -25,7 +25,7 @@ if [ "$1" == 'format' ]; then
 fi
 
 if [ "$1" == 'install-with-mkl' ]; then
-    . "$(pwd)/install/install-wth-mkl.sh" $@; exit
+    . "$(pwd)/install/install-with-mkl.sh" $@; exit
 fi
 
 if [ "$1" == 'install-with-lapack' ]; then
