@@ -12,10 +12,12 @@ libcommon.a
 .vscode
 field
 packages
-packages2
-packages3
 traction
 test
 tes17
 pinv
 qf1d
+packages2
+packages3
+testcases
+mycases
