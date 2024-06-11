@@ -37,4 +37,4 @@ cd makedepf90
 make
 make install
 
-echo "Done installing!"
+echo "Done installing RBC3D!"

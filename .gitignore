@@ -2,6 +2,7 @@
 */*/D/*
 !*/*/D/.gittouch
 */*/*/*.log
+examples/case/*.sh
 *.o
 *.mod
 .depend
@@ -13,4 +14,3 @@ libcommon.a
 field
 packages
 traction
-
