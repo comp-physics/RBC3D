@@ -148,7 +148,7 @@ contains
   end subroutine PolarPatch_Build
 
 !**********************************************************************
-! Find the Cartesian mesh pionts within a polar patch
+! Find the Cartesian mesh points within a polar patch
 ! Arguments:
 !  (th0, phi0) -- origin of the patch
 !  r0 -- radius of the patch

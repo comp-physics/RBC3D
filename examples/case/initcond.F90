@@ -105,7 +105,7 @@ program InitCond
   Nt0 = 0; time = 0.
   vBkg(1:2) = 0.; vBkg(3) = 8.
 
-  ! Write intial conditions
+  ! Write initial conditions
   if (nrbc > 0) then
     write (fn, FMT=fn_FMT) 'D/', 'x', 0, '.dat'
     call WriteManyRBCs(fn, nrbc, rbcs)

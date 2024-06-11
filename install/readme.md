@@ -21,6 +21,12 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
 * Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
+You will also need python3 for the PETSc install and pip modules. On Phoenix, you can module load it via `ml python/3.9.12-rkxvr6`. On Phoenix, you may also need to add the `~/.local/bin` directory to your PATH by adding this line to your `~/.bashrc`: 
+
+```shell
+export PATH="$PATH:$HOME/.local/bin"
+```
+
 ## Build libraries
 
 ### MKL
@@ -29,22 +35,10 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
 * You can check environment variables via `module show mkl`
 * If your cluster does not have mkl, it's available for download and install [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html?operatingsystem=linux&distributions=offline).
-* For a manual mkl install, we recommend installing inside a packages directory. Creating an `MKL_ROOT` variable in `Makefile.in` may be necessary too. It should be set to the path of the `/mkl` directory.
+* If MKL is not available on your system, follow the LAPACK and BLAS step, and skip this step.
 * Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl, but the [mkl link line advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.9hbhed) should provide the correct link options.
 
-### BLAS
-
-* Make a packages directory inside the RBC3D directory: `mkdir packages`
-* Move back into the packages: `cd packages`
-* Download the latest BLAS (at time of writing `3.11.0`): `wget http://www.netlib.org/blas/blas-3.11.0.tgz`
-* Unpack it: `tar -xvf blas-3.11.0.tgz`
-* `cd BLAS-3.11.0`
-* Modify `make.inc` line 18 as `FC = mpif90`
-* Execute `make`, which will create the library file `blas_LINUX.a`
-* Later, You will need the absolute path of `blas_LINUX.a` to configure `petsc-lite`
-   * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a`
-
-### LAPACK
+### LAPACK and BLAS
 
 * Move back into packages: `cd RBC3D/packages`
 * Download the latest lapack (at time of writing `3.11`): `wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz`
@@ -55,37 +49,31 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
    * `FC = mpif90` (line 20)
 * `mv make.inc.example make.inc`
 * Build (this takes a few minutes): `make`
-* Later, You will need the absolute path of `liblapack.a` to configure `petsc-lite`
+* Later, You will need the absolute path of `liblapack.a` and `librefblas.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a`
+   * and `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/librefblas.a`
+* Note that if you're choosing to install LAPACK/BLAS instead of MKL, you'll need to include `Makefile.lapack` in `examples/case/Makefile` instead of `Makefile.mkl` when you run the example case later.
 
-### Valgrind
 
-* Easiest if this is already available or can be loaded.
-* PACE Phoenix has this available as a module: `module load valgrind`
-* `module show valgrind` or `which valgrind` can tell you where the library is.
-* At time of writing, it is here: `/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5`
-    * You will need this path to build PETSc-lite
+### PETSc
 
-### PETSc-lite
-
-* This depends on Valgrind, LAPACK, BLAS from above, don't attempt until those steps are finished
+* This depends on MKL or LAPACK/BLAS from above, don't attempt until one of those steps is finished
 * Move back to `RBC3D/packages`
-* Copy `petsc-lite-3.0.0-p3.tar.gz` from the libs directory into the packages directory: `cp ../libs/petsc-lite-3.0.0-p3.tar.gz ./`
-* Unpack `petsc-lite`: `tar -xvf petsc-lite-3.0.0-p3.tar.gz`
-* Set up your environment via the environment variables 
-   * Get the absolute path of the unpacked petsc via
-      * `cd petsc-3.0.0-p3`
-      * `pwd`: In my case: `/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
-   * If you are using something other than bash, look up how to set environment variables for it, otherwise:
-      * Execute (notice this is the path from above): `export PETSC_DIR=/storage/home/hcoda1/6/sbryngelson3/p-sbryngelson3-0/RBC3D/packages/petsc-3.0.0-p3`
-      * Execute: `export PETSC_ARCH=linux-gnu-c-opt`
-* Ascend up a directory and create a new build directory like `mkdir RBC3D/packages/mypetsc` then cd back into `petsc-3.0.0-p3`
-* Configure via something like this, using your own absolute paths (for blas, lapack, valgrind, and mypetsc), and notice the `--with-mpiexec=srun` line where you should replace `srun` with what is relevant for your system (`srun` if available, `mpirun` or `mpiexec` are two other options):
-```
-./configure --with-cc=mpicc --with-fc=mpif90 --with-debugging=0 COPTFLAGS='-O3 -march=native -mtune=native' CXXOPTFLAGS='-O3 -march=native -mtune=native' FOPTFLAGS='-O3 -march=native -mtune=native' --with-blas-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/BLAS-3.11.0/blas_LINUX.a --with-lapack-lib=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a --with-valgrind-dir=/usr/local/pace-apps/manual/packages/valgrind/3.19.0/gcc-4.8.5 --prefix=/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/mypetsc --with-shared=0 --with-mpiexec=srun --with-x11=0 --with-x=0 --with-windows-graphics=0
-```
-* Build: `make` 
-* Install: `make install`
+* Download PETSc: wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz`
+* Unpack `petsc-3.19`: `tar -xvf petsc-3.19.tar.gz`
+* Copy configure script into petsc directory: `cp ../install/py_scripts/petsc_configure.py ./petsc-3.19.6`
+* Descend into the directory: `cd petsc-3.19`
+* Install pip configure: `pip3 install --user configure`
+* If you installed MKL, run: `python3 petsc_configure.py --mkl-only`
+* If you installed LAPACK/BLAS instead, run: `python3 petsc_configure.py --blas-lapack`
+* Note the `--dryrun` option will show you the PETSc configure options.
+
+* Build and Test:
+```shell
+make PETSC_DIR=`pwd` PETSC_ARCH=petsc_configure all
+make PETSC_DIR=`pwd` PETSC_ARCH=petsc_configure check
+``` 
+* `make check` may return errors, but you can ignore these if the tests completed.
 
 ### FFTW
 

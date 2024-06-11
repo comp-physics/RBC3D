@@ -210,9 +210,9 @@ contains
       write (cell_unit, '(A,I9,A,I9,A)') 'ZONE I=', nlat + 1, '  J=', nlon + 1, '  F=POINT'
 
       do ilon = 1, nlon
-      do ilat = 0, nlat
-        write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
-      end do ! ilat
+        do ilat = 0, nlat
+          write (cell_unit, '(3F20.10)') x(ilat, ilon, :)
+        end do ! ilat
       end do ! ilon
       do ilat = 0, nlat
         write (cell_unit, '(3F20.10)') x(ilat, 1, :)
@@ -230,7 +230,7 @@ contains
 ! Write the shape of blood cells of specified type to file
 ! Arguments:
 !  fn -- file suffix name
-!  nrbc -- nubmer of cells
+!  nrbc -- number of cells
 !  rbcs -- blood cells
 !  type -- type filter (1: rbc, 2: leukocyte, 3: sickle cell)
   subroutine WriteManyRBCsByType(fn, nrbc, rbcs, type)

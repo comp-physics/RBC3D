@@ -60,7 +60,7 @@ contains
 !**********************************************************************
 ! Compute the Hash table index of a point
 ! Argument:
-!  Nc -- nunber of cell blocks
+!  Nc -- number of cell blocks
 !  iLbNc -- Nc/(local domain size)
 !  x -- point coordinate
 !  i1, i2, i3 -- Hash index of x(:)

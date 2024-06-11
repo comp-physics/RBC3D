@@ -131,7 +131,7 @@ contains
 ! double precision.
 !
 ! Note:
-!  Copied from "Numerical Recipies in Fortran 90"
+!  Copied from "Numerical Recipes in Fortran 90"
   subroutine GauLeg(x1, x2, n, x, w)
     real(WP) :: x1, x2
     integer :: n
@@ -212,7 +212,7 @@ contains
 ! Arguments:
 !  xmin, xmax -- integration interval
 !  (a, b) -- the target point coordinate.  b is very small (but non-zero),
-!            which will cause a near singularity for the integration arond
+!            which will cause a near singularity for the integration around
 !            (a,0)
 !  n, x, w -- same as those in subroutine GauLeg
 !

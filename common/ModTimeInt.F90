@@ -398,7 +398,7 @@ contains
     time = time0
 
     do lt = Nt0 + 1, Nt
-      clockBgn = MPI_WTime() ! Start timeing
+      clockBgn = MPI_WTime() ! Start timing
 
       ! Evolve cells
 !      print *,"NO VEL"
@@ -580,7 +580,7 @@ contains
     time = time0
 
     lt = Nt0 + 1
-    clockBgn = MPI_WTime() ! Start timeing
+    clockBgn = MPI_WTime() ! Start timing
 
 !      rbc => rbcs(1)
 !      allocate(xsave(rbc%nlat,rbc%nlon,3))
@@ -667,7 +667,7 @@ contains
     time = time0
 
     lt = Nt0 + 1
-    clockBgn = MPI_WTime() ! Start timeing
+    clockBgn = MPI_WTime() ! Start timing
 
     ! Evolve cells
     ! print *,"NO VEL"

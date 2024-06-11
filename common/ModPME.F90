@@ -387,7 +387,7 @@ contains
     call MPI_SendRecv(bufSend, sizebuf, MPI_WP, nodeRight, nodeNum, &
                       bufRecv, sizeBuf, MPI_WP, nodeLeft, nodeLeft, &
                       MPI_COMM_Ewald, stat, ierr)
-!   print*,' callled mpi'
+!   print*,' called mpi'
     vv(:, :, ixBgn(3) - PBspln:ixBgn(3) - 1, :) = reshape(bufRecv, (/Nb(1), Nb(2), PBspln, 3/))
 
     ! Deallocate working arrays

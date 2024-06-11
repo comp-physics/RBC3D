@@ -5,6 +5,9 @@ module ModConf
   use ModDataTypes
   use ModDataStruct
 
+#include "petsc/finclude/petsc.h"
+  use petsc
+
   implicit none
 
   ! Domain size
@@ -108,7 +111,6 @@ contains
   subroutine InitMPI(split_comm)
     logical, optional :: split_comm
 
-#include "../petsc_include.h"
     integer :: numNodes, nodeNum
     character(MPI_Max_Processor_Name) :: machinename
     integer :: lenname
@@ -207,8 +209,6 @@ contains
 !**********************************************************************
 ! Finalize MPI and PETSc
   subroutine FinalizeMPI
-
-#include "../petsc_include.h"
     integer :: ierr
 
     if (MPI_COMM_Ewald /= MPI_COMM_WORLD) then
@@ -437,7 +437,7 @@ contains
   end subroutine DomainDecomp
 
 !**********************************************************************
-! Wheather a source point make contribution to the local domain
+! Whether a source point make contribution to the local domain
   function Is_Source(x)
     real(WP) :: x(3)
     logical :: Is_Source
@@ -493,7 +493,7 @@ contains
   end function Cell_Has_Source
 
 !**********************************************************************
-! Wheather a triangle has active source points
+! Whether a triangle has active source points
 ! Arguments:
 !  x(i,:) -- the coordinates of the i-th vertex
   function Tri_Has_Source(x) result(hasSource)

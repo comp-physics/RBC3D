@@ -453,7 +453,7 @@ contains
       cell%detj(ilat, ilon) = sqrt(detA)/sin(cell%th(ilat))
 
       a3 = CrossProd(a1, a2)
-      cell%a3(ilat, ilon, :) = a3/VecNorm(a3)
+      cell%a3(ilat, ilon, :) = a3/NORM2(a3)
     end do ! ilat
     end do ! ilon
 
@@ -509,7 +509,7 @@ contains
   end subroutine RBC_ComputeGeometry
 
 !**********************************************************************
-! Compute the covariant gradient of a vecotr field
+! Compute the covariant gradient of a vector field
 ! Arguments:
 !  cell --
 !  v(ilat,ilon,:) -- covariant vector component
@@ -921,7 +921,7 @@ contains
 
     do ilat = 1, nlat
     do ilon = 1, nlon
-      ! V2 is the strech tensor
+      ! V2 is the stretch tensor
       V2 = matmul(cell%a(ilat, ilon, :, :), cellRef%a_rcp(ilat, ilon, :, :))
 
       lbd1 = V2(1, 1) + V2(2, 2) - 2.0

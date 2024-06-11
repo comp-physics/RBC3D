@@ -1,4 +1,4 @@
-! Collection of basic math operation
+! Collection of basic math operations
 module ModBasicMath
 
   use ModDataTypes
@@ -7,7 +7,7 @@ module ModBasicMath
 
   private
 
-  public :: VecNorm, &
+  public :: VecNormL2, &
             CrossProd, &
             InvMat2, &
             InvMat3, &
@@ -27,12 +27,12 @@ contains
 !**********************************************************************
 ! L2 norm of a vector
 ! |a|
-  function VecNorm(a) result(c)
+  function VecNormL2(a) result(c)
     real(WP) :: a(:), c
 
     c = sqrt(sum(a*a))
 
-  end function VecNorm
+  end function VecNormL2
 
 !**********************************************************************
 ! Cross product of two vectors
@@ -167,7 +167,9 @@ contains
     AtA = matmul(B, A)
 
     ! Solve (AtA)X = B and store solution in B
-    call DPOSV('U', N, M, Ata, N, B, N, ierr)
+    call dposv('U', N, M, Ata, N, B, N, ierr)
+
+    if (ierr .ne. 0) write (*, *) "Matrix_PseudoInvert error code: ", ierr
 
     ! Deallocate working arrays
     deallocate (AtA)
@@ -212,7 +214,9 @@ contains
     lhs(3, 1) = lhs(1, 3)
     lhs(3, 2) = lhs(2, 3)
 
-    call DPOSV('U', 3, 1, lhs, 3, rhs, 3, ierr)
+    call dposv('U', 3, 1, lhs, 3, rhs, 3, ierr)
+
+    if (ierr .ne. 0) write (*, *) "QuadFit_1D error code: ", ierr
 
     a0 = rhs(1)
     a1 = rhs(2)
@@ -222,6 +226,7 @@ contains
 
 !**********************************************************************
 ! 2D Quadratic fit
+! Uses least squares normal equation method
 ! Arguments:
 !  x(i,:), f(i) -- coordinates and functional value of the i-th point
 ! Note:
@@ -265,7 +270,9 @@ contains
       end do ! jj
     end do ! ii
 
-    call DPOSV('U', 6, 1, lhs, 6, rhs, 6, ierr)
+    call dposv('U', 6, 1, lhs, 6, rhs, 6, ierr)
+
+    if (ierr .ne. 0) write (*, *) "QuadFit_2D error code: ", ierr
 
     a0 = rhs(1)
     a1 = rhs(2)
@@ -410,7 +417,7 @@ contains
   end subroutine BsplineFunc
 
 !**********************************************************************
-! Random number generator, copied from Numerical Recipies
+! Random number generator, copied from Numerical Recipes
   function RandomNumber(idum)
     integer, intent(IN), optional :: idum
     real(WP)        :: RandomNumber

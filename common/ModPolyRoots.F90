@@ -2,7 +2,7 @@
 MODULE ModPolyRoots
 ! ---------------------------------------------------------------------------
 ! PURPOSE - Solve for the roots of a polynomial equation with real
-!   coefficients, up to quartic order. Retrun a code indicating the nature
+!   coefficients, up to quartic order. Return a code indicating the nature
 !   of the roots found.
 
 ! AUTHORS - Alfred H. Morris, Naval Surface Weapons Center, Dahlgren,VA
@@ -387,7 +387,7 @@ CONTAINS
 
 ! SOLVE THE RESOLVENT CUBIC EQUATION. THE CUBIC HAS AT LEAST ONE
 ! NONNEGATIVE REAL ROOT.  IF W1, W2, W3 ARE THE ROOTS OF THE CUBIC
-! THEN THE ROOTS OF THE ORIGINIAL EQUATION ARE
+! THEN THE ROOTS OF THE ORIGINAL EQUATION ARE
 !     Z = -B + CSQRT(W1) + CSQRT(W2) + CSQRT(W3)
 ! WHERE THE SIGNS OF THE SQUARE ROOTS ARE CHOSEN SO
 ! THAT CSQRT(W1) * CSQRT(W2) * CSQRT(W3) = -Q/8.
