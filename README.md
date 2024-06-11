@@ -31,6 +31,7 @@ bash rbc.sh install-with-mkl
 
 Then to execute and run a case, you can:
 ```shell
+ml gcc mvapich2 mkl netcdf-fortran fftw
 cd examples/case
 make .depend
 make -j 8
