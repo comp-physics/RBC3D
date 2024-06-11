@@ -38,7 +38,7 @@ srun -n 1 ./initcond
 srun ./tube
 ```
 
-On other supercomputing clusters, it should be easy to replace line of 7 of `./install/install-with-mkl.sh` with the modules available on your system. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+On other supercomputing clusters, it should be easy to replace line 7 of `./install/install-with-mkl.sh` with the modules available on your system and change the directories in `Makefile.in` to point to those modules. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
 
 ### Papers that use RBC3D
 

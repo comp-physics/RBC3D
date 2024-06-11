@@ -35,7 +35,7 @@ export PATH="$PATH:$HOME/.local/bin"
 * This will automatically set the `MKL_ROOT` environment variable necessary for `Makefile.in`
 * You can check environment variables via `module show mkl`
 * If your cluster does not have mkl, it's available for download and install [here](https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit-download.html?operatingsystem=linux&distributions=offline).
-* If MKL is not available on your system, follow the LAPACK and BLAS step. Otherwise, skip this step.
+* If MKL is not available on your system, follow the LAPACK and BLAS step, and skip this step.
 * Note that `MKL_LIB` options in Makefile.in may need to be changed depending on the version of mkl, but the [mkl link line advisor](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onemkl-link-line-advisor.html#gs.9hbhed) should provide the correct link options.
 
 ### LAPACK and BLAS
