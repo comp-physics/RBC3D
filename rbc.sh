@@ -1,35 +1,5 @@
 #!/bin/bash
 
-load_modules() {
-    # A list with all the necessary modules
-    local -a modules=('gcc'
-                        'mvapich2'
-                        'mkl'
-                        'netcdf-c'
-                        'netcdf-cxx'
-                        'netcdf-fortran'
-                        'fftw')
-    local mod
-
-    echo "Running function"
-    echo
-
-    # Check if modules are loaded. If not, load them
-    for mod in "${modules[@]}"
-    do
-        if module is-loaded "$mod"
-        then
-            echo "$mod is already loaded"
-        else
-            echo "Loading $mod…"
-            module load $mod
-        fi
-    done
-
-    echo
-    echo "Finished loading modules on Phoenix!"
-}
-
 # change this to the correct module load for python3 on your cluster
 ml python/3.9.12-rkxvr6
 
@@ -60,10 +30,4 @@ fi
 
 if [ "$1" == 'install-with-lapack' ]; then
     . "$(pwd)/install/install-with-lapack.sh" $@; exit
-fi
-
-if [ "$1" == 'phoenix-modules' ]; then
-    . "$(pwd)/install/phoenix-modules.sh" $@
-    bash; exit
-    # . "$(pwd)/install/phoenix-modules.sh" $@; exit
 fi

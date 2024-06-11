@@ -23,7 +23,7 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
-To install on PACE Phoenix, you can salloc a node and then run: 
+To install on PACE Phoenix, you need to salloc a node (because default PETSc configure options use srun) and then run: 
 
 ```shell
 bash rbc.sh install-with-mkl
@@ -31,10 +31,13 @@ bash rbc.sh install-with-mkl
 
 Then to execute and run a case, you can:
 ```shell
-ml gcc mvapich2 mkl netcdf-fortran fftw
-cd examples/case
+ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
+cd common
 make .depend
-make -j 8
+make
+cd ..examples/case
+make .depend
+make
 srun -n 1 ./initcond
 srun ./tube
 ```

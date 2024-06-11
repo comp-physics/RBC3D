@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #SBATCH --account=gts-sbryngelson3
-#SBATCH -N4 --ntasks-per-node=24
+#SBATCH -N1 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=2G
 #SBATCH -t1:00:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH -o "./run_logs/comeon.log"
+#SBATCH -o "./run_logs/testing1234.log"
 
 cd $SLURM_SUBMIT_DIR
 
