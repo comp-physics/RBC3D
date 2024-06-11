@@ -139,11 +139,10 @@ contains
     real(WP) :: v(:, :)
     real(WP), allocatable :: v1D(:), f1D(:)
 
-    integer :: nrow, i, j
+    integer :: nrow, i
     integer, allocatable :: irows(:)
     Vec :: f_vec, lhsf_vec
     integer :: ierr
-    integer :: Mat_m, Mat_n
 
     nrow = 3*wall%nvert
 

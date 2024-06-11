@@ -33,7 +33,7 @@ Then to execute and run a case, you can:
 ```shell
 cd examples/case
 make .depend
-make
+make -j 8
 srun -n 1 ./initcond
 srun ./tube
 ```
