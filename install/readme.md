@@ -59,7 +59,7 @@ export PATH="$PATH:$HOME/.local/bin"
 
 * This depends on MKL or LAPACK/BLAS from above, don't attempt until one of those steps is finished
 * Move back to `RBC3D/packages`
-* Download PETSc: wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz`
+* Download PETSc: `wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz`
 * Unpack `petsc-3.19`: `tar -xvf petsc-3.19.tar.gz`
 * Copy configure script into petsc directory: `cp ../install/py_scripts/petsc_configure.py ./petsc-3.19.6`
 * Descend into the directory: `cd petsc-3.19`
