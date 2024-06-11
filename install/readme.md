@@ -79,7 +79,7 @@ make PETSC_DIR=`pwd` PETSC_ARCH=petsc_configure check
 
 * Easiest if this is already available or can be loaded.
 * PACE Phoenix has this available as a module: `module load fftw`
-* `module show fftw` tells you where the library is.
+* `module show fftw` tells you where the library is if you look at `FFTWROOT`.
 * At time of writing, the FFTW library files live at `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6/lib`
     * You will need this directory for the `Makefile.in`
 
