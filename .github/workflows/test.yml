@@ -10,10 +10,11 @@ jobs:
     name: Georgia Tech | Phoenix
     runs-on:
       - self-hosted
+    if: github.repository == 'Comp-Physics/RBC3D'
     continue-on-error: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Test
         run: |
