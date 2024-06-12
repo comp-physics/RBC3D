@@ -13,5 +13,5 @@ jobs:
     steps:
       - name: Test
         run: |
-          sbatch ./.github/workflows/phoenix/submit.sh
+          sbatch ./.github/workflows/scripts/submit.sh
           wait %1
