@@ -9,10 +9,17 @@ jobs:
   self:
     name: Georgia Tech | Phoenix
     runs-on:
-      group:  phoenix-rbc-1
-      labels: self-hosted
+      - self-hosted
+    if: github.repository == 'Comp-Physics/RBC3D'
+    continue-on-error: true
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Test
         run: |
-          sbatch ./.github/workflows/phoenix/submit.sh
+          echo "$(pwd)"
+          cd ${{github.workspace}}/.github/scripts
+          echo "$(pwd)"
+          sbatch submit.sh
           wait %1
