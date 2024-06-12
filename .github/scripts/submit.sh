@@ -3,7 +3,7 @@
 #SBATCH --account=gts-sbryngelson3
 #SBATCH -N1 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=2G
-#SBATCH -t1:00:00
+#SBATCH -t0:05:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL

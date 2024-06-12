@@ -7,7 +7,7 @@ on:
 
 jobs:
   self:
-    name: Georgia Tech | Phoenix
+    name: Phoenix Runner
     runs-on:
       - self-hosted
     if: github.repository == 'Comp-Physics/RBC3D'
@@ -23,3 +23,4 @@ jobs:
           echo "$(pwd)"
           sbatch submit.sh
           wait %1
+          cat examples/case/ci.log
