@@ -9,8 +9,7 @@ jobs:
   self:
     name: Georgia Tech | Phoenix
     runs-on:
-      group:  phoenix-rbc-1
-      labels: self-hosted
+      - self-hosted
     steps:
       - name: Test
         run: |
