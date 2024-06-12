@@ -23,3 +23,10 @@ packages3
 packages4
 testcases
 mycases
+sample_files/sample_walls/wall_meshes/constrict_L10.e
+sample_files/sample_walls/wall_meshes/cyl_D6_L6.e
+sample_files/sample_walls/wall_meshes/cylwithslit.e
+sample_files/sample_walls/wall_meshes/cylwithslit2.e
+sample_files/sample_walls/wall_meshes/fullbifurc.e
+sample_files/sample_walls/wall_meshes/squeeze2.e
+sample_files/sample_walls/wall_meshes/squeeze3.e
