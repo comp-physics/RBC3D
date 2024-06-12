@@ -12,18 +12,6 @@ jobs:
       group:  phoenix
       labels: gt
     steps:
-      - name: Clone - PR
-        uses: actions/checkout@v4
-        with:
-          path: pr
-
-      - name: Clone - Master
-        uses: actions/checkout@v4
-        with:
-          repository: Comp-Physics/RBC3D
-          ref: master
-          path: master
-
       - name: Test
         run: |
           cd master 
