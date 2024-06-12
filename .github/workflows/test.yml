@@ -1,0 +1,32 @@
+name: 'Test on Phoenix'
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  self:
+    name: Georgia Tech | Phoenix
+    if: github.repository == 'Comp-Physics/RBC3D'
+    runs-on:
+      group:  phoenix
+      labels: gt
+    steps:
+      - name: Clone - PR
+        uses: actions/checkout@v4
+        with:
+          path: pr
+
+      - name: Clone - Master
+        uses: actions/checkout@v4
+        with:
+          repository: Comp-Physics/RBC3D
+          ref: master
+          path: master
+
+      - name: Test
+        run: |
+          cd master 
+          bash .github/workflows/phoenix/submit.sh
+          wait %1
