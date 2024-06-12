@@ -14,5 +14,7 @@ jobs:
       - name: Test
         run: |
           echo "$(pwd)"
-          sbatch ./.github/scripts/submit.sh
+          cd ${{github.workspace}}/.github/scripts
+          echo "$(pwd)"
+          sbatch submit.sh
           wait %1
