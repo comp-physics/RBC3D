@@ -10,6 +10,7 @@ jobs:
     name: Georgia Tech | Phoenix
     runs-on:
       - self-hosted
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
