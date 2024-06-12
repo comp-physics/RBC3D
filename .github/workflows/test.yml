@@ -1,0 +1,18 @@
+name: 'Test on Phoenix'
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  self:
+    name: Georgia Tech | Phoenix
+    runs-on:
+      group:  phoenix-rbc-1
+      labels: self-hosted
+    steps:
+      - name: Test
+        run: |
+          sbatch ./.github/workflows/phoenix/submit.sh
+          wait %1

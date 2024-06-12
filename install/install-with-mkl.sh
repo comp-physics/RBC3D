@@ -2,10 +2,6 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-# replace with equivalent modules on your cluster
-# if module is not available, follow readme.md to manually install
-ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
-
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
 cd packages
