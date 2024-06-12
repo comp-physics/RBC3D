@@ -15,9 +15,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Load Modules
+        run: |
+          ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
-      - name: Build & Test
+      - name: Build
+        run: |
+          bash rbc.sh install-with-mkl
+
+      - name: Test
         run: |
           sbatch .github/scripts/submit.sh
-          wait %1
           cat examples/case/ci.log
