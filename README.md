@@ -23,7 +23,7 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
-To install, you need to salloc a node (because default PETSc configure options use srun) and then run this on PACE Phoenix in the RBC3D root directory: 
+To install, you need to make sure srun is available (being on a node ensures this) and then run this on PACE Phoenix in the RBC3D root directory: 
 
 ```shell
 ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
