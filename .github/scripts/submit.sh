@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #SBATCH --account=gts-sbryngelson3
-#SBATCH -N4 --ntasks-per-node=24
+#SBATCH -N1 --ntasks-per-node=24
 #SBATCH --mem-per-cpu=2G
 #SBATCH -t1:00:00
 #SBATCH -q embers
 #SBATCH --mail-user=smanasreh6@gatech.edu
 #SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH -W
 
 cd $SLURM_SUBMIT_DIR
 echo "Running in $(pwd):"
@@ -26,7 +27,6 @@ make
 cd ..
 git clone https://github.com/comp-physics/makedepf90.git
 cd makedepf90
-# it works without setting prefix
 make
 make install
 
