@@ -16,11 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Test
+      - name: Build & Test
         run: |
-          echo "$(pwd)"
-          cd ${{github.workspace}}/.github/scripts
-          echo "$(pwd)"
-          sbatch submit.sh
+          sbatch .github/scripts/submit.sh
           wait %1
           cat examples/case/ci.log
