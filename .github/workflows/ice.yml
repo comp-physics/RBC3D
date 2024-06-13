@@ -20,15 +20,32 @@ jobs:
         run: |
             ml anaconda3 gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva
             bash rbc.sh install-with-mkl
-
-      - name: Test
+            
+      # will stop on any errors
+      - name: Compile Common
         run: |
-            ml anaconda3 gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva
             set -e
             cd common
             make .depend
             make
-            cd ../examples/case
+            echo "/common compiled successfully!"
+
+      - name: Compile Example Cases
+        run: |
+            set -e
+            cd examples/case
             make .depend
             make
-            echo "common and examples/case compilation successful!"
+            cd ../case_diff_celltypes
+            make .depend
+            make
+            cd ../randomized_case
+            make .depend
+            make
+            cd ../carotid_web
+            make .depend
+            make
+            cd ../field_visual
+            make .depend
+            make
+            echo "All cases in /examples compiled successfully!"
