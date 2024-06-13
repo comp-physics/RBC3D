@@ -2,9 +2,6 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-# echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
-# source ~/.bashrc
-
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
 cd packages
@@ -15,6 +12,7 @@ tar -xf petsc-3.19.tar.gz
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
 
+# if these configure options don't work, it's probably a path issue
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \
