@@ -9,9 +9,9 @@ cd packages
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-echo "BEFORE pip3 install --user configure"
-pip3 install -r configure
-echo "AFTER pip3 install --user configure"
+# echo "BEFORE pip3 install --user configure"
+# pip3 install -r configure
+# echo "AFTER pip3 install --user configure"
 
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
