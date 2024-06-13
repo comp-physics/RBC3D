@@ -26,6 +26,7 @@ jobs:
 
       - name: Test
         run: |
+          ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
           cd common
           make .depend
           make
