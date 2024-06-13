@@ -3,6 +3,7 @@
 # salloc a node before you run this because petsc configure uses srun
 
 echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
+echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
 source ~/.bashrc
 
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
@@ -22,7 +23,9 @@ tar -xf petsc-3.19.tar.gz
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
 
-./configure --with-fc=mpif90 \
+./configure --with-cc=/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/mvapich2-2.3.6-ouywalrqjnakjlhjxgunwqssb3iongrc/bin/mpicc \
+    --with-cxx=/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/mvapich2-2.3.6-ouywalrqjnakjlhjxgunwqssb3iongrc/bin/mpicxx \
+    --with-fc=/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/mvapich2-2.3.6-ouywalrqjnakjlhjxgunwqssb3iongrc/bin/mpif90 \
     --with-fortran-datatypes \
     --with-debugging=0 \
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
