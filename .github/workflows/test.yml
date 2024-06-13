@@ -15,18 +15,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Load Modules
-        run: |
-          ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
-
+    
       - name: Build
         run: |
-          bash rbc.sh install-no-petsc
+          bash rbc.sh install-with-mkl
 
       - name: Test
         run: |
-          ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
+          ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
           cd common
           make .depend
           make
