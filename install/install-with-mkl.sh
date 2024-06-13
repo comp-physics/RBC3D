@@ -4,7 +4,7 @@
 
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
-mpicc --show
+mpicc -show
 
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
