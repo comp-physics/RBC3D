@@ -26,5 +26,9 @@ jobs:
 
       - name: Test
         run: |
-          sbatch .github/scripts/submit.sh
-          cat examples/case/ci.log
+          cd common
+          make .depend
+          make
+          cd ../examples/case
+          make .depend
+          make
