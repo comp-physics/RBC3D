@@ -2,6 +2,7 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
+module unload openmpi
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
 mpicc -show
@@ -31,20 +32,20 @@ cd petsc-3.19.6
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 
-# build and install spherepack
-cd ..
-git clone https://github.com/comp-physics/spherepack3.2.git
-cd spherepack3.2
-make
+# # build and install spherepack
+# cd ..
+# git clone https://github.com/comp-physics/spherepack3.2.git
+# cd spherepack3.2
+# make
 
-# build and install makedepf90
-cd ..
-git clone https://github.com/comp-physics/makedepf90.git
-cd ../install/scripts
-echo "PWD $(pwd)"
-python3 mdf90_replace.py
-cd ../../packages/makedepf90
-make
-make install
+# # build and install makedepf90
+# cd ..
+# git clone https://github.com/comp-physics/makedepf90.git
+# cd ../install/scripts
+# echo "PWD $(pwd)"
+# python3 mdf90_replace.py
+# cd ../../packages/makedepf90
+# make
+# make install
 
 echo "Done installing RBC3D!"
