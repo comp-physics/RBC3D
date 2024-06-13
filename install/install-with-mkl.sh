@@ -10,6 +10,7 @@ wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
 pip3 install --user configure
+echo "AFTER pip3 install --user configure"
 
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
@@ -23,7 +24,7 @@ make PETSC_DIR=`pwd` PETSC_ARCH=petsc_configure check
 cd ..
 git clone https://github.com/comp-physics/spherepack3.2.git
 cd spherepack3.2
-make -j 8
+make
 
 # build and install makedepf90
 cd ..
@@ -32,7 +33,7 @@ cd ../install/scripts
 echo "PWD $(pwd)"
 python3 mdf90_replace.py
 cd ../../packages/makedepf90
-make -j 8
+make
 make install
 
 echo "Done installing RBC3D!"
