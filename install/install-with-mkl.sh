@@ -2,7 +2,9 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-module unload openmpi
+echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
+source ~/.bashrc
+
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
 mpicc -show
@@ -48,4 +50,4 @@ make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 # make
 # make install
 
-echo "Done installing RBC3D!"
+# echo "Done installing RBC3D!"
