@@ -10,6 +10,7 @@ ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 mpicc -show
 echo "calling mpicc"
 mpicc
+echo $mpicc
 echo "after calling mpicc"
 
 module show mvapich2
