@@ -26,7 +26,7 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 To install, you need to make sure srun is available (being on a node ensures this) and then run this on PACE Phoenix in the RBC3D root directory: 
 
 ```shell
-ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
+ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
 bash rbc.sh install-with-mkl
 ```
 
@@ -35,6 +35,12 @@ Or if you're on COC-ICE, you just need to load different modules to run the inst
 ```shell
 ml anaconda3 gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2
 bash rbc.sh install-with-mkl
+```
+
+Or if you're on a cluster with a PETSc module (PACE Phoenix has one)
+```shell
+ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
+bash rbc.sh install-no-petsc
 ```
 
 Then to execute and run a case, you can:

@@ -3,8 +3,10 @@
 # this installer script assumes you module loaded petsc 
 # so it doesn't install it
 
+mkdir packages
+cd packages
+
 # build and install spherepack
-cd ..
 git clone https://github.com/comp-physics/spherepack3.2.git
 cd spherepack3.2
 make
@@ -12,8 +14,10 @@ make
 # build and install makedepf90
 cd ..
 git clone https://github.com/comp-physics/makedepf90.git
-cd makedepf90
-# it works without setting prefix
+cd ../install/scripts
+echo "PWD $(pwd)"
+python3 mdf90_replace.py
+cd ../../packages/makedepf90
 make
 make install
 
