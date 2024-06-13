@@ -3,7 +3,7 @@ WORK_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Package directories (shouldn't need to change these)
 PETSC_DIR = $(WORK_DIR)/packages/petsc-3.19.6
-PETSC_ARCH = $(PETSC_DIR)/petsc_configure
+PETSC_ARCH = $(PETSC_DIR)/arch-linux-c-opt
 
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 
