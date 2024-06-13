@@ -25,6 +25,8 @@ command -v pip3 > /dev/null 2>&1
 if (($?)); then
     echo "[rbc.sh] Error: Pip3 is not working."
     exit 1
+else
+    echo "Pip works"
 fi
 
 if [ "$1" == 'format' ]; then
