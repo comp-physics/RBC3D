@@ -11,7 +11,7 @@ wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz
 tar -xf v3.11.tar.gz
 cd lapack-3.11
 cp ../../install/scripts/make.inc ./
-make
+make -j 8
 
 # build and install petsc 3.19.6 in packages directory
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
