@@ -12,25 +12,8 @@
 cd $SLURM_SUBMIT_DIR
 echo "Running in $(pwd):"
 
-# ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
+ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
 
-# mkdir packages
-# cd packages
-
-# # build and install spherepack
-# cd ..
-# git clone https://github.com/comp-physics/spherepack3.2.git
-# cd spherepack3.2
-# make
-
-# # build and install makedepf90
-# cd ..
-# git clone https://github.com/comp-physics/makedepf90.git
-# cd makedepf90
-# make
-# make install
-
-# cd ../../common
 cd common
 make .depend
 make
