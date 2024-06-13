@@ -10,3 +10,5 @@ for case in $cases; do
     make -C "$case" .depend
     make -C "$case"
 done
+
+echo "`pwd`/lapack-3.11/liblapack.a"
