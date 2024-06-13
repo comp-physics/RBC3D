@@ -1,16 +1,13 @@
 name: 'Test on Phoenix'
 
-on:
-    push:
-    pull_request:
-    workflow_dispatch:
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   self:
     name: Phoenix Runner
     runs-on:
       labels: gt
-    if: github.repository == 'Comp-Physics/RBC3D'
+    if: 1 == 2
     continue-on-error: true
     steps:
       - name: Checkout
