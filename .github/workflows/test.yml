@@ -18,8 +18,8 @@ jobs:
     
       - name: Build
         run: |
-          ml gcc mvapich2 mkl petsc python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
-          bash rbc.sh install-no-petsc
+          ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
+          bash rbc.sh install-with-mkl
 
       - name: Test
         run: |
