@@ -22,8 +22,7 @@ tar -xf petsc-3.19.tar.gz
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
 
-./configure --with-cc=mpicc \
-    --with-cxx=mpicxx \
+./configure --with-cxx=mpicxx \
     --with-fc=mpif90 \
     --with-fortran-datatypes \
     --with-debugging=0 \
