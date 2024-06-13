@@ -20,6 +20,13 @@ if (($?)); then
     exit 1
 fi
 
+# check pip3
+command -v pip3 > /dev/null 2>&1
+if (($?)); then
+    echo "[rbc.sh] Error: Pip3 is not working."
+    exit 1
+fi
+
 if [ "$1" == 'format' ]; then
     . "$(pwd)/install/format.sh" $@; exit
 fi

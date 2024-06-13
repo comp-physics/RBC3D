@@ -7,7 +7,7 @@ mkdir packages
 cd packages
 
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
-tar -xvf petsc-3.19.tar.gz
+tar -xf petsc-3.19.tar.gz
 
 pip3 install --user configure
 
