@@ -18,7 +18,7 @@ jobs:
     
       - name: Build
         run: |
-          ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
+          ml anaconda3/2021.05 gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
           bash rbc.sh install-with-mkl
 
       - name: Test
