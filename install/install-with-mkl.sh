@@ -2,9 +2,8 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
-echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
-source ~/.bashrc
+# echo -e "export PATH="$PATH:$HOME/.local/bin"" >> ~/.bashrc
+# source ~/.bashrc
 
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
@@ -12,6 +11,8 @@ mpicc -show
 echo "calling mpicc"
 mpicc
 echo "after calling mpicc"
+
+module show mvapich2
 
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
