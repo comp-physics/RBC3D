@@ -2,7 +2,7 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-set -e
+# set -e
 
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
