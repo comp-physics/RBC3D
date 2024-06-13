@@ -4,16 +4,14 @@
 
 ml python/3.9.12-rkxvr6 gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 
+mpicc --show
+
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
 cd packages
 
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
-
-# echo "BEFORE pip3 install --user configure"
-# pip3 install --user configure
-# echo "AFTER pip3 install --user configure"
 
 cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
@@ -29,8 +27,6 @@ cd petsc-3.19.6
     --with-blaslapack-dir=$MKLROOT \
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
-# python3 petsc_configure.py --mkl-only --dryrun
-# python3 petsc_configure.py --mkl-only
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
