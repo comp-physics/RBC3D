@@ -1,1 +1,1 @@
-include ../Makefile.lapack
+include ../Makefile.mkl

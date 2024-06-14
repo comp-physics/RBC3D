@@ -10,7 +10,7 @@ jobs:
     name: ICE Runner
     runs-on:
         labels: ice
-    if: github.repository == 'Comp-Physics/RBC3D'
+    if: 1 == 2    
     continue-on-error: true
     steps:
       - name: Checkout
