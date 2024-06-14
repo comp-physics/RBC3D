@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # salloc a node before you run this because petsc tests use srun
-set -e -x
 
 # # create packages directory
 mkdir packages
