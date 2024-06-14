@@ -1,4 +1,4 @@
-name: 'Test on ICE'
+name: 'Test on ICE - mkl'
 
 on:
     push:

@@ -4,16 +4,16 @@
 set -e -x
 
 # # create packages directory
-# mkdir packages
-# cd packages
+mkdir packages
+cd packages
 
-# # build and install lapack and blas
-# wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz
-# tar -xf v3.11.tar.gz
-# cd lapack-3.11
-# cp ../../install/scripts/make.inc ./
-# echo "PWD: `PWD`"
-# make -j 8
+# build and install lapack and blas
+wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz
+tar -xf v3.11.tar.gz
+cd lapack-3.11
+cp ../../install/scripts/make.inc ./
+echo "PWD: `PWD`"
+make -j 8
 
 cd ..
 # echo "PWD: `PWD`"
