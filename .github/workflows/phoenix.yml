@@ -8,7 +8,7 @@ jobs:
     runs-on:
       labels: gt
     # skip this test
-    if: 1 == 2
+    if: github.repository == 'Comp-Physics/RBC3D'
     continue-on-error: true
     steps:
       - name: Checkout
