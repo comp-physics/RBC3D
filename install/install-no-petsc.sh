@@ -3,6 +3,9 @@
 # this installer script assumes you module loaded petsc 
 # so it doesn't install it
 
+echo "BASHRC:"
+cat ~/.bashrc
+
 mkdir packages
 cd packages
 
