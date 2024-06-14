@@ -63,9 +63,7 @@ export PATH="$PATH:$HOME/.local/bin"
 * Unpack `petsc-3.19`: `tar -xvf petsc-3.19.tar.gz`
 * Descend into the directory: `cd petsc-3.19`
 * Run configure script. This depends on python3.
-```shell
-```
-* If you installed MKL, run this configure command:
+* If you installed with MKL and have the `$MKLROOT` env variable set, run this configure command:
 ```shell
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
@@ -79,9 +77,22 @@ export PATH="$PATH:$HOME/.local/bin"
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 ```
-* If you installed LAPACK/BLAS instead, run the same configure commands but replace
-* Note the `--dryrun` option will show you the PETSc configure options.
-
+* If you installed with the LAPACK/BLAS version in an earlier step, run this configure command. 
+```shell
+./configure --with-cc=mpicc \
+    --with-cxx=mpicxx \
+    --with-fc=mpif90 \
+    --with-fortran-datatypes \
+    --with-debugging=0 \
+    --COPTFLAGS=-g -O3 -march=native -mtune=native \
+    --CXXOPTFLAGS=-g -O3 -march=native -mtune=native \
+    --FOPTFLAGS=-g -O3 -march=native -mtune=native \
+    --with-blas-lib=$parentdir/packages/lapack-3.11/librefblas.a \
+    --with-lapack-lib=$parentdir/packages/lapack-3.11/liblapack.a \
+    --with-mpiexec=srun \
+    --with-shared-libraries=0 \
+    --with-x11=0 --with-x=0 --with-windows-graphics=0
+```
 * Build and Test:
 ```shell
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all

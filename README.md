@@ -39,12 +39,6 @@ ml anaconda3 gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.1
 bash rbc.sh install-with-mkl
 ```
 
-Or if you're on a cluster with a PETSc module (PACE Phoenix has one). This requires a different Makefile.in (adding instructions later)
-```shell
-ml gcc mvapich2 mkl petsc netcdf-c netcdf-cxx netcdf-fortran fftw
-bash rbc.sh install-no-petsc
-```
-
 Then to execute and run a case, you can:
 ```shell
 cd common

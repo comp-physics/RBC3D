@@ -2,7 +2,7 @@
 
 # salloc a node before you run this because petsc tests use srun
 
-# # create packages directory
+# create packages directory
 mkdir packages
 cd packages
 
