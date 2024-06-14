@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # salloc a node before you run this because petsc configure uses srun
+source ~/.bashrc
 
 # building and installing petsc 3.19.6 in packages directory
 mkdir packages
