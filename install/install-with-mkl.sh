@@ -9,7 +9,6 @@ cd packages
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-cp ../install/scripts/petsc_configure.py ./petsc-3.19.6
 cd petsc-3.19.6
 
 # if these configure options don't work, it's probably a path issue
