@@ -7,4 +7,4 @@ pip3 install --upgrade fprettify
 fprettify ./examples -r --indent 2
 fprettify ./common -r --indent 2
 
-echo "Done formatting!"
+echo "Done formatting RBC3D!"

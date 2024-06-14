@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# change this to the correct module load for python3 on your cluster
-ml python/3.9.12-rkxvr6
+# module load the latest version of python3 on your cluster
 
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH="$PATH:$HOME/.local/bin"
