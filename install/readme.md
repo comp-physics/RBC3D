@@ -77,7 +77,7 @@ export PATH="$PATH:$HOME/.local/bin"
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 ```
-* If you installed with the LAPACK/BLAS version in an earlier step, run this configure command. 
+* If you installed with the LAPACK/BLAS version in an earlier step, run this configure command, and replace `$parentdir` with what `pwd` returns from the RBC3D root directory. 
 ```shell
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
