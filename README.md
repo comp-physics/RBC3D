@@ -25,7 +25,7 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 [![Test on ICE](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml/badge.svg)](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml)
 
-To install, you need to salloc a node to make sure srun is available and then run this on PACE Phoenix in the RBC3D root directory: 
+To install on PACE Phoenix, you need to salloc a node to make sure srun is available and then run this in the RBC3D root directory: 
 
 ```shell
 ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
