@@ -31,7 +31,3 @@ if [ "$1" == 'install-with-lapack' ]; then
     echo "HERE"
     . "$(pwd)/install/install-with-lapack.sh" $@; exit
 fi
-
-if [ "$1" == 'install-no-petsc' ]; then
-    . "$(pwd)/install/install-no-petsc.sh" $@; exit
-fi
