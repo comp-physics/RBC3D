@@ -28,6 +28,5 @@ if [ "$1" == 'install-with-mkl' ]; then
 fi
 
 if [ "$1" == 'install-with-lapack' ]; then
-    echo "HERE"
     . "$(pwd)/install/install-with-lapack.sh" $@; exit
 fi
