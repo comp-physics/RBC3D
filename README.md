@@ -23,15 +23,24 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
-To install on PACE Phoenix, you need to salloc a node (because default PETSc configure options use srun) and then run: 
+[![Test on ICE](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml/badge.svg)](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml)
+
+To install on PACE Phoenix, you need to salloc a node to make sure srun is available and then run this in the RBC3D root directory: 
 
 ```shell
+ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-c netcdf-cxx netcdf-fortran fftw
+bash rbc.sh install-with-mkl
+```
+
+Or if you're on COC-ICE, you just need to load different modules to run the installer script.
+
+```shell
+ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2
 bash rbc.sh install-with-mkl
 ```
 
 Then to execute and run a case, you can:
 ```shell
-ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
 cd common
 make .depend
 make
@@ -42,7 +51,7 @@ srun -n 1 ./initcond
 srun ./tube
 ```
 
-On other supercomputing clusters, it should be easy to replace line 7 of `./install/install-with-mkl.sh` with the modules available on your system and change the directories in `Makefile.in` to point to those modules. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+On other supercomputing clusters, it should be easy to replace the module loads with the modules available on your system and change the directories in `Makefile.in` to point to those modules. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
 
 ### Papers that use RBC3D
 

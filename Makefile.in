@@ -3,7 +3,7 @@ WORK_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Package directories (shouldn't need to change these)
 PETSC_DIR = $(WORK_DIR)/packages/petsc-3.19.6
-PETSC_ARCH = $(PETSC_DIR)/petsc_configure
+PETSC_ARCH = $(PETSC_DIR)/arch-linux-c-opt
 
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 
@@ -12,16 +12,12 @@ LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
 # Makedependf90 binary
 MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
 
-# Directories from loaded modules (change this to the appropriate locations on your system!)
-FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6
-NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
-
 vpath $(WORK_DIR)/common
 
 # Includes
 PETSC_INCLUDE = $(PETSC_DIR)/include
 PETSC_ARCH_INCLUDE = $(PETSC_ARCH)/include
-NETCDF_INCLUDE = $(NETCDF_DIR)/include
+NETCDF_INCLUDE = $(NETCDF_FORTRANROOT)/include
 
 COMMON_INCLUDE = -I$(WORK_DIR)/common
 INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(PETSC_ARCH_INCLUDE) -I$(NETCDF_INCLUDE)
@@ -29,8 +25,8 @@ INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(PETSC_ARCH_INCLUDE) -I$(NETCD
 # Libraries
 COMMON_LIB = $(WORK_DIR)/common/libcommon.a
 SPHPK_LIB = -L$(SPHEREPACK_DIR)/lib -lspherepack
-FFTW_LIB = -L$(FFTW_DIR)/lib -lfftw3
-NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
+FFTW_LIB = -L$(FFTWROOT)/lib -lfftw3
+NETCDF_LIB = -L$(NETCDF_FORTRANROOT)/lib -lnetcdff
 PETSC_LIB = -Wl,-rpath,$(PETSC_ARCH)/lib -L$(PETSC_ARCH)/lib -lpetsc -lstdc++
 MKL_LIB = -L$(MKL_ROOT)lib/intel64/ -lmkl_gf_lp64 -lmkl_core -lmkl_sequential -lpthread -lm -ldl
 BLAS_LIB = -L$(BLAS_DIR) -lrefblas

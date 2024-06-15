@@ -15,5 +15,5 @@ jobs:
 
     - name: Check formatting
       run: |
-        bash ./.github/scripts/format.sh
+        bash rbc.sh format
         git diff --exit-code
