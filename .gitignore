@@ -18,9 +18,7 @@ test
 tes17
 pinv
 qf1d
-packages2
-packages3
-packages4
+packages*
 testcases
 mycases
 sample_files/sample_walls/my_meshes
