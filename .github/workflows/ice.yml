@@ -1,0 +1,48 @@
+name: 'Test on ICE'
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  self:
+    name: ICE Runner
+    runs-on:
+        labels: ice
+    if: github.repository == 'Comp-Physics/RBC3D'
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # use mkl option
+      - name: Build
+        run: |
+            ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva
+            bash rbc.sh install-with-mkl
+
+      # will stop on any errors
+      - name: Compile Common
+        run: |
+            ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva
+            set -e -x
+            cd common
+            make .depend
+            make
+            echo "/common compiled successfully!"
+
+      - name: Compile Example Cases
+        run: |
+            ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva
+            set -e -x
+            base_dir="examples"
+
+            cases=$(find "$base_dir" -maxdepth 1 -type d ! -path "$base_dir")
+
+            for case in $cases; do
+                make -C "$case" .depend
+                make -C "$case"
+            done
+            
+            echo "All cases in /examples compiled successfully!"

@@ -3,7 +3,7 @@ WORK_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 # Package directories (shouldn't need to change these)
 PETSC_DIR = $(WORK_DIR)/packages/petsc-3.19.6
-PETSC_ARCH = $(PETSC_DIR)/petsc_configure
+PETSC_ARCH = $(PETSC_DIR)/arch-linux-c-opt
 
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 
@@ -11,10 +11,6 @@ LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
 
 # Makedependf90 binary
 MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
-
-# Directories from loaded modules (change this to the appropriate locations on your system!)
-FFTW_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/fftw-3.3.10-dgx5szpp2x4fznqfuaoucmwieqxbgpg6
-NETCDF_DIR = /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p
 
 vpath $(WORK_DIR)/common
 
