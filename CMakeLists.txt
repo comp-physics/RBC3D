@@ -1,17 +1,16 @@
 include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.20)
 
+project(RBC3D LANGUAGES Fortran C CXX)
+
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 set(BLA_VENDOR Intel10_64lp)
 
-message("before PETSc pkg config")
-
 # set root of location to find PETSc's pkg-config
-set(PETSC $ENV{PETSC_DIR})
+set(PETSC $ENV{PETSC_DIR}/$ENV{PETSC_ARCH})
 set(ENV{PKG_CONFIG_PATH} ${PETSC}/lib/pkgconfig)
 
-message("after petsc pkg config")
 cmake_print_variables(PETSC)
 
 execute_process ( COMMAND pkg-config PETSc --variable=ccompiler COMMAND tr -d '\n' OUTPUT_VARIABLE C_COMPILER)
@@ -36,15 +35,9 @@ if (FORTRAN_COMPILER)
   # set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -I${PETSC_DIR}/include -I${PETSC_DIR}/${PETSC_ARCH}/include")
   add_compile_options(-fallow-argument-mismatch -freal-4-real-8 -O3)
   add_link_options(-ldl -lstdc++ -Wl,--copy-dt-needed-entries)
-  enable_language(Fortran C CXX)
 
   # SET(CMAKE_Fortran_LINK_EXECUTABLE "${CMAKE_Fortran_LINK_EXECUTABLE} -ldl")
 endif (FORTRAN_COMPILER)
-
-
-#  tells CMake to build the application ex1 from the source file ex1.c
-#  this must appear AFTER the compilers are set
-project(RBC3D)
 
 find_package(PkgConfig REQUIRED)
 find_package(LAPACK REQUIRED)
@@ -61,8 +54,11 @@ endif()
 
 if (PETSC_FOUND)
   message("PETSc found")
-  set(PETSC_INCLUDE "$ENV{PETSC_DIR}/include")
-  cmake_print_variables(PETSC_INCLUDE)
+  # set(PETSC_INCLUDE "$ENV{PETSC_DIR}/include")
+  # cmake_print_variables(PETSC_INCLUDE)
+
+  # set(PETSC_ARCH_INCLUDE "${PETSC}/include")
+  # cmake_print_variables(PETSC_ARCH_INCLUDE)
 
   list(APPEND COMPILE_OPTIONS ${PETSC_CFLAGS})
   include_directories(${PETSC_INCLUDE_DIRS})
@@ -72,24 +68,25 @@ if (PETSC_FOUND)
   set(CMAKE_REQUIRED_INCLUDES "${PETSC_INCLUDE_DIRS}")
 endif(PETSC_FOUND)
 
-# include_directories(include)
-
 if (LAPACK_FOUND)
   message(STATUS "LAPACK libraries: ${LAPACK_LIBRARIES}")
 endif(LAPACK_FOUND)
 
 if (DEFINED ENV{FFTWROOT})
     # set(FFTW_INCLUDE "${FFTW_INCLUDE};$ENV{FFTWROOT}/include")
-    set(FFTW_LIB "$ENV{FFTWROOT}/lib")
+    set(FFTW_LIB "-L$ENV{FFTWROOT}/lib -lfftw3")
     cmake_print_variables(FFTW_LIB)
 endif()
 
 if (DEFINED ENV{NETCDF_FORTRANROOT})
     set(NETCDF_INCLUDE "$ENV{NETCDF_FORTRANROOT}/include")
-    set(NETCDF_LIB "$ENV{NETCDF_FORTRANROOT}/lib")
+    set(NETCDF_LIB "-L$ENV{NETCDF_FORTRANROOT}/lib -lnetcdff")
     cmake_print_variables(NETCDF_INCLUDE)
     cmake_print_variables(NETCDF_LIB)
 endif()
+
+# spherepack library
+set(SPHPK_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/spherepack3.2/lib -lspherepack")
 
 # build libcommon
 file(GLOB libcommon_F90s "${CMAKE_CURRENT_SOURCE_DIR}/common/*.F90")
@@ -97,6 +94,8 @@ cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
 add_executable(libcommon "${libcommon_F90s}")
 # target_link_libraries(libcommon LAPACK::LAPACK PkgConfig::PETSC)
 cmake_print_variables(PETSC_INCLUDE_DIRS)
-cmake_print_variables(PETSC_INCLUDE)
+cmake_print_variables(PETSC_LINK_LIBRARIES)
 target_include_directories(libcommon PRIVATE ${PETSC_INCLUDE_DIRS} ${NETCDF_INCLUDE})
+# LAPACK::LAPACK?
+target_link_libraries(libcommon PRIVATE ${PETSC_LINK_LIBRARIES} ${SPHPK_LIB} ${FFTW_LIB} ${NETCDF_LIB})
 install(TARGETS libcommon RUNTIME DESTINATION bin)
