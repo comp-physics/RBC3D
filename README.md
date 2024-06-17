@@ -23,19 +23,6 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
-<<<<<<< HEAD
-To install, you need to make sure srun is available (being on a node ensures this) and then run this on PACE Phoenix in the RBC3D root directory: 
-
-```shell
-ml gcc mvapich2 mkl netcdf-c netcdf-cxx netcdf-fortran fftw
-bash rbc.sh install-with-mkl
-```
-
-Or if you're on COC-ICE, you just need to load different modules to run the installer script.
-
-```shell
-ml anaconda3 gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2
-=======
 [![Test on ICE](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml/badge.svg)](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml)
 
 To install on PACE Phoenix, you need to salloc a node to make sure srun is available and then run this in the RBC3D root directory: 
@@ -49,7 +36,6 @@ Or if you're on COC-ICE, you just need to load different modules to run the inst
 
 ```shell
 ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-c/4.9.2-mva2-hdf5-1.14 netcdf-cxx/4.2-mva2-hdf5-1.14 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2
->>>>>>> master
 bash rbc.sh install-with-mkl
 ```
 
