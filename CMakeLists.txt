@@ -3,7 +3,7 @@
 #   cd build
 #   cmake -DBUILD_COMMON+ON ..
 #   make
-# Regenerate after common changes:
+# Regenerate after changes:
 #   cmake .
 # Show each build command line as it is launched
 #   cmake -DCMAKE_VERBOSE_MAKEFILE=ON ..
@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION 3.20)
 project(RBC3D LANGUAGES Fortran C CXX)
 
 option(BUILD_COMMON  "Build common"  OFF)
+option(BUILD_CASE  "Build common"  OFF)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
@@ -59,7 +60,7 @@ if (PETSC_FOUND)
   # cmake_print_variables(PETSC_ARCH_INCLUDE)
 
 #   list(APPEND COMPILE_OPTIONS ${PETSC_CFLAGS})
-#   # include_directories(${PETSC_INCLUDE_DIRS})
+#   include_directories(${PETSC_INCLUDE_DIRS})
 #   set(LINK_FLAGS "${LINK_FLAGS} ${PETSC_LDFLAGS}")   
 #   list(APPEND LIBRARIES ${PETSC_LINK_LIBRARIES})   
 #   set(CMAKE_REQUIRED_FLAGS ${PETSC_CFLAGS})   
@@ -112,10 +113,7 @@ endif()
 
 # set(TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90 ${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90)
 # cmake_print_variables(TARGET_SOURCES)
-file(GLOB inputs "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/Input/*")
-cmake_print_variables(inputs)
-file(COPY ${inputs}
-     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/Input")
+
 cmake_print_variables(CMAKE_CURRENT_BINARY_DIR)
 make_directory("${CMAKE_CURRENT_BINARY_DIR}/D")
 add_executable(initcond "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/initcond.F90")
