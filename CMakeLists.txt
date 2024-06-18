@@ -1,13 +1,13 @@
 # To build /common (generate libcommon in build dir):
 #   mkdir build
 #   cd build
-#   cmake -DBUILD_COMMON+ON ..
+#   cmake -DBUILD_COMMON=ON ..
 #   make
 # Regenerate after changes:
 #   cmake .
 # Show each build command line as it is launched
 #   cmake -DCMAKE_VERBOSE_MAKEFILE=ON ..
-# Thank you Boost
+# Thank you Boost, Sundials
 
 include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.20)
@@ -103,21 +103,30 @@ set(SPHPK_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/spherepack3.2/lib -lsphere
 
 # build common
 if (BUILD_COMMON)
-    file(GLOB common_F90s "${CMAKE_CURRENT_SOURCE_DIR}/common/*.F90")
-    add_library(common STATIC "${common_F90s}")
-    # target_link_libraries(common LAPACK::LAPACK PkgConfig::PETSC)
-    target_include_directories(common PRIVATE ${PETSC_INCLUDE_DIRS} ${NETCDF_INCLUDE})
-    target_link_libraries(common PRIVATE ${PETSC_LINK_LIBRARIES} ${SPHPK_LIB} ${FFTW_LIB} ${NETCDF_LIB})
+    add_subdirectory(common)
     install(TARGETS common RUNTIME DESTINATION bin)
 endif()
 
 # set(TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90 ${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90)
 # cmake_print_variables(TARGET_SOURCES)
 
-cmake_print_variables(CMAKE_CURRENT_BINARY_DIR)
-make_directory("${CMAKE_CURRENT_BINARY_DIR}/D")
-add_executable(initcond "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/initcond.F90")
-add_executable(tube "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/tube.F90")
-target_link_libraries(initcond common)
-target_include_directories(tube PRIVATE ${PETSC_INCLUDE_DIRS})
-target_link_libraries(tube common ${PETSC_LINK_LIBRARIES})
+add_subdirectory(examples/case case)
+
+# file(GLOB case_F90s "examples/case/*.F90")
+# cmake_print_variables(case_F90s)
+# foreach(F90_filepath ${case_F90s})
+#     get_filename_component(file_target ${F90_filepath} NAME_WE)
+#     add_executable(${file_target} ${F90_filepath})
+#     cmake_print_variables(file_target)
+
+#     target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
+#     target_link_libraries(${file_target} common ${PETSC_LINK_LIBRARIES})
+#     message("HERE")
+# endforeach()
+
+# cmake_print_variables(CMAKE_CURRENT_BINARY_DIR)
+# add_executable(initcond "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/initcond.F90")
+# add_executable(tube "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/tube.F90")
+# target_link_libraries(initcond common)
+# target_include_directories(tube PRIVATE ${PETSC_INCLUDE_DIRS})
+# target_link_libraries(tube common ${PETSC_LINK_LIBRARIES})

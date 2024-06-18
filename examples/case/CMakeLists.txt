@@ -1,0 +1,11 @@
+file(GLOB case_F90s "*.F90")
+cmake_print_variables(case_F90s)
+foreach(F90_filepath ${case_F90s})
+    get_filename_component(file_target ${F90_filepath} NAME_WE)
+    add_executable(${file_target} ${F90_filepath})
+    cmake_print_variables(file_target)
+
+    target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
+    target_link_libraries(${file_target} common ${PETSC_LINK_LIBRARIES})
+    message("HERE")
+endforeach()
