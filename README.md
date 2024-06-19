@@ -23,6 +23,11 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
+```shell
+export PETSC_DIR=/storage/home/hcoda1/4/smanasreh6/RBC3D/packages/petsc-3.19.6
+export PETSC_ARCH=arch-linux-c-opt
+```
+
 [![Test on ICE](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml/badge.svg)](https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml)
 
 To install on PACE Phoenix, you need to salloc a node to make sure srun is available and then run this in the RBC3D root directory: 

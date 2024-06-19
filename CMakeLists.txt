@@ -1,7 +1,7 @@
-# To build /common (generate libcommon in build dir):
+# To generate build files:
 #   mkdir build
 #   cd build
-#   cmake -DBUILD_COMMON=ON ..
+#   cmake ..
 #   make
 # Regenerate after changes:
 #   cmake .
@@ -88,7 +88,7 @@ set(SPHPK_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/spherepack3.2/lib -lsphere
 
 # build common
 add_subdirectory(common)
-install(TARGETS common RUNTIME DESTINATION "bin")
+install(TARGETS common LIBRARY DESTINATION "bin")
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/common")
 add_subdirectory(examples/case case)
