@@ -35,7 +35,7 @@ bash rbc.sh install
 Or if you're on COC-ICE, you just need to load different modules to run the installer script.
 
 ```shell
-ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2
+ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2 cmake
 bash rbc.sh install
 ```
 
@@ -50,6 +50,7 @@ Then to execute and run a case, you can:
 mkdir build
 cd build
 cmake ..
+cd case
 make case
 srun -n 1 ./initcond
 srun ./tube
