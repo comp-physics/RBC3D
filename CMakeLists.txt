@@ -98,16 +98,54 @@ install(TARGETS common LIBRARY DESTINATION "bin")
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/common")
 
+set(examples_dir "examples")
+
 # glob for the directories in /examples
-file(GLOB examples_list RELATIVE ${CMAKE_SOURCE_DIR}/examples ${CMAKE_SOURCE_DIR}/examples/*)
+file(GLOB examples_list RELATIVE ${CMAKE_SOURCE_DIR}/${examples_dir} ${CMAKE_SOURCE_DIR}/${examples_dir}/*)
 set(dirlist "")
 foreach (example ${examples_list})
-    if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/examples/${example})
+    if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/${examples_dir}/${example})
         list(APPEND dirlist ${example})
     endif()
 endforeach()
 
 cmake_print_variables(dirlist)
+
+set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)
+
+foreach (casedir ${dirlist})
+    cmake_print_variables(${casedir})
+
+    # make binary dir inside /build for case files
+    set(case_binary_dir "${CMAKE_CURRENT_BINARY_DIR}/${casedir}")
+    file(MAKE_DIRECTORY ${case_binary_dir})
+    cmake_print_variables(case_binary_dir)
+
+    # find all F90 files in the examples/case directory
+    file(GLOB case_F90s "${CMAKE_CURRENT_SOURCE_DIR}/${examples_dir}/${casedir}/*.F90")
+    cmake_print_variables(case_F90s)
+
+    # create a custom target with the name of the current case directory
+    add_custom_target(${casedir})
+
+    # loop through each F90 file
+    foreach(F90_filepath ${case_F90s})
+        # get the file name without extension
+        get_filename_component(file_target ${F90_filepath} NAME_WE)
+        add_executable(${file_target} ${F90_filepath})
+
+        # add target to its own case build directory
+        set_target_properties(${file_target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${case_binary_dir})
+
+        # set include directories and link libraries
+        # petsc might not be necessary for all files (i.e. initcond) but it doesn't hurt to add it
+        target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
+        target_link_libraries(${file_target} PRIVATE common ${PETSC_LINK_LIBRARIES})
+
+        # add dependency to the custom target
+        add_dependencies(${casedir} ${file_target})
+    endforeach()
+endforeach()
 
 # # make binary dir inside /build for case files
 # set(CASE_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/case")
