@@ -1,6 +1,8 @@
 file(GLOB case_F90s "*.F90")
 cmake_print_variables(case_F90s)
 
+add_custom_target(case)
+
 foreach(F90_filepath ${case_F90s})
     get_filename_component(file_target ${F90_filepath} NAME_WE)
     add_executable(${file_target} ${F90_filepath})
@@ -8,7 +10,8 @@ foreach(F90_filepath ${case_F90s})
 
     target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
     target_link_libraries(${file_target} PRIVATE common ${PETSC_LINK_LIBRARIES})
-    message("HERE")
+
+    add_dependencies(case ${file_target})
 endforeach()
 
 # add_executable(initcond "initcond.F90")
