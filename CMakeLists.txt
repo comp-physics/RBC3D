@@ -98,32 +98,42 @@ install(TARGETS common LIBRARY DESTINATION "bin")
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/common")
 
-
-# make binary dir inside /build for case files
-set(CASE_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/case")
-file(MAKE_DIRECTORY ${CASE_BINARY_DIR})
-
-# add_subdirectory(examples/case case)
-# Find all Fortran files in the examples/case directory
-file(GLOB case_F90s "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90")
-cmake_print_variables(case_F90s)
-
-# Create a custom target with the name of the current directory
-add_custom_target(case)
-
-# Loop through each Fortran file
-foreach(F90_filepath ${case_F90s})
-    # Get the file name without extension
-    get_filename_component(file_target ${F90_filepath} NAME_WE)
-    add_executable(${file_target} ${F90_filepath})
-    cmake_print_variables(file_target)
-
-    set_target_properties(${file_target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CASE_BINARY_DIR})
-
-    # Set include directories and link libraries
-    target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
-    target_link_libraries(${file_target} PRIVATE common ${PETSC_LINK_LIBRARIES})
-
-    # Add dependency to the custom target
-    add_dependencies(case ${file_target})
+# glob for the directories in /examples
+file(GLOB examples_list RELATIVE ${CMAKE_SOURCE_DIR}/examples ${CMAKE_SOURCE_DIR}/examples/*)
+set(dirlist "")
+foreach (example ${examples_list})
+    if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/examples/${example})
+        list(APPEND dirlist ${example})
+    endif()
 endforeach()
+
+cmake_print_variables(dirlist)
+
+# # make binary dir inside /build for case files
+# set(CASE_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/case")
+# file(MAKE_DIRECTORY ${CASE_BINARY_DIR})
+
+# # add_subdirectory(examples/case case)
+# # Find all Fortran files in the examples/case directory
+# file(GLOB case_F90s "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90")
+# cmake_print_variables(case_F90s)
+
+# # Create a custom target with the name of the current directory
+# add_custom_target(case)
+
+# # Loop through each Fortran file
+# foreach(F90_filepath ${case_F90s})
+#     # Get the file name without extension
+#     get_filename_component(file_target ${F90_filepath} NAME_WE)
+#     add_executable(${file_target} ${F90_filepath})
+#     cmake_print_variables(file_target)
+
+#     set_target_properties(${file_target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CASE_BINARY_DIR})
+
+#     # Set include directories and link libraries
+#     target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
+#     target_link_libraries(${file_target} PRIVATE common ${PETSC_LINK_LIBRARIES})
+
+#     # Add dependency to the custom target
+#     add_dependencies(case ${file_target})
+# endforeach()
