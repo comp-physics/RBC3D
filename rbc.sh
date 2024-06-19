@@ -31,6 +31,6 @@ if [ "$1" == 'install-with-lapack' ]; then
     . "$(pwd)/install/install-with-lapack.sh" $@; exit
 fi
 
-if [ "$1" == 'build-common' ]; then
-    . "$(pwd)/install/build-common.sh" $@; exit
+if [ "$1" == 'install' ]; then
+    . "$(pwd)/install/install.sh" $@; exit
 fi

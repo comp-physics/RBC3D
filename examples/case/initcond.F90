@@ -39,6 +39,8 @@ program InitCond
   call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
   actlen = 13.33
 
+  print *, "NEW HELLO"
+
   nrbc = 8
   nlat0 = 12
   dealias = 3

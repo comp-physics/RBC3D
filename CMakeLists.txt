@@ -1,10 +1,11 @@
-# To generate build files:
+# To generate build files for common and all example cases:
 #   mkdir build
 #   cd build
 #   cmake ..
 #   make
-# Regenerate after changes:
+# Regenerate case files after changes:
 #   cmake .
+#   make case
 # Show each build command line as it is launched
 #   cmake -DCMAKE_VERBOSE_MAKEFILE=ON ..
 # Thank you Boost, Sundials
@@ -37,8 +38,6 @@ if (FORTRAN_COMPILER)
     set(CMAKE_Fortran_COMPILER ${FORTRAN_COMPILER})
     add_compile_options(-fallow-argument-mismatch -freal-4-real-8 -O3)
     add_link_options(-ldl -lstdc++ -Wl,--copy-dt-needed-entries)
-
-    # set(CMAKE_Fortran_LINK_EXECUTABLE "${CMAKE_Fortran_LINK_EXECUTABLE} -ldl")
 else ()
     message(FATAL_ERROR "PETSc Fortran compiler not found. Please export PETSC_DIR and PETSC_ARCH.")
 endif (FORTRAN_COMPILER)
@@ -119,6 +118,10 @@ foreach (casedir ${dirlist})
     # make binary dir inside /build for case files
     set(case_binary_dir "${CMAKE_CURRENT_BINARY_DIR}/${casedir}")
     file(MAKE_DIRECTORY ${case_binary_dir})
+    make_directory("${case_binary_dir}/D")
+    file(GLOB inputs "${CMAKE_CURRENT_SOURCE_DIR}/${examples_dir}/${casedir}/Input/*")
+    cmake_print_variables(inputs)
+    file(COPY ${inputs} DESTINATION "${case_binary_dir}/Input")
     cmake_print_variables(case_binary_dir)
 
     # find all F90 files in the examples/case directory
