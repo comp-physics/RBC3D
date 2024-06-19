@@ -14,9 +14,6 @@ cmake_minimum_required(VERSION 3.20)
 
 project(RBC3D LANGUAGES Fortran C CXX)
 
-# option(BUILD_COMMON  "Build common"  OFF)
-# option(BUILD_CASE  "Build common"  OFF)
-
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 set(BLA_VENDOR Intel10_64lp)
