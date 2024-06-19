@@ -151,7 +151,8 @@ endforeach()
 # set(CASE_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/case")
 # file(MAKE_DIRECTORY ${CASE_BINARY_DIR})
 
-# # add_subdirectory(examples/case case)
+# add_subdirectory(examples/case case)
+# add_subdirectory(examples/case_sickles case_sickles)
 # # Find all Fortran files in the examples/case directory
 # file(GLOB case_F90s "${CMAKE_CURRENT_SOURCE_DIR}/examples/case/*.F90")
 # cmake_print_variables(case_F90s)
