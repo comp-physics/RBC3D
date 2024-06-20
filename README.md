@@ -50,8 +50,8 @@ Then to execute and run a case, you can:
 mkdir build
 cd build
 cmake ..
-cd case
 make case # or just `make` to make common and all the cases
+cd case
 srun -n 1 ./initcond
 srun ./tube
 ```

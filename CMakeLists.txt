@@ -33,7 +33,6 @@ execute_process (COMMAND pkg-config PETSc --variable=fcompiler COMMAND tr -d '\n
 cmake_print_variables(FORTRAN_COMPILER)
 
 if (FORTRAN_COMPILER)
-    message(${FORTRAN_COMPILER})
     set(CMAKE_Fortran_COMPILER ${FORTRAN_COMPILER})
     add_compile_options(-fallow-argument-mismatch -freal-4-real-8 -O3)
     add_link_options(-ldl -lstdc++ -Wl,--copy-dt-needed-entries)
@@ -52,7 +51,7 @@ endif()
 if (NOT PETSC_FOUND)
     message(FATAL_ERROR "PETSc was not found through PkgConfig.")
 else()
-    message("PETSc was found")
+    # message("PETSc was found")
     # cmake_print_variables(PETSC_INCLUDE_DIRS)
     # cmake_print_variables(PETSC_LINK_LIBRARIES)
 endif()
@@ -109,7 +108,7 @@ foreach (example ${examples_list})
     endif()
 endforeach()
 
-cmake_print_variables(dirlist)
+# cmake_print_variables(dirlist)
 
 set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)
 
