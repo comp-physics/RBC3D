@@ -23,16 +23,12 @@ if [ "$1" == 'format' ]; then
     . "$(pwd)/install/format.sh" $@; exit
 fi
 
-if [ "$1" == 'install-with-mkl' ]; then
-    . "$(pwd)/install/install-with-mkl.sh" $@; exit
-fi
-
-if [ "$1" == 'install-with-lapack' ]; then
-    . "$(pwd)/install/install-with-lapack.sh" $@; exit
-fi
-
 if [ "$1" == 'install' ]; then
     . "$(pwd)/install/install.sh" $@; exit
+fi
+
+if [ "$1" == 'install-with-makedepf90' ]; then
+    . "$(pwd)/install/install-with-makedepf90.sh" $@; exit
 fi
 
 if [ "$1" == 'cmake' ]; then
