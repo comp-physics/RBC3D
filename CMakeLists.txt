@@ -111,8 +111,6 @@ endforeach()
 
 # cmake_print_variables(dirlist)
 
-set(ALLOW_DUPLICATE_CUSTOM_TARGETS TRUE)
-
 foreach (casedir ${dirlist})
     # cmake_print_variables(casedir)
 
