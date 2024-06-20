@@ -18,12 +18,19 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 set(BLA_VENDOR Intel10_64lp)
 
-if (NOT DEFINED ENV{PETSC_DIR} OR NOT DEFINED ENV{PETSC_ARCH})
-    message(FATAL_ERROR "PETSc environment variables are not set. Please export PETSC_DIR and PETSC_ARCH.")
+if (NOT DEFINED ENV{PETSC_DIR})
+    message(FATAL_ERROR "PETSc environment variables are not set. Please export PETSC_DIR.")
 endif()
 
-# PETSC_DIR and PETSC_ARCH env variable must be set
-set(PETSC $ENV{PETSC_DIR}/$ENV{PETSC_ARCH})
+if (NOT DEFINED ENV{PETSC_ARCH})
+    # PETSC_ARCH is not part of PETSc module
+    message(WARNING "PETSC_ARCH is not set. Please export PETSC_ARCH if using manually installed PETSc package.")
+    set(PETSC $ENV{PETSC_DIR})
+else ()
+    # full path if PETSC_DIR and PETSC_ARCH env variables are set
+    set(PETSC $ENV{PETSC_DIR}/$ENV{PETSC_ARCH})
+endif()
+
 set(ENV{PKG_CONFIG_PATH} ${PETSC}/lib/pkgconfig)
 
 cmake_print_variables(PETSC)
@@ -52,6 +59,10 @@ endif()
 if (NOT PETSC_FOUND)
     message(FATAL_ERROR "PETSc was not found through PkgConfig.")
 else()
+    if (NOT DEFINED ENV{PETSC_ARCH})
+        # not having PETSC_ARCH set makes include dirs null for some reason
+        set(PETSC_INCLUDE_DIRS "$ENV{PETSC_DIR}/include")
+    endif()
     # message("PETSc was found")
     # cmake_print_variables(PETSC_INCLUDE_DIRS)
     # cmake_print_variables(PETSC_LINK_LIBRARIES)
