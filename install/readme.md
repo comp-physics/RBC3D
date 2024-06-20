@@ -14,9 +14,9 @@ At Georgia Tech we have several, including ICE and PACE Phoenix.
 
 ## Ensure you have compilers and wrappers
 
-You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or the like).
+You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (openmpi will not work because the fftw module depends on mvapich2).
 * On PACE Phoenix you can issue `module load gcc mvapich2`.
-* On COC-ICE you can issue `module load gcc/8.3.0 mvapich2/2.3.2` 
+* On COC-ICE you can issue `module load gcc/12.3.0 mvapich2/2.3.7-1` 
 
 * To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
 * Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
