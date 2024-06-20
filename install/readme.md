@@ -52,7 +52,7 @@ export PATH="$PATH:$HOME/.local/bin"
 * Later, You will need the absolute path of `liblapack.a` and `librefblas.a` to configure `petsc-lite`
    * In my case this is `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/liblapack.a`
    * and `/storage/coda1/p-sbryngelson3/0/sbryngelson3/RBC3D/packages/lapack-3.11/librefblas.a`
-* Note that if you're choosing to install LAPACK/BLAS instead of MKL, you'll need to include `Makefile.lapack` in `examples/case/Makefile` instead of `Makefile.mkl` when you run the example case later.
+* Note that if you're choosing to install LAPACK/BLAS instead of MKL, you'll need to replace $(MKL_LIB) with $(BLAS_LIB) $(LAPACK_LIB) in `examples/case/Makefile` when you run the example case later.
 
 
 ### PETSc
@@ -184,5 +184,5 @@ Note that on Phoenix, `srun` only works if you [salloc](https://gatech.service-n
 
 ## Data and visualization
 
-After running `srun ./tube` or the equivalent, you should see `x000*.dat`, `wall000*.dat`, and restart files.
+After running `srun ./tube` or the equivalent, you should see `x000*.dat`, `wall000*.dat`, and restart files in the `D` folder.
 You can load the `.dat` files into Paraview to visualize them.

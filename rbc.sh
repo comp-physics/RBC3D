@@ -30,3 +30,11 @@ fi
 if [ "$1" == 'install-with-lapack' ]; then
     . "$(pwd)/install/install-with-lapack.sh" $@; exit
 fi
+
+if [ "$1" == 'install' ]; then
+    . "$(pwd)/install/install.sh" $@; exit
+fi
+
+if [ "$1" == 'cmake' ]; then
+    . "$(pwd)/install/cmake.sh" $@; exit
+fi
