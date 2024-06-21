@@ -27,8 +27,8 @@ if [ "$1" == 'install' ]; then
     . "$(pwd)/install/install.sh" $@; exit
 fi
 
-if [ "$1" == 'install-with-makedepf90' ]; then
-    . "$(pwd)/install/install-with-makedepf90.sh" $@; exit
+if [ "$1" == 'install-makedepf90' ]; then
+    . "$(pwd)/install/install-makedepf90.sh" $@; exit
 fi
 
 if [ "$1" == 'cmake' ]; then
