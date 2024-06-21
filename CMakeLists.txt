@@ -8,6 +8,8 @@
 #   make case
 # Show each build command line as it is launched
 #   cmake -DCMAKE_VERBOSE_MAKEFILE=ON ..
+# See compile commands in build directory
+#   cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
 
 include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.20)
@@ -63,9 +65,6 @@ else()
         # not having PETSC_ARCH set makes include dirs null for some reason
         set(PETSC_INCLUDE_DIRS "$ENV{PETSC_DIR}/include")
     endif()
-    # message("PETSc was found")
-    # cmake_print_variables(PETSC_INCLUDE_DIRS)
-    # cmake_print_variables(PETSC_LINK_LIBRARIES)
 endif()
 
 if (LAPACK_FOUND)
@@ -75,10 +74,8 @@ endif(LAPACK_FOUND)
 # look for FFTWROOT or FFTW_ROOT
 if (DEFINED ENV{FFTWROOT})
     set(FFTW_LIB "-L$ENV{FFTWROOT}/lib -lfftw3")
-    # cmake_print_variables(FFTW_LIB)
 elseif(DEFINED ENV{FFTWROOT})
     set(FFTW_LIB "-L$ENV{FFTW_ROOT}/lib -lfftw3")
-    # cmake_print_variables(FFTW_LIB)
 else ()
     message(FATAL_ERROR "FFTWROOT and FFTW_ROOT environment variables not found. Please module load fftw.")
 endif()
@@ -87,8 +84,6 @@ endif()
 if (DEFINED ENV{NETCDF_FORTRANROOT})
     set(NETCDF_INCLUDE "$ENV{NETCDF_FORTRANROOT}/include")
     set(NETCDF_LIB "-L$ENV{NETCDF_FORTRANROOT}/lib -lnetcdff")
-    # cmake_print_variables(NETCDF_INCLUDE)
-    # cmake_print_variables(NETCDF_LIB)
 elseif (DEFINED ENV{NETCDF_FORTRAN_ROOT})
     set(NETCDF_INCLUDE "$ENV{NETCDF_FORTRAN_ROOT}/include")
     set(NETCDF_LIB "-L$ENV{NETCDF_FORTRAN_ROOT}/lib -lnetcdff")
@@ -120,23 +115,18 @@ foreach (example ${examples_list})
     endif()
 endforeach()
 
-# cmake_print_variables(dirlist)
-
 foreach (casedir ${dirlist})
-    # cmake_print_variables(casedir)
 
     # make binary dir inside /build for case executables
     set(case_binary_dir "${CMAKE_CURRENT_BINARY_DIR}/${casedir}")
     file(MAKE_DIRECTORY ${case_binary_dir})
+    # copy input directory to case binary dir and create D directory
     make_directory("${case_binary_dir}/D")
     file(GLOB inputs "${CMAKE_CURRENT_SOURCE_DIR}/${examples_dir}/${casedir}/Input/*")
-    # cmake_print_variables(inputs)
     file(COPY ${inputs} DESTINATION "${case_binary_dir}/Input")
-    # cmake_print_variables(case_binary_dir)
 
     # find all F90 files in the examples/case directory
     file(GLOB case_F90s "${CMAKE_CURRENT_SOURCE_DIR}/${examples_dir}/${casedir}/*.F90")
-    # cmake_print_variables(case_F90s)
 
     # create a custom target with the name of the current case directory
     add_custom_target(${casedir})
@@ -147,7 +137,7 @@ foreach (casedir ${dirlist})
         get_filename_component(file_target ${F90_filepath} NAME_WE)
         add_executable(${file_target} ${F90_filepath})
 
-        # add target to its own case build directory
+        # add each target to its own case build directory
         set_target_properties(${file_target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${case_binary_dir})
 
         # set include directories and link libraries
