@@ -58,7 +58,7 @@ srun ./tube
 
 This will generate output files in `build/case/D`. To keep output files in `examples/case/D`, you can `cd examples/case` and `srun ../../build/case/initcond` and same for tube.
 
-On other supercomputing clusters, it should be easy to replace the module loads with the modules available on your system and make sure modules are setting appropriate environment variables via the `module show` command. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+On other supercomputing clusters, it should be easy to replace the module loads with the modules available on your system. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
 
 ### Papers that use RBC3D
 
