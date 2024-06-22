@@ -18,10 +18,10 @@ project(RBC3D LANGUAGES Fortran C CXX)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
-set(BLA_VENDOR Intel10_64lp)
-# if (DEFINED ENV{MKLROOT})
-#     set(BLA_VENDOR Intel10_64lp)
-# endif()
+# set(BLA_VENDOR Intel10_64lp)
+if (DEFINED ENV{MKLROOT})
+    set(BLA_VENDOR Intel10_64lp)
+endif()
 
 if (NOT DEFINED ENV{PETSC_DIR})
     message(FATAL_ERROR "PETSc environment variables are not set. Please export PETSC_DIR.")
