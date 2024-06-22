@@ -1,7 +1,7 @@
 include ../../Makefile.in
 
 # replace $(MKL_LIB) with $(BLAS_LIB) $(LAPACK_LIB) if using lapack install
-LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(MKL_LIB) $(STATIC)
+LIB = $(COMMON_LIB) $(SPHPK_LIB) $(FFTW_LIB) $(PETSC_LIB) $(NETCDF_LIB) $(LAPACK_LIB) $(STATIC)
 EXECUTABLES = tube initcond
 
 all : $(EXECUTABLES)

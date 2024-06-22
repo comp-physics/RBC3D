@@ -15,7 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      # use mkl option
       - name: Build Packages
         run: |
             ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6
@@ -24,12 +23,27 @@ jobs:
       # will stop on any errors
       - name: Compile Cases
         run: |
-            ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
+            ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
             set -e -x
             export PETSC_DIR=`pwd`/packages/petsc-3.19.6
             export PETSC_ARCH=arch-linux-c-opt
             mkdir build
             cd build
             cmake ..
+            make
+            echo "/common and all cases in /examples compiled successfully!"
+      
+      - name: Make Case
+        run: |
+            ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
+            set -e -x
+            export PETSC_DIR=`pwd`/packages/petsc-3.19.6
+            export PETSC_ARCH=arch-linux-c-opt
+            ./rbc.sh install-makedepf90
+            cd common
+            make .depend
+            make
+            cd ../examples/case
+            make .depend
             make
             echo "/common and all cases in /examples compiled successfully!"
