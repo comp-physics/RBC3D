@@ -18,12 +18,25 @@ jobs:
       - name: Build Packages
         run: |
             ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6
-            ./rbc.sh install-lapack
+            ./rbc.sh install-phoenix
+      
+      - name: Make Case
+        run: |
+            ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
+            export PETSC_DIR=`pwd`/packages/petsc-3.19.6
+            export PETSC_ARCH=arch-linux-c-opt
+            cd common
+            make .depend
+            make
+            cd ../examples/case
+            make .depend
+            make
+            echo "/common and case compiled successfully!"
 
       # will stop on any errors
       - name: Compile Cases
         run: |
-            ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
+            ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
             export PETSC_DIR=`pwd`/packages/petsc-3.19.6
             export PETSC_ARCH=arch-linux-c-opt
             mkdir build
@@ -32,16 +45,3 @@ jobs:
             make
             echo "/common and all cases in /examples compiled successfully!"
       
-      - name: Make Case
-        run: |
-            ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
-            export PETSC_DIR=`pwd`/packages/petsc-3.19.6
-            export PETSC_ARCH=arch-linux-c-opt
-            ./rbc.sh install-makedepf90
-            cd common
-            make .depend
-            make
-            cd ../examples/case
-            make .depend
-            make
-            echo "/common and all cases in /examples compiled successfully!"

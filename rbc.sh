@@ -27,8 +27,8 @@ if [ "$1" == 'install' ]; then
     . "$(pwd)/install/install.sh" $@; exit
 fi
 
-if [ "$1" == 'install-lapack' ]; then
-    . "$(pwd)/install/install-lapack.sh" $@; exit
+if [ "$1" == 'install-phoenix' ]; then
+    . "$(pwd)/install/install-phoenix.sh" $@; exit
 fi
 
 if [ "$1" == 'install-makedepf90' ]; then

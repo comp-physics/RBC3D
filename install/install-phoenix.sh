@@ -6,6 +6,17 @@
 mkdir packages
 cd packages
 
+# build and install fftw
+wget http://www.fftw.org/fftw-3.3.10.tar.gz
+tar -xf fftw-3.3.10.tar.gz
+cd fftw-3.3.10
+export FFTW_DIR=`pwd`/build/
+./configure --prefix="$FFTW_DIR"
+make clean
+make -j
+make install
+cd ..
+
 # build and install lapack and blas
 wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz
 tar -xf v3.11.tar.gz
@@ -51,5 +62,14 @@ cd ..
 git clone https://github.com/comp-physics/spherepack3.2.git
 cd spherepack3.2
 make -j 8
+
+# build and install makedepf90
+cd ..
+git clone https://github.com/comp-physics/makedepf90.git
+cd ../install/scripts
+python3 mdf90_replace.py
+cd ../../packages/makedepf90
+make -j 8
+make install
 
 echo "Done installing RBC3D!"

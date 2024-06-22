@@ -18,14 +18,15 @@ vpath $(WORK_DIR)/common
 PETSC_INCLUDE = $(PETSC_DIR)/include
 PETSC_ARCH_INCLUDE = $(PETSC_ARCH)/include
 NETCDF_INCLUDE = $(NETCDF_FORTRANROOT)/include
+FFTW_INCLUDE = $(FFTWROOT)/build/include
 
 COMMON_INCLUDE = -I$(WORK_DIR)/common
-INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(PETSC_ARCH_INCLUDE) -I$(NETCDF_INCLUDE)
+INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(PETSC_ARCH_INCLUDE) -I$(NETCDF_INCLUDE) -I$(FFTW_INCLUDE)
 
 # Libraries
 COMMON_LIB = $(WORK_DIR)/common/libcommon.a
 SPHPK_LIB = -L$(SPHEREPACK_DIR)/lib -lspherepack
-FFTW_LIB = -L$(FFTWROOT)/lib -lfftw3
+FFTW_LIB = -L$(FFTWROOT)/build/lib -lfftw3
 NETCDF_LIB = -L$(NETCDF_FORTRANROOT)/lib -lnetcdff
 PETSC_LIB = -Wl,-rpath,$(PETSC_ARCH)/lib -L$(PETSC_ARCH)/lib -lpetsc -lstdc++
 MKL_LIB = -L$(MKL_ROOT)lib/intel64/ -lmkl_gf_lp64 -lmkl_core -lmkl_sequential -lpthread -lm -ldl
