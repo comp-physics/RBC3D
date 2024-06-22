@@ -12,9 +12,7 @@ tar -xf petsc-3.19.tar.gz
 cd petsc-3.19.6
 
 # if these configure options don't work, it's probably a path issue
-./configure --with-cc=mpicc \
-    --with-cxx=mpicxx \
-    --with-fc=mpif90 \
+./configure --with-mpi-dir=$MPI_ROOT \
     --with-fortran-datatypes \
     --with-debugging=0 \
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
@@ -23,6 +21,11 @@ cd petsc-3.19.6
     --with-blaslapack-dir=$MKLROOT \
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
+
+if (($?)); then
+    error "PETSc configure failed"
+    exit 1
+fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
