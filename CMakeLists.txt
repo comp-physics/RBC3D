@@ -19,7 +19,10 @@ project(RBC3D LANGUAGES Fortran C CXX)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 # set(BLA_VENDOR Intel10_64lp)
+set(USE_MKL OFF)
+
 if (DEFINED ENV{MKLROOT})
+    set(USE_MKL ON)
     message("Using MKL lapack because MKLROOT=$ENV{MKLROOT}")
     set(BLA_VENDOR Intel10_64lp)
 endif()
@@ -73,17 +76,18 @@ endif()
 
 if (LAPACK_FOUND)
   message(STATUS "LAPACK libraries: ${LAPACK_LIBRARIES}")
-elseif(NOT DEFINED ENV{MKLROOT})
-    set(LAPACK_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/lapack-3.11 -llapack -lrefblas")
-    cmake_print_variables(LAPACK_LIB)
+elseif(NOT USE_MKL)
+    # LAPACK_LIBARIES doesn't need to be set if MKL is module loaded
+    set(LAPACK_LIBRARIES "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/lapack-3.11 -llapack -lrefblas")
+    cmake_print_variables(LAPACK_LIBRARIES)
 endif(LAPACK_FOUND)
 
 # look for FFTWROOT or FFTW_ROOT
 if (DEFINED ENV{FFTWROOT})
-    set(FFTW_INCLUDE "-L$ENV{FFTWROOT}/include")
+    set(FFTW_INCLUDE "$ENV{FFTWROOT}/include")
     set(FFTW_LIB "-L$ENV{FFTWROOT}/lib -lfftw3")
 elseif(DEFINED ENV{FFTWROOT})
-    set(FFTW_INCLUDE "-L$ENV{FFTW_ROOT}/include")
+    set(FFTW_INCLUDE "$ENV{FFTW_ROOT}/include")
     set(FFTW_LIB "-L$ENV{FFTW_ROOT}/lib -lfftw3")
 else ()
     message(WARNING "FFTWROOT and FFTW_ROOT environment variables from module load fftw not found. Assuming you installed FFTW in packages.")
@@ -156,7 +160,7 @@ foreach (casedir ${dirlist})
         # set include directories and link libraries
         # petsc might not be necessary for all files (i.e. initcond) but it doesn't hurt to add it
         target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
-        target_link_libraries(${file_target} PRIVATE ${LAPACK_LIB} common ${PETSC_LINK_LIBRARIES})
+        target_link_libraries(${file_target} PRIVATE ${LAPACK_LIBRARIES} common ${PETSC_LINK_LIBRARIES})
 
         # add dependency to the custom target
         add_dependencies(${casedir} ${file_target})
