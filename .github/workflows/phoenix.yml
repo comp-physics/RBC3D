@@ -18,7 +18,7 @@ jobs:
       # use mkl option
       - name: Build Packages
         run: |
-            ml gcc openmpi mkl python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
+            ml gcc openmpi mkl python/3.9.12-rkxvr6
             ./rbc.sh install
 
       # will stop on any errors
