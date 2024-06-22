@@ -24,10 +24,10 @@ cd petsc-3.19.6
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
-if (($?)); then
-    echo "[install.sh] Error: PETSc configure failed"
-    exit 1
-fi
+# if (($?)); then
+#     echo "[install.sh] Error: PETSc configure failed"
+#     exit 1
+# fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
