@@ -18,7 +18,7 @@ jobs:
       # use mkl option
       - name: Build Packages
         run: |
-            ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv 
+            ml gcc/10.3.0-o57x6h mvapich2/2.3.7-733lcv 
             ml mkl python/3.9.12-rkxvr6
             ./rbc.sh install
 
