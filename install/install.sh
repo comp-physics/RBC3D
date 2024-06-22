@@ -25,7 +25,7 @@ cd petsc-3.19.6
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
 if (($?)); then
-    echo "PETSc configure failed"
+    echo "[install.sh] Error: PETSc configure failed"
     exit 1
 fi
 
