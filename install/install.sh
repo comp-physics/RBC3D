@@ -12,7 +12,9 @@ tar -xf petsc-3.19.tar.gz
 cd petsc-3.19.6
 
 # if these configure options don't work, it's probably a path issue
-./configure --with-mpi-compilers=0 \
+./configure --with-cc=mpicc \
+    --with-cxx=mpicxx \
+    --with-fc=mpif90 \
     --with-fortran-datatypes \
     --with-debugging=0 \
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
