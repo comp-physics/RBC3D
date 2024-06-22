@@ -20,6 +20,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 # set(BLA_VENDOR Intel10_64lp)
 if (DEFINED ENV{MKLROOT})
+    message("Using MKL lapack because MKLROOT=$ENV{MKLROOT}")
     set(BLA_VENDOR Intel10_64lp)
 endif()
 
