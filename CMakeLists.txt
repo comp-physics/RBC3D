@@ -77,7 +77,7 @@ endif()
 if (LAPACK_FOUND)
   message(STATUS "LAPACK libraries: ${LAPACK_LIBRARIES}")
 elseif(NOT USE_MKL)
-    # LAPACK_LIBARIES doesn't need to be set if MKL is module loaded
+    # LAPACK_LIBRARIES doesn't need to be set if MKL is module loaded
     set(LAPACK_LIBRARIES "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/lapack-3.11 -llapack -lrefblas")
     cmake_print_variables(LAPACK_LIBRARIES)
 endif(LAPACK_FOUND)
