@@ -1,17 +1,28 @@
 #!/bin/bash
 
-# salloc a node before you run this because petsc configure uses srun
+# salloc a node before you run this because petsc tests use srun
 
-# building and installing petsc 3.19.6 in packages directory
+# create packages directory
 mkdir packages
 cd packages
 
+# build and install lapack and blas
+wget https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.11.tar.gz
+tar -xf v3.11.tar.gz
+cd lapack-3.11
+cp ../../install/scripts/make.inc ./
+echo "PWD: `PWD`"
+make -j 8
+
+cd ..
+# build and install petsc 3.19.6 in packages directory
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-cd petsc-3.19.6
+parentdir="$(dirname `pwd`)"
+echo "parentdir: $parentdir"
 
-# if these configure options don't work, it's probably a path issue
+cd petsc-3.19.6
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \
@@ -20,15 +31,11 @@ cd petsc-3.19.6
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
     --CXXOPTFLAGS=-g -O3 -march=native -mtune=native \
     --FOPTFLAGS=-g -O3 -march=native -mtune=native \
-    --with-blaslapack-dir=$MKLROOT \
+    --with-blas-lib=$parentdir/packages/lapack-3.11/librefblas.a \
+    --with-lapack-lib=$parentdir/packages/lapack-3.11/liblapack.a \
     --with-mpiexec=srun \
+    --with-shared-libraries=0 \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
-
-if (($?)); then
-    echo "[install.sh] Error: PETSc configure failed. See configure.log for more details"
-    cat configure.log
-    exit 1
-fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
