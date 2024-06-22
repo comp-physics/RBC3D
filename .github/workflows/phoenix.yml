@@ -23,7 +23,7 @@ jobs:
       - name: Make Case
         run: |
             ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran cmake
-            export FFTWROOT=`pwd`/packages/fftw-3.3.10
+            export FFTWROOT=`pwd`/packages/fftw-3.3.10/build
             export PETSC_DIR=`pwd`/packages/petsc-3.19.6
             export PETSC_ARCH=arch-linux-c-opt
             cd common
