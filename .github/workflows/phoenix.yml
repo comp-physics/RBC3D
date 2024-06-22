@@ -24,7 +24,6 @@ jobs:
       - name: Compile Cases
         run: |
             ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
-            set -e -x
             export PETSC_DIR=`pwd`/packages/petsc-3.19.6
             export PETSC_ARCH=arch-linux-c-opt
             mkdir build
@@ -36,7 +35,6 @@ jobs:
       - name: Make Case
         run: |
             ml gcc mvapich2 python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
-            set -e -x
             export PETSC_DIR=`pwd`/packages/petsc-3.19.6
             export PETSC_ARCH=arch-linux-c-opt
             ./rbc.sh install-makedepf90
