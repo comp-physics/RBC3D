@@ -17,13 +17,12 @@ cmake_minimum_required(VERSION 3.20)
 project(RBC3D LANGUAGES Fortran C CXX)
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-# use mkl implementation of lapack
-# set(BLA_VENDOR Intel10_64lp)
 set(USE_MKL OFF)
 
 if (DEFINED ENV{MKLROOT})
     set(USE_MKL ON)
     message("Using MKL lapack because MKLROOT=$ENV{MKLROOT}")
+    # use mkl implementation of lapack
     set(BLA_VENDOR Intel10_64lp)
 endif()
 
