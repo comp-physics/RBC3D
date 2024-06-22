@@ -19,6 +19,9 @@ project(RBC3D LANGUAGES Fortran C CXX)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # use mkl implementation of lapack
 set(BLA_VENDOR Intel10_64lp)
+# if (DEFINED ENV{MKLROOT})
+#     set(BLA_VENDOR Intel10_64lp)
+# endif()
 
 if (NOT DEFINED ENV{PETSC_DIR})
     message(FATAL_ERROR "PETSc environment variables are not set. Please export PETSC_DIR.")
@@ -69,6 +72,9 @@ endif()
 
 if (LAPACK_FOUND)
   message(STATUS "LAPACK libraries: ${LAPACK_LIBRARIES}")
+elseif(NOT DEFINED ENV{MKLROOT})
+    set(LAPACK_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/lapack-3.11 -llapack -lrefblas")
+    cmake_print_variables(LAPACK_LIB)
 endif(LAPACK_FOUND)
 
 # look for FFTWROOT or FFTW_ROOT
@@ -115,6 +121,8 @@ foreach (example ${examples_list})
     endif()
 endforeach()
 
+cmake_print_variables(LAPACK_LIBRARIES)
+
 foreach (casedir ${dirlist})
 
     # make binary dir inside /build for case executables
@@ -143,7 +151,7 @@ foreach (casedir ${dirlist})
         # set include directories and link libraries
         # petsc might not be necessary for all files (i.e. initcond) but it doesn't hurt to add it
         target_include_directories(${file_target} PRIVATE ${PETSC_INCLUDE_DIRS})
-        target_link_libraries(${file_target} PRIVATE common ${PETSC_LINK_LIBRARIES})
+        target_link_libraries(${file_target} PRIVATE ${LAPACK_LIB} common ${PETSC_LINK_LIBRARIES})
 
         # add dependency to the custom target
         add_dependencies(${casedir} ${file_target})
