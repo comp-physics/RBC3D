@@ -19,6 +19,10 @@ jobs:
       - name: Build Packages
         run: |
             ml gcc mvapich2 mkl python/3.9.12-rkxvr6
+            directory_to_remove=/usr/mpi/gcc/openmpi-4.1.2a1/bin
+            PATH=:$PATH:
+            PATH=${PATH//:$directory_to_remove:/:}
+            PATH=${PATH#:}; PATH=${PATH%:}
             ./rbc.sh install
 
       # will stop on any errors
