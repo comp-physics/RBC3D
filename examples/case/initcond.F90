@@ -89,7 +89,6 @@ program InitCond
     xc(1:2) = 0.
     xc(3) = lengspacing*(iz - 0.5)
     print *, 'Xc', iz, xc
-    
     rbc => rbcs(iz)
     rbc%celltype = 1
     call Rbc_Create(rbc, nlat0, dealias)

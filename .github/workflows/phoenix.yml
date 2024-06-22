@@ -13,7 +13,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       
       # use mkl option
       - name: Build Packages
