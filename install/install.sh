@@ -20,7 +20,7 @@ cd petsc-3.19.6
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
     --CXXOPTFLAGS=-g -O3 -march=native -mtune=native \
     --FOPTFLAGS=-g -O3 -march=native -mtune=native \
-    --with-blaslapack-dir=$MKLROOT \
+    --with-blaslapack-dir=$INTEL_ONEAPI_MKLROOT \
     --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
