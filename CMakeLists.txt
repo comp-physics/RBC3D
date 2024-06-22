@@ -88,7 +88,7 @@ elseif(DEFINED ENV{FFTWROOT})
 else ()
     message(WARNING "FFTWROOT and FFTW_ROOT environment variables from module load fftw not found. Assuming you installed FFTW in packages.")
     set(FFTW_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/packages/fftw-3.3.10/build/include")
-    set(FFTW_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/fftw-3.3.10/build -lfftw3")
+    set(FFTW_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/fftw-3.3.10/build/lib -lfftw3")
 endif()
 
 # look for NETCDF_FORTRANROOT or NETCDF_FORTRAN_ROOT 

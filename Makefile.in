@@ -18,6 +18,8 @@ vpath $(WORK_DIR)/common
 PETSC_INCLUDE = $(PETSC_DIR)/include
 PETSC_ARCH_INCLUDE = $(PETSC_ARCH)/include
 NETCDF_INCLUDE = $(NETCDF_FORTRANROOT)/include
+# If you installed FFTW in packages through install/install-phoenix.sh
+# run: export FFTWROOT=`pwd`/packages/fftw-3.3.10/build from RBC3D root directory in terminal
 FFTW_INCLUDE = $(FFTWROOT)/include
 
 COMMON_INCLUDE = -I$(WORK_DIR)/common

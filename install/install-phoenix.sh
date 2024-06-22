@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# salloc a node before you run this because petsc tests use srun
+# salloc a node just in case before you run this because petsc tests use srun
+ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
 
 # create packages directory
 mkdir packages
