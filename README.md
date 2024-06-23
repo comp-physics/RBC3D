@@ -28,11 +28,11 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 To install on PACE Phoenix, you need to salloc a node to make sure srun is available and then run this in the RBC3D root directory: 
 
 ```shell
-ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
+ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran cmake
 ./rbc.sh install-phoenix
 ```
 
-Note that if the `gcc`, `mvapich2`, and `fftw` modules work on your Phoenix account, you should use this installer script for a faster build.
+Note that if the `gcc`, `mvapich2`, `mkl`, and `fftw` modules work on your Phoenix account, you should use this installer script for a faster build.
 ```shell
 ml gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
 ./rbc.sh install
