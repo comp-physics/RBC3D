@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# module load the latest version of python3 on your cluster
+# module load the latest version of python3 on your cluster for formatter
 
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH="$PATH:$HOME/.local/bin"
