@@ -243,7 +243,7 @@ contains
     end do ! i
 
     ! nnz = nnz*2    ! a very conservative estimate
-    nnz = nnz*12    ! a very conservative estimate
+    nnz = nnz*12    ! SLM edit for PETSc to not throw malloc warnings
     call MatCreateSeqAIJ(PETSC_COMM_SELF, nrow, nrow, 0, nnz, wall%lhs, ierr)
 
     ! Assemble the matrix
