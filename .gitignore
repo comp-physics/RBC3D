@@ -12,5 +12,6 @@ tube
 libcommon.a
 .vscode
 field
-packages
+packages*
 traction
+build
