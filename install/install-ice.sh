@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # salloc a node before you run this because petsc configure uses srun
-ml gcc/12.3.0 mvapich2/2.3.7-1 hdf5 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
+ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
 
 # building and installing petsc 3.19.6 in packages directory
 rm -fr packages
