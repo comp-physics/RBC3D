@@ -104,7 +104,7 @@ elseif (DEFINED ENV{NETCDF_FORTRAN_ROOT})
 else ()
     message(WARNING "NETCDF_FORTRANROOT and NETCDF_FORTRAN_ROOT environment variables from module load fftw not found. Assuming you installed NETCDF-FORTRAN in packages.")
     set(NETCDF_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/packages/NETCDF_INST/include")
-    set(NETCDF_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/NETCDF_INST/lib -lnetcdff")
+    set(NETCDF_LIB "-Wl,-rpath -L${CMAKE_CURRENT_SOURCE_DIR}/packages/NETCDF_INST/lib -lnetcdff")
 endif()
 
 # spherepack library
