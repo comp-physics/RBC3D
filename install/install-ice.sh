@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # salloc a node before you run this because petsc configure uses srun
-ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
+ml gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
 
 # build and install netcdf-c in packages/NETCDF_INST
 rm -fr packages
@@ -17,48 +17,48 @@ mkdir $INSNCDF
 
 cd $SRCNCDF
 
-wget downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
+# wget downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
 wget downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz
 
-tar -xf netcdf-c-4.9.2.tar.gz
+# tar -xf netcdf-c-4.9.2.tar.gz
 tar -xf netcdf-fortran-4.6.1.tar.gz
 
-cd netcdf-c-4.9.2
-export CPPFLAGS="-DNDEBUG -DgFortran"
-export CFLAGS="-O"
-export FFLAGS="-O -w"
-export BIN=Linux2_x86_64gfort
+# cd netcdf-c-4.9.2
+# export CPPFLAGS="-DNDEBUG -DgFortran"
+# export CFLAGS="-O"
+# export FFLAGS="-O -w"
+# export BIN=Linux2_x86_64gfort
 
-./configure --prefix=${INSNCDF} --disable-netcdf-4 --disable-dap
-if (($?)); then
-    echo "[install-ice.sh] Error: NETCDF-C configure failed."
-    exit 1
-fi
-make all check install
-if (($?)); then
-    echo "[install-ice.sh] Error: NETCDF-C tests or install failed."
-    exit 1
-fi
+# ./configure --prefix=${INSNCDF} --disable-netcdf-4 --disable-dap
+# if (($?)); then
+#     echo "[install-ice.sh] Error: NETCDF-C configure failed."
+#     exit 1
+# fi
+# make all check install
+# if (($?)); then
+#     echo "[install-ice.sh] Error: NETCDF-C tests or install failed."
+#     exit 1
+# fi
 
 # build and install netcdf-fortran in packages/NETCDF_INST
-cd ../netcdf-fortran-4.6.1
-export NCDIR=${INSNCDF}
+cd netcdf-fortran-4.6.1
+# instructions for build with shared libraries
+# https://docs.unidata.ucar.edu/netcdf-c/current/building_netcdf_fortran.html
+export NCDIR=${NETCDF_CROOT}
 export NFDIR=${INSNCDF}
 export CPPFLAGS=$CPPFLAGS" -I${NCDIR}/include"
 export LDFLAGS=$LDFLAGS" -L${NCDIR}/lib"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${NCDIR}/lib
-export LIBS=$LIBS" -lnetcdf"
 
 # copy necessary updated files from this PR until they release new version
 # https://github.com/Unidata/netcdf-fortran/pull/429
-cd fortran
-rm -f module_netcdf_nc_data.F90
-rm -f module_typesizes.F90
-rm -f netcdf.F90
-cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
-cp ../../../../install/scripts/module_typesizes.F90 ./
-cp ../../../../install/scripts/netcdf.F90 ./
-cd ..
+# cd fortran
+# rm -f module_netcdf_nc_data.F90
+# rm -f module_typesizes.F90
+# rm -f netcdf.F90
+# cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
+# cp ../../../../install/scripts/module_typesizes.F90 ./
+# cp ../../../../install/scripts/netcdf.F90 ./
+# cd ..
 
 ./configure --prefix=${INSNCDF}
 if (($?)); then
