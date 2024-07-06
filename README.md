@@ -42,6 +42,7 @@ Or if you're on COC-ICE, you just need to load different modules to run the inst
 
 ```shell
 ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 netcdf-fortran/4.6.0-mva2-hdf5-1.14 fftw/3.3.10-mva2 cmake
+ml gcc/12.3.0 mvapich2/2.3.7-1 python/3.10.10 fftw/3.3.10-mva2 cmake
 ./rbc.sh install
 ```
 

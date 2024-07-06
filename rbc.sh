@@ -35,6 +35,10 @@ if [ "$1" == 'install-makedepf90' ]; then
     . "$(pwd)/install/install-makedepf90.sh" $@; exit
 fi
 
+if [ "$1" == 'install-ice' ]; then
+    . "$(pwd)/install/install-ice.sh" $@; exit
+fi
+
 if [ "$1" == 'cmake' ]; then
     . "$(pwd)/install/cmake.sh" $@; exit
 fi

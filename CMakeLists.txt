@@ -21,7 +21,7 @@ set(USE_MKL OFF)
 
 if (DEFINED ENV{MKLROOT})
     set(USE_MKL ON)
-    message("Using MKL lapack because MKLROOT=$ENV{MKLROOT}")
+    message(STATUS "MKLROOT: $ENV{MKLROOT}")   
     # use mkl implementation of lapack
     set(BLA_VENDOR Intel10_64lp)
 endif()
@@ -103,6 +103,8 @@ elseif (DEFINED ENV{NETCDF_FORTRAN_ROOT})
     set(NETCDF_LIB "-L$ENV{NETCDF_FORTRAN_ROOT}/lib -lnetcdff")
 else ()
     message(FATAL_ERROR "NETCDF_FORTRANROOT or NETCDF_FORTRAN_ROOT environment variables not found. Please module load netcdf-fortran.")
+    set(NETCDF_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/packages/NETCDF_INST/include")
+    set(NETCDF_LIB "-L${CMAKE_CURRENT_SOURCE_DIR}/packages/NETCDF_INST/lib -lnetcdff")
 endif()
 
 # spherepack library
@@ -128,8 +130,6 @@ foreach (example ${examples_list})
         list(APPEND dirlist ${example})
     endif()
 endforeach()
-
-cmake_print_variables(LAPACK_LIBRARIES)
 
 foreach (casedir ${dirlist})
 

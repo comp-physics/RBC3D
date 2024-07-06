@@ -11,7 +11,7 @@ tar -xf petsc-3.19.tar.gz
 
 cd petsc-3.19.6
 
-# if these configure options don't work, it's probably a path issue
+# using mpiexec here instead of srun but srun works if you salloc a node (last time i (suzan) checked?)
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \

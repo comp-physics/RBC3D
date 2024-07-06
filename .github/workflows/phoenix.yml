@@ -1,6 +1,7 @@
 name: 'Test on Phoenix'
 
 on:
+    push:
     pull_request:
     workflow_dispatch:
 
@@ -9,6 +10,9 @@ jobs:
     name: Phoenix Runner
     runs-on:
         labels: gt
+    env:
+        ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: node16
+        ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     if: github.repository == 'Comp-Physics/RBC3D'
     continue-on-error: true
     steps:
