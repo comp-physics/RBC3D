@@ -3,7 +3,7 @@
 # salloc a node before you run this because petsc configure uses srun
 ml gcc/12.3.0 mvapich2/2.3.7-1 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
 
-# building and installing petsc 3.19.6 in packages directory
+# build and install netcdf-c in packages/NETCDF_INST
 rm -fr packages
 mkdir packages
 cd packages
@@ -30,8 +30,17 @@ export FFLAGS="-O -w"
 export BIN=Linux2_x86_64gfort
 
 ./configure --prefix=${INSNCDF} --disable-netcdf-4 --disable-dap
+if (($?)); then
+    echo "[install-ice.sh] Error: NETCDF-C configure failed."
+    exit 1
+fi
 make all check install
+if (($?)); then
+    echo "[install-ice.sh] Error: NETCDF-C tests or install failed."
+    exit 1
+fi
 
+# build and install netcdf-fortran in packages/NETCDF_INST
 cd ../netcdf-fortran-4.6.1
 export NCDIR=${INSNCDF}
 export NFDIR=${INSNCDF}
@@ -49,15 +58,23 @@ rm -f netcdf.F90
 cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
 cp ../../../../install/scripts/module_typesizes.F90 ./
 cp ../../../../install/scripts/netcdf.F90 ./
-cp ../../../../install/scripts/typesizes.mod ./
 cd ..
 
 ./configure --prefix=${INSNCDF}
+if (($?)); then
+    echo "[install-ice.sh] Error: NETCDF-Fortran configure failed."
+    exit 1
+fi
 make check
+if (($?)); then
+    echo "[install-ice.sh] Error: NETCDF-Fortran tests failed."
+    exit 1
+fi
 make install
 
 cd ../..
 
+# building and installing petsc 3.19.6 in packages directory
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
