@@ -65,7 +65,7 @@ cd build
 cmake ..
 make case # or just `make` to make common and all the cases
 cd case
-srun -n 1 ./initcond # or mpiexec is petsc configured with it
+srun -n 1 ./initcond # or mpiexec
 srun ./tube
 ```
 
