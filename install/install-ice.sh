@@ -73,7 +73,7 @@ cd petsc-3.19.6
     --CXXOPTFLAGS=-g -O3 -march=native -mtune=native \
     --FOPTFLAGS=-g -O3 -march=native -mtune=native \
     --with-blaslapack-dir=$MKLROOT \
-    --with-mpiexec=mpiexec \
+    --with-mpiexec=srun \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
 if (($?)); then
