@@ -118,6 +118,7 @@ make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 * Later you will need information about where `netcdf-fortran` is installed for `Makefile.in`. 
 * Get this via `module show netcdf-fortran` and looking at the `NETCDF_FORTRANROOT`
 * In my case, this is `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/`
+* An example of how to install `netcdf-c` and `netcdf-fortran` manually is available in `install/install-ice`.
 
 ### Spherepack
 
