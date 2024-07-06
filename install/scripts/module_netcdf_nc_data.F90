@@ -31,7 +31,7 @@ Module netcdf_nc_data
 ! Version 8.:  Feb.  2013 - Updated for netcdf fortran-4.4
 ! Version 9.:  April 2014 - Changed C_PTRDIFF_T to UCAR definitions
 ! Version 10.: Jan.  2016 - General code cleanup. Added a definition
-!                           for a C_ENUM kind paramater for future
+!                           for a C_ENUM kind parameter for future
 !                           code mods. Added several new parameters
 !                           to include all of the values supported
 !                           in netcdf_constant.f90
