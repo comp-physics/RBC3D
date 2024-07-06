@@ -61,7 +61,7 @@ cd ../..
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-cd packages/petsc-3.19.6
+cd petsc-3.19.6
 
 # using mpiexec here instead of srun but srun works if you salloc a node (last time i (suzan) checked?)
 ./configure --with-cc=mpicc \
