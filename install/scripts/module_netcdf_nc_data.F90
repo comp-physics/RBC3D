@@ -78,7 +78,7 @@ Module netcdf_nc_data
 ! Define processor/compiler dependent parameters for ptrdiff_t, signed char,
 ! and short types. Note prtdiff_t was not defined in the FORTRAN 2003
 ! standard as an interoperable type in ISO_C_BINDING but was added as part of
-! the recent TS29113 Technical Specification "Futher Interoperability with C" 
+! the recent TS29113 Technical Specification "Further Interoperability with C" 
 ! passed in 2012. For now we will make our own using C_INT32_T or C_INT64_T
 ! but allow users to use the default definition for compilers that support 
 ! TS29113 (like gfortran 4.8). Default will be C_INTPTR_T 
@@ -192,7 +192,7 @@ Module netcdf_nc_data
  
 !--------- Define default C interface parameters from netcdf.h   ---------------
 
-! This is not a complete impementation of the C header files but 
+! This is not a complete implementation of the C header files but 
 ! defines NC_ values equivalent to the values in the netcdf.inc files
 ! excluding the V2 values
 
@@ -242,7 +242,7 @@ Module netcdf_nc_data
  Integer(C_INT), Parameter :: NC_MMAP             = 16
  Integer(C_INT), Parameter :: NC_INMEMORY         = 32768
 
-! Unlimited dimension size argument and global attibute ID
+! Unlimited dimension size argument and global attribute ID
 
  Integer(C_INT),  Parameter :: NC_UNLIMITED = 0
  Integer(C_INT),  Parameter :: NC_GLOBAL    = 0 

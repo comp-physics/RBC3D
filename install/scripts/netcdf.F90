@@ -6,13 +6,13 @@
 ! Output Parameters:
 !   Many public constants are defined in "netcdf_constants.F90". The names follow 
 !     the Fortran 77 names, with nf90_ used as a prefix instead of nf_77. 
-!   Functions are made accessable through PUBLIC:: statements in "netcdf_visibility.F90". 
+!   Functions are made accessible through PUBLIC:: statements in "netcdf_visibility.F90". 
 !     Only the functions listed in this file are available in the interface. 
 !
 ! References and Credits:
 !   Written by
 !    Robert Pincus
-!    Cooperative Institue for Meteorological Satellite Studies
+!    Cooperative Institute for Meteorological Satellite Studies
 !    University of Wisconsin - Madison
 !    1225 W. Dayton St. 
 !    Madison, Wisconsin 53706
