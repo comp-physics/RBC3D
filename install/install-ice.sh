@@ -63,7 +63,7 @@ cd petsc-3.19.6
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
 if (($?)); then
-    echo "[install.sh] Error: PETSc configure failed. See configure.log for more details"
+    echo "[install-ice.sh] Error: PETSc configure failed. See configure.log for more details"
     cat configure.log
     exit 1
 fi
