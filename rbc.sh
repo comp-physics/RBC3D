@@ -39,6 +39,10 @@ if [ "$1" == 'install-ice' ]; then
     . "$(pwd)/install/install-ice.sh" $@; exit
 fi
 
+if [ "$1" == 'install-mac' ]; then
+    . "$(pwd)/install/install-mac.sh" $@; exit
+fi
+
 if [ "$1" == 'cmake' ]; then
     . "$(pwd)/install/cmake.sh" $@; exit
 fi
