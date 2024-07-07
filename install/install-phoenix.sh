@@ -30,7 +30,7 @@ cd ..
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-parentdir="$(dirname `pwd`)"
+parentdir=$(pwd)
 echo "parentdir: $parentdir"
 
 cd petsc-3.19.6
