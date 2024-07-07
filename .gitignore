@@ -16,4 +16,3 @@ packages*
 traction
 build
 *.sbatch
-out*.log

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# salloc a node before you run this because petsc configure uses srun
 ml gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
 
 # build and install netcdf-c in packages/NETCDF_INST
@@ -17,10 +16,8 @@ mkdir $INSNCDF
 
 cd $SRCNCDF
 
-# wget downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
 wget downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz
 
-# tar -xf netcdf-c-4.9.2.tar.gz
 tar -xf netcdf-fortran-4.6.1.tar.gz
 
 # build and install netcdf-fortran in packages/NETCDF_INST
