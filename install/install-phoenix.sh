@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
+module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
 
 # create packages directory
 mkdir packages
@@ -30,7 +30,7 @@ cd ..
 wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
 tar -xf petsc-3.19.tar.gz
 
-parentdir=$(pwd)
+parentdir="$(dirname `pwd`)"
 echo "parentdir: $parentdir"
 
 cd petsc-3.19.6
