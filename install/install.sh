@@ -11,7 +11,6 @@ tar -xf petsc-3.19.tar.gz
 
 cd petsc-3.19.6
 
-# using mpiexec here instead of srun but srun works
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \
