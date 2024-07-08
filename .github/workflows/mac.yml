@@ -27,7 +27,7 @@ jobs:
         run: |
             set -e -x
             export PETSC_DIR=`pwd`/packages/petsc-3.21.3
-            export PETSC_ARCH=arch-linux-c-opt
+            export PETSC_ARCH=arch-darwin-c-opt
             mkdir build
             cd build
             cmake ..
