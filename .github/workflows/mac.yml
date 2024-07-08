@@ -16,7 +16,10 @@ jobs:
       
       - name: Build Packages
         run: |
+            set -x
             brew install gcc mpich
+            export PATH=$PATH:/usr/local/bin
+            gfortran -v
             ./rbc.sh install-mac
 
       - name: Compile Cases
