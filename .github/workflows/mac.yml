@@ -20,6 +20,7 @@ jobs:
             brew install gcc mpich gfortran
             ln -s /opt/homebrew/bin/gfortran-14 /usr/local/bin/gfortran
             gfortran -v
+            which mpif90
             ./rbc.sh install-mac
 
       - name: Compile Cases
