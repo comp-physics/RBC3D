@@ -8,7 +8,7 @@ on:
 jobs:
   self:
     name: Mac Runner
-    runs-on: macos-latest
+    runs-on: macos
     # continue-on-error: true
     steps:
       - name: Checkout
