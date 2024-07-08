@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e -x
-
 mkdir packages
 cd packages
 
