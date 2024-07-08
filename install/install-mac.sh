@@ -143,5 +143,9 @@ cd ..
 git clone https://github.com/comp-physics/spherepack3.2.git
 cd spherepack3.2
 make -j 8
+if (($?)); then
+    echo "[install-mac.sh] Error: Spherepack make failed"
+    exit 1
+fi
 
 echo "Done installing RBC3D!"
