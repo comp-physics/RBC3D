@@ -84,6 +84,7 @@ python3 netcdf_replace.py
 cd ../../packages/srcNETCDF/netcdf-fortran-4.6.1
 cd fortran
 cp typeSizes.F90 module_typesizes.F90
+cd ..
 # rm -f module_netcdf_nc_data.F90
 # rm -f module_typesizes.F90
 # rm -f netcdf.F90
@@ -114,7 +115,7 @@ tar -xf petsc-3.21.3.tar.gz
 packagesdir=$(pwd)
 echo "packagesdir: $packagesdir"
 
-cd petsc-3.19.6
+cd petsc-3.21.3
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \
