@@ -18,7 +18,7 @@ jobs:
         run: |
             set -x
             brew install gcc mpich gfortran
-            ls ~/opt/homebrew/bin
+            ls /opt/homebrew/bin
             ln -s /opt/homebrew/bin/gfortran-10 /usr/local/bin/gfortran
             gfortran -v
             ./rbc.sh install-mac
