@@ -124,8 +124,8 @@ cd petsc-3.21.3
     --COPTFLAGS=-g -O3 -march=native -mtune=native \
     --CXXOPTFLAGS=-g -O3 -march=native -mtune=native \
     --FOPTFLAGS=-g -O3 -march=native -mtune=native \
-    --with-blas-lib=$parentdir/packages/lapack-3.11/librefblas.a \
-    --with-lapack-lib=$parentdir/packages/lapack-3.11/liblapack.a \
+    --with-blas-lib=$packagesdir/lapack-3.11/librefblas.a \
+    --with-lapack-lib=$packagesdir/lapack-3.11/liblapack.a \
     --with-mpiexec=mpiexec \
     --with-x11=0 --with-x=0 --with-windows-graphics=0
 
