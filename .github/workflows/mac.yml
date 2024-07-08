@@ -8,7 +8,7 @@ on:
 jobs:
   self:
     name: Mac Runner
-    runs-on: macos
+    runs-on: macos-latest
     # continue-on-error: true
     steps:
       - name: Checkout
@@ -17,7 +17,7 @@ jobs:
       - name: Build Packages
         run: |
             set -x
-            brew install gcc mpich
+            brew install gcc mpich gfortran-10
             export PATH=$PATH:/usr/local/bin
             gfortran -v
             ./rbc.sh install-mac
