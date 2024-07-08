@@ -17,7 +17,7 @@ jobs:
       - name: Build Packages
         run: |
             set -x
-            brew install gcc mpich gfortran-10
+            brew install gcc mpich gfortran
             export PATH=$PATH:/usr/local/bin
             gfortran -v
             ./rbc.sh install-mac
