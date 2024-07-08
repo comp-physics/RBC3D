@@ -135,8 +135,8 @@ if (($?)); then
     exit 1
 fi
 
-make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
-make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
+make PETSC_DIR=`pwd` PETSC_ARCH=arch-darwin-c-opt all
+make PETSC_DIR=`pwd` PETSC_ARCH=arch-darwin-c-opt check
 
 # build and install spherepack
 cd ..
