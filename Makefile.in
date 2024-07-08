@@ -8,6 +8,9 @@ PETSC_ARCH = $(PETSC_DIR)/arch-linux-c-opt
 SPHEREPACK_DIR = $(WORK_DIR)/packages/spherepack3.2
 
 LAPACK_DIR = $(WORK_DIR)/packages/lapack-3.11
+# if netcdf-fortran is manually installed then this will need to be set instead
+# NETCDF_DIR = $(WORK_DIR)/packages/NETCDF_INST
+NETCDF_DIR = $(NETCDF_FORTRANROOT)
 
 # Makedependf90 binary
 MAKEDEPEND_BIN = $(WORK_DIR)/packages/makedepf90/makedepf90
@@ -17,7 +20,7 @@ vpath $(WORK_DIR)/common
 # Includes
 PETSC_INCLUDE = $(PETSC_DIR)/include
 PETSC_ARCH_INCLUDE = $(PETSC_ARCH)/include
-NETCDF_INCLUDE = $(NETCDF_FORTRANROOT)/include
+NETCDF_INCLUDE = $(NETCDF_DIR)/include
 # If you installed FFTW in packages through install/install-phoenix.sh
 # run: export FFTWROOT=`pwd`/packages/fftw-3.3.10/build from RBC3D root directory in terminal
 # or make a variable in this file
@@ -31,7 +34,7 @@ INCLUDE = $(COMMON_INCLUDE) -I$(PETSC_INCLUDE) -I$(PETSC_ARCH_INCLUDE) -I$(NETCD
 COMMON_LIB = $(WORK_DIR)/common/libcommon.a
 SPHPK_LIB = -L$(SPHEREPACK_DIR)/lib -lspherepack
 FFTW_LIB = -L$(FFTWROOT)/lib -lfftw3
-NETCDF_LIB = -L$(NETCDF_FORTRANROOT)/lib -lnetcdff
+NETCDF_LIB = -L$(NETCDF_DIR)/lib -lnetcdff
 PETSC_LIB = -Wl,-rpath,$(PETSC_ARCH)/lib -L$(PETSC_ARCH)/lib -lpetsc -lstdc++
 MKL_LIB = -L$(MKL_ROOT)lib/intel64/ -lmkl_gf_lp64 -lmkl_core -lmkl_sequential -lpthread -lm -ldl
 BLAS_LIB = -L$(BLAS_DIR) -lrefblas

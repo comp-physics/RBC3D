@@ -21,7 +21,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
 * Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
-You will also need python3 for the PETSc install and pip modules. On Phoenix, you can module load it via `ml python/3.9.12-rkxvr6`, and ICE has a similar module. You may also need to add the `~/.local/bin` directory to your PATH by adding this line to your `~/.bashrc`: 
+You will also need python3 for the PETSc install and pip modules. On Phoenix, you can module load it via `module load python/3.9.12-rkxvr6`, and ICE has a similar module. You may also need to add the `~/.local/bin` directory to your PATH by adding this line to your `~/.bashrc`: 
 
 ```shell
 export PATH="$PATH:$HOME/.local/bin"
@@ -118,6 +118,7 @@ make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 * Later you will need information about where `netcdf-fortran` is installed for `Makefile.in`. 
 * Get this via `module show netcdf-fortran` and looking at the `NETCDF_FORTRANROOT`
 * In my case, this is `/usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-10.3.0/netcdf-fortran-4.5.4-yx5osuxluenmuvr3xnahmosfr3abeu2p/`
+* An example of how to install `netcdf-fortran` manually is available in `install/install-ice`.
 
 ### Spherepack
 

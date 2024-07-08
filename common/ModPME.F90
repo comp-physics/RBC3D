@@ -269,7 +269,7 @@ contains
     allocate (tt(ixBgn(1):ixEnd(1), ixBgn(2):ixEnd(2), ixBgn(3):ixEnd(3), 3, 3))
     ! Note:
     !  We need to extend the domain of velocity mesh in z-direction
-    !  since velocity interplation needs data in the buffer zon
+    !  since velocity interpolation needs data in the buffer zon
     allocate (vv(ixBgn(1):ixEnd(1), ixBgn(2):ixEnd(2), ixBgn(3) - PBspln:ixEnd(3), 3))
 
     allocate (ffC(iqBgn(3):iqEnd(3), iqBgn(2):iqEnd(2), iqBgn(1):iqEnd(1), 3))
