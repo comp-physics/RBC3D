@@ -1,0 +1,32 @@
+name: 'Test on MacOS'
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  self:
+    name: Mac Runner
+    runs-on: macos-latest
+    # continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Build Packages
+        run: |
+            brew install gcc mpich
+            ./rbc.sh install-mac
+
+      - name: Compile Cases
+        run: |
+            set -e -x
+            export PETSC_DIR=`pwd`/packages/petsc-3.21.3
+            export PETSC_ARCH=arch-linux-c-opt
+            mkdir build
+            cd build
+            cmake ..
+            make
+            echo "/common and all cases in /examples compiled successfully!"
+

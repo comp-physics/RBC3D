@@ -76,14 +76,19 @@ export NFDIR=${INSNCDF}
 export CPPFLAGS=$CPPFLAGS" -I${NCDIR}/include"
 export LDFLAGS=$LDFLAGS" -L${NCDIR}/lib"
 
+cd ../../../install/scripts
+python3 netcdf_replace.py
+
+cd ../../packages/srcNETCDF/netcdf-fortran-4.6.1
 cd fortran
-rm -f module_netcdf_nc_data.F90
-rm -f module_typesizes.F90
-rm -f netcdf.F90
-cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
-cp ../../../../install/scripts/module_typesizes.F90 ./
-cp ../../../../install/scripts/netcdf.F90 ./
-cd ..
+cp typeSizes.F90 module_typesizes.F90
+# rm -f module_netcdf_nc_data.F90
+# rm -f module_typesizes.F90
+# rm -f netcdf.F90
+# cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
+# cp ../../../../install/scripts/module_typesizes.F90 ./
+# cp ../../../../install/scripts/netcdf.F90 ./
+# cd ..
 
 ./configure --prefix=${INSNCDF}
 if (($?)); then
@@ -99,11 +104,10 @@ make install
 
 cd ../..
 
-# building and installing petsc 3.19.6 in packages directory
-wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
+# building and installing petsc 3.21.3 in packages directory
+wget https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.21.3.tar.gz
 
-
-tar -xf petsc-3.19.tar.gz
+tar -xf petsc-3.21.3.tar.gz
 
 packagesdir=$(pwd)
 echo "packagesdir: $packagesdir"
