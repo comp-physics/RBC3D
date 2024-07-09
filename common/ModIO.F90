@@ -45,17 +45,17 @@ contains
 
     if (rootWorld) then
       if (pgrad_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'pgrad', Nt0, '.dat'
         open (pGrad_unit, file=trim(fn), action='write')
       end if
 
       if (flow_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'flow', Nt0, '.dat'
         open (flow_unit, file=trim(fn), action='write')
       end if
 
       if (ftot_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'ftot', Nt0, '.dat'
         open (ftot_unit, file=trim(fn), action='write')
       end if
 
