@@ -48,11 +48,7 @@ module load gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
 Or if you're on the ICE cluster, you just need to load different modules to run the installer script.
 
 ```shell
-<<<<<<< HEAD
-ml gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
-=======
 module load gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
->>>>>>> master
 ./rbc.sh install-ice
 ```
 

@@ -1,10 +1,6 @@
 #!/bin/bash
 
-<<<<<<< HEAD
-ml gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
-=======
 module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv mkl python/3.9.12-rkxvr6 netcdf-fortran cmake
->>>>>>> master
 
 # create packages directory
 mkdir packages
