@@ -26,14 +26,14 @@ echo "PWD: `PWD`"
 make -j 8
 
 cd ..
-# build and install petsc 3.19.6 in packages directory
-wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
-tar -xf petsc-3.19.tar.gz
+# build and install petsc 3.21.3 in packages directory
+wget https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.21.3.tar.gz
+tar -xf petsc-3.21.3.tar.gz
 
 parentdir=$(pwd)
 echo "parentdir: $parentdir"
 
-cd petsc-3.19.6
+cd petsc-3.21.3
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
     --with-fc=mpif90 \
