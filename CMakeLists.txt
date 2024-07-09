@@ -37,6 +37,14 @@ if (NOT DEFINED ENV{PETSC_ARCH})
 else ()
     # full path if PETSC_DIR and PETSC_ARCH env variables are set
     set(PETSC $ENV{PETSC_DIR}/$ENV{PETSC_ARCH})
+    if ("$ENV{PETSC_ARCH}" STREQUAL "arch-darwin-c-opt")
+        set(MAC on)
+    elseif("$ENV{PETSC_ARCH}" STREQUAL "arch-linux-c-opt")
+        set(LINUX on)
+    else ()
+        message(FATAL_ERROR "PETSC_ARCH $ENV{PETSC_ARCH} not recognized. Please add support in CMakeLists.txt")
+    endif()
+    
 endif()
 
 set(ENV{PKG_CONFIG_PATH} ${PETSC}/lib/pkgconfig)
@@ -51,8 +59,11 @@ if (FORTRAN_COMPILER)
     set(CMAKE_Fortran_COMPILER ${FORTRAN_COMPILER})
     # same compile options as Makefile.in
     add_compile_options(-fallow-argument-mismatch -freal-4-real-8 -O3)
-    # add_link_options(-ldl -lstdc++ -Wl,--copy-dt-needed-entries)
     add_link_options(-ldl -lstdc++)
+    if (LINUX)
+        # ice cluster install needs this extra link option
+        add_link_options(-Wl,--copy-dt-needed-entries)
+    endif
 else ()
     message(FATAL_ERROR "PETSc Fortran compiler not found. Please ensure PETSc was configured with a Fortran compiler.")
 endif (FORTRAN_COMPILER)
