@@ -63,7 +63,7 @@ if (FORTRAN_COMPILER)
     if (LINUX)
         # ice cluster install needs this extra link option
         add_link_options(-Wl,--copy-dt-needed-entries)
-    endif
+    endif()
 else ()
     message(FATAL_ERROR "PETSc Fortran compiler not found. Please ensure PETSc was configured with a Fortran compiler.")
 endif (FORTRAN_COMPILER)
