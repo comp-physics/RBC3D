@@ -17,7 +17,7 @@ jobs:
       - name: Build Packages
         run: |
             set -x
-            brew install gcc mpich gfortran pkg-config
+            brew install gcc open-mpi gfortran pkg-config
             ln -s /opt/homebrew/bin/gfortran-14 /usr/local/bin/gfortran
             gfortran -v
             which mpif90
