@@ -83,13 +83,6 @@ cd ../../packages/srcNETCDF/netcdf-fortran-4.6.1
 cd fortran
 cp typeSizes.F90 module_typesizes.F90
 cd ..
-# rm -f module_netcdf_nc_data.F90
-# rm -f module_typesizes.F90
-# rm -f netcdf.F90
-# cp ../../../../install/scripts/module_netcdf_nc_data.F90 ./
-# cp ../../../../install/scripts/module_typesizes.F90 ./
-# cp ../../../../install/scripts/netcdf.F90 ./
-# cd ..
 
 ./configure --prefix=${INSNCDF}
 if (($?)); then
