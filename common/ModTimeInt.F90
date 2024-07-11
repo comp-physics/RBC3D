@@ -966,7 +966,7 @@ contains
       fac = (rbcRefs(rbc%celltype)%vol - rbc%vol)/rbc%area
       fac = SIGN(MIN(ABS(fac), epsDist/20.), fac)
       if (rootWorld .and. ABS(fac) .gt. epsDist/40.) then
-        print *, "VOL: ", rbcRefs(rbc%celltype)%vol, rbc%vol, fac
+        print *, "VOL: ", rbc%celltype, rbcRefs(rbc%celltype)%vol, rbc%vol, fac
       end if
       do ilat = 1, rbc%nlat
         do ilon = 1, rbc%nlon

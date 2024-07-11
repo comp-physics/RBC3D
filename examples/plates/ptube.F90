@@ -82,8 +82,9 @@ contains
       radEqv = 1.
       radPlat = .4
       ! assumes first rbc is a rbc
-      ! nlat0 = rbcs(1)%nlat0
-      nlat0 = 12
+      nlat0 = rbcs(1)%nlat0
+      print *, "NLAT0", nlat0
+      ! nlat0 = 12
       nlatp = 4
 
       rbcRef => rbcRefs(1)
@@ -136,7 +137,7 @@ contains
 
     ! Background velocity
     vbkg(1:2) = 0.
-    vbkg(3) = 8.
+    vbkg(3) = 6.
     print *, "vbkg: ", vbkg
 
   end subroutine InitSystem

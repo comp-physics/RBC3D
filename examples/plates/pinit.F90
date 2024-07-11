@@ -90,17 +90,8 @@ program InitCond
 
   print *, "szCell: ", szCell
 
-  ! place 1 platelet at beginning of tube
+  ! place 1 rbc at front
   iz = 1
-  xc(1:2) = .5
-  xc(3) = 1.
-  print *, 'Xc', iz, xc
-  rbc => rbcs(iz)
-  rbc%celltype = 3
-  call Rbc_Create(rbc, nlatp, dealias)
-  call Rbc_MakePlatelet(rbc, radPlat, xc)
-
-  iz = 2
   xc(1:2) = 0
   xc(3) = 4.
   print *, 'Xc', iz, xc
@@ -108,6 +99,16 @@ program InitCond
   rbc%celltype = 1
   call Rbc_Create(rbc, nlat0, dealias)
   call RBC_MakeBiConcave(rbc, radEqv, xc)
+
+  ! place 1 platelet in middle of tube
+  iz = 2
+  xc(1:2) = .5
+  xc(3) = 1.
+  print *, 'Xc', iz, xc
+  rbc => rbcs(iz)
+  rbc%celltype = 3
+  call Rbc_Create(rbc, nlatp, dealias)
+  call Rbc_MakePlatelet(rbc, radPlat, xc)
 
   ! do iz = 1, nrbc
   !   xc(1:2) = 0.
@@ -126,7 +127,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 8.
+  vBkg(1:2) = 0.; vBkg(3) = 6.
 
   ! Write initial conditions
   if (nrbc > 0) then

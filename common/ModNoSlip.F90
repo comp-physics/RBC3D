@@ -84,7 +84,7 @@ contains
       !SHB modify from 1.D-3 to 1.D-6 and now to eps_Ewd
       call KSPSetTolerances(ksp_lhs, eps_Ewd, &
                             PETSC_DEFAULT_REAL, PETSC_DEFAULT_REAL, &
-                            60, ierr)
+                            80, ierr)
 !!$      print *
 !!$      print *, "SMALL WALL ITERATIONS"
 !!$      print *, "SMALL WALL ITERATIONS"
