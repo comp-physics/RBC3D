@@ -63,6 +63,9 @@ if (FORTRAN_COMPILER)
     if (LINUX)
         # ice cluster install needs this extra link option
         add_link_options(-Wl,--copy-dt-needed-entries)
+    elseif(MAC)
+        # might be able to remove this if homebrew fixes bug
+        add_link_options(-Wl,-no_warn_duplicate_libraries)
     endif()
 else ()
     message(FATAL_ERROR "PETSc Fortran compiler not found. Please ensure PETSc was configured with a Fortran compiler.")

@@ -64,7 +64,7 @@ contains
       ! call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
       rbcRefs(1)%patch => rbcPatch
       rbcRefs(2)%patch => rbcPatch
-      ! rbcRefs(3)%patch => rbcPatch
+      rbcRefs(3)%patch => rbcPatch
 
       if (PhysEwald) then
       do irbc = 1, nrbc
@@ -112,7 +112,7 @@ contains
     integer :: irbc, iwall
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd
+    real(WP) :: clockBgn, clockEnd, areaExp
     integer :: ierr
 
     ! Time integration
@@ -122,11 +122,25 @@ contains
       clockBgn = MPI_WTime() ! Start timing
 
       ! Evolve cells
-      ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
+      ! Log area expansion of cells every 10 ts
+      do irbc = 1, nrbc
+        rbc => rbcs(irbc)
+        if (rootWorld) then
+          if (lt == 1) then
+            rbc%starting_area = rbc%area
+            print *, "STARTING AREA: ", rbc%area
+          end if
+          if (modulo(lt, 10) == 0) then
+            areaExp = RBC_AreaExpansion(rbc)
+            write (*, '(A, I3, A, F10.5, A)') &
+              "area expansion of cell ", irbc, ": ", areaExp, "%"
+          end if
+        end if
+      end do
+
       ! Enforce no-slip condition on the wall
-      ! print *,"NO NO SLIP"
       call NoSlipWall
 
       ! Evolve RBC
@@ -139,8 +153,6 @@ contains
 
       ! call FilterRbcs
       call ReboxRbcs
-
-      ! print *,"MULTIVOL"
 
       ! call AddR0Motion
 

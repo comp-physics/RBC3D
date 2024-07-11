@@ -23,6 +23,15 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
+To install on a mac from the cloned repository, you can 
+
+```shell
+brew install gcc mpich gfortran pkg-config wget cmake
+./rbc.sh install-mac
+```
+
+and then set these environment variables
+
 <p align="left">
   <a href="https://github.com/comp-physics/RBC3D/actions/workflows/phoenix.yml">
     <img src="https://github.com/comp-physics/RBC3D/actions/workflows/phoenix.yml/badge.svg" />
