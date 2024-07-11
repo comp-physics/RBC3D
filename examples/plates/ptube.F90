@@ -136,7 +136,7 @@ contains
 
     ! Background velocity
     vbkg(1:2) = 0.
-    vbkg(3) = 6.
+    vbkg(3) = 8.
     print *, "vbkg: ", vbkg
 
   end subroutine InitSystem

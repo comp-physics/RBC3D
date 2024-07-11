@@ -553,6 +553,8 @@ contains
     integer, allocatable :: connect(:, :)
     character(*), parameter :: func_name = "ReadWallMesh"
 
+    print *, "fn: ", trim(fn)
+
     ! Check whether the file exists
     ierr = NF90_OPEN(trim(fn), NF90_NOWRITE, ncid)
     if (ierr .ne. 0) then

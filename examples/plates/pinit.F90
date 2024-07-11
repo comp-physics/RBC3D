@@ -35,17 +35,17 @@ program InitCond
   ! Wall
   nwall = 1
   wall => walls(1)
-  call ReadWallMesh('Input/cyl_D3_L6.e', wall)
-  actlen = 8
+  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
+  actlen = 13.33
 
-  nrbc = 1
+  nrbc = 2
   nlat0 = 12
   nlatp = 4
   dealias = 3
   phi = 70/real(100)
   ! lengtube = nrbc/real(phi) !XXLL
-  lengtube = 6
-  tubeRad = 4.0 ! 5.0
+  lengtube = 8
+  tubeRad = 5.0 ! 4.0
 
   ! lengspacing = lengtube/Real(nrbc)
 
@@ -92,13 +92,22 @@ program InitCond
 
   ! place 1 platelet at beginning of tube
   iz = 1
-  xc(1:2) = 0.
+  xc(1:2) = .5
   xc(3) = 1.
   print *, 'Xc', iz, xc
   rbc => rbcs(iz)
   rbc%celltype = 3
   call Rbc_Create(rbc, nlatp, dealias)
   call Rbc_MakePlatelet(rbc, radPlat, xc)
+
+  iz = 2
+  xc(1:2) = 0
+  xc(3) = 4.
+  print *, 'Xc', iz, xc
+  rbc => rbcs(iz)
+  rbc%celltype = 1
+  call Rbc_Create(rbc, nlat0, dealias)
+  call RBC_MakeBiConcave(rbc, radEqv, xc)
 
   ! do iz = 1, nrbc
   !   xc(1:2) = 0.
@@ -117,7 +126,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 6.
+  vBkg(1:2) = 0.; vBkg(3) = 8.
 
   ! Write initial conditions
   if (nrbc > 0) then
@@ -143,12 +152,8 @@ program InitCond
   ! Deallocate working arrays
   deallocate (rbcs)
 
-  print *, "after deallocate"
-
   ! Finalize
   call FinalizeMPI
-
-  print *, "FinalizeMPI"
 
   stop
 
