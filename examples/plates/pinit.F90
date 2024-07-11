@@ -24,7 +24,7 @@ program InitCond
   integer :: iz, i, dealias
   integer, parameter :: ranseed = 161269
   character(CHRLEN) :: fn
-  real :: lengtube, lengspacing, phi, actlen
+  real :: lengtube, lengspacing, phi, actlen, tubeRad
 
   ! Initialize
   call InitMPI
@@ -35,9 +35,8 @@ program InitCond
   ! Wall
   nwall = 1
   wall => walls(1)
-
-  call ReadWallMesh('Input/new_cyl_D6_L13_33.e', wall)
-  actlen = 13.33
+  call ReadWallMesh('Input/cyl_D3_L6.e', wall)
+  actlen = 8
 
   nrbc = 1
   nlat0 = 12
@@ -45,7 +44,8 @@ program InitCond
   dealias = 3
   phi = 70/real(100)
   ! lengtube = nrbc/real(phi) !XXLL
-  lengtube = 11
+  lengtube = 6
+  tubeRad = 4.0 ! 5.0
 
   ! lengspacing = lengtube/Real(nrbc)
 
@@ -54,8 +54,8 @@ program InitCond
   do i = 1, wall%nvert
     th = ATAN2(wall%x(i, 1), wall%x(i, 2))
     ! 10 is the new tube diameter
-    wall%x(i, 1) = 10/2.0*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
-    wall%x(i, 2) = 10/2.0*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
+    wall%x(i, 1) = tubeRad*COS(th)    !!!!!!!!!!!!!!!!!!!!!!
+    wall%x(i, 2) = tubeRad*SIN(th)    !!!!!!!!!!!!!!!!!!!!!!
     wall%x(i, 3) = lengtube/actlen*wall%x(i, 3)   !!!!!!!!!!!!!!!!!!!
   end do
   xmin = minval(wall%x(:, 1))
@@ -117,7 +117,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 4.
+  vBkg(1:2) = 0.; vBkg(3) = 6.
 
   ! Write initial conditions
   if (nrbc > 0) then
