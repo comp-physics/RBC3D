@@ -12,9 +12,9 @@
 0.0     !
 
 10000                   ! Nt
-0.0014                  ! Ts
+0.0008                  ! Ts
 
-50                       ! cell_out
+20                       ! cell_out
 -10000                   ! wall_out
 -10                      ! pGrad_out
 -10                      ! flow_out
