@@ -131,6 +131,7 @@ contains
           if (lt == 1) then
             rbc%starting_area = rbc%area
             print *, "STARTING AREA: ", rbc%area
+            print *, "STARTING VOLUME: ", rbc%area, " for celltype ", rbc%celltype
           end if
           if (modulo(lt, 10) == 0) then
             areaExp = RBC_AreaExpansion(rbc)
