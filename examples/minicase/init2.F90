@@ -127,7 +127,7 @@ program InitCond
   write (*, '(A,3F10.3)') 'Periodic domain size = ', Lb
 
   Nt0 = 0; time = 0.
-  vBkg(1:2) = 0.; vBkg(3) = 6.
+  vBkg(1:2) = 0.; vBkg(3) = 8.
 
   ! Write initial conditions
   if (nrbc > 0) then
