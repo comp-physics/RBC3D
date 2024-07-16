@@ -826,14 +826,13 @@ contains
       write (*, *) 'vBkg = ', vBkg
     end if
 
-    print *, '1'
     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
 
     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-    print *, '2'
+
     ! cells
     if (rootWorld) then
       read (restart_unit) nrbc
@@ -841,7 +840,7 @@ contains
       write (*, *) 'nrbc = ', nrbc
     end if
     call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-    print *, '3'
+
     allocate (rbcs(nrbc))
 
     do irbc = 1, nrbc
@@ -889,7 +888,7 @@ contains
       end if
       call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
     end do ! irbc
-    print *, '4'
+
     ! Walls
     if (rootWorld) then
       read (restart_unit) nwall

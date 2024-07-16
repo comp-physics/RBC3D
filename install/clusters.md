@@ -21,7 +21,8 @@ module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-
 ./rbc.sh install-phoenix
 ```
 
-Note that if the `gcc`, `mvapich2`, `mkl`, and `fftw` modules work on your Phoenix account, you should use this installer script for a faster build.
+Note that if the `gcc`, `mvapich2`, `mkl`, and `fftw` modules work on your Phoenix account, you should use this installer script for a faster build. You should try this one first before the other one, but it is not guaranteed to work.
+
 ```shell
 module load gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
 ./rbc.sh install
@@ -36,6 +37,7 @@ module load gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi
 ```
 
 Before you can run cmake, you must set these environment variables. You can place them in your `~/.bashrc`. If you didn't place `RBC3D` in your `$HOME` directory, then replace it with where you placed `RBC3D`.
+
 ```shell
 export PETSC_DIR=$HOME/RBC3D/packages/petsc-3.19.6
 export PETSC_ARCH=arch-linux-c-opt
@@ -46,10 +48,19 @@ Then to execute and run a case, you can:
 mkdir build
 cd build
 cmake ..
-make case # or just `make` to make common and all the cases
+make -j 8 case # or just `make` to make common and all the cases
 cd case
-srun -n 1 ./initcond # or mpiexec
-srun ./tube
+srun -n 1 ./initcond
+srun ./tube # command to use all the nodes
 ```
 
-This will generate output files in `build/case/D`. To keep output files in `examples/case/D`, you can `cd examples/case` and `srun ../../build/case/initcond` and same for tube.
+This will generate output files in `build/case/D`. To keep output files in `examples/case/D` and use input files in `examples/case/Input`, you can do this instead once files are built. I recommend this way.
+
+```shell
+cd examples/case
+srun -n 1 ../../build/case/initcond
+srun -n 2 ../../build/case/tube
+```
+
+To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+

@@ -30,41 +30,11 @@ brew install gcc mpich gfortran pkg-config wget cmake
 ./rbc.sh install-mac
 ```
 
-and then set these environment variables
+and then set these environment variables in your `~/.zshrc` or `~/.bashrc`. Note that `$HOME` will need to be replaced with the folder you cloned RBC3D in.
 
-<p align="left">
-  <a href="https://github.com/comp-physics/RBC3D/actions/workflows/phoenix.yml">
-    <img src="https://github.com/comp-physics/RBC3D/actions/workflows/phoenix.yml/badge.svg" />
-  </a>
-  <a href="https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml">
-    <img src="https://github.com/comp-physics/RBC3D/actions/workflows/ice.yml/badge.svg" />
-  </a>
-</p>
-
-To install on PACE Phoenix, you need to salloc a node to make sure `srun` is available and then run this in the RBC3D root directory: 
-
-```shell
-module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv python/3.9.12-rkxvr6 netcdf-fortran cmake
-./rbc.sh install-phoenix
-```
-
-Note that if the `gcc`, `mvapich2`, `mkl`, and `fftw` modules work on your Phoenix account, you should use this installer script for a faster build.
-```shell
-module load gcc mvapich2 mkl python/3.9.12-rkxvr6 netcdf-fortran fftw cmake
-./rbc.sh install
-```
-
-Or if you're on the ICE cluster, you just need to load different modules to run the installer script.
-
-```shell
-module load gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi-mkl/2023.1.0 python/3.10.10 fftw/3.3.10-mva2 cmake
-./rbc.sh install-ice
-```
-
-Before you can run cmake, you must set these environment variables. You can place them in your `~/.bashrc`. If you didn't place `RBC3D` in your `$HOME` directory, then replace it with where you placed `RBC3D`.
 ```shell
 export PETSC_DIR=$HOME/RBC3D/packages/petsc-3.19.6
-export PETSC_ARCH=arch-linux-c-opt
+export PETSC_ARCH=arch-darwin-c-opt
 ```
 
 Then to execute and run a case, you can:
@@ -72,15 +42,21 @@ Then to execute and run a case, you can:
 mkdir build
 cd build
 cmake ..
-make case # or just `make` to make common and all the cases
+make -j 8 case # or just `make` to make common and all the cases
 cd case
-srun -n 1 ./initcond # or mpiexec
-srun ./tube
+mpiexec -n 1 ./initcond
+mpiexec -n 2 ./tube # number of nodes can be changed
 ```
 
-This will generate output files in `build/case/D`. To keep output files in `examples/case/D`, you can `cd examples/case` and `srun ../../build/case/initcond` and same for tube.
+This will generate output files in `build/case/D`. To keep output files in `examples/case/D` and use input files in `examples/case/Input`, you can do this instead once files are built:
 
-To run a case with more cells, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+```shell
+cd examples/case
+mpiexec -n 1 ../../build/case/initcond
+mpiexec -n 2 ../../build/case/tube
+```
+
+To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
 
 
 ### Papers that use RBC3D
