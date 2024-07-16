@@ -1,6 +1,6 @@
 # Install on a GT Cluster
 
-Georgia Tech has several computing clusters and using a cluster is necessary to run simulations with 8+ cells. We've provided install scripts that can install all necessary packages on these clusters. They're used inside the github runners (linked below). The same instructions can be used for other clusters but modules might be named differently.
+Georgia Tech has several computing clusters and using a cluster is necessary to run simulations with many cells. We've provided install scripts that can install all necessary packages on these clusters. They're used inside the github runners (linked below), so they're guaranteed to at least compile the codebase if similar instructions are followed. The same instructions can be used for other clusters, but modules will be named differently.
 
 
 <p align="left">
@@ -59,8 +59,6 @@ This will generate output files in `build/case/D`. To keep output files in `exam
 ```shell
 cd examples/case
 srun -n 1 ../../build/case/initcond
-srun -n 2 ../../build/case/tube
+srun ../../build/case/tube
 ```
-
-To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
 
