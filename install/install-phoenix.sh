@@ -55,6 +55,10 @@ if (($?)); then
 fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
+if (($?)); then
+    echo "[install-mac.sh] Error: PETSc make failed."
+    exit 1
+fi
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 
 # build and install spherepack
