@@ -112,7 +112,7 @@ contains
     integer :: irbc, iwall
     type(t_rbc), pointer :: rbc
     type(t_wall), pointer :: wall
-    real(WP) :: clockBgn, clockEnd, areaExp
+    real(WP) :: clockBgn, clockEnd
     integer :: ierr
 
     ! Time integration
@@ -123,23 +123,6 @@ contains
 
       ! Evolve cells
       call Compute_Rbc_Vel
-
-      ! Log area expansion of cells every 10 ts
-      do irbc = 1, nrbc
-        rbc => rbcs(irbc)
-        if (rootWorld) then
-          if (lt == 1) then
-            rbc%starting_area = rbc%area
-            print *, "STARTING AREA: ", rbc%area
-            print *, "STARTING VOLUME: ", rbc%area, " for celltype ", rbc%celltype
-          end if
-          if (modulo(lt, 10) == 0) then
-            areaExp = RBC_AreaExpansion(rbc)
-            write (*, '(A, I3, A, F10.5, A)') &
-              "area expansion of cell ", irbc, ": ", areaExp, "%"
-          end if
-        end if
-      end do
 
       ! Enforce no-slip condition on the wall
       call NoSlipWall

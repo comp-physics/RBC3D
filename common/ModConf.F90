@@ -139,7 +139,6 @@ contains
         print *, 'Node ', i, ' of ', numNodes, ' running on ', trim(machinename)
       end do ! i
     else
-      ! stat should not be used
       call MPI_Send(lenname, 1, MPI_Integer, 0, 1, MPI_Comm_World, ierr)
       call MPI_Send(machinename, lenname, MPI_Character, 0, 1, MPI_Comm_World, ierr)
     end if

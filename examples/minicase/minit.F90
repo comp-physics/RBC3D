@@ -18,7 +18,7 @@ program InitCond
   type(t_rbc)         :: rbcRef
   type(t_wall), pointer :: wall
   real(WP) :: radEqv, szCell(3), radPlat
-  integer :: nlat0, ii, nlatp
+  integer :: nlat0, ii
   real(WP) :: th, xc(3)
   real(WP) :: xmin, xmax, ymin, ymax, zmin, zmax
   integer :: iz, i, dealias
@@ -40,14 +40,10 @@ program InitCond
 
   nrbc = 2
   nlat0 = 12
-  nlatp = 4
   dealias = 3
   phi = 70/real(100)
-  ! lengtube = nrbc/real(phi) !XXLL
   lengtube = 8
-  tubeRad = 5.0 ! 4.0
-
-  ! lengspacing = lengtube/Real(nrbc)
+  tubeRad = 5.0
 
   wall%f = 0.
 
@@ -73,24 +69,11 @@ program InitCond
   Lb(3) = zmax - zmin
   lengtube = Lb(3)
   lengspacing = lengtube/real(nrbc)
-  print *, "lengtube: ", lengtube
 
-  ! reference cell (unnecessary)
   xc = 0.
   radEqv = 1.0
-  radPlat = .4
 
-  call Rbc_Create(rbcRef, nlatp, dealias)
-  call Rbc_MakePlatelet(rbcRef, radPlat, xc)
-
-  ! dimensions of starting rbc
-  do ii = 1, 3
-    szCell(ii) = maxval(rbcRef%x(:, :, ii)) - minval(rbcRef%x(:, :, ii))
-  end do
-
-  print *, "szCell: ", szCell
-
-  ! place 1 rbc at front
+  ! Place 1 rbc in middle of tube
   iz = 1
   xc(1:2) = -.5
   xc(3) = 4.
@@ -100,7 +83,7 @@ program InitCond
   call Rbc_Create(rbc, nlat0, dealias)
   call RBC_MakeBiConcave(rbc, radEqv, xc)
 
-  ! place 1 platelet in middle of tube
+  ! Place 1 rbc at front of tube
   iz = 2
   xc(1:2) = .5
   xc(3) = 1.
@@ -109,16 +92,6 @@ program InitCond
   rbc%celltype = 1
   call Rbc_Create(rbc, nlat0, dealias)
   call RBC_MakeBiConcave(rbc, radEqv, xc)
-
-  ! do iz = 1, nrbc
-  !   xc(1:2) = 0.
-  !   xc(3) = lengspacing*(iz - 0.5)
-  !   print *, 'Xc', iz, xc
-  !   rbc => rbcs(iz)
-  !   rbc%celltype = 1
-  !   call Rbc_Create(rbc, nlat0, dealias)
-  !   call Rbc_MakeBiConcave(rbc, radEqv, xc)
-  ! end do
 
   ! Put things in the middle of the periodic box
   call Recenter_Cells_and_Walls
