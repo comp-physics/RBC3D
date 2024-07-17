@@ -9,7 +9,8 @@
 ## Use an appropriate computer
 
 * RBC3D has not been tested on WSL or Windows computers broadly. We do not recommend using WSL. Instead, use a Linux partition or a *nix-based computing cluster.
-At Georgia Tech we have several, including ICE and PACE Phoenix. Installer scripts for these clusters are available and run instructions are available in `install/clusters.md`.
+
+At Georgia Tech we have several, including ICE and PACE Phoenix. Automated installer scripts and run instructions for these clusters are available in `install/clusters.md`.
 
 ## Ensure you have compilers and wrappers
 

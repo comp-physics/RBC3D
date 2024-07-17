@@ -42,18 +42,18 @@ Then to execute and run a case, you can:
 mkdir build
 cd build
 cmake ..
-make -j 8 case # or just `make` to make common and all the cases
-cd case
-mpiexec -n 1 ./initcond
-mpiexec -n 2 ./tube # number of nodes can be changed
+make -j 8 minicase # or just `make` to make common and all the cases
+cd minicase
+mpiexec -n 1 ./minit
+mpiexec -n 2 ./mtube # number of nodes can be changed
 ```
 
-This will generate output files in `build/case/D`. To keep output files in `examples/case/D` and use input files in `examples/case/Input`, you can do this instead once files are built:
+This will generate output files in `build/minicase/D`. To keep output files in `examples/minicase/D` and use input files in `examples/minicase/Input`, you can do this instead once files are built in the `build` directory:
 
 ```shell
 cd examples/case
-mpiexec -n 1 ../../build/case/initcond
-mpiexec -n 2 ../../build/case/tube
+mpiexec -n 1 ../../build/case/minit
+mpiexec -n 2 ../../build/case/mtube
 ```
 
 To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
