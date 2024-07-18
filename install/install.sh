@@ -2,14 +2,14 @@
 
 # salloc a node before you run this because petsc configure uses srun
 
-# building and installing petsc 3.19.6 in packages directory
+# building and installing petsc 3.21.3 in packages directory
 mkdir packages
 cd packages
 
-wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
-tar -xf petsc-3.19.tar.gz
+wget https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.21.3.tar.gz
+tar -xf petsc-3.21.3.tar.gz
 
-cd petsc-3.19.6
+cd petsc-3.21.3
 
 ./configure --with-cc=mpicc \
     --with-cxx=mpicxx \
@@ -30,6 +30,10 @@ if (($?)); then
 fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
+if (($?)); then
+    echo "[install-mac.sh] Error: PETSc make failed."
+    exit 1
+fi
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 
 # build and install spherepack

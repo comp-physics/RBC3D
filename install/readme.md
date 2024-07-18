@@ -1,4 +1,4 @@
-# RBC3D Build and Run Instructions
+# RBC3D Manual Build and Run Instructions
 
 0. Use an appropriate computer
 1. Ensure you have compilers and wrappers
@@ -8,9 +8,9 @@
 
 ## Use an appropriate computer
 
-* RBC3D __will not__ build on non-x86 hardware (like a new Mac M1+) at time of writing. Use an x86 machine (AMD or Intel processors).
 * RBC3D has not been tested on WSL or Windows computers broadly. We do not recommend using WSL. Instead, use a Linux partition or a *nix-based computing cluster.
-At Georgia Tech we have several, including ICE and PACE Phoenix. 
+
+At Georgia Tech we have several, including ICE and PACE Phoenix. Automated installer scripts and run instructions for these clusters are available in `install/clusters.md`.
 
 ## Ensure you have compilers and wrappers
 
@@ -21,7 +21,7 @@ You will need `gcc`, `gfortran`, and a suitable MPI wrapper like `mvapich` (or t
 * To check for gfortran and gcc, see if `which gfortran` and `which gcc` return a path
 * Similarly, to see if you can run MPI commands for later, see if `which mpicc` or `which mpif90` return a path
 
-You will also need python3 for the PETSc install and pip modules. On Phoenix, you can module load it via `module load python/3.9.12-rkxvr6`, and ICE has a similar module. You may also need to add the `~/.local/bin` directory to your PATH by adding this line to your `~/.bashrc`: 
+You will also need python3 for the PETSc install. On Phoenix, you can module load it via `module load python/3.9.12-rkxvr6`, and ICE has a similar module. You may also need to add the `~/.local/bin` directory to your PATH by adding this line to your `~/.bashrc`: 
 
 ```shell
 export PATH="$PATH:$HOME/.local/bin"

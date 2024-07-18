@@ -45,17 +45,17 @@ contains
 
     if (rootWorld) then
       if (pgrad_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'pgrad', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'pgrad', Nt0, '.dat'
         open (pGrad_unit, file=trim(fn), action='write')
       end if
 
       if (flow_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'flow', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'flow', Nt0, '.dat'
         open (flow_unit, file=trim(fn), action='write')
       end if
 
       if (ftot_out > 0) then
-        write (fn, FMT=fn_FMT), 'D/', 'ftot', Nt0, '.dat'
+        write (fn, FMT=fn_FMT) 'D/', 'ftot', Nt0, '.dat'
         open (ftot_unit, file=trim(fn), action='write')
       end if
 
@@ -553,6 +553,8 @@ contains
     integer, allocatable :: connect(:, :)
     character(*), parameter :: func_name = "ReadWallMesh"
 
+    print *, "fn: ", trim(fn)
+
     ! Check whether the file exists
     ierr = NF90_OPEN(trim(fn), NF90_NOWRITE, ncid)
     if (ierr .ne. 0) then
@@ -824,14 +826,13 @@ contains
       write (*, *) 'vBkg = ', vBkg
     end if
 
-    print *, '1'
     call MPI_Bcast(Lb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(iLb, 3, MPI_WP, 0, MPI_Comm_World, ierr)
 
     call MPI_Bcast(Nt0, 1, MPI_INTEGER, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(time0, 1, MPI_WP, 0, MPI_Comm_World, ierr)
     call MPI_Bcast(vBkg, 3, MPI_WP, 0, MPI_Comm_World, ierr)
-    print *, '2'
+
     ! cells
     if (rootWorld) then
       read (restart_unit) nrbc
@@ -839,7 +840,7 @@ contains
       write (*, *) 'nrbc = ', nrbc
     end if
     call MPI_Bcast(nrbc, 1, MPI_Integer, 0, MPI_Comm_World, ierr)
-    print *, '3'
+
     allocate (rbcs(nrbc))
 
     do irbc = 1, nrbc
@@ -848,7 +849,6 @@ contains
       if (rootWorld) then
         read (restart_unit) nlat0, nlon0
         read (restart_unit) nlat, nlon
-        ! celltype = 1; print *,"NO READ CELL TYPE"
         read (restart_unit) celltype
         read (restart_unit) starting_area
         write (*, *) 'irbc : ', irbc, ' nlat0 = ', nlat0, 'type = ', celltype, 'starting_area = ', starting_area
@@ -888,7 +888,7 @@ contains
       end if
       call MPI_Bcast(rbc%x, size(rbc%x), MPI_WP, 0, MPI_Comm_World, ierr)
     end do ! irbc
-    print *, '4'
+
     ! Walls
     if (rootWorld) then
       read (restart_unit) nwall

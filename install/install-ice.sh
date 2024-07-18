@@ -43,11 +43,11 @@ make install
 
 cd ../..
 
-# building and installing petsc 3.19.6 in packages directory
-wget https://ftp.mcs.anl.gov/pub/petsc/petsc-3.19.tar.gz
-tar -xf petsc-3.19.tar.gz
+# building and installing petsc 3.21.3 in packages directory
+wget https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.21.3.tar.gz
+tar -xf petsc-3.21.3.tar.gz
 
-cd petsc-3.19.6
+cd petsc-3.21.3
 
 # using mpiexec here instead of srun but srun works too --with-mpiexec=mpiexec \
 ./configure --with-cc=mpicc \
@@ -69,6 +69,10 @@ if (($?)); then
 fi
 
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt all
+if (($?)); then
+    echo "[install-ice.sh] Error: PETSc make failed."
+    exit 1
+fi
 make PETSC_DIR=`pwd` PETSC_ARCH=arch-linux-c-opt check
 
 # build and install spherepack

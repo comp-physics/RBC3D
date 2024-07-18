@@ -229,14 +229,14 @@ contains
     type(t_RBC) :: cell
     real(WP), optional :: xc(3)
 
-    integer :: ilat, ilon, ii
+    integer :: ilat, ilon, ii, ierr
     real(WP) :: th, phi, r_u, r_l, r, p, rad
 
     real(WP), dimension(0:5) :: a_l, a_u
     real(WP), dimension(2) :: b
 
     print *, "The RBC_MakeSickle Cell Configuration is Not Confirmed Working Yet - Aborting"
-    call MPI_Abort(MPI_COMM_WORLD, 1, 1)
+    call MPI_Abort(MPI_COMM_WORLD, 1, ierr)
 
     a_u = (/1.36, -0.0403, 0.306, -0.00169, -0.0360, -0.0277/)
     a_l = (/-0.806, -0.1141, -0.00678, 0.00212, 0.0201, 0.0284/)

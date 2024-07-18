@@ -1,4 +1,4 @@
-0.44 !0.04              ! alpha_Ewld !changed for big tube
+0.44                    ! alpha_Ewld !changed for big tube
 1.E-3                   ! eps_Ewld
 8                       ! PBspln_Ewld
 
@@ -12,9 +12,9 @@
 0.0     !
 
 10000                   ! Nt
-0.0014                  ! Ts
+0.0008                  ! Ts
 
-50                       ! cell_out
+10                       ! cell_out
 -10000                   ! wall_out
 -10                      ! pGrad_out
 -10                      ! flow_out

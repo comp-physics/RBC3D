@@ -29,7 +29,7 @@ jobs:
             module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
             set -e -x
             export FFTWROOT=`pwd`/packages/fftw-3.3.10/build
-            export PETSC_DIR=`pwd`/packages/petsc-3.19.6
+            export PETSC_DIR=`pwd`/packages/petsc-3.21.3
             export PETSC_ARCH=arch-linux-c-opt
             cd common
             make .depend
@@ -43,7 +43,7 @@ jobs:
         run: |
             module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
             set -e -x
-            export PETSC_DIR=`pwd`/packages/petsc-3.19.6
+            export PETSC_DIR=`pwd`/packages/petsc-3.21.3
             export PETSC_ARCH=arch-linux-c-opt
             mkdir build
             cd build

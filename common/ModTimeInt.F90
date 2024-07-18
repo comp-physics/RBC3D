@@ -64,7 +64,7 @@ contains
       ! call RBC_ComputeGeometry(rbcRef)  JBF:  not needed???
       rbcRefs(1)%patch => rbcPatch
       rbcRefs(2)%patch => rbcPatch
-      ! rbcRefs(3)%patch => rbcPatch
+      rbcRefs(3)%patch => rbcPatch
 
       if (PhysEwald) then
       do irbc = 1, nrbc
@@ -122,11 +122,9 @@ contains
       clockBgn = MPI_WTime() ! Start timing
 
       ! Evolve cells
-      ! print *,"NO VEL"
       call Compute_Rbc_Vel
 
       ! Enforce no-slip condition on the wall
-      ! print *,"NO NO SLIP"
       call NoSlipWall
 
       ! Evolve RBC
@@ -139,8 +137,6 @@ contains
 
       ! call FilterRbcs
       call ReboxRbcs
-
-      ! print *,"MULTIVOL"
 
       ! call AddR0Motion
 
@@ -954,7 +950,7 @@ contains
       fac = (rbcRefs(rbc%celltype)%vol - rbc%vol)/rbc%area
       fac = SIGN(MIN(ABS(fac), epsDist/20.), fac)
       if (rootWorld .and. ABS(fac) .gt. epsDist/40.) then
-        print *, "VOL: ", rbcRefs(rbc%celltype)%vol, rbc%vol, fac
+        print *, "VOL: ", rbc%celltype, rbcRefs(rbc%celltype)%vol, rbc%vol, fac
       end if
       do ilat = 1, rbc%nlat
         do ilon = 1, rbc%nlon
