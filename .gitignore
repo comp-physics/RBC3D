@@ -16,3 +16,4 @@ packages*
 traction
 build
 *.sbatch
+examples/field_visual/Input/restart*
