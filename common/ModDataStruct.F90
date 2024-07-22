@@ -92,7 +92,7 @@ module ModDataStruct
 !
 !======================================================================
 ! Cell type
-!  celltype --   1  red cell ; 2 leukocyte ; 3 platelet
+!  celltype --   1 red cell ; 2 leukocyte ; 3 platelet
 !
 !======================================================================
 ! Solid body modes

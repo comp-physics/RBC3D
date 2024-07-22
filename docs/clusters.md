@@ -36,12 +36,16 @@ module load gcc/12.3.0 mvapich2/2.3.7-1 netcdf-c hdf5/1.14.1-2-mva2 intel-oneapi
 ./rbc.sh install-ice
 ```
 
-Before you can run cmake, you must set these environment variables. You can place them in your `~/.bashrc`. If you didn't place `RBC3D` in your `$HOME` directory, then replace it with where you placed `RBC3D`.
+## Environment Variables
+
+Before you can run cmake, you must set `PETSC_DIR` and `PETSC_ARCH` environment variables. You can place them in your `~/.bashrc`. This path depends on where you placed RBC3D. To get the path to where you placed it you can run this from your RBC3D root directory:
 
 ```shell
-export PETSC_DIR=$HOME/RBC3D/packages/petsc-3.19.6
-export PETSC_ARCH=arch-linux-c-opt
+rootdir=`pwd`
+echo -e "export PETSC_DIR=$rootdir/packages/petsc-3.21.3 \nexport PETSC_ARCH=arch-linux-c-opt" >> ~/.bashrc
 ```
+
+## Running an Example Case
 
 Then to execute and run a case, you can:
 ```shell
