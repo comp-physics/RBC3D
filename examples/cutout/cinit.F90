@@ -243,7 +243,7 @@ contains
           tmp_xc(1) = (RandomNumber(ranseed)*sphere_rad*2) - sphere_rad
           tmp_xc(2) = (RandomNumber(ranseed)*sphere_rad*2) - sphere_rad
           tmp_xc(3) = (RandomNumber(ranseed)*sphere_rad*2) - sphere_rad
-    
+
           d = sum(tmp_xc*tmp_xc)
         end do
         d = 100.
