@@ -12,9 +12,9 @@ program randomized_cell_gen
   integer, parameter :: ranseed = 161269
 
   !initial condition setup parameters
-  real(WP), parameter :: hematocrit = 0.20
-  real(WP), parameter :: tuber = 7
-  real(WP), parameter :: tubelen = 20
+  real(WP), parameter :: hematocrit = 0.18
+  real(WP), parameter :: tuber = 4
+  real(WP), parameter :: tubelen = 15
 
   integer :: nrbcMax ! how many cells
 
