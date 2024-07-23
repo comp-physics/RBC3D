@@ -27,7 +27,7 @@ Now, your pipeline browser and render view should look like this:
 
 We can change the color of the cells to red by following these steps:
 
-1. Open the properies panel for `GenerateSurfaceNormals2`
+1. Open the properties panel for `GenerateSurfaceNormals2`
 2. Select `Coloring = Solid Color`
 3. Select `Edit` and using hex value `#980808` or a similar red color
 
