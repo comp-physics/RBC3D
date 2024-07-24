@@ -3,7 +3,7 @@
 8                       ! PBspln_Ewld
 
 3                       ! nCellTypes
-1 1 1                   ! viscRat -- for RBCS, approx 5, for Sickles, approximated as 7 from https://doi.org/10.1016/0167-4889(90)90025-9
+1 1 1                   ! viscRat
 1. 1. 1.                ! refRad
 .false.                 ! Deflate
 
@@ -21,7 +21,7 @@
 -1                       ! ftotout
 100                      ! restart_out
 
-'D/restart.LATEST.dat'
+'R/restart000021800.dat'
 
 0.02                ! epsDist
 10.                 ! forceCoef

@@ -804,20 +804,13 @@ contains
     ! global parameters
     if (rootWorld) then
       write (*, *) 'Read restart file ', TRIM(fn)
-      print *, 'error 0'
       open (restart_unit, file=trim(fn), form='unformatted', action='read')
 
-      print *, 'error 1'
       read (restart_unit) Lb
       iLb = 1./Lb
-      print *, 'error 2'
-      print *, 'z'
       read (restart_unit) Nt0
-      print *, 'a'
       read (restart_unit) time0
-      print *, 'b'
       read (restart_unit) vBkg
-      print *, '0'
       write (*, *) 'Lb = ', Lb
       write (*, *) 'Nt0 = ', Nt0
       write (*, *) 'time0 = ', time0
