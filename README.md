@@ -48,9 +48,15 @@ mpiexec -n 1 ./minit
 mpiexec -n 2 ./mtube # number of nodes can be changed
 ```
 
-This will generate output files in `build/case/D`. To keep output files in `examples/case/D`, you can `cd examples/case` and `srun ../../build/case/initcond` and same for tube.
+This will generate output files in `build/minicase/D`. To keep output files in `examples/minicase/D` and use input files in `examples/minicase/Input`, you can do this instead once files are built in the `build` directory:
 
-On other supercomputing clusters, it should be easy to replace the module loads with the modules available on your system. If one of these isn't available, you can follow the manual build instructions [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
+```shell
+cd examples/case
+mpiexec -n 1 ../../build/case/minit
+mpiexec -n 2 ../../build/case/mtube
+```
+
+To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/clusters.md).
 
 ### Papers that use RBC3D
 
