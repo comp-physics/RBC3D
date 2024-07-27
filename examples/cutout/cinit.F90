@@ -128,67 +128,6 @@ contains
 
   end subroutine recenterWalls
 
-  recursive subroutine choose_point(pt)
-    real(WP) :: pt(3)
-
-    type(t_wall), pointer :: wall
-    real(WP) :: rad = 3., len, maxN, minN
-    real(WP) :: threshold
-    integer :: i
-
-    wall => walls(1)
-    len = RandomNumber(ranseed)*actlen
-    threshold = 0.2
-    maxN = -1E9
-    minN = 1E9
-
-    ! figure out the radius based on the location in the tube
-    do i = 1, wall%nvert
-      if (abs(wall%x(i, 3) - len) .le. threshold) then
-        maxN = maxval((/maxN, wall%x(i, 1), wall%x(i, 2)/))
-        minN = minval((/minN, wall%x(i, 1), wall%x(i, 2)/))
-      end if
-    end do
-
-    rad = (maxN - minN)/2
-    ! rad = 3
-
-    pt(2) = RandomNumber(ranseed)*2*PI
-    pt(3) = sqrt(RandomNumber(ranseed))*(rad)
-    pt(1) = pt(3)*cos(pt(2)) + rad + minN ! x
-    pt(2) = pt(3)*sin(pt(2)) + rad + minN ! y
-    pt(3) = len
-
-  end subroutine choose_point
-
-! generate point inside sphere with center and radius
-  subroutine get_point(pt, center, rad)
-
-    real(WP) :: pt(3)
-    real(WP) :: center(3), rad
-    real(WP) :: d = 100., x, y, z, tmp_pt(3)
-    do while (d .gt. rad)
-      call random_number(x)
-      call random_number(y)
-      call random_number(z)
-      x = (x*rad*2) - rad
-      y = (y*rad*2) - rad
-      z = (z*rad*2) - rad
-      ! if (rootWorld) print *, "tmp_pt: ", tmp_pt
-
-      d = sum(tmp_pt*tmp_pt)
-      ! if (rootWorld) print *, "d: ", d, "tmp_pt: ", tmp_pt
-    end do
-    ! if (rootWorld) print *, "tmp_pt after: ", x, y, z
-
-    pt = tmp_pt
-    ! if (rootWorld) print *, "tmp_pt: ", tmp_pt
-    pt(1) = x + center(1)
-    pt(2) = y + center(2)
-    pt(3) = z + center(3)
-    ! if (rootWorld) print *, "pt after: ", pt
-  end subroutine get_point
-
 ! find an open spot in the simulation to place a cell
   subroutine place_cell(celltype, num)
 
@@ -235,7 +174,7 @@ contains
       call rotate_cell(newcell)
 
       ! randomly select a tmp_xc
-      ! call choose_point(tmp_xc)
+      ! place first 22 cells in sphere
       if (num .le. 22) then
         sphere_center = (/4.5, 5., 9./)
         sphere_rad = 4.5
@@ -248,6 +187,7 @@ contains
         end do
         d = 100.
         tmp_xc = tmp_xc + sphere_center
+      ! place rest of the cells in cylinder
       else
         tmp_xc(2) = RandomNumber(ranseed)*2*PI
         tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber)
@@ -318,12 +258,12 @@ contains
     zv(3) = 1 - (2*vsq)
 
     !generate rotation matrix
-    rotmat = RotateMatrix(zv) !(/ 0., 1., 0./))
+    rotmat = RotateMatrix(zv)
 
     !rotate cell with rotmat
     !each point: x = Rx
     forall (i=1:cell%nlat, j=1:cell%nlon)
-      ! reshpe is unnecessary?
+      ! reshape is unnecessary
       cell%x(i, j, :) = matmul(rotmat, cell%x(i, j, :))
     end forall
 
