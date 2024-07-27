@@ -17,11 +17,11 @@ curdir = os.getcwd()
 target = f'{curdir}/Input/tube.in'
 old = "'D/restart.LATEST.dat'"
 
-for i in range(21500, 25700, 100):
+for i in range(0, 4500, 100):
     numZeros = 9 - len(str(i))
     print(f'i: {i}, numZeros: {numZeros}')
     numStr = ("0"*numZeros) + str(i)
-    filePath = "'R/" + "restart" + numStr + ".dat'"
+    filePath = "'R2/" + "restart" + numStr + ".dat'"
     print(filePath)
     replace(target, old, filePath)
     old = filePath

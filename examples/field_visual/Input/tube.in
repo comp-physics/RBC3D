@@ -21,7 +21,7 @@
 -1                       ! ftotout
 100                      ! restart_out
 
-'R/restart000021800.dat'
+'D/restart.LATEST.dat'
 
 0.02                ! epsDist
 10.                 ! forceCoef
