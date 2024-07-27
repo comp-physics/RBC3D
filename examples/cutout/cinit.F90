@@ -187,7 +187,7 @@ contains
         end do
         d = 100.
         tmp_xc = tmp_xc + sphere_center
-      ! place rest of the cells in cylinder
+        ! place rest of the cells in cylinder
       else
         tmp_xc(2) = RandomNumber(ranseed)*2*PI
         tmp_xc(3) = sqrt(RandomNumber(ranseed))*(tuber)
