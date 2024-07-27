@@ -56,7 +56,7 @@ mpiexec -n 1 ../../build/case/minit
 mpiexec -n 2 ../../build/case/mtube
 ```
 
-To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/clusters.md).
+To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/docs/clusters.md).
 
 ### Papers that use RBC3D
 

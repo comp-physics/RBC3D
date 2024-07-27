@@ -4,7 +4,7 @@ For this visualization tutorial, I ran `examples/randomized_case` with a smaller
 
 ![alt text](images/image-6.png)
 
-Now, you can click the `Play` button at the top to see the cell output at each frame. This is at frame 21 of the simulation I ran. However we can make the visualization look nicer with a few extra steps.
+Now, you can click the `Play` button at the top to see the cell output at each frame. This is at frame 21 of the simulation I ran. However, we can make the visualization look nicer with a few extra steps.
 
 ![alt text](images/image-7.png)
 
@@ -85,3 +85,7 @@ I also changed the material of the box to something reflective, specifically `Me
 There are lots more Paraview options that you can change, but these are the basics! Ray-tracing takes up a lot of resources, so you might want to follow the remote visualization instructions [here](https://github.com/comp-physics/Scientific-Visualization?tab=readme-ov-file) if you're getting screenshots for a full simulation video. The `OSPRay raycaster` with `Shadows` turned on is a less intensive ray-tracer but still provides some visual interest.
 
 ![alt text](images/image-16.png)
+
+# Making a Video
+
+In the previous steps, we edited a snapshot of one timestep of the simulation. To create a video showing the simulation data through all the timesteps, you can follow the steps in [this repo](https://github.com/comp-physics/Scientific-Visualization/blob/master/Tutorials/creating-an-annimation.md). It has instructions on how to save all the screenshots at each timestep into a folder and then clip them together with FFmpeg. Note that it may take several hours to save all the screenshots with ray-tracing, so it's probably better to not ray-trace the simulation if you just want to see the general flow.
