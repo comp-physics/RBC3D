@@ -30,11 +30,11 @@ brew install gcc mpich gfortran pkg-config wget cmake
 ./rbc.sh install-mac
 ```
 
-and then set these environment variables in your `~/.zshrc` or `~/.bashrc`. Note that `$HOME` will need to be replaced with the folder you cloned RBC3D in.
+and then from the RBC3D root directory, run these commands but replace `.zshrc` with where you store environment variables:
 
 ```shell
-export PETSC_DIR=$HOME/RBC3D/packages/petsc-3.19.6
-export PETSC_ARCH=arch-darwin-c-opt
+rootdir=`pwd`
+echo -e "export PETSC_DIR=$rootdir/packages/petsc-3.21.3 \nexport PETSC_ARCH=arch-darwin-c-opt" >> ~/.zshrc
 ```
 
 Then to execute and run a case, you can:
@@ -56,8 +56,7 @@ mpiexec -n 1 ../../build/case/minit
 mpiexec -n 2 ../../build/case/mtube
 ```
 
-To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/install/readme.md).
-
+To run a case with more cells and nodes, you should use a supercomputing cluster. Instructions on how to build RBC3D on a cluster are [available here](https://github.com/comp-physics/RBC3D/blob/master/docs/clusters.md).
 
 ### Papers that use RBC3D
 

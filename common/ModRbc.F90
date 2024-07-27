@@ -423,38 +423,38 @@ contains
 
     ! Surface tangential and normals
     do ilon = 1, nlon
-    do ilat = 1, nlat
-      a1 = cell%a1(ilat, ilon, :)
-      a2 = cell%a2(ilat, ilon, :)
+      do ilat = 1, nlat
+        a1 = cell%a1(ilat, ilon, :)
+        a2 = cell%a2(ilat, ilon, :)
 
-      a(1, 1) = dot_product(a1, a1)
-      a(1, 2) = dot_product(a1, a2)
-      a(2, 1) = a(1, 2)
-      a(2, 2) = dot_product(a2, a2)
+        a(1, 1) = dot_product(a1, a1)
+        a(1, 2) = dot_product(a1, a2)
+        a(2, 1) = a(1, 2)
+        a(2, 2) = dot_product(a2, a2)
 
-      detA = a(1, 1)*a(2, 2) - a(1, 2)*a(2, 1)
-      iDetA = 1./detA
+        detA = a(1, 1)*a(2, 2) - a(1, 2)*a(2, 1)
+        iDetA = 1./detA
 
-      a_rcp(1, 1) = iDeta*a(2, 2)
-      a_rcp(1, 2) = -iDeta*a(1, 2)
-      a_rcp(2, 1) = -iDeta*a(2, 1)
-      a_rcp(2, 2) = iDeta*a(1, 1)
+        a_rcp(1, 1) = iDeta*a(2, 2)
+        a_rcp(1, 2) = -iDeta*a(1, 2)
+        a_rcp(2, 1) = -iDeta*a(2, 1)
+        a_rcp(2, 2) = iDeta*a(1, 1)
 
-      a1_rcp = a_rcp(1, 1)*a1 + a_rcp(1, 2)*a2
-      a2_rcp = a_rcp(2, 1)*a1 + a_rcp(2, 2)*a2
+        a1_rcp = a_rcp(1, 1)*a1 + a_rcp(1, 2)*a2
+        a2_rcp = a_rcp(2, 1)*a1 + a_rcp(2, 2)*a2
 
-      ! Store results
-      cell%a1_rcp(ilat, ilon, :) = a1_rcp
-      cell%a2_rcp(ilat, ilon, :) = a2_rcp
+        ! Store results
+        cell%a1_rcp(ilat, ilon, :) = a1_rcp
+        cell%a2_rcp(ilat, ilon, :) = a2_rcp
 
-      cell%a(ilat, ilon, :, :) = a
-      cell%a_rcp(ilat, ilon, :, :) = a_rcp
+        cell%a(ilat, ilon, :, :) = a
+        cell%a_rcp(ilat, ilon, :, :) = a_rcp
 
-      cell%detj(ilat, ilon) = sqrt(detA)/sin(cell%th(ilat))
+        cell%detj(ilat, ilon) = sqrt(detA)/sin(cell%th(ilat))
 
-      a3 = CrossProd(a1, a2)
-      cell%a3(ilat, ilon, :) = a3/NORM2(a3)
-    end do ! ilat
+        a3 = CrossProd(a1, a2)
+        cell%a3(ilat, ilon, :) = a3/norm2(a3)
+      end do ! ilat
     end do ! ilon
 
     ! Compute curvature tensor
@@ -920,22 +920,22 @@ contains
     nlon = cell%nlon
 
     do ilat = 1, nlat
-    do ilon = 1, nlon
-      ! V2 is the stretch tensor
-      V2 = matmul(cell%a(ilat, ilon, :, :), cellRef%a_rcp(ilat, ilon, :, :))
+      do ilon = 1, nlon
+        ! V2 is the stretch tensor
+        V2 = matmul(cell%a(ilat, ilon, :, :), cellRef%a_rcp(ilat, ilon, :, :))
 
-      lbd1 = V2(1, 1) + V2(2, 2) - 2.0
-      lbd2 = V2(1, 1)*V2(2, 2) - V2(1, 2)*V2(2, 1) - 1.0
-      JS = sqrt(V2(1, 1)*V2(2, 2) - V2(1, 2)*V2(2, 1))
+        lbd1 = V2(1, 1) + V2(2, 2) - 2.0
+        lbd2 = V2(1, 1)*V2(2, 2) - V2(1, 2)*V2(2, 1) - 1.0
+        JS = sqrt(V2(1, 1)*V2(2, 2) - V2(1, 2)*V2(2, 1))
 
-      ! Take the covariant form of V2
-      V2 = cellRef%a_rcp(ilat, ilon, :, :)
+        ! Take the covariant form of V2
+        V2 = cellRef%a_rcp(ilat, ilon, :, :)
 
-      tau_tmp = 0.5*ES/JS*(lbd1 + 1.0)*V2 &
-                + 0.5*JS*(ED*lbd2 - ES)*cell%a_rcp(ilat, ilon, :, :)
+        tau_tmp = 0.5*ES/JS*(lbd1 + 1.0)*V2 &
+                  + 0.5*JS*(ED*lbd2 - ES)*cell%a_rcp(ilat, ilon, :, :)
 
-      tau(ilat, ilon, :, :) = tau_tmp
-    end do ! ilon
+        tau(ilat, ilon, :, :) = tau_tmp
+      end do ! ilon
     end do ! ilat
 
   end subroutine Shell_ElasStrs
@@ -957,12 +957,12 @@ contains
     nlon = cell%nlon
 
     do ilat = 1, nlat
-    do ilon = 1, nlon
-      b = matmul(cell%a_rcp(ilat, ilon, :, :), cell%b(ilat, ilon, :, :))
-      bref = matmul(cellRef%a_rcp(ilat, ilon, :, :), cellRef%b(ilat, ilon, :, :))
+      do ilon = 1, nlon
+        b = matmul(cell%a_rcp(ilat, ilon, :, :), cell%b(ilat, ilon, :, :))
+        bref = matmul(cellRef%a_rcp(ilat, ilon, :, :), cellRef%b(ilat, ilon, :, :))
 
-      bnd(ilat, ilon, :, :) = -cell%EB*matmul(b - bref, cell%a_rcp(ilat, ilon, :, :))
-    end do ! ilon
+        bnd(ilat, ilon, :, :) = -cell%EB*matmul(b - bref, cell%a_rcp(ilat, ilon, :, :))
+      end do ! ilon
     end do ! ilat
 
   end subroutine Shell_Bend

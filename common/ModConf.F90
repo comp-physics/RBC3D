@@ -249,11 +249,11 @@ contains
       print *, 'refRad = ', refRadIN(1:nCellTypes)
 
       read (funit, *) Deflate; print *, 'Deflate = ', Deflate
-      !print *, 'before error'
+      ! print *, 'before error'
       read (funit, *) pGradTar(1); print *, 'pGradTar = ', pGradTar(1)
       read (funit, *) pGradTar(2); print *, 'pGradTar = ', pGradTar(2)
       read (funit, *) pGradTar(3); print *, 'pGradTar = ', pGradTar(3)
-      !print *, 'after error'
+      ! print *, 'after error'
       read (funit, *) Nt; print *, 'Nt = ', Nt
       read (funit, *) Ts; print *, 'Ts = ', Ts
 

@@ -103,11 +103,11 @@ contains
       zc = 0.5*(minval(rbc%x(:, :, 3)) + maxval(rbc%x(:, :, 3)))
 
       do ilon = 1, rbc%nlon
-      do ilat = 1, rbc%nlat
-        ds = rbc%detJ(ilat, ilon)*rbc%w(ilat)
-        vn = dot_product(rbc%g(ilat, ilon, :), rbc%a3(ilat, ilon, :))
-        flowrate = flowrate + (rbc%x(ilat, ilon, 3) - zc)*vn*ds
-      end do ! ilat
+        do ilat = 1, rbc%nlat
+          ds = rbc%detJ(ilat, ilon)*rbc%w(ilat)
+          vn = dot_product(rbc%g(ilat, ilon, :), rbc%a3(ilat, ilon, :))
+          flowrate = flowrate + (rbc%x(ilat, ilon, 3) - zc)*vn*ds
+        end do ! ilat
       end do ! ilon
     end do ! irbc
 
@@ -134,12 +134,12 @@ contains
       end do ! ii
 
       do ilon = 1, rbc%nlon
-      do ilat = 1, rbc%nlat
-        x = rbc%x(ilat, ilon, :) - xc
-        f = rbc%f(ilat, ilon, :)
-        dS = rbc%w(ilat)*rbc%detJ(ilat, ilon)
-        forall (ii=1:3, jj=1:3) tau(ii, jj) = tau(ii, jj) - dS*f(ii)*x(jj)
-      end do ! ilat
+        do ilat = 1, rbc%nlat
+          x = rbc%x(ilat, ilon, :) - xc
+          f = rbc%f(ilat, ilon, :)
+          dS = rbc%w(ilat)*rbc%detJ(ilat, ilon)
+          forall (ii=1:3, jj=1:3) tau(ii, jj) = tau(ii, jj) - dS*f(ii)*x(jj)
+        end do ! ilat
       end do ! ilon
     end do ! irbc
 

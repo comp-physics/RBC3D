@@ -16,3 +16,5 @@ packages*
 traction
 build
 *.sbatch
+*/*/*/restart*
+examples/*/*.py
