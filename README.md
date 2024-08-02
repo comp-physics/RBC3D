@@ -23,7 +23,7 @@ This codebase solves the boundary integral form of the Stokes equations via an a
 
 ### Installation
 
-To install on a mac from the cloned repository, you can 
+To install on a mac from the cloned repository, you can:
 
 ```shell
 brew install gcc mpich gfortran pkg-config wget cmake
