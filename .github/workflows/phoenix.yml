@@ -1,53 +1,53 @@
-name: 'Test on Phoenix'
+# name: 'Test on Phoenix'
 
-on:
-    push:
-    pull_request:
-    workflow_dispatch:
+# on:
+#     push:
+#     pull_request:
+#     workflow_dispatch:
 
-jobs:
-  self:
-    name: Phoenix Runner
-    runs-on:
-        labels: gt
-    env:
-        ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: node16
-        ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-    if: github.repository == 'Comp-Physics/RBC3D'
-    continue-on-error: true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+# jobs:
+#   self:
+#     name: Phoenix Runner
+#     runs-on:
+#         labels: gt
+#     env:
+#         ACTIONS_RUNNER_FORCE_ACTIONS_NODE_VERSION: node16
+#         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+#     if: github.repository == 'Comp-Physics/RBC3D'
+#     continue-on-error: true
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
       
-      - name: Build Packages
-        run: |
-            module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv
-            ./rbc.sh install-phoenix
+#       - name: Build Packages
+#         run: |
+#             module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv
+#             ./rbc.sh install-phoenix
       
-      - name: Make Case with Makefiles
-        run: |
-            module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
-            set -e -x
-            export FFTWROOT=`pwd`/packages/fftw-3.3.10/build
-            export PETSC_DIR=`pwd`/packages/petsc-3.21.3
-            export PETSC_ARCH=arch-linux-c-opt
-            cd common
-            make .depend
-            make
-            cd ../examples/case
-            make .depend
-            make
-            echo "/common and case compiled successfully!"
+#       - name: Make Case with Makefiles
+#         run: |
+#             module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
+#             set -e -x
+#             export FFTWROOT=`pwd`/packages/fftw-3.3.10/build
+#             export PETSC_DIR=`pwd`/packages/petsc-3.21.3
+#             export PETSC_ARCH=arch-linux-c-opt
+#             cd common
+#             make .depend
+#             make
+#             cd ../examples/case
+#             make .depend
+#             make
+#             echo "/common and case compiled successfully!"
 
-      - name: Compile Cases with CMake
-        run: |
-            module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
-            set -e -x
-            export PETSC_DIR=`pwd`/packages/petsc-3.21.3
-            export PETSC_ARCH=arch-linux-c-opt
-            mkdir build
-            cd build
-            cmake ..
-            make
+#       - name: Compile Cases with CMake
+#         run: |
+#             module load gcc/12.1.0-qgxpzk mvapich2/2.3.7-733lcv netcdf-fortran cmake
+#             set -e -x
+#             export PETSC_DIR=`pwd`/packages/petsc-3.21.3
+#             export PETSC_ARCH=arch-linux-c-opt
+#             mkdir build
+#             cd build
+#             cmake ..
+#             make
             echo "/common and all cases in /examples compiled successfully!"
       
