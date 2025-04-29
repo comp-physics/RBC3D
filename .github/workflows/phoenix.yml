@@ -49,5 +49,5 @@
 #             cd build
 #             cmake ..
 #             make
-            echo "/common and all cases in /examples compiled successfully!"
+            # echo "/common and all cases in /examples compiled successfully!"
       
